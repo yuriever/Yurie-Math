@@ -1,6 +1,4 @@
-
-
-(*Diff.wl*)
+(* Diff.wl *)
 
 jacobianMatrix::usage =
 	"jacobianMatrix.";
@@ -21,7 +19,7 @@ IBP::usage =
 	"integration by parts.";
 
 
-(*DLMF.wl*)
+(* DLMF.wl *)
 
 DLMF::usage =
 	"simplify expressions by the rules in DLMFData.";
@@ -33,7 +31,7 @@ DLMFRuleShow::usage =
 	"show the rules without context marks in DLMFData.";
 
 
-(*Dye.wl*)
+(* Dye.wl *)
 
 dye::usage =
 	"dye[expr_]: color the elements at the first level of expression.";
@@ -51,7 +49,7 @@ dyeOff::usage =
 	"dyeOff[expr_]: eliminate the colors from dye.";
 
 
-(*Gamma.wl*)
+(* Gamma.wl *)
 
 gammaFrom::usage =
 	"expand everything to Gamma factors.";
@@ -75,7 +73,7 @@ multiGammaReduceByBarnesLemma::usage =
 	"reduce the multi-Gamma symbol by the Barnes lemmas.";
 
 
-(*Hyper.wl*)
+(* Hyper.wl *)
 
 hyperSplit::usage =
 	"split a product into a list containing Hypergeometric2F1 factors and the rests.";
@@ -120,7 +118,7 @@ wilsonPolynomialFromHyper::usage =
 	"convert Hypergeometric4F3 to Wilson polynomial.";
 
 
-(*Label.wl*)
+(* Label.wl *)
 
 labelJoin::usage =
 	"{x,1}->x1.";
@@ -144,7 +142,7 @@ labelShiftToDiffBack::usage =
 	"x12->x1-x2.";
 
 
-(*Lie.wl*)
+(* Lie.wl *)
 
 lie::usage =
 	"simple Lie algebras.";
@@ -162,7 +160,7 @@ lieDynkinDiagram::usage =
 	"Dynkin diagram of simple Lie algebras.";
 
 
-(*Matrix.wl*)
+(* Matrix.wl *)
 
 matSquareQ::usage =
 	"testing if is a square matrix.";
@@ -177,7 +175,7 @@ sparseBlockMatrix::usage =
 	"SparseArray`SparseBlockMatrix.";
 
 
-(*Quest.wl*)
+(* Quest.wl *)
 
 isZ::usage =
 	"integers.";
@@ -219,7 +217,7 @@ linearQ::usage =
 	"whether the expression is linear with respect to the variables.";
 
 
-(*Simplify.wl*)
+(* Simplify.wl *)
 
 SS::usage =
 	"Simplify.";
