@@ -173,6 +173,27 @@ gammaTakeResidue[variable_Symbol,index_Symbol,gm_Gamma,opts:OptionsPattern[]][ex
     ]//Catch;
 
 
+gammaTakeResidue[] :=
+    CellPrint@{
+        ExpressionCell[
+            ToExpression[
+                "gammaTakeResidue[x,n,Gamma[2x+1],\"ShowPole\"->True]@Gamma[2x+1]",
+                 StandardForm,
+                 Defer
+            ],
+            "Code"
+        ],
+        ExpressionCell[
+            ToExpression[
+                "{(-1)^n/(2 n!),x->1/2 (-1-n)}",
+                StandardForm,
+                Defer
+            ],
+            "Output"
+        ]
+    };
+
+
 (* ::Subsubsection:: *)
 (*Helper*)
 
