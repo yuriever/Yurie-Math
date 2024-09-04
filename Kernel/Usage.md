@@ -126,15 +126,17 @@
 
 <!-- Quest.wl -->
 
+* `#!wl isN` - zero or positive integers.
+
 * `#!wl isZ` - integers.
 
-* `#!wl isZP` - positive integers
+* `#!wl isZP` - positive integers.
 
-* `#!wl isZN` - negative integers
+* `#!wl isZN` - negative integers.
 
-* `#!wl isZP0` - zero or positive integers
+* `#!wl isZP0` - zero or positive integers.
 
-* `#!wl isZN0` - zero or negative integers
+* `#!wl isZN0` - zero or negative integers.
 
 * `#!wl isQ` - rational numbers.
 

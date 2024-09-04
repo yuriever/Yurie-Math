@@ -177,20 +177,23 @@ sparseBlockMatrix::usage =
 
 (* Quest.wl *)
 
+isN::usage =
+	"zero or positive integers.";
+
 isZ::usage =
 	"integers.";
 
 isZP::usage =
-	"positive integers";
+	"positive integers.";
 
 isZN::usage =
-	"negative integers";
+	"negative integers.";
 
 isZP0::usage =
-	"zero or positive integers";
+	"zero or positive integers.";
 
 isZN0::usage =
-	"zero or negative integers";
+	"zero or negative integers.";
 
 isQ::usage =
 	"rational numbers.";
