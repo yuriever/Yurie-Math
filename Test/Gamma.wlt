@@ -118,7 +118,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[x, n, Gamma[-x]][Gamma[x]]
 	,
-	Gamma[x]
+	Quiet[Gamma[x]]
 	,
 	{Yurie`Math`gammaTakeResidue::gammaNotInExpr}
 	,
@@ -128,7 +128,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[x, x, Gamma[-x]][Gamma[x]]
 	,
-	Gamma[x]
+	Quiet[Gamma[x]]
 	,
 	{Yurie`Math`gammaTakeResidue::indexConflict}
 	,
@@ -138,7 +138,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[x, n, Gamma[f[x]]][Gamma[x]]
 	,
-	Gamma[x]
+	Quiet[Gamma[x]]
 	,
 	{Yurie`Math`gammaTakeResidue::gammaNotMatchVar}
 	,
@@ -148,7 +148,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[y, n, Gamma[f[x]]][Gamma[x]]
 	,
-	Gamma[x]
+	Quiet[Gamma[x]]
 	,
 	{Yurie`Math`gammaTakeResidue::gammaNotMatchVar}
 	,
@@ -286,7 +286,7 @@ VerificationTest[
 VerificationTest[
 	multiGammaReduceByBarnesLemma[s][multiGamma[{a1 - s, a2 - s, b1 + s, b2 + s, c, s}, {d}]]
 	,
-	multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s}, {d}]
+	Quiet[multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s}, {d}]]
 	,
 	{Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
 	,
@@ -296,7 +296,7 @@ VerificationTest[
 VerificationTest[
 	multiGammaReduceByBarnesLemma[s][multiGamma[{a1 - s, a2 - s, b1 + s, b2 + s, c}, {d, s}]]
 	,
-	multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s}, {d, s}]
+	Quiet[multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s}, {d, s}]]
 	,
 	{Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
 	,
@@ -314,7 +314,7 @@ VerificationTest[
 VerificationTest[
 	multiGammaReduceByBarnesLemma[s][multiGamma[{a1 - s, a2 - s, b1 + s, b2 + s, b3 + s, c, s}, {a1 + a2 + b1 + b2 + b3 + s, d}]]
 	,
-	multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s, b3 + s}, {d, a1 + a2 + b1 + b2 + b3 + s}]
+	Quiet[multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s, b3 + s}, {d, a1 + a2 + b1 + b2 + b3 + s}]]
 	,
 	{Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
 	,
@@ -324,7 +324,7 @@ VerificationTest[
 VerificationTest[
 	multiGammaReduceByBarnesLemma[s][multiGamma[{a1 - s, a2 - s, b1 + s, b2 + s, b3 + s, c}, {a1 + a2 + b1 + b2 + b3 + s, d, s}]]
 	,
-	multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s, b3 + s}, {d, s, a1 + a2 + b1 + b2 + b3 + s}]
+	Quiet[multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s, b3 + s}, {d, s, a1 + a2 + b1 + b2 + b3 + s}]]
 	,
 	{Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
 	,

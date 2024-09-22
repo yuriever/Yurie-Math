@@ -46,7 +46,7 @@ VerificationTest[
 VerificationTest[
 	hyperToMellinBarnes[s, t][expr]
 	,
-	f[Hypergeometric2F1[a1, b1, c1, z1]] + Hypergeometric2F1[a2, b2, c2, z2]^2
+	Quiet[f[Hypergeometric2F1[a1, b1, c1, z1]] + Hypergeometric2F1[a2, b2, c2, z2]^2]
 	,
 	{Yurie`Math`hyperTo::symbolNotEnough}
 	,
@@ -64,7 +64,7 @@ VerificationTest[
 VerificationTest[
 	hyperToTaylor[n, m][expr]
 	,
-	f[Hypergeometric2F1[a1, b1, c1, z1]] + Hypergeometric2F1[a2, b2, c2, z2]^2
+	Quiet[f[Hypergeometric2F1[a1, b1, c1, z1]] + Hypergeometric2F1[a2, b2, c2, z2]^2]
 	,
 	{Yurie`Math`hyperTo::symbolNotEnough}
 	,
