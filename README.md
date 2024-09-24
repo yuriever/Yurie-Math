@@ -2,6 +2,8 @@
 
 Math utilities.
 
+## Documentation
+
 ## Install
 
 Install from this repository:
@@ -41,5 +43,3 @@ PacletInstall["Yurie/Math"]
 ``` wl
 PacletUninstall["Yurie/Math"]
 ```
-
-## Documentation
