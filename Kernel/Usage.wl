@@ -118,30 +118,6 @@ wilsonPolynomialFromHyper::usage =
 	"convert Hypergeometric4F3 to Wilson polynomial.";
 
 
-(* Label.wl *)
-
-labelJoin::usage =
-	"{x,1}->x1.";
-
-labelSplit::usage =
-	"x1->f[x,1].";
-
-labelShiftToZero::usage =
-	"x1->0.";
-
-labelShiftToEqual::usage =
-	"x1->x2.";
-
-labelShiftToDiff::usage =
-	"x1->x12+x2.";
-
-labelShiftToDiffZero::usage =
-	"x1->x12,x2->0.";
-
-labelShiftToDiffBack::usage =
-	"x12->x1-x2.";
-
-
 (* Lie.wl *)
 
 lie::usage =

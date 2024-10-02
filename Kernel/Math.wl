@@ -20,8 +20,6 @@ Get["Yurie`Math`Gamma`"];
 
 Get["Yurie`Math`Hyper`"];
 
-Get["Yurie`Math`Label`"];
-
 Get["Yurie`Math`Lie`"];
 
 Get["Yurie`Math`Matrix`"];
