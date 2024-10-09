@@ -97,9 +97,9 @@ diffComm[x_,y_] :=
 
 diffChange[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
     expr//ReplaceAll[getFunctionRuleList[eqList,oldList,newList,funList,FilterRules[{opts,Options@diffChange},Options@getFunctionRuleList]]]//
-		(*convert old variables to new ones.*)
-		ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
-			diffChangeStripList;
+        (*convert old variables to new ones.*)
+        ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
+            diffChangeStripList;
 
 
 diffChange[] :=

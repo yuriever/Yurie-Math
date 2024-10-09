@@ -269,7 +269,7 @@ multiGamma/:prod:HoldPattern[Verbatim[Times][___,_multiGamma,___,_multiGamma,___
 
 multiGammaFrom[expr_] :=
     expr//ReplaceAll[prod_Times:>multiGammaFromProduct[prod]]//
-    	ReplaceAll[Gamma[x_]:>multiGamma[{x},{}]];
+        ReplaceAll[Gamma[x_]:>multiGamma[{x},{}]];
 
 
 (* ::Subsubsection:: *)

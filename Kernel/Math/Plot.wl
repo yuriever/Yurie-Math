@@ -15,7 +15,7 @@ Needs["Yurie`Math`"];
 
 
 showComplexMapping::usage =
-	"plot the complex mapping.";
+    "plot the complex mapping.";
 
 
 (* ::Section:: *)

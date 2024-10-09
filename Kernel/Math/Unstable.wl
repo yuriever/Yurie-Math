@@ -116,7 +116,7 @@ nestedMultiGammaDataFromPolePinching[var_][mgdata_] :=
 
 nestedMultiGammaDataFromPolePinching[var1_,var2__][mgdata_] :=
     newMultiGammaDataFromPolePinching[var1][mgdata]//
-		Query[<|#,"newMultiGamma"->Map[nestedMultiGammaDataFromPolePinching[var2],#newMultiGamma]|>&];
+        Query[<|#,"newMultiGamma"->Map[nestedMultiGammaDataFromPolePinching[var2],#newMultiGamma]|>&];
 
 
 newMultiGammaDataFromPolePinching[var_][mgdata_] :=
@@ -209,7 +209,7 @@ getPinchingDataFromNestedMultiGammaData[mgdataNested_] :=
 
 multiGammaDataToPinchingData[mgdata_] :=
     mgdata//Query[Select[KeyExistsQ["gammaFactorParent"]]]//
-		Query[All,<|"child"->#gammaFactor,"parent1"->#gammaFactorParent[[1,"gammaFactor"]],"parent2"->#gammaFactorParent[[2,"gammaFactor"]]|>&]
+        Query[All,<|"child"->#gammaFactor,"parent1"->#gammaFactorParent[[1,"gammaFactor"]],"parent2"->#gammaFactorParent[[2,"gammaFactor"]]|>&]
 
 
 (* ::Subsection:: *)
