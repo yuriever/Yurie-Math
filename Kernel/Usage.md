@@ -174,10 +174,6 @@
 
 * `#!wl solveFirst` - operator form of Solve + First.
 
-* `#!wl solveZero` - operator form of SolveValues.
-
-* `#!wl solveFirstZero` - operator form of SolveValues + First.
-
 * `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
 
 * `#!wl collect` - operator form of Collect.

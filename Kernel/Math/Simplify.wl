@@ -73,12 +73,6 @@ solve::usage =
 solveFirst::usage =
     "operator form of Solve + First.";
 
-solveZero::usage =
-    "operator form of SolveValues.";
-
-solveFirstZero::usage =
-    "operator form of SolveValues + First.";
-
 part::usage =
     "operator form of Part, GeneralUtilities`Slice.";
 
@@ -170,12 +164,6 @@ solve//Options =
     Options@Solve;
 
 solveFirst//Options =
-    Options@Solve;
-
-solveZero//Options =
-    Options@Solve;
-
-solveFirstZero//Options =
     Options@Solve;
 
 collect//Options =
@@ -298,15 +286,7 @@ solve[args___,opts:OptionsPattern[]][expr_] :=
 
 
 solveFirst[args___,opts:OptionsPattern[]][expr_] :=
-    Solve[expr,args,FilterRules[{opts,Options@solveFirst},Options@Solve]]//First;
-
-
-solveZero[args___,opts:OptionsPattern[]][expr_] :=
-    Solve[expr==0,args,FilterRules[{opts,Options@solveZero},Options@Solve]];
-
-
-solveFirstZero[args___,opts:OptionsPattern[]][expr_] :=
-    Solve[expr==0,args,FilterRules[{opts,Options@solveFirstZero},Options@Solve]]//First;
+    First@Solve[expr,args,FilterRules[{opts,Options@solveFirst},Options@Solve]];
 
 
 part :=

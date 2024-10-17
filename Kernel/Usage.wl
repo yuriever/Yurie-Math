@@ -249,12 +249,6 @@ solve::usage =
 solveFirst::usage =
 	"operator form of Solve + First.";
 
-solveZero::usage =
-	"operator form of SolveValues.";
-
-solveFirstZero::usage =
-	"operator form of SolveValues + First.";
-
 part::usage =
 	"operator form of Part, GeneralUtilities`Slice.";
 
