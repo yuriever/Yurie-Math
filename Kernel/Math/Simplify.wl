@@ -79,6 +79,10 @@ part::usage =
 collect::usage =
     "operator form of Collect.";
 
+separateBy::usage =
+    "separate the elements by whether or not satisfying the criteria.";
+
+
 
 (* ::Subsection:: *)
 (*Simplification*)
@@ -295,6 +299,13 @@ part :=
 
 collect[var_,head_:Identity,opts:OptionsPattern[]][expr_] :=
     Collect[expr,var,head,FilterRules[{opts,Options@collect},Options@Collect]];
+
+
+separateBy[crit_][expr_] :=
+    {
+        Select[expr,crit[#]&],
+        Select[expr,!crit[#]&]
+    };
 
 
 (* ::Subsection:: *)

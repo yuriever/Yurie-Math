@@ -60,6 +60,54 @@ VerificationTest[
 ]
 
 VerificationTest[
+	FreeQ[(x_) + (y_)][f[a + b]]
+	,
+	False
+	,
+	TestID->"7-Quest.nb"
+]
+
+VerificationTest[
+	presentQ[(x_) + (y_)][f[a + b]]
+	,
+	True
+	,
+	TestID->"8-Quest.nb"
+]
+
+VerificationTest[
+	FreeQ[_Integer][f[a + b]]
+	,
+	True
+	,
+	TestID->"9-Quest.nb"
+]
+
+VerificationTest[
+	presentQ[_Integer][f[a + b]]
+	,
+	False
+	,
+	TestID->"10-Quest.nb"
+]
+
+VerificationTest[
+	patternPresentQ[a + b]
+	,
+	False
+	,
+	TestID->"11-Quest.nb"
+]
+
+VerificationTest[
+	patternPresentQ[_Times]
+	,
+	True
+	,
+	TestID->"12-Quest.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

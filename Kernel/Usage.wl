@@ -195,6 +195,15 @@ isC::usage =
 linearQ::usage =
 	"whether the expression is linear with respect to the variables.";
 
+presentQ::usage =
+	"Not + FreeQ.";
+
+patternPresentQ::usage =
+	"Internal`PatternPresentQ.";
+
+patternFreeQ::usage =
+	"Internal`PatternFreeQ.";
+
 
 (* Simplify.wl *)
 
@@ -254,6 +263,9 @@ part::usage =
 
 collect::usage =
 	"operator form of Collect.";
+
+separateBy::usage =
+	"separate the elements by whether or not satisfying the criteria.";
 
 exprTogether::usage =
 	"take powers, logs and abs together.";

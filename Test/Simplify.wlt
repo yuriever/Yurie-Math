@@ -135,6 +135,22 @@ VerificationTest[
 ]
 
 VerificationTest[
+	separateBy[EvenQ][Range[10]]
+	,
+	{{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
+	,
+	TestID->"16-Simplify.nb"
+]
+
+VerificationTest[
+	separateBy[FreeQ[s]][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])]
+	,
+	{Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
+	,
+	TestID->"17-Simplify.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

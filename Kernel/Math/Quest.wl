@@ -60,6 +60,16 @@ isC::usage =
 linearQ::usage =
     "whether the expression is linear with respect to the variables.";
 
+presentQ::usage =
+    "Not + FreeQ.";
+
+
+patternPresentQ::usage =
+    "Internal`PatternPresentQ.";
+
+patternFreeQ::usage =
+    "Internal`PatternFreeQ.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -214,6 +224,20 @@ linearQ[vars__][expr_] :=
 (*linearQ[vars__][expr_] :=
     PolynomialQ[expr,{vars}]&&
         Max@Total[GroebnerBasis`DistributedTermsList[expr,vars][[1,All,1]],{2}]<=1;*)
+
+
+presentQ[expr_,args__] :=
+    Not@FreeQ[expr,args];
+
+presentQ[form_][expr_] :=
+    Not@FreeQ[expr,form];
+
+
+patternPresentQ :=
+    Internal`PatternPresentQ;
+
+patternFreeQ :=
+    Internal`PatternFreeQ;
 
 
 (* ::Subsection:: *)

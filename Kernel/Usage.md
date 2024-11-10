@@ -137,6 +137,12 @@
 
 * `#!wl linearQ` - whether the expression is linear with respect to the variables.
 
+* `#!wl presentQ` - Not + FreeQ.
+
+* `#!wl patternPresentQ` - Internal\`PatternPresentQ.
+
+* `#!wl patternFreeQ` - Internal\`PatternFreeQ.
+
 
 <!-- Simplify.wl -->
 
@@ -177,6 +183,8 @@
 * `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
 
 * `#!wl collect` - operator form of Collect.
+
+* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
 
 * `#!wl exprTogether` - take powers, logs and abs together.
 
