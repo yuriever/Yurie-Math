@@ -79,10 +79,6 @@ part::usage =
 collect::usage =
     "operator form of Collect.";
 
-separateBy::usage =
-    "separate the elements by whether or not satisfying the criteria.";
-
-
 
 (* ::Subsection:: *)
 (*Simplification*)
@@ -132,6 +128,12 @@ swap::usage =
 
 stripPattern::usage =
     "strip off pattern-related functions in expressions.";
+
+separateBy::usage =
+    "separate the elements by whether or not satisfying the criteria.";
+
+freeze::usage =
+    "free subexpressions matching the pattern and perform the operation.";
 
 
 (* ::Section:: *)
@@ -301,13 +303,6 @@ collect[var_,head_:Identity,opts:OptionsPattern[]][expr_] :=
     Collect[expr,var,head,FilterRules[{opts,Options@collect},Options@Collect]];
 
 
-separateBy[crit_][expr_] :=
-    {
-        Select[expr,crit[#]&],
-        Select[expr,!crit[#]&]
-    };
-
-
 (* ::Subsection:: *)
 (*Simplification*)
 
@@ -409,6 +404,70 @@ stripPattern//Attributes =
 
 stripPattern[expr_,head_:Defer] :=
     head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
+
+
+(* ::Subsubsection:: *)
+(*separateBy*)
+
+
+separateBy[crit_][expr_] :=
+    {
+        Select[expr,crit[#]&],
+        Select[expr,!crit[#]&]
+    };
+
+
+(* ::Subsubsection:: *)
+(*freeze*)
+
+
+freeze//Options = {
+    "Heads"->False,
+    "Level"->Infinity,
+    "TemporarySymbol"->"a",
+    "Transformation"->{Identity,Identity}
+};
+
+
+freeze//Attributes =
+    {HoldAll};
+
+freeze[args___][expr_] :=
+    With[ {sep = ArgumentsOptions[freeze[args],{1,2}]},
+        freezeCheckArg[sep][expr]/;!FailureQ[sep]
+    ];
+
+
+freezeCheckArg//Attributes =
+    {HoldAll};
+
+freezeCheckArg[{argList_,optList_}][expr_] :=
+    Switch[Length[argList],
+        1,
+            freezeCore[{argList[[1]],Simplify},optList][expr],
+        2,
+            freezeCore[argList,optList][expr]
+    ];
+
+
+freezeCore//Attributes =
+    {HoldAll};
+
+freezeCore[{pat_,fun_},OptionsPattern[freeze]][expr_] :=
+    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList,trans,inverseTrans},
+        {trans,inverseTrans} = OptionValue["Transformation"];
+        subExprList =
+            DeleteDuplicates@Cases[expr,pat,OptionValue["Level"],Heads->OptionValue["Heads"]];
+        tempSymbolList =
+            Table[Unique[OptionValue["TemporarySymbol"]<>"$",{Temporary}],Length@subExprList];
+        ruleList =
+            MapThread[Rule[#1,trans[#2]]&,{subExprList,tempSymbolList}];
+        inverseRuleList =
+            MapThread[Rule[#1,inverseTrans[#2]]&,{tempSymbolList,subExprList}];
+        frozenExpr =
+            Replace[expr,ruleList,OptionValue["Level"],Heads->OptionValue["Heads"]];
+        frozenExpr//fun//ReplaceAll[inverseRuleList]
+    ];
 
 
 (* ::Subsection:: *)

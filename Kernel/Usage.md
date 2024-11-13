@@ -184,8 +184,6 @@
 
 * `#!wl collect` - operator form of Collect.
 
-* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
-
 * `#!wl exprTogether` - take powers, logs and abs together.
 
 * `#!wl exprApart` - take powers, logs and abs apart.
@@ -211,3 +209,7 @@
 * `#!wl swap` - swap two symbols in an expression.
 
 * `#!wl stripPattern` - strip off pattern-related functions in expressions.
+
+* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
+
+* `#!wl freeze` - free subexpressions matching the pattern and perform the operation.

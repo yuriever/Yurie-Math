@@ -151,6 +151,54 @@ VerificationTest[
 ]
 
 VerificationTest[
+	freeze[x, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
+	,
+	{s[x], x[s[x]], x[x[s[x]]]}
+	,
+	TestID->"18-Simplify.nb"
+]
+
+VerificationTest[
+	freeze[x, "Transformation" -> {Identity, s}, "Heads" -> True][NestList[x, x, 2]]
+	,
+	{s[x], s[x][s[x]], s[x][s[x][s[x]]]}
+	,
+	TestID->"19-Simplify.nb"
+]
+
+VerificationTest[
+	freeze[x, "Transformation" -> {Identity, s}, "Heads" -> True, "Level" -> 2][NestList[x, x, 2]]
+	,
+	{s[x], s[x][s[x]], s[x][x[x]]}
+	,
+	TestID->"20-Simplify.nb"
+]
+
+VerificationTest[
+	SetOptions[freeze, "Heads" -> True]
+	,
+	{"Heads" -> True, "Level" -> Infinity, "TemporarySymbol" -> "a", "Transformation" -> {Identity, Identity}}
+	,
+	TestID->"21-Simplify.nb"
+]
+
+VerificationTest[
+	freeze[x, "Transformation" -> {s, t}][NestList[x, x, 2]]
+	,
+	{s[t[x]], s[t[x]][s[t[x]]], s[t[x]][s[t[x]][s[t[x]]]]}
+	,
+	TestID->"22-Simplify.nb"
+]
+
+VerificationTest[
+	SetOptions[freeze, "Heads" -> False]
+	,
+	{"Heads" -> False, "Level" -> Infinity, "TemporarySymbol" -> "a", "Transformation" -> {Identity, Identity}}
+	,
+	TestID->"23-Simplify.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

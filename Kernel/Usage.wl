@@ -264,9 +264,6 @@ part::usage =
 collect::usage =
 	"operator form of Collect.";
 
-separateBy::usage =
-	"separate the elements by whether or not satisfying the criteria.";
-
 exprTogether::usage =
 	"take powers, logs and abs together.";
 
@@ -305,3 +302,9 @@ swap::usage =
 
 stripPattern::usage =
 	"strip off pattern-related functions in expressions.";
+
+separateBy::usage =
+	"separate the elements by whether or not satisfying the criteria.";
+
+freeze::usage =
+	"free subexpressions matching the pattern and perform the operation.";
