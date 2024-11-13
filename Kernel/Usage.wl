@@ -49,6 +49,12 @@ dyeOff::usage =
 	"dyeOff[expr_]: eliminate the colors from dye.";
 
 
+(* Format.wl *)
+
+interpretableFormat::usage =
+	"dye[expr_]: color the elements at the first level of expression.";
+
+
 (* Gamma.wl *)
 
 gammaFrom::usage =

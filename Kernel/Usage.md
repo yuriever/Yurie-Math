@@ -35,6 +35,11 @@
 * `#!wl dyeOff` - dyeOff[expr_]: eliminate the colors from dye.
 
 
+<!-- Format.wl -->
+
+* `#!wl interpretableFormat` - dye[expr_]: color the elements at the first level of expression.
+
+
 <!-- Gamma.wl -->
 
 * `#!wl gammaFrom` - expand everything to Gamma factors.

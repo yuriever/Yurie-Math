@@ -157,7 +157,7 @@ gammaSplit[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[variable_Symbol,index_Symbol,gm_Gamma,opts:OptionsPattern[]][expr_] :=
+gammaTakeResidue[variable_,index_,gm_Gamma,OptionsPattern[]][expr_] :=
     Module[ {solution,residue},
         gammaTakeResidueCheckAndThrow[variable,index,gm][expr];
         solution =
@@ -198,7 +198,7 @@ gammaTakeResidue[] :=
 (*Helper*)
 
 
-gammaTakeResidueCheckAndThrow[variable_Symbol,index_Symbol,gm_Gamma][expr_] :=
+gammaTakeResidueCheckAndThrow[variable_,index_,gm_Gamma][expr_] :=
     Which[
         !FreeQ[expr,index],
             Message[gammaTakeResidue::indexConflict,index];

@@ -422,38 +422,18 @@ separateBy[crit_][expr_] :=
 
 
 freeze//Options = {
-    "Heads"->False,
+    "Transformation"->{Identity,Identity},
     "Level"->Infinity,
-    "TemporarySymbol"->"a",
-    "Transformation"->{Identity,Identity}
+    "Heads"->False,
+    "ShowFrozen"->False,
+    "TemporarySymbol"->"a"
 };
 
 
 freeze//Attributes =
     {HoldAll};
 
-freeze[args___][expr_] :=
-    With[ {sep = ArgumentsOptions[freeze[args],{1,2}]},
-        freezeCheckArg[sep][expr]/;!FailureQ[sep]
-    ];
-
-
-freezeCheckArg//Attributes =
-    {HoldAll};
-
-freezeCheckArg[{argList_,optList_}][expr_] :=
-    Switch[Length[argList],
-        1,
-            freezeCore[{argList[[1]],Simplify},optList][expr],
-        2,
-            freezeCore[argList,optList][expr]
-    ];
-
-
-freezeCore//Attributes =
-    {HoldAll};
-
-freezeCore[{pat_,fun_},OptionsPattern[freeze]][expr_] :=
+freeze[pat_,fun_,OptionsPattern[]][expr_] :=
     Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList,trans,inverseTrans},
         {trans,inverseTrans} = OptionValue["Transformation"];
         subExprList =

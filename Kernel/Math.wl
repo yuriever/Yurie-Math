@@ -16,6 +16,8 @@ Get["Yurie`Math`DLMF`"];
 
 Get["Yurie`Math`Dye`"];
 
+Get["Yurie`Math`Format`"];
+
 Get["Yurie`Math`Gamma`"];
 
 Get["Yurie`Math`Hyper`"];
