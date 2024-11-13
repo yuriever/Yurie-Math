@@ -36,8 +36,8 @@ DLMFRuleShow::usage =
 dye::usage =
 	"dye[expr_]: color the elements at the first level of expression.";
 
-dye2::usage =
-	"dye2[levelspec_:1][expr_]: color the elements at the specific levels of expression.";
+dyeIn::usage =
+	"dyeIn[levelspec_:1][expr_]: color the elements at the specific levels of expression.";
 
 dyeBy::usage =
 	"dyeBy[pattern_,levelspec_,n_][expr_]: color the occurrences of pattern in expression.";
@@ -86,9 +86,6 @@ hyperSplit::usage =
 
 hyperRegToUnreg::usage =
 	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
-
-hyperSwap::usage =
-	"swap the first two arguments of Hypergeometric2F1.";
 
 hyperTo::usage =
 	"convert Hypergeometric2F1 factors according to the prototype rule.";

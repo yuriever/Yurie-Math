@@ -17,8 +17,8 @@ Needs["Yurie`Math`"];
 dye::usage =
     "dye[expr_]: color the elements at the first level of expression.";
 
-dye2::usage =
-    "dye2[levelspec_:1][expr_]: color the elements at the specific levels of expression.";
+dyeIn::usage =
+    "dyeIn[levelspec_:1][expr_]: color the elements at the specific levels of expression.";
 
 dyeBy::usage =
     "dyeBy[pattern_,levelspec_,n_][expr_]: color the occurrences of pattern in expression.";
@@ -57,10 +57,10 @@ dye[expr_] :=
     dyeAtPosition[expr,Position[expr,_,{1},Heads->False]];
 
 
-dye2[levelspec:_:1][expr_]/;!ColorQ[levelspec] :=
+dyeIn[levelspec:_:1][expr_]/;!ColorQ[levelspec] :=
     dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False]];
 
-dye2[color_,levelspec_:1][expr_]/;ColorQ[color]&&!ColorQ[levelspec] :=
+dyeIn[color_,levelspec_:1][expr_]/;ColorQ[color]&&!ColorQ[levelspec] :=
     dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False],color];
 
 

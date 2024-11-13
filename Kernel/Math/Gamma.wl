@@ -86,11 +86,14 @@ gammaTakeResidue::gammaNotMatchVar =
     "the argument of the factor `` should be a linear function of the variable ``.";
 
 gammaTakeResidue::gammaNotInExpr =
-    "the factor `` does not appear in the expression.";
+    "the factor `` does not appear in the expression, and the residue vanishes.";
 
 
 multiGammaReduceByBarnesLemma::notMatch =
     "the multi-Gamma symbol cannot be reduced by the Barnes lemmas."
+
+multiGammaReduceByBarnesLemma::notProduct =
+    "this function only handles product-type expression."
 
 
 (* ::Subsection:: *)
@@ -101,7 +104,7 @@ multiGammaReduceByBarnesLemma::notMatch =
 (*Main*)
 
 
-gammaFrom[expr_,opts:OptionsPattern[]] :=
+gammaFrom[expr_,OptionsPattern[]] :=
     Module[ {opt = OptionValue["Transformation"],ruleList},
         ruleList =
             Which[
@@ -208,7 +211,7 @@ gammaTakeResidueCheckAndThrow[variable_,index_,gm_Gamma][expr_] :=
             Throw[expr],
         FreeQ[expr,gm],
             Message[gammaTakeResidue::gammaNotInExpr,gm];
-            Throw[expr]
+            Throw[0]
     ];
 
 
@@ -310,7 +313,7 @@ listComplement[list1_List,list2_List]/;Length[list1]>32 :=
 (*Main*)
 
 
-multiGammaSimplify[expr_,opts:OptionsPattern[]] :=
+multiGammaSimplify[expr_,OptionsPattern[]] :=
     ReplaceAll[expr,
         mg_multiGamma:>multiGammaFunctionExpand[OptionValue["Assumptions"]][mg]
     ];
@@ -331,6 +334,21 @@ multiGammaFunctionExpand[assumption_][mg_] :=
 (* ::Subsubsection:: *)
 (*Main*)
 
+
+multiGammaReduceByBarnesLemma[s_][k_*mg_multiGamma]/;FreeQ[k,s] :=
+    k*multiGammaReduceByBarnesLemma[s][mg];
+
+multiGammaReduceByBarnesLemma[s_][expr:k_*_multiGamma]/;!FreeQ[k,s] :=
+    (
+        Message[multiGammaReduceByBarnesLemma::notMatch];
+        expr
+    );
+
+multiGammaReduceByBarnesLemma[_][expr:Except[_Times|_multiGamma]] :=
+    (
+        Message[multiGammaReduceByBarnesLemma::notProduct];
+        expr
+    );
 
 multiGammaReduceByBarnesLemma[s_][mg_multiGamma] :=
     Module[ {num,denom,numPlus,numMinus,denomPlus,numPlusMinusSum,numRest,denomRest},

@@ -26,7 +26,7 @@
 
 * `#!wl dye` - dye[expr_]: color the elements at the first level of expression.
 
-* `#!wl dye2` - dye2[levelspec_:1][expr_]: color the elements at the specific levels of expression.
+* `#!wl dyeIn` - dyeIn[levelspec_:1][expr_]: color the elements at the specific levels of expression.
 
 * `#!wl dyeBy` - dyeBy[pattern_,levelspec_,n_][expr_]: color the occurrences of pattern in expression.
 
@@ -62,8 +62,6 @@
 * `#!wl hyperSplit` - split a product into a list containing Hypergeometric2F1 factors and the rests.
 
 * `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
-
-* `#!wl hyperSwap` - swap the first two arguments of Hypergeometric2F1.
 
 * `#!wl hyperTo` - convert Hypergeometric2F1 factors according to the prototype rule.
 

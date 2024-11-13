@@ -20,9 +20,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-	hyperSwap[Hypergeometric2F1[a, b, c, z]]
+	Null
 	,
-	Hold[Hypergeometric2F1[b, a, c, z]]
+	Null
 	,
 	TestID->"2-Hyper.nb"
 ]

@@ -58,15 +58,15 @@ DLMFRuleShow//Options = {
 (*Main*)
 
 
-DLMF[ruleOrItsList_,opts:OptionsPattern[]][expr_] :=
+DLMF[ruleOrItsList_,OptionsPattern[]][expr_] :=
     expr//DLMFPreprocess//DLMFKernel[ruleOrItsList,OptionValue["IgnoreCondition"]];
 
 
-DLMFRule[ruleOrItsList_,opts:OptionsPattern[]] :=
+DLMFRule[ruleOrItsList_,OptionsPattern[]] :=
     getRuleIgnoringCondition[OptionValue["IgnoreCondition"],ruleOrItsList];
 
 
-DLMFRuleShow/:MakeBoxes[DLMFRuleShow[ruleOrItsList_,opts:OptionsPattern[]],form_] :=
+DLMFRuleShow/:MakeBoxes[DLMFRuleShow[ruleOrItsList_,OptionsPattern[]],form_] :=
     Block[ {Internal`$ContextMarks = False},
         (*here the function associated to the OptionValue should be specified.*)
         With[ {expr = getRuleIgnoringCondition[OptionValue[DLMFRuleShow,"IgnoreCondition"],ruleOrItsList]},

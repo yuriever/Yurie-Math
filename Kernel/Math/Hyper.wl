@@ -22,8 +22,8 @@ hyperSplit::usage =
 hyperRegToUnreg::usage =
     "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
-hyperSwap::usage =
-    "swap the first two arguments of Hypergeometric2F1.";
+(*hyperSwap::usage =
+    "swap the first two arguments of Hypergeometric2F1.";*)
 
 
 hyperTo::usage =
