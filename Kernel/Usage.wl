@@ -51,8 +51,8 @@ dyeOff::usage =
 
 (* Format.wl *)
 
-interpretableFormat::usage =
-	"dye[expr_]: color the elements at the first level of expression.";
+interpretize::usage =
+	".";
 
 
 (* Gamma.wl *)

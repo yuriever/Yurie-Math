@@ -37,7 +37,7 @@
 
 <!-- Format.wl -->
 
-* `#!wl interpretableFormat` - dye[expr_]: color the elements at the first level of expression.
+* `#!wl interpretize` - .
 
 
 <!-- Gamma.wl -->
