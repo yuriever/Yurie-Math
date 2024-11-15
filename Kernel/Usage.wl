@@ -49,12 +49,6 @@ dyeOff::usage =
 	"dyeOff[expr_]: eliminate the colors from dye.";
 
 
-(* Format.wl *)
-
-interpretize::usage =
-	".";
-
-
 (* Gamma.wl *)
 
 gammaFrom::usage =
