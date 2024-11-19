@@ -289,7 +289,10 @@ collectDerivative::usage =
 	"collect by derivatives.";
 
 fracSimplify::usage =
-	"simplify the Numerator and Denominator by multiplying a factor.";
+	"simplify the numerator and denominator.";
+
+powerBaseSimplify::usage =
+	"simplify the power bases.";
 
 vanishing::usage =
 	"Simplify + Flatten + DeleteDuplicates.";

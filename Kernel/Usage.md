@@ -200,7 +200,9 @@
 
 * `#!wl collectDerivative` - collect by derivatives.
 
-* `#!wl fracSimplify` - simplify the Numerator and Denominator by multiplying a factor.
+* `#!wl fracSimplify` - simplify the numerator and denominator.
+
+* `#!wl powerBaseSimplify` - simplify the power bases.
 
 * `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
 

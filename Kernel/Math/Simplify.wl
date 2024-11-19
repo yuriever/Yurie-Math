@@ -118,7 +118,10 @@ collectDerivative::usage =
     "collect by derivatives.";
 
 fracSimplify::usage =
-    "simplify the Numerator and Denominator by multiplying a factor.";
+    "simplify the numerator and denominator.";
+
+powerBaseSimplify::usage =
+    "simplify the power bases.";
 
 vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
@@ -386,6 +389,10 @@ collectDerivative[varList_List,post_:Identity][expr_] :=
 
 fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
     simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]];
+
+
+powerBaseSimplify[simplify_:Simplify,level_:All][expr_] :=
+    expr//Replace[#,Power[x_,n_]:>Power[simplify@Together[x],n],level]&;
 
 
 vanishing[expr_] :=
