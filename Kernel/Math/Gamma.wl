@@ -314,9 +314,7 @@ listComplement[list1_List,list2_List]/;Length[list1]>32 :=
 
 
 multiGammaSimplify[expr_,OptionsPattern[]] :=
-    ReplaceAll[expr,
-        mg_multiGamma:>multiGammaFunctionExpand[OptionValue["Assumptions"]][mg]
-    ];
+    expr//ReplaceAll[mg_multiGamma:>multiGammaFunctionExpand[OptionValue["Assumptions"]][mg]];
 
 
 (* ::Subsubsection:: *)
@@ -324,7 +322,7 @@ multiGammaSimplify[expr_,OptionsPattern[]] :=
 
 
 multiGammaFunctionExpand[assumption_][mg_] :=
-    mg//gammaFrom//Simplify//FunctionExpand//Simplify[#,Assumptions->assumption]&//gammaFrom//multiGammaFrom;
+    mg//gammaFrom//Simplify//FunctionExpand//Simplify[#,Assumptions->assumption]&//gammaFrom//multiGammaFrom//Simplify;
 
 
 (* ::Subsection:: *)
