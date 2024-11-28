@@ -199,6 +199,30 @@ VerificationTest[
 ]
 
 VerificationTest[
+	trigPhaseSimplify[k][Sin[(-Pi)*k + a]]
+	,
+	(-1)^k*Sin[a]
+	,
+	TestID->"24-Simplify.nb"
+]
+
+VerificationTest[
+	trigPhaseSimplify[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
+	,
+	Cos[b]*Sin[a]
+	,
+	TestID->"25-Simplify.nb"
+]
+
+VerificationTest[
+	trigPhaseSimplify[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
+	,
+	(-1)^k*Cos[b]*Cos[c]*Sin[a]
+	,
+	TestID->"26-Simplify.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

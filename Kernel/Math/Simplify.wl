@@ -495,7 +495,7 @@ trigPhaseSimplify[vars__][expr_] :=
 
 
 trigPhaseSimplifyKernel[var_][expr_] :=
-    expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(2 var):>1];
+    expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
 
 trigPhaseSimplifyKernel[var_,rest__][expr_] :=
     trigPhaseSimplifyKernel[rest][
