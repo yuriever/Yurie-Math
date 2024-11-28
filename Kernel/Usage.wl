@@ -308,3 +308,6 @@ separateBy::usage =
 
 freeze::usage =
 	"free subexpressions matching the pattern and perform the operation.";
+
+trigPhaseSimplify::usage =
+	"separate the phase factor in trigonometric functions.";

@@ -138,6 +138,9 @@ separateBy::usage =
 freeze::usage =
     "free subexpressions matching the pattern and perform the operation.";
 
+trigPhaseSimplify::usage =
+    "separate the phase factor in trigonometric functions.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -321,26 +324,6 @@ $exprSimLoop = 4;
 
 
 (* ::Subsubsection:: *)
-(*Helper*)
-
-
-powerPreprocess[expr_] :=
-    expr//ReplaceAll[{subexpr_Plus:>Together@subexpr}];
-
-
-powerCollectKernel[][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[]];
-
-powerCollectKernel[power_][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[power]];
-
-powerCollectKernel[power1_,powerRest__][expr_] :=
-    powerCollectKernel[powerRest][
-        powerCollectKernel[power1][expr]
-    ];
-
-
-(* ::Subsubsection:: *)
 (*Main*)
 
 
@@ -376,8 +359,32 @@ deltaSim[expr_] :=
     expr//ReplaceRepeated[ruleCancelDiracDelta]//Simplify;
 
 
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+powerPreprocess[expr_] :=
+    expr//ReplaceAll[{subexpr_Plus:>Together@subexpr}];
+
+
+powerCollectKernel[][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[]];
+
+powerCollectKernel[power_][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[power]];
+
+powerCollectKernel[power_,rest__][expr_] :=
+    powerCollectKernel[rest][
+        powerCollectKernel[power][expr]
+    ];
+
+
 (* ::Subsection:: *)
 (*Misc*)
+
+
+(* ::Subsubsection:: *)
+(*collectDerivative*)
 
 
 collectDerivative[var_Symbol,post_:Identity][expr_] :=
@@ -387,16 +394,32 @@ collectDerivative[varList_List,post_:Identity][expr_] :=
     Collect[expr,Derivative[___][#][___]&/@varList,post];
 
 
+(* ::Subsubsection:: *)
+(*fracSimplify*)
+
+
 fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
     simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]];
+
+
+(* ::Subsubsection:: *)
+(*powerBaseSimplify*)
 
 
 powerBaseSimplify[simplify_:Simplify,level_:All][expr_] :=
     expr//Replace[#,Power[x_,n_]:>Power[simplify@Together[x],n],level]&;
 
 
+(* ::Subsubsection:: *)
+(*vanishing*)
+
+
 vanishing[expr_] :=
     expr//Simplify//Flatten//DeleteDuplicates;
+
+
+(* ::Subsubsection:: *)
+(*swap*)
 
 
 swap[a_Symbol,b_Symbol][expr_] :=
@@ -404,6 +427,10 @@ swap[a_Symbol,b_Symbol][expr_] :=
 
 swap[pairs:{_Symbol,_Symbol}...][expr_] :=
     expr//ReplaceAll[Flatten@Map[{#[[1]]->#[[2]],#[[2]]->#[[1]]}&,{pairs}]];
+
+
+(* ::Subsubsection:: *)
+(*stripPattern*)
 
 
 stripPattern//Attributes =
@@ -454,6 +481,25 @@ freeze[pat_,fun_,OptionsPattern[]][expr_] :=
         frozenExpr =
             Replace[expr,ruleList,OptionValue["Level"],Heads->OptionValue["Heads"]];
         frozenExpr//fun//ReplaceAll[inverseRuleList]
+    ];
+
+
+(* ::Subsubsection:: *)
+(*trigPhaseSimplify*)
+
+
+trigPhaseSimplify[vars__][expr_] :=
+    expr//ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Expand@arg]//
+        trigPhaseSimplifyKernel[vars]//
+            ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Simplify@arg];
+
+
+trigPhaseSimplifyKernel[var_][expr_] :=
+    expr//ReplaceAll[ruleTrigPhase[var]];
+
+trigPhaseSimplifyKernel[var_,rest__][expr_] :=
+    trigPhaseSimplifyKernel[rest][
+        trigPhaseSimplifyKernel[var][expr]
     ];
 
 

@@ -213,3 +213,5 @@
 * `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
 
 * `#!wl freeze` - free subexpressions matching the pattern and perform the operation.
+
+* `#!wl trigPhaseSimplify` - separate the phase factor in trigonometric functions.

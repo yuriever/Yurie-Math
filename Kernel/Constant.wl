@@ -67,6 +67,9 @@ ruleCombineExpr::usage =
 ruleCancelDiracDelta::usage =
     "rules to cancel the Dirac Delta function and its derivatives.";
 
+ruleTrigPhase::usage =
+    "rules to separate the phase factor in trigonometric functions.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -529,6 +532,14 @@ ruleCancelDiracDelta = {
     Power[x_,n_]*Derivative[m_][DiracDelta][x_]:>
         -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]/;n>=1&&m>=1
 };
+
+
+ruleTrigPhase[var_] :=
+    ruleTrigPhase[var] =
+        {
+            (h:Sin|Cos|Csc|Sec)[\[Pi] var+rest_.]:>(-1)^var*h[rest],
+            (h:Tan|Cot)[\[Pi] var+rest_.]:>h[rest]
+        };
 
 
 (* ::Subsection:: *)
