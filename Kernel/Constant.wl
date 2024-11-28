@@ -416,8 +416,6 @@ DLMFData = <|
 |>;
 
 
-
-
 (* ::Subsection:: *)
 (*Simplify*)
 
@@ -537,8 +535,8 @@ ruleCancelDiracDelta = {
 ruleTrigPhase[var_] :=
     ruleTrigPhase[var] =
         {
-            (h:Sin|Cos|Csc|Sec)[\[Pi] var+rest_.]:>(-1)^var*h[rest],
-            (h:Tan|Cot)[\[Pi] var+rest_.]:>h[rest]
+            (h:Sin|Cos|Csc|Sec)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
+            (h:Tan|Cot)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>h[rest]
         };
 
 
