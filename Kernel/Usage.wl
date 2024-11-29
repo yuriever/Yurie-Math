@@ -81,14 +81,14 @@ hyperSplit::usage =
 hyperRegToUnreg::usage =
 	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
-hyperTo::usage =
-	"convert Hypergeometric2F1 factors according to the prototype rule.";
-
 hyperToTaylor::usage =
 	"convert Hypergeometric2F1 factors to Taylor terms.";
 
 hyperToMellinBarnes::usage =
 	"convert Hypergeometric2F1 factors to Mellin-Barnes integrands.";
+
+hyperToMellinBarnes2::usage =
+	"convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).";
 
 hyperTaylor::usage =
 	"head used by hyperToTaylor.";

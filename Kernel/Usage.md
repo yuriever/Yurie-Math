@@ -58,11 +58,11 @@
 
 * `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
 
-* `#!wl hyperTo` - convert Hypergeometric2F1 factors according to the prototype rule.
-
 * `#!wl hyperToTaylor` - convert Hypergeometric2F1 factors to Taylor terms.
 
 * `#!wl hyperToMellinBarnes` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands.
+
+* `#!wl hyperToMellinBarnes2` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).
 
 * `#!wl hyperTaylor` - head used by hyperToTaylor.
 

@@ -26,14 +26,17 @@ hyperRegToUnreg::usage =
     "swap the first two arguments of Hypergeometric2F1.";*)
 
 
-hyperTo::usage =
-    "convert Hypergeometric2F1 factors according to the prototype rule.";
+(*hyperTo::usage =
+    "convert Hypergeometric2F1 factors according to the prototype rule.";*)
 
 hyperToTaylor::usage =
     "convert Hypergeometric2F1 factors to Taylor terms.";
 
 hyperToMellinBarnes::usage =
     "convert Hypergeometric2F1 factors to Mellin-Barnes integrands.";
+
+hyperToMellinBarnes2::usage =
+    "convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).";
 
 hyperTaylor::usage =
     "head used by hyperToTaylor.";
@@ -90,8 +93,8 @@ hyperSplit[expr_Hypergeometric2F1] :=
 
 hyperSplit[expr_Times] :=
     {
-        Select[expr,!FreeQ[#,Hypergeometric2F1|HypergeometricPFQ]&],
-        Select[expr,FreeQ[Hypergeometric2F1|HypergeometricPFQ]]
+        Select[expr,!FreeQ[#,Hypergeometric0F1|Hypergeometric1F1|Hypergeometric2F1|HypergeometricPFQ]&],
+        Select[expr,FreeQ[Hypergeometric0F1|Hypergeometric1F1|Hypergeometric2F1|HypergeometricPFQ]]
     };
 
 hyperSplit[expr_] :=
@@ -125,9 +128,11 @@ hyperSwap[expr_,head_:Hold] :=
 hyperToTaylor[symbols__][expr_] :=
     hyperTo[hyperToTaylorRule,{symbols}][expr];
 
-
 hyperToMellinBarnes[symbols__][expr_] :=
     hyperTo[hyperToMellinBarnesRule,{symbols}][expr];
+
+hyperToMellinBarnes2[symbols__][expr_] :=
+    hyperTo[hyperToMellinBarnesRule2,{symbols}][expr];
 
 
 hyperTo[which_,symbolList_][expr0_] :=
@@ -176,6 +181,10 @@ hyperToPostprocess[expr_] :=
 
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
+
+
+hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
+    hyperMellinBarnes[((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
 
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=

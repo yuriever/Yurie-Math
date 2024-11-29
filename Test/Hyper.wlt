@@ -72,11 +72,35 @@ VerificationTest[
 ]
 
 VerificationTest[
+	(ReplaceAll[hyperTaylor -> Identity])[hyperToTaylor[n][Hypergeometric2F1[a, b, c, z]]]
+	,
+	(z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])
+	,
+	TestID->"8-Hyper.nb"
+]
+
+VerificationTest[
+	powerSim[gammaTakeResidue[s, n, Gamma[-s]][(ReplaceAll[hyperMellinBarnes -> Identity])[hyperToMellinBarnes[s][Hypergeometric2F1[a, b, c, z]]]]]
+	,
+	-((z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n]))
+	,
+	TestID->"9-Hyper.nb"
+]
+
+VerificationTest[
+	(ReplaceAll[hyperMellinBarnes -> Identity])[hyperToMellinBarnes2[s][Hypergeometric2F1[a, b, c, z]]]
+	,
+	((1 - z)^s*Gamma[c]*Gamma[-a - b + c - s]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[-a + c]*Gamma[-b + c])
+	,
+	TestID->"10-Hyper.nb"
+]
+
+VerificationTest[
 	wilsonPolynomialToHyper[wilsonPolynomialFromHyper[HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*x, a + I*x}, {a + b, a + c, a + d}, 1]]]
 	,
 	HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*Sqrt[x^2], a + I*Sqrt[x^2]}, {a + b, a + c, a + d}, 1]
 	,
-	TestID->"8-Hyper.nb"
+	TestID->"11-Hyper.nb"
 ]
 
 VerificationTest[
@@ -84,7 +108,7 @@ VerificationTest[
 	,
 	wilsonPolynomial[a, b, c, d, n, x]
 	,
-	TestID->"9-Hyper.nb"
+	TestID->"12-Hyper.nb"
 ]
 
 VerificationTest[
@@ -92,7 +116,7 @@ VerificationTest[
 	,
 	jacobiPhi[a, b, c, z]
 	,
-	TestID->"10-Hyper.nb"
+	TestID->"13-Hyper.nb"
 ]
 
 VerificationTest[
@@ -100,7 +124,7 @@ VerificationTest[
 	,
 	Hypergeometric2F1[a, b, c, z]
 	,
-	TestID->"11-Hyper.nb"
+	TestID->"14-Hyper.nb"
 ]
 
 VerificationTest[
