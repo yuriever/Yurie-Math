@@ -58,15 +58,17 @@
 
 * `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
 
+* `#!wl hyperUnregularize` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
+
+* `#!wl hyperTaylor` - head used by hyperToTaylor.
+
+* `#!wl hyperMellinBarnes` - head used by hyperToMellinBarnes and hyperToMellinBarnes2.
+
 * `#!wl hyperToTaylor` - convert Hypergeometric2F1 factors to Taylor terms.
 
 * `#!wl hyperToMellinBarnes` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands.
 
 * `#!wl hyperToMellinBarnes2` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).
-
-* `#!wl hyperTaylor` - head used by hyperToTaylor.
-
-* `#!wl hyperMellinBarnes` - head used by hyperToMellinBarnes.
 
 * `#!wl jacobiPhi` - head of Jacobi Phi, jacobiPhi[a,b,c,z], DLMF:15.9.11.
 
@@ -79,19 +81,6 @@
 * `#!wl wilsonPolynomialToHyper` - convert Wilson polynomial to Hypergeometric4F3.
 
 * `#!wl wilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
-
-
-<!-- Lie.wl -->
-
-* `#!wl lie` - simple Lie algebras.
-
-* `#!wl lieSimpleRoot` - orthogonal simple roots of simple Lie algebras.
-
-* `#!wl lieCartan` - Cartan matrix of simple Lie algebras.
-
-* `#!wl lieCartanInverse` - inverse Cartan matrix of simple Lie algebras.
-
-* `#!wl lieDynkinDiagram` - Dynkin diagram of simple Lie algebras.
 
 
 <!-- Matrix.wl -->

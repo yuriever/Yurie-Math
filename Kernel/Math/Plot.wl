@@ -34,9 +34,17 @@ Begin["`Private`"];
 
 
 showComplexMapping[fun_,var_,th_:0,max_:10] :=
-    ContourPlot[Exp[2\[Pi] I th] fun/.{var->re+I im}//ReIm,{re,-max,max},{im,-max,max},ContourShading->None];
+    Module[ {re,im},
+        ContourPlot[
+            Exp[2\[Pi] I th] fun/.{var->re+I im}//ReIm,
+            {re,-max,max},
+            {im,-max,max},
+            ContourShading->None
+        ]
+    ];
 
-showComplexMapping[]:=
+
+showComplexMapping[] :=
     CellPrint@{
         ExpressionCell[
             ToExpression[

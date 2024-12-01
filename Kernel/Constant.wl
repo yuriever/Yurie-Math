@@ -171,14 +171,6 @@ DLMFData = <|
             2^n*Pochhammer[a/2,(n+1)/2]*Pochhammer[(a+1)/2,(n-1)/2]
     },
     (*Hypergeometric2F1*)
-    "HyperSwapAB"->{
-        Hypergeometric2F1[a_,b_,c_,z_]:>
-            Hypergeometric2F1[b,a,c,z]
-    },
-    "HyperRegToUnreg"->{
-        Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
-            Hypergeometric2F1[a,b,c,z]/Gamma[c]
-    },
     "15.1.2"->{
         Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
             Hypergeometric2F1[a,b,c,z]/Gamma[c]

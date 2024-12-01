@@ -22,12 +22,15 @@ hyperSplit::usage =
 hyperRegToUnreg::usage =
     "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
-(*hyperSwap::usage =
-    "swap the first two arguments of Hypergeometric2F1.";*)
+hyperUnregularize::usage =
+    "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
 
-(*hyperTo::usage =
-    "convert Hypergeometric2F1 factors according to the prototype rule.";*)
+hyperTaylor::usage =
+    "head used by hyperToTaylor.";
+
+hyperMellinBarnes::usage =
+    "head used by hyperToMellinBarnes and hyperToMellinBarnes2.";
 
 hyperToTaylor::usage =
     "convert Hypergeometric2F1 factors to Taylor terms.";
@@ -37,12 +40,6 @@ hyperToMellinBarnes::usage =
 
 hyperToMellinBarnes2::usage =
     "convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).";
-
-hyperTaylor::usage =
-    "head used by hyperToTaylor.";
-
-hyperMellinBarnes::usage =
-    "head used by hyperToMellinBarnes.";
 
 
 jacobiPhi::usage =
@@ -80,8 +77,15 @@ Begin["`Private`"];
 (*Message*)
 
 
+hyperTo::usage =
+    "convert Hypergeometric2F1 factors according to the prototype rule.";
+
 hyperTo::symbolNotEnough =
     "there are `` more Hypergeometric2F1-s than the number of specified symbols."
+
+
+hyperRegToUnreg::deprecation =
+    "this function has been superseded by hyperUnregularize.";
 
 
 (* ::Subsection:: *)
@@ -93,8 +97,8 @@ hyperSplit[expr_Hypergeometric2F1] :=
 
 hyperSplit[expr_Times] :=
     {
-        Select[expr,!FreeQ[#,Hypergeometric0F1|Hypergeometric1F1|Hypergeometric2F1|HypergeometricPFQ]&],
-        Select[expr,FreeQ[Hypergeometric0F1|Hypergeometric1F1|Hypergeometric2F1|HypergeometricPFQ]]
+        Select[expr,!FreeQ[#,Hypergeometric2F1|HypergeometricPFQ|Hypergeometric0F1|Hypergeometric1F1]&],
+        Select[expr,FreeQ[Hypergeometric2F1|HypergeometricPFQ|Hypergeometric0F1|Hypergeometric1F1]]
     };
 
 hyperSplit[expr_] :=
@@ -106,15 +110,32 @@ hyperSplit[expr_] :=
 
 
 hyperRegToUnreg[expr_] :=
-    expr//ReplaceAll[DLMFData["HyperRegToUnreg"]];
+    (
+        Message[hyperRegToUnreg::deprecation];
+        expr//ReplaceAll[{
+            Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
+                Hypergeometric2F1[a,b,c,z]/Gamma[c],
+            HypergeometricPFQRegularized[as_,bs_,z_]:>
+                HypergeometricPFQ[as,bs,z]/Apply[Times,Map[Gamma,bs]],
+            Hypergeometric0F1Regularized[a_,z_]:>
+                Hypergeometric0F1[a,z]/Gamma[a],
+            Hypergeometric1F1Regularized[a_,b_,z_]:>
+                Hypergeometric1F1[a,b,z]/Gamma[b]
+        }]
+    );
 
 
-(* ::Subsection:: *)
-(*hyperSwap*)
-
-
-hyperSwap[expr_,head_:Hold] :=
-    head[expr]//ReplaceAll[DLMFData["HyperSwapAB"]];
+hyperUnregularize[expr_] :=
+    expr//ReplaceAll[{
+        Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
+            Hypergeometric2F1[a,b,c,z]/Gamma[c],
+        HypergeometricPFQRegularized[as_,bs_,z_]:>
+            HypergeometricPFQ[as,bs,z]/Apply[Times,Map[Gamma,bs]],
+        Hypergeometric0F1Regularized[a_,z_]:>
+            Hypergeometric0F1[a,z]/Gamma[a],
+        Hypergeometric1F1Regularized[a_,b_,z_]:>
+            Hypergeometric1F1[a,b,z]/Gamma[b]
+    }];
 
 
 (* ::Subsection:: *)

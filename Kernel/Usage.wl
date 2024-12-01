@@ -81,6 +81,15 @@ hyperSplit::usage =
 hyperRegToUnreg::usage =
 	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
+hyperUnregularize::usage =
+	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
+
+hyperTaylor::usage =
+	"head used by hyperToTaylor.";
+
+hyperMellinBarnes::usage =
+	"head used by hyperToMellinBarnes and hyperToMellinBarnes2.";
+
 hyperToTaylor::usage =
 	"convert Hypergeometric2F1 factors to Taylor terms.";
 
@@ -89,12 +98,6 @@ hyperToMellinBarnes::usage =
 
 hyperToMellinBarnes2::usage =
 	"convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).";
-
-hyperTaylor::usage =
-	"head used by hyperToTaylor.";
-
-hyperMellinBarnes::usage =
-	"head used by hyperToMellinBarnes.";
 
 jacobiPhi::usage =
 	"head of Jacobi Phi, jacobiPhi[a,b,c,z], DLMF:15.9.11.";
@@ -113,24 +116,6 @@ wilsonPolynomialToHyper::usage =
 
 wilsonPolynomialFromHyper::usage =
 	"convert Hypergeometric4F3 to Wilson polynomial.";
-
-
-(* Lie.wl *)
-
-lie::usage =
-	"simple Lie algebras.";
-
-lieSimpleRoot::usage =
-	"orthogonal simple roots of simple Lie algebras.";
-
-lieCartan::usage =
-	"Cartan matrix of simple Lie algebras.";
-
-lieCartanInverse::usage =
-	"inverse Cartan matrix of simple Lie algebras.";
-
-lieDynkinDiagram::usage =
-	"Dynkin diagram of simple Lie algebras.";
 
 
 (* Matrix.wl *)

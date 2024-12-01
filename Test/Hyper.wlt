@@ -20,11 +20,35 @@ VerificationTest[
 ]
 
 VerificationTest[
-	Null
+	hyperUnregularize[HypergeometricPFQRegularized[{a1, b1, c1}, {d1, e1}, z]]
 	,
-	Null
+	HypergeometricPFQ[{a1, b1, c1}, {d1, e1}, z]/(Gamma[d1]*Gamma[e1])
 	,
 	TestID->"2-Hyper.nb"
+]
+
+VerificationTest[
+	hyperUnregularize[Hypergeometric2F1Regularized[a1, b1, c1, z]]
+	,
+	Hypergeometric2F1[a1, b1, c1, z]/Gamma[c1]
+	,
+	TestID->"3-Hyper.nb"
+]
+
+VerificationTest[
+	hyperUnregularize[Hypergeometric1F1Regularized[a1, b1, z]]
+	,
+	Hypergeometric1F1[a1, b1, z]/Gamma[b1]
+	,
+	TestID->"4-Hyper.nb"
+]
+
+VerificationTest[
+	hyperUnregularize[Hypergeometric0F1Regularized[a1, z]]
+	,
+	Hypergeometric0F1[a1, z]/Gamma[a1]
+	,
+	TestID->"5-Hyper.nb"
 ]
 
 VerificationTest[
@@ -32,7 +56,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"3-Hyper.nb"
+	TestID->"6-Hyper.nb"
 ]
 
 VerificationTest[
@@ -40,7 +64,7 @@ VerificationTest[
 	,
 	f[hyperMellinBarnes[((-z1)^s*Gamma[c1]*Gamma[-s]*Gamma[a1 + s]*Gamma[b1 + s])/(Gamma[a1]*Gamma[b1]*Gamma[c1 + s])]] + hyperMellinBarnes[((-z2)^t*Gamma[c2]*Gamma[-t]*Gamma[a2 + t]*Gamma[b2 + t])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + t])]*hyperMellinBarnes[((-z2)^u*Gamma[c2]*Gamma[-u]*Gamma[a2 + u]*Gamma[b2 + u])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + u])]
 	,
-	TestID->"4-Hyper.nb"
+	TestID->"7-Hyper.nb"
 ]
 
 VerificationTest[
@@ -50,7 +74,7 @@ VerificationTest[
 	,
 	{Yurie`Math`hyperTo::symbolNotEnough}
 	,
-	TestID->"5-Hyper.nb"
+	TestID->"8-Hyper.nb"
 ]
 
 VerificationTest[
@@ -58,7 +82,7 @@ VerificationTest[
 	,
 	f[hyperTaylor[(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(Gamma[a1]*Gamma[b1]*Gamma[1 + n]*Gamma[c1 + n])]] + hyperTaylor[(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(Gamma[a2]*Gamma[b2]*Gamma[1 + k]*Gamma[c2 + k])]*hyperTaylor[(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(Gamma[a2]*Gamma[b2]*Gamma[1 + m]*Gamma[c2 + m])]
 	,
-	TestID->"6-Hyper.nb"
+	TestID->"9-Hyper.nb"
 ]
 
 VerificationTest[
@@ -68,7 +92,7 @@ VerificationTest[
 	,
 	{Yurie`Math`hyperTo::symbolNotEnough}
 	,
-	TestID->"7-Hyper.nb"
+	TestID->"10-Hyper.nb"
 ]
 
 VerificationTest[
@@ -76,7 +100,7 @@ VerificationTest[
 	,
 	(z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])
 	,
-	TestID->"8-Hyper.nb"
+	TestID->"11-Hyper.nb"
 ]
 
 VerificationTest[
@@ -84,7 +108,7 @@ VerificationTest[
 	,
 	-((z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n]))
 	,
-	TestID->"9-Hyper.nb"
+	TestID->"12-Hyper.nb"
 ]
 
 VerificationTest[
@@ -92,7 +116,7 @@ VerificationTest[
 	,
 	((1 - z)^s*Gamma[c]*Gamma[-a - b + c - s]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[-a + c]*Gamma[-b + c])
 	,
-	TestID->"10-Hyper.nb"
+	TestID->"13-Hyper.nb"
 ]
 
 VerificationTest[
@@ -100,7 +124,7 @@ VerificationTest[
 	,
 	HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*Sqrt[x^2], a + I*Sqrt[x^2]}, {a + b, a + c, a + d}, 1]
 	,
-	TestID->"11-Hyper.nb"
+	TestID->"14-Hyper.nb"
 ]
 
 VerificationTest[
@@ -108,7 +132,7 @@ VerificationTest[
 	,
 	wilsonPolynomial[a, b, c, d, n, x]
 	,
-	TestID->"12-Hyper.nb"
+	TestID->"15-Hyper.nb"
 ]
 
 VerificationTest[
@@ -116,7 +140,7 @@ VerificationTest[
 	,
 	jacobiPhi[a, b, c, z]
 	,
-	TestID->"13-Hyper.nb"
+	TestID->"16-Hyper.nb"
 ]
 
 VerificationTest[
@@ -124,7 +148,7 @@ VerificationTest[
 	,
 	Hypergeometric2F1[a, b, c, z]
 	,
-	TestID->"14-Hyper.nb"
+	TestID->"17-Hyper.nb"
 ]
 
 VerificationTest[
