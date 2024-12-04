@@ -187,11 +187,13 @@
 
 * `#!wl deltaSim` - simplify Delta functions.
 
-* `#!wl collectDerivative` - collect by derivatives.
-
 * `#!wl fracSimplify` - simplify the numerator and denominator.
 
 * `#!wl powerBaseSimplify` - simplify the power bases.
+
+* `#!wl trigPhaseSimplify` - separate the phase factor in trigonometric functions.
+
+* `#!wl collectDerivative` - collect by derivatives.
 
 * `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
 
@@ -202,5 +204,3 @@
 * `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
 
 * `#!wl freeze` - free subexpressions matching the pattern and perform the operation.
-
-* `#!wl trigPhaseSimplify` - separate the phase factor in trigonometric functions.

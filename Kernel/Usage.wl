@@ -270,14 +270,17 @@ powerSim::usage =
 deltaSim::usage =
 	"simplify Delta functions.";
 
-collectDerivative::usage =
-	"collect by derivatives.";
-
 fracSimplify::usage =
 	"simplify the numerator and denominator.";
 
 powerBaseSimplify::usage =
 	"simplify the power bases.";
+
+trigPhaseSimplify::usage =
+	"separate the phase factor in trigonometric functions.";
+
+collectDerivative::usage =
+	"collect by derivatives.";
 
 vanishing::usage =
 	"Simplify + Flatten + DeleteDuplicates.";
@@ -293,6 +296,3 @@ separateBy::usage =
 
 freeze::usage =
 	"free subexpressions matching the pattern and perform the operation.";
-
-trigPhaseSimplify::usage =
-	"separate the phase factor in trigonometric functions.";

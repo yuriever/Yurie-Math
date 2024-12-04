@@ -76,12 +76,16 @@ Begin["`Private`"];
 (* ::Subsection:: *)
 (*Message*)
 
+Needs["Lacia`Base`"];
+
+ClearAll[hyperTo];
+
 
 hyperTo::usage =
-    "convert Hypergeometric2F1 factors according to the prototype rule.";
+    "convert Hypergeometric functions according to the prototype rule.";
 
 hyperTo::symbolNotEnough =
-    "there are `` more Hypergeometric2F1-s than the number of specified symbols."
+    "there are `` more Hypergeometric functions than the number of specified symbols."
 
 
 hyperRegToUnreg::deprecation =
@@ -92,13 +96,13 @@ hyperRegToUnreg::deprecation =
 (*hyperSplit*)
 
 
-hyperSplit[expr_Hypergeometric2F1] :=
+hyperSplit[expr:_Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ] :=
     {expr,1};
 
 hyperSplit[expr_Times] :=
     {
-        Select[expr,!FreeQ[#,Hypergeometric2F1|HypergeometricPFQ|Hypergeometric0F1|Hypergeometric1F1]&],
-        Select[expr,FreeQ[Hypergeometric2F1|HypergeometricPFQ|Hypergeometric0F1|Hypergeometric1F1]]
+        Select[expr,!FreeQ[#,Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]&],
+        Select[expr,FreeQ[Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]]
     };
 
 hyperSplit[expr_] :=
@@ -112,16 +116,7 @@ hyperSplit[expr_] :=
 hyperRegToUnreg[expr_] :=
     (
         Message[hyperRegToUnreg::deprecation];
-        expr//ReplaceAll[{
-            Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
-                Hypergeometric2F1[a,b,c,z]/Gamma[c],
-            HypergeometricPFQRegularized[as_,bs_,z_]:>
-                HypergeometricPFQ[as,bs,z]/Apply[Times,Map[Gamma,bs]],
-            Hypergeometric0F1Regularized[a_,z_]:>
-                Hypergeometric0F1[a,z]/Gamma[a],
-            Hypergeometric1F1Regularized[a_,b_,z_]:>
-                Hypergeometric1F1[a,b,z]/Gamma[b]
-        }]
+        expr//hyperUnregularize
     );
 
 
@@ -129,12 +124,12 @@ hyperUnregularize[expr_] :=
     expr//ReplaceAll[{
         Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
             Hypergeometric2F1[a,b,c,z]/Gamma[c],
-        HypergeometricPFQRegularized[as_,bs_,z_]:>
-            HypergeometricPFQ[as,bs,z]/Apply[Times,Map[Gamma,bs]],
+        Hypergeometric1F1Regularized[a_,b_,z_]:>
+            Hypergeometric1F1[a,b,z]/Gamma[b],
         Hypergeometric0F1Regularized[a_,z_]:>
             Hypergeometric0F1[a,z]/Gamma[a],
-        Hypergeometric1F1Regularized[a_,b_,z_]:>
-            Hypergeometric1F1[a,b,z]/Gamma[b]
+        HypergeometricPFQRegularized[as_,bs_,z_]:>
+            HypergeometricPFQ[as,bs,z]/Apply[Times,Map[Gamma,bs]]
     }];
 
 
@@ -161,7 +156,7 @@ hyperTo[which_,symbolList_][expr0_] :=
         expr =
             expr0//hyperToPreprocess;
         positionList =
-            Position[expr,_Hypergeometric2F1];
+            Position[expr,_Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ];
         numberOfHyper =
             Length[positionList];
         numberOfSymbol =
@@ -203,6 +198,17 @@ hyperToPostprocess[expr_] :=
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
 
+hyperToMellinBarnesRule[s_,Hypergeometric1F1[a_,b_,z_]] :=
+    hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
+
+hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
+    hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
+
+hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    hyperMellinBarnes[
+        Times@@Map[Pochhammer[#,s]&,as]/Times@@Map[Pochhammer[#,s]&,bs] (-z)^s Gamma[-s]//gammaFrom
+    ];
+
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyperMellinBarnes[((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
@@ -210,6 +216,17 @@ hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyperTaylor[(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
+
+hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
+    hyperTaylor[(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
+
+hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
+    hyperTaylor[(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
+
+hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    hyperTaylor[
+        Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
+    ];
 
 
 (* ::Subsection:: *)

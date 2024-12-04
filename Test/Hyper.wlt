@@ -120,11 +120,27 @@ VerificationTest[
 ]
 
 VerificationTest[
+	hyperToTaylor[n, m, k, l][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
+	,
+	{hyperTaylor[(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])], hyperTaylor[(x^m*Gamma[b]*Gamma[a + m])/(Gamma[a]*Gamma[1 + m]*Gamma[b + m])], hyperTaylor[(x^k*Gamma[a])/(Gamma[1 + k]*Gamma[a + k])], hyperTaylor[(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
+	,
+	TestID->"14-Hyper.nb"
+]
+
+VerificationTest[
+	hyperToMellinBarnes[s, t, u, v][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
+	,
+	{hyperMellinBarnes[((-x)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])], hyperMellinBarnes[((-x)^t*Gamma[b]*Gamma[-t]*Gamma[a + t])/(Gamma[a]*Gamma[b + t])], hyperMellinBarnes[((-x)^u*Gamma[a]*Gamma[-u])/Gamma[a + u]], hyperMellinBarnes[((-x)^v*Gamma[c]*Gamma[-v]*Gamma[a + v]*Gamma[b + v])/(Gamma[a]*Gamma[b]*Gamma[c + v])]}
+	,
+	TestID->"15-Hyper.nb"
+]
+
+VerificationTest[
 	wilsonPolynomialToHyper[wilsonPolynomialFromHyper[HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*x, a + I*x}, {a + b, a + c, a + d}, 1]]]
 	,
 	HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*Sqrt[x^2], a + I*Sqrt[x^2]}, {a + b, a + c, a + d}, 1]
 	,
-	TestID->"14-Hyper.nb"
+	TestID->"16-Hyper.nb"
 ]
 
 VerificationTest[
@@ -132,7 +148,7 @@ VerificationTest[
 	,
 	wilsonPolynomial[a, b, c, d, n, x]
 	,
-	TestID->"15-Hyper.nb"
+	TestID->"17-Hyper.nb"
 ]
 
 VerificationTest[
@@ -140,7 +156,7 @@ VerificationTest[
 	,
 	jacobiPhi[a, b, c, z]
 	,
-	TestID->"16-Hyper.nb"
+	TestID->"18-Hyper.nb"
 ]
 
 VerificationTest[
@@ -148,7 +164,7 @@ VerificationTest[
 	,
 	Hypergeometric2F1[a, b, c, z]
 	,
-	TestID->"17-Hyper.nb"
+	TestID->"19-Hyper.nb"
 ]
 
 VerificationTest[
