@@ -480,27 +480,28 @@ separate[crit_][expr_] :=
 (*freeze*)
 
 
+freeze//Options = {
+    "Transformation"->{Identity,Identity}
+};
+
 freeze//Attributes =
     {HoldAll};
 
-freeze[pattern_][expr_] :=
-    freezeKernel[pattern,Simplify,{Identity,Identity},Infinity][expr];
-
-freeze[pattern_,operation_][expr_] :=
-    freezeKernel[pattern,operation,{Identity,Identity},Infinity][expr];
-
-freeze[pattern_,operation_,transformation:{_,_}][expr_] :=
-    freezeKernel[pattern,operation,transformation,Infinity][expr];
-
-freeze[pattern_,operation_,transformation:{_,_},level_][expr_] :=
-    freezeKernel[pattern,operation,transformation,level][expr];
+freeze[args___][expr_] :=
+    With[ {sep = ArgumentsOptions[freeze[args],{1,3},<|"Head"->Hold,"OptionsMode"->"Shortest"|>]},
+        freezeKernel[sep][expr]/;!FailureQ[sep]
+    ];
 
 
-freezeKernel//Attributes =
-    {HoldAll};
+freezeKernel[{Hold[pattern_],Hold[opts___]}][expr_] :=
+    freezeKernel[{Hold[pattern,Simplify,Infinity],Hold[opts]}][expr];
 
-freezeKernel[pattern_,operation_,{trans_,inverseTrans_},level_][expr_] :=
-    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList},
+freezeKernel[{Hold[pattern_,operation_],Hold[opts___]}][expr_] :=
+    freezeKernel[{Hold[pattern,operation,Infinity],Hold[opts]}][expr];
+
+freezeKernel[{Hold[pattern_,operation_,level_],Hold[opts___]}][expr_] :=
+    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList,trans,inverseTrans},
+        {trans,inverseTrans} = OptionValue[freeze,{opts},"Transformation"];
         subExprList =
             DeleteDuplicates@Cases[expr,pattern,level];
         tempSymbolList =
