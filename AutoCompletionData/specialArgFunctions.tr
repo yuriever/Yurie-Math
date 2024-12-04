@@ -3,6 +3,7 @@
  "multiGammaSimplify" -> {0, {"Assumptions"}}, 
  "diffChange" -> {0, 0, 0, 0, 0, {"FirstSolution"}}, 
  "integrateChange" -> {0, 0, 0, 0, {"FirstSolution"}}, 
+ "freeze" -> {0, 0, {"Transformation"}}, 
  "DLMF" -> {{"5.5.5", "BinomialSwapA", "BinomialSwapN", "PochhammerSwapA", 
     "5.2.6", "5.2.8.1", "5.2.8.2", "15.1.2", "15.4.20", "15.5.11", "15.5.12", 
     "15.5.13", "15.5.14", "15.5.15", "15.5.16", "15.5.17", "15.5.18", 

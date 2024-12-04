@@ -151,7 +151,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	freeze[x, Simplify, {Identity, s}][NestList[x, x, 2]]
+	freeze[x, Simplify, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
 	,
 	{s[x], x[s[x]], x[x[s[x]]]}
 	,
@@ -159,7 +159,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	freeze[x, Simplify, {Identity, s}, 2][NestList[x, x, 2]]
+	freeze[x, Simplify, 2, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
 	,
 	{s[x], x[s[x]], x[x[x]]}
 	,
@@ -167,7 +167,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	freeze[x, Simplify, {s, t}][NestList[x, x, 2]]
+	freeze[x, Simplify, "Transformation" -> {s, t}][NestList[x, x, 2]]
 	,
 	{s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
 	,
