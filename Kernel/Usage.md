@@ -189,18 +189,24 @@
 
 * `#!wl fracSimplify` - simplify the numerator and denominator.
 
-* `#!wl powerBaseSimplify` - simplify the power bases.
-
-* `#!wl trigPhaseSimplify` - separate the phase factor in trigonometric functions.
+* `#!wl trigPhaseReduce` - reduce the phase factor in trigonometric functions.
 
 * `#!wl collectDerivative` - collect by derivatives.
+
+* `#!wl stripPattern` - strip off pattern-related functions in expressions.
 
 * `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
 
 * `#!wl swap` - swap two symbols in an expression.
 
-* `#!wl stripPattern` - strip off pattern-related functions in expressions.
+* `#!wl separate` - separate the elements by whether or not satisfying the criteria.
+
+* `#!wl freeze` - screen subexpressions matching the pattern and then perform the operation.
+
+* `#!wl focus` - simplify the arguments of the specified heads.
+
+* `#!wl powerBaseSimplify` - simplify the power bases.
+
+* `#!wl trigPhaseSimplify` - reduce the phase factor in trigonometric functions.
 
 * `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
-
-* `#!wl freeze` - free subexpressions matching the pattern and perform the operation.

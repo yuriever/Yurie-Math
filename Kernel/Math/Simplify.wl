@@ -117,14 +117,14 @@ deltaSim::usage =
 fracSimplify::usage =
     "simplify the numerator and denominator.";
 
-powerBaseSimplify::usage =
-    "simplify the power bases.";
-
-trigPhaseSimplify::usage =
-    "separate the phase factor in trigonometric functions.";
+trigPhaseReduce::usage =
+    "reduce the phase factor in trigonometric functions.";
 
 collectDerivative::usage =
     "collect by derivatives.";
+
+stripPattern::usage =
+    "strip off pattern-related functions in expressions.";
 
 vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
@@ -132,14 +132,28 @@ vanishing::usage =
 swap::usage =
     "swap two symbols in an expression.";
 
-stripPattern::usage =
-    "strip off pattern-related functions in expressions.";
-
-separateBy::usage =
+separate::usage =
     "separate the elements by whether or not satisfying the criteria.";
 
 freeze::usage =
-    "free subexpressions matching the pattern and perform the operation.";
+    "screen subexpressions matching the pattern and then perform the operation.";
+
+focus::usage =
+    "simplify the arguments of the specified heads.";
+
+
+(* ::Subsection:: *)
+(*Deprecated*)
+
+
+powerBaseSimplify::usage =
+    "simplify the power bases.";
+
+trigPhaseSimplify::usage =
+    "reduce the phase factor in trigonometric functions.";
+
+separateBy::usage =
+    "separate the elements by whether or not satisfying the criteria.";
 
 
 (* ::Section:: *)
@@ -198,20 +212,20 @@ FE :=
     FunctionExpand;
 
 
-AS[as_] :=
-    Function[expr,Assuming[as,expr],{HoldAll}];
+AS[assumption_] :=
+    Function[expr,Assuming[assumption,expr],{HoldAll}];
 
 
-SSA[assumption_,opts:OptionsPattern[]][expr_] :=
-    Simplify[expr,assumption,FilterRules[{opts,Options@SSA},Options@Simplify]];
+SSA[assumption_][expr_] :=
+    Simplify[expr,assumption];
 
 
-FSA[assumption_,opts:OptionsPattern[]][expr_] :=
-    FullSimplify[expr,assumption,FilterRules[{opts,Options@FSA},Options@FullSimplify]];
+FSA[assumption_][expr_] :=
+    FullSimplify[expr,assumption];
 
 
-FEA[assumption_,opts:OptionsPattern[]][expr_] :=
-    FunctionExpand[expr,assumption,FilterRules[{opts,Options@FEA},Options@FunctionExpand]];
+FEA[assumption_][expr_] :=
+    FunctionExpand[expr,assumption];
 
 
 modularize//Attributes =
@@ -285,28 +299,28 @@ plus[args___][expr_] :=
     Plus[expr,args];
 
 
-series[args___,opts:OptionsPattern[]][expr_] :=
-    Normal@Series[expr,args,FilterRules[{opts,Options@series},Options@Series]];
+series[args___][expr_] :=
+    Normal@Series[expr,args];
 
 
-limit[direction_,opts:OptionsPattern[]][expr_] :=
-    Limit[expr,direction,FilterRules[{opts,Options@limit},Options@Limit]];
+limit[direction_][expr_] :=
+    Limit[expr,direction];
 
 
-solve[args___,opts:OptionsPattern[]][expr_] :=
-    Solve[expr,args,FilterRules[{opts,Options@solve},Options@Solve]];
+solve[args___][expr_] :=
+    Solve[expr,args];
 
 
-solveFirst[args___,opts:OptionsPattern[]][expr_] :=
-    First@Solve[expr,args,FilterRules[{opts,Options@solveFirst},Options@Solve]];
+solveFirst[args___][expr_] :=
+    First@Solve[expr,args];
 
 
 part :=
     GeneralUtilities`Slice;
 
 
-collect[var_,head_:Identity,opts:OptionsPattern[]][expr_] :=
-    Collect[expr,var,head,FilterRules[{opts,Options@collect},Options@Collect]];
+collect[var_,head_:Identity][expr_] :=
+    Collect[expr,var,head];
 
 
 (* ::Subsection::Closed:: *)
@@ -392,29 +406,21 @@ fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
 
 
 (* ::Subsubsection:: *)
-(*powerBaseSimplify*)
+(*trigPhaseReduce*)
 
 
-powerBaseSimplify[simplify_:Simplify,level_:All][expr_] :=
-    expr//Replace[#,Power[x_,n_]:>Power[simplify@Together[x],n],level]&;
-
-
-(* ::Subsubsection:: *)
-(*trigPhaseSimplify*)
-
-
-trigPhaseSimplify[vars__][expr_] :=
+trigPhaseReduce[vars__][expr_] :=
     expr//ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Expand@arg]//
-        trigPhaseSimplifyKernel[vars]//
+        trigPhaseReduceKernel[vars]//
             ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Simplify@arg];
 
 
-trigPhaseSimplifyKernel[var_][expr_] :=
+trigPhaseReduceKernel[var_][expr_] :=
     expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
 
-trigPhaseSimplifyKernel[var_,rest__][expr_] :=
-    trigPhaseSimplifyKernel[rest][
-        trigPhaseSimplifyKernel[var][expr]
+trigPhaseReduceKernel[var_,rest__][expr_] :=
+    trigPhaseReduceKernel[rest][
+        trigPhaseReduceKernel[var][expr]
     ];
 
 
@@ -422,11 +428,22 @@ trigPhaseSimplifyKernel[var_,rest__][expr_] :=
 (*collectDerivative*)
 
 
-collectDerivative[var_Symbol,post_:Identity][expr_] :=
-    Collect[expr,Derivative[___][var][___],post];
+collectDerivative[var_Symbol,operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][var][___],operation];
 
-collectDerivative[varList_List,post_:Identity][expr_] :=
-    Collect[expr,Derivative[___][#][___]&/@varList,post];
+collectDerivative[varList_List,operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][#][___]&/@varList,operation];
+
+
+(* ::Subsubsection:: *)
+(*stripPattern*)
+
+
+stripPattern//Attributes =
+    {HoldAll};
+
+stripPattern[expr_,head_:Defer] :=
+    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
 
 
 (* ::Subsubsection:: *)
@@ -449,21 +466,10 @@ swap[pairs:{_Symbol,_Symbol}...][expr_] :=
 
 
 (* ::Subsubsection:: *)
-(*stripPattern*)
+(*separate*)
 
 
-stripPattern//Attributes =
-    {HoldAll};
-
-stripPattern[expr_,head_:Defer] :=
-    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
-
-
-(* ::Subsubsection:: *)
-(*separateBy*)
-
-
-separateBy[crit_][expr_] :=
+separate[crit_][expr_] :=
     {
         Select[expr,crit[#]&],
         Select[expr,!crit[#]&]
@@ -474,33 +480,88 @@ separateBy[crit_][expr_] :=
 (*freeze*)
 
 
-freeze//Options = {
-    "Transformation"->{Identity,Identity},
-    "Level"->Infinity,
-    "Heads"->False,
-    "ShowFrozen"->False,
-    "TemporarySymbol"->"a"
-};
-
-
 freeze//Attributes =
     {HoldAll};
 
-freeze[pat_,fun_,OptionsPattern[]][expr_] :=
-    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList,trans,inverseTrans},
-        {trans,inverseTrans} = OptionValue["Transformation"];
+freeze[pattern_][expr_] :=
+    freezeKernel[pattern,Simplify,{Identity,Identity},Infinity][expr];
+
+freeze[pattern_,operation_][expr_] :=
+    freezeKernel[pattern,operation,{Identity,Identity},Infinity][expr];
+
+freeze[pattern_,operation_,transformation:{_,_}][expr_] :=
+    freezeKernel[pattern,operation,transformation,Infinity][expr];
+
+freeze[pattern_,operation_,transformation:{_,_},level_][expr_] :=
+    freezeKernel[pattern,operation,transformation,level][expr];
+
+
+freezeKernel//Attributes =
+    {HoldAll};
+
+freezeKernel[pattern_,operation_,{trans_,inverseTrans_},level_][expr_] :=
+    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList},
         subExprList =
-            DeleteDuplicates@Cases[expr,pat,OptionValue["Level"],Heads->OptionValue["Heads"]];
+            DeleteDuplicates@Cases[expr,pattern,level];
         tempSymbolList =
-            Table[Unique[OptionValue["TemporarySymbol"]<>"$",{Temporary}],Length@subExprList];
+            Table[Unique["a$",{Temporary}],Length@subExprList];
         ruleList =
             MapThread[Rule[#1,trans[#2]]&,{subExprList,tempSymbolList}];
         inverseRuleList =
             MapThread[Rule[#1,inverseTrans[#2]]&,{tempSymbolList,subExprList}];
         frozenExpr =
-            Replace[expr,ruleList,OptionValue["Level"],Heads->OptionValue["Heads"]];
-        frozenExpr//fun//ReplaceAll[inverseRuleList]
+            Replace[expr,ruleList,level];
+        frozenExpr//operation//ReplaceAll[inverseRuleList]
     ];
+
+
+(* ::Subsubsection:: *)
+(*focus*)
+
+
+focus//Attributes =
+    {HoldAll};
+
+
+focus[pattern_,operation_:Simplify][expr_] :=
+    expr//Replace[#,{
+        (head:pattern)[arg_]:>head@operation@arg,
+        (head:pattern)[args__]:>head@@Map[operation,{args}]
+    },All]&;
+
+
+(* ::Subsection:: *)
+(*Deprecated*)
+
+
+powerBaseSimplify::deprecation =
+    "this function has been superseded by focus.";
+
+powerBaseSimplify[simplify_:Simplify][expr_] :=
+    (
+        Message[powerBaseSimplify::deprecation];
+        expr//Replace[#,Power[x_,n_]:>Power[simplify@Together[x],n],All]&
+    );
+
+
+trigPhaseSimplify::deprecation =
+    "this function has been superseded by trigPhaseReduce.";
+
+trigPhaseSimplify[vars__][expr_] :=
+    (
+        Message[trigPhaseSimplify::deprecation];
+        trigPhaseReduce[vars][expr]
+    );
+
+
+separateBy::deprecation =
+    "this function has been superseded by separate.";
+
+separateBy[crit_][expr_] :=
+    (
+        Message[separateBy::deprecation];
+        separate[crit][expr]
+    );
 
 
 (* ::Subsection:: *)

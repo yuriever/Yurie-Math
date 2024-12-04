@@ -273,14 +273,14 @@ deltaSim::usage =
 fracSimplify::usage =
 	"simplify the numerator and denominator.";
 
-powerBaseSimplify::usage =
-	"simplify the power bases.";
-
-trigPhaseSimplify::usage =
-	"separate the phase factor in trigonometric functions.";
+trigPhaseReduce::usage =
+	"reduce the phase factor in trigonometric functions.";
 
 collectDerivative::usage =
 	"collect by derivatives.";
+
+stripPattern::usage =
+	"strip off pattern-related functions in expressions.";
 
 vanishing::usage =
 	"Simplify + Flatten + DeleteDuplicates.";
@@ -288,11 +288,20 @@ vanishing::usage =
 swap::usage =
 	"swap two symbols in an expression.";
 
-stripPattern::usage =
-	"strip off pattern-related functions in expressions.";
-
-separateBy::usage =
+separate::usage =
 	"separate the elements by whether or not satisfying the criteria.";
 
 freeze::usage =
-	"free subexpressions matching the pattern and perform the operation.";
+	"screen subexpressions matching the pattern and then perform the operation.";
+
+focus::usage =
+	"simplify the arguments of the specified heads.";
+
+powerBaseSimplify::usage =
+	"simplify the power bases.";
+
+trigPhaseSimplify::usage =
+	"reduce the phase factor in trigonometric functions.";
+
+separateBy::usage =
+	"separate the elements by whether or not satisfying the criteria.";

@@ -135,7 +135,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	separateBy[EvenQ][Range[10]]
+	separate[EvenQ][Range[10]]
 	,
 	{{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
 	,
@@ -143,7 +143,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	separateBy[FreeQ[s]][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])]
+	separate[FreeQ[s]][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])]
 	,
 	{Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
 	,
@@ -151,7 +151,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
+	freeze[x, Simplify, {Identity, s}][NestList[x, x, 2]]
 	,
 	{s[x], x[s[x]], x[x[s[x]]]}
 	,
@@ -159,67 +159,75 @@ VerificationTest[
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {Identity, s}, "Heads" -> True][NestList[x, x, 2]]
+	freeze[x, Simplify, {Identity, s}, 2][NestList[x, x, 2]]
 	,
-	{s[x], s[x][s[x]], s[x][s[x][s[x]]]}
+	{s[x], x[s[x]], x[x[x]]}
 	,
 	TestID->"19-Simplify.nb"
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {Identity, s}, "Heads" -> True, "Level" -> 2][NestList[x, x, 2]]
+	freeze[x, Simplify, {s, t}][NestList[x, x, 2]]
 	,
-	{s[x], s[x][s[x]], s[x][x[x]]}
+	{s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
 	,
 	TestID->"20-Simplify.nb"
 ]
 
 VerificationTest[
-	SetOptions[freeze, "Heads" -> True]
+	trigPhaseReduce[k][Sin[(-Pi)*k + a]]
 	,
-	{"Transformation" -> {Identity, Identity}, "Level" -> Infinity, "Heads" -> True, "ShowFrozen" -> False, "TemporarySymbol" -> "a"}
+	(-1)^k*Sin[a]
 	,
 	TestID->"21-Simplify.nb"
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {s, t}][NestList[x, x, 2]]
+	trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
 	,
-	{s[t[x]], s[t[x]][s[t[x]]], s[t[x]][s[t[x]][s[t[x]]]]}
+	Cos[b]*Sin[a]
 	,
 	TestID->"22-Simplify.nb"
 ]
 
 VerificationTest[
-	SetOptions[freeze, "Heads" -> False]
+	trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
 	,
-	{"Transformation" -> {Identity, Identity}, "Level" -> Infinity, "Heads" -> False, "ShowFrozen" -> False, "TemporarySymbol" -> "a"}
+	(-1)^k*Cos[b]*Cos[c]*Sin[a]
 	,
 	TestID->"23-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseSimplify[k][Sin[(-Pi)*k + a]]
+	expr = f[a^2 + b^2 + 2*a*b] + g[a^2 + b^2 + 2*a*b, 2]
 	,
-	(-1)^k*Sin[a]
+	f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
 	,
 	TestID->"24-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseSimplify[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
+	focus[f][expr]
 	,
-	Cos[b]*Sin[a]
+	f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
 	,
 	TestID->"25-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseSimplify[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
+	focus[f, Identity][expr]
 	,
-	(-1)^k*Cos[b]*Cos[c]*Sin[a]
+	f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
 	,
 	TestID->"26-Simplify.nb"
+]
+
+VerificationTest[
+	focus[f | g][expr]
+	,
+	f[(a + b)^2] + g[(a + b)^2, 2]
+	,
+	TestID->"27-Simplify.nb"
 ]
 
 VerificationTest[
