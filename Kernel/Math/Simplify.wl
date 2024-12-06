@@ -526,6 +526,7 @@ focus//Attributes =
 
 focus[pattern_,operation_:Simplify][expr_] :=
     expr//Replace[#,{
+        (head:pattern):>operation@head,
         (head:pattern)[arg_]:>head@operation@arg,
         (head:pattern)[args__]:>head@@Map[operation,{args}]
     },All]&;
