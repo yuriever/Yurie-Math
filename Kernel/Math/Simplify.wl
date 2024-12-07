@@ -143,7 +143,7 @@ focus::usage =
 
 
 (* ::Subsection:: *)
-(*Deprecated*)
+(*Deprecation*)
 
 
 powerBaseSimplify::usage =
@@ -533,7 +533,7 @@ focus[pattern_,operation_:Simplify][expr_] :=
 
 
 (* ::Subsection:: *)
-(*Deprecated*)
+(*Deprecation*)
 
 
 powerBaseSimplify::deprecation =
