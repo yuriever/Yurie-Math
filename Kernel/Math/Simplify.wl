@@ -500,16 +500,19 @@ freezeKernel[{Hold[pattern_,operation_],Hold[opts___]}][expr_] :=
     freezeKernel[{Hold[pattern,operation,Infinity],Hold[opts]}][expr];
 
 freezeKernel[{Hold[pattern_,operation_,level_],Hold[opts___]}][expr_] :=
-    Module[ {frozenExpr,subExprList,tempSymbolList,ruleList,inverseRuleList,trans,inverseTrans},
+    Module[ {frozenExpr,subExprList,tempList,ruleList,inverseRuleList,trans,inverseTrans},
         {trans,inverseTrans} = OptionValue[freeze,{opts},"Transformation"];
         subExprList =
             DeleteDuplicates@Cases[expr,pattern,level];
-        tempSymbolList =
-            Table[Unique["a$",{Temporary}],Length@subExprList];
+        tempList =
+            Table[Unique["sub$",{Temporary}],Length@subExprList];
         ruleList =
-            MapThread[Rule[#1,trans[#2]]&,{subExprList,tempSymbolList}];
+            MapThread[Rule[#1,trans[#2]]&,{subExprList,tempList}];
+        If[ freeze`Echo,
+            Echo@ruleList
+        ];
         inverseRuleList =
-            MapThread[Rule[#1,inverseTrans[#2]]&,{tempSymbolList,subExprList}];
+            MapThread[Rule[#1,inverseTrans[#2]]&,{tempList,subExprList}];
         frozenExpr =
             Replace[expr,ruleList,level];
         frozenExpr//operation//ReplaceAll[inverseRuleList]
