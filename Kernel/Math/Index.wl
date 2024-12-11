@@ -86,6 +86,12 @@ indexize[var_,index_] :=
 indexize[{var_,index_}] :=
     ToExpression[ToString[var,FormatType->InputForm]<>indexToString[index]];
 
+indexize[var_,indices__] :=
+    ToExpression[ToString[var,FormatType->InputForm]<>StringJoin@Map[indexToString,{indices}]];
+
+indexize[{var_,indices__}] :=
+    ToExpression[ToString[var,FormatType->InputForm]<>StringJoin@Map[indexToString,{indices}]];
+
 
 (* ::Subsubsection:: *)
 (*Helper*)
