@@ -26,6 +26,8 @@ Get["Yurie`Math`Matrix`"];
 
 Get["Yurie`Math`Dye`"];
 
+Get["Yurie`Math`Index`"];
+
 (*Get["Yurie`Math`Lie`"];*)
 
 (*Get["Yurie`Math`Plot`"];*)
