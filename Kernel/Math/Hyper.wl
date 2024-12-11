@@ -76,10 +76,6 @@ Begin["`Private`"];
 (* ::Subsection:: *)
 (*Message*)
 
-Needs["Lacia`Base`"];
-
-ClearAll[hyperTo];
-
 
 hyperTo::usage =
     "convert Hypergeometric functions according to the prototype rule.";
