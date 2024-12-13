@@ -508,13 +508,13 @@ freezeKernel[{Hold[pattern_,operation_,level_],Hold[opts___]}][expr_] :=
             Table[Unique["sub$",{Temporary}],Length@subExprList];
         ruleList =
             MapThread[Rule[#1,trans[#2]]&,{subExprList,tempList}];
-        If[ freeze`Echo,
-            Echo@ruleList
-        ];
         inverseRuleList =
             MapThread[Rule[#1,inverseTrans[#2]]&,{tempList,subExprList}];
         frozenExpr =
             Replace[expr,ruleList,level];
+        If[ freeze`Debug,
+            Return@{frozenExpr,ruleList,inverseRuleList}
+        ];
         frozenExpr//operation//ReplaceAll[inverseRuleList]
     ];
 
