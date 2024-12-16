@@ -95,11 +95,14 @@ diffComm[x_,y_] :=
 (*diffChange*)
 
 
-diffChange[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
+diffChange[expr_,eqList:{__Equal},oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
     expr//ReplaceAll[getFunctionRuleList[eqList,oldList,newList,funList,FilterRules[{opts,Options@diffChange},Options@getFunctionRuleList]]]//
         (*convert old variables to new ones.*)
         ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
             diffChangeStripList;
+
+diffChange[expr_,eqList:{__Rule},oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
+    diffChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,funList,opts];
 
 
 diffChange[] :=
@@ -127,7 +130,7 @@ diffChange[] :=
 (*integrateChange*)
 
 
-integrateChange[expr_,eqList_List,oldList_List,newList_List,opts:OptionsPattern[]] :=
+integrateChange[expr_,eqList:{__Equal},oldList_List,newList_List,opts:OptionsPattern[]] :=
     Module[ {oldToNew,oldToNewList},
         oldToNewList =
             cleanSolve[eqList,oldList,FilterRules[{opts,Options@integrateChange},Options@cleanSolve]];
@@ -136,6 +139,9 @@ integrateChange[expr_,eqList_List,oldList_List,newList_List,opts:OptionsPattern[
             {oldToNew,oldToNewList}
         ]//integrateChangeStripList
     ];
+
+integrateChange[expr_,eqList:{__Rule},oldList_List,newList_List,opts:OptionsPattern[]]:=
+    integrateChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,opts];
 
 
 integrateChange[] :=

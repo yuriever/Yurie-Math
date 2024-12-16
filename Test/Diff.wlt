@@ -102,6 +102,22 @@ VerificationTest[
 ]
 
 VerificationTest[
+	integrateChange[t^a, {t -> 1 - x}, {t}, {x}]
+	,
+	-(1 - x)^a
+	,
+	TestID->"12-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[g[t] + Derivative[1][f][t], {x -> t^2}, {t}, {x}, {f[t], g[t]}]
+	,
+	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	,
+	TestID->"13-Diff.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,
