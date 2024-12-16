@@ -1,5 +1,9 @@
 <!-- Diff.wl -->
 
+* `#!wl PD` - head of partial derivative that acts on the rest of the expression.
+
+* `#!wl INT` - head of integral that acts on the rest of the expression.
+
 * `#!wl jacobianMatrix` - jacobianMatrix.
 
 * `#!wl jacobianDet` - jacobianDet.

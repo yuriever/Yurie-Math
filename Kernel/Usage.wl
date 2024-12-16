@@ -1,5 +1,11 @@
 (* Diff.wl *)
 
+PD::usage =
+	"head of partial derivative that acts on the rest of the expression.";
+
+INT::usage =
+	"head of integral that acts on the rest of the expression.";
+
 jacobianMatrix::usage =
 	"jacobianMatrix.";
 

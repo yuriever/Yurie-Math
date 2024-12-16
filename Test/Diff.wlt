@@ -118,6 +118,30 @@ VerificationTest[
 ]
 
 VerificationTest[
+	integrateChange[{t -> 1 - x}, {t}, {x}][t^a]
+	,
+	-(1 - x)^a
+	,
+	TestID->"14-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[{x -> t^2}, {t}, {x}, {f[t], g[t]}][g[t] + Derivative[1][f][t]]
+	,
+	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	,
+	TestID->"15-Diff.nb"
+]
+
+VerificationTest[
+	integrateChange[{x == 2*t}, {x}, {t}][INT[x]*x^a]
+	,
+	2^(1 + a)*t^a*INT[t]
+	,
+	TestID->"16-Diff.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

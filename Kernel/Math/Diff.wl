@@ -14,6 +14,13 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
+PD::usage =
+    "head of partial derivative that acts on the rest of the expression."
+
+INT::usage =
+    "head of integral that acts on the rest of the expression."
+
+
 jacobianMatrix::usage =
     "jacobianMatrix.";
 
@@ -72,6 +79,23 @@ integrateChange//Options =
 
 
 (* ::Subsubsection:: *)
+(*Property*)
+
+
+pd_PD/;System`Private`HoldNotValidQ[pd] :=
+    (
+        System`Private`HoldSetValid[pd];
+        System`Private`HoldSetNoEntry[pd]
+    );
+
+int_INT/;System`Private`HoldNotValidQ[int] :=
+    (
+        System`Private`HoldSetValid[int];
+        System`Private`HoldSetNoEntry[int]
+    );
+
+
+(* ::Subsubsection:: *)
 (*Jacobian*)
 
 
@@ -103,6 +127,9 @@ diffChange[expr_,eqList:{__Equal},oldList_List,newList_List,funList_List,opts:Op
 
 diffChange[expr_,eqList:{__Rule},oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
     diffChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,funList,opts];
+
+diffChange[eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]][expr_] :=
+    diffChange[expr,eqList,oldList,newList,funList,opts];
 
 
 diffChange[] :=
@@ -137,11 +164,14 @@ integrateChange[expr_,eqList:{__Equal},oldList_List,newList_List,opts:OptionsPat
         Table[
             ReplaceAll[expr,oldToNew]*Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
             {oldToNew,oldToNewList}
-        ]//integrateChangeStripList
+        ]//dealINT[oldList,newList]//integrateChangeStripList
     ];
 
-integrateChange[expr_,eqList:{__Rule},oldList_List,newList_List,opts:OptionsPattern[]]:=
+integrateChange[expr_,eqList:{__Rule},oldList_List,newList_List,opts:OptionsPattern[]] :=
     integrateChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,opts];
+
+integrateChange[eqList_List,oldList_List,newList_List,opts:OptionsPattern[]][expr_] :=
+    integrateChange[expr,eqList,oldList,newList,opts];
 
 
 integrateChange[] :=
@@ -211,6 +241,18 @@ cleanSolve[eqList_,varList_,opts:OptionsPattern[]] :=
         Solve[eqList,varList]//Take[#,1]&//Normal//ReplaceAll[C[_]->0],
         (*Else*)
         Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0]
+    ];
+
+
+dealINT[oldList_,newList_][expr_] :=
+    With[ {rule = MapThread[INT[#1]->INT[#2]&,{oldList,newList}]},
+        ReplaceAll[expr,rule]
+    ];
+
+
+dealPD[oldList_,newList_][expr_] :=
+    With[ {rule = MapThread[PD[#1]->PD[#2]&,{oldList,newList}]},
+        ReplaceAll[expr,rule]
     ];
 
 
