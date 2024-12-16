@@ -79,7 +79,7 @@ integrateChange//Options =
 
 
 (* ::Subsubsection:: *)
-(*Property*)
+(*PD|INT*)
 
 
 pd_PD/;System`Private`HoldNotValidQ[pd] :=
@@ -93,6 +93,20 @@ int_INT/;System`Private`HoldNotValidQ[int] :=
         System`Private`HoldSetValid[int];
         System`Private`HoldSetNoEntry[int]
     );
+
+
+PD/:PD[x___]PD[y___]:=
+    PD@@Sort@{x,y};
+
+PD/:Power[PD[x___],n_Integer]/;n>=2:=
+    PD@@Flatten@ConstantArray[{x},n];
+
+
+INT/:INT[x___]INT[y___]:=
+    INT@@Sort@{x,y};
+
+INT/:Power[INT[x___],n_Integer]/;n>=2:=
+    INT@@Flatten@ConstantArray[{x},n];
 
 
 (* ::Subsubsection:: *)
