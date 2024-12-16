@@ -6,6 +6,9 @@ PD::usage =
 INT::usage =
 	"head of integral that acts on the rest of the expression.";
 
+PDCoefficient::usage =
+	"collect the coefficients of PD[___].";
+
 jacobianMatrix::usage =
 	"jacobianMatrix.";
 

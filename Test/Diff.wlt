@@ -44,12 +44,46 @@ VerificationTest[
 ]
 
 VerificationTest[
+	expr = PD[x, y]*f[x] + PD[x]*g[x] + h[y]
+	,
+	h[y] + g[x]*PD[x] + f[x]*PD[x, y]
+	,
+	TestID->"5-Diff.nb"
+]
+
+VerificationTest[
+	expr2 = PD[x, y]*f[x] + g[PD[x]*g[x]]
+	,
+	g[g[x]*PD[x]] + f[x]*PD[x, y]
+	,
+	TestID->"6-Diff.nb"
+]
+
+VerificationTest[
+	PDCoefficient[expr]
+	,
+	{{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
+	,
+	TestID->"7-Diff.nb"
+]
+
+VerificationTest[
+	PDCoefficient[expr2]
+	,
+	Quiet[g[g[x]*PD[x]] + f[x]*PD[x, y]]
+	,
+	{Yurie`Math`PDCoefficient::nonlinear}
+	,
+	TestID->"8-Diff.nb"
+]
+
+VerificationTest[
 	expr = D[f[x, y, z, w], {x, 1}, {y, 1}]*D[g[x, y, z, w], {z, 1}, {w, 1}]; 
 	IBP[f][expr]
 	,
 	f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
 	,
-	TestID->"5-Diff.nb"
+	TestID->"9-Diff.nb"
 ]
 
 VerificationTest[
@@ -57,7 +91,7 @@ VerificationTest[
 	,
 	(-Derivative[0, 1, 0, 0][f][x, y, z, w])*Derivative[1, 0, 1, 1][g][x, y, z, w]
 	,
-	TestID->"6-Diff.nb"
+	TestID->"10-Diff.nb"
 ]
 
 VerificationTest[
@@ -65,7 +99,7 @@ VerificationTest[
 	,
 	f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
 	,
-	TestID->"7-Diff.nb"
+	TestID->"11-Diff.nb"
 ]
 
 VerificationTest[
@@ -74,7 +108,7 @@ VerificationTest[
 	,
 	(-f[x])*Derivative[1][f][x]
 	,
-	TestID->"8-Diff.nb"
+	TestID->"12-Diff.nb"
 ]
 
 VerificationTest[
@@ -82,31 +116,7 @@ VerificationTest[
 	,
 	-(1 - x)^a
 	,
-	TestID->"9-Diff.nb"
-]
-
-VerificationTest[
-	Simplify[diffChange[D[f[x, t], {t, 2}] == c^2*D[f[x, t], {x, 2}], {u == x + c*t, v == x - c*t}, {x, t}, {u, v}, {f[x, t]}]]
-	,
-	c*Derivative[1, 1][f][u, v] == 0
-	,
-	TestID->"10-Diff.nb"
-]
-
-VerificationTest[
-	diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}]
-	,
-	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
-	,
-	TestID->"11-Diff.nb"
-]
-
-VerificationTest[
-	diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}, "FirstSolution" -> False]
-	,
-	{g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
-	,
-	TestID->"12-Diff.nb"
+	TestID->"13-Diff.nb"
 ]
 
 VerificationTest[
@@ -114,7 +124,7 @@ VerificationTest[
 	,
 	1/2
 	,
-	TestID->"13-Diff.nb"
+	TestID->"14-Diff.nb"
 ]
 
 VerificationTest[
@@ -122,21 +132,13 @@ VerificationTest[
 	,
 	{1/2, 1/2}
 	,
-	TestID->"14-Diff.nb"
+	TestID->"15-Diff.nb"
 ]
 
 VerificationTest[
 	integrateChange[t^a, {t -> 1 - x}, {t}, {x}]
 	,
 	-(1 - x)^a
-	,
-	TestID->"15-Diff.nb"
-]
-
-VerificationTest[
-	diffChange[g[t] + Derivative[1][f][t], {x -> t^2}, {t}, {x}, {f[t], g[t]}]
-	,
-	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
 	,
 	TestID->"16-Diff.nb"
 ]
@@ -150,19 +152,51 @@ VerificationTest[
 ]
 
 VerificationTest[
-	diffChange[{x -> t^2}, {t}, {x}, {f[t], g[t]}][g[t] + Derivative[1][f][t]]
+	integrateChange[{x == 2*t}, {x}, {t}][INT[x]*x^a]
 	,
-	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	2^(1 + a)*t^a*INT[t]
 	,
 	TestID->"18-Diff.nb"
 ]
 
 VerificationTest[
-	integrateChange[{x == 2*t}, {x}, {t}][INT[x]*x^a]
+	Simplify[diffChange[D[f[x, t], {t, 2}] == c^2*D[f[x, t], {x, 2}], {u == x + c*t, v == x - c*t}, {x, t}, {u, v}, {f[x, t]}]]
 	,
-	2^(1 + a)*t^a*INT[t]
+	c*Derivative[1, 1][f][u, v] == 0
 	,
 	TestID->"19-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}]
+	,
+	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	,
+	TestID->"20-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}, "FirstSolution" -> False]
+	,
+	{g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
+	,
+	TestID->"21-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[g[t] + Derivative[1][f][t], {x -> t^2}, {t}, {x}, {f[t], g[t]}]
+	,
+	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	,
+	TestID->"22-Diff.nb"
+]
+
+VerificationTest[
+	diffChange[{x -> t^2}, {t}, {x}, {f[t], g[t]}][g[t] + Derivative[1][f][t]]
+	,
+	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
+	,
+	TestID->"23-Diff.nb"
 ]
 
 VerificationTest[

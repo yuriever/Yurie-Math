@@ -4,6 +4,8 @@
 
 * `#!wl INT` - head of integral that acts on the rest of the expression.
 
+* `#!wl PDCoefficient` - collect the coefficients of PD[___].
+
 * `#!wl jacobianMatrix` - jacobianMatrix.
 
 * `#!wl jacobianDet` - jacobianDet.

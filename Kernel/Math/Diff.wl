@@ -21,6 +21,10 @@ INT::usage =
     "head of integral that acts on the rest of the expression."
 
 
+PDCoefficient::usage =
+    "collect the coefficients of PD[___].";
+
+
 jacobianMatrix::usage =
     "jacobianMatrix.";
 
@@ -75,6 +79,14 @@ integrateChange//Options =
 
 
 (* ::Subsection:: *)
+(*Message*)
+
+
+PDCoefficient::nonlinear =
+    "the expression is nonlinear with respect to PD[__]."
+
+
+(* ::Subsection:: *)
 (*Main*)
 
 
@@ -88,6 +100,17 @@ pd_PD/;System`Private`HoldNotValidQ[pd] :=
         System`Private`HoldSetNoEntry[pd]
     );
 
+
+PD/:PD[x__]PD[y__]:=
+    PD@@Sort@{x,y};
+
+PD/:Power[PD[x__],n_Integer]/;n>=2:=
+    PD@@Flatten@ConstantArray[{x},n];
+
+PD[] :=
+    1;
+
+
 int_INT/;System`Private`HoldNotValidQ[int] :=
     (
         System`Private`HoldSetValid[int];
@@ -95,18 +118,36 @@ int_INT/;System`Private`HoldNotValidQ[int] :=
     );
 
 
-PD/:PD[x___]PD[y___]:=
-    PD@@Sort@{x,y};
-
-PD/:Power[PD[x___],n_Integer]/;n>=2:=
-    PD@@Flatten@ConstantArray[{x},n];
-
-
-INT/:INT[x___]INT[y___]:=
+INT/:INT[x__]INT[y__]:=
     INT@@Sort@{x,y};
 
-INT/:Power[INT[x___],n_Integer]/;n>=2:=
+INT/:Power[INT[x__],n_Integer]/;n>=2:=
     INT@@Flatten@ConstantArray[{x},n];
+
+INT[] :=
+    1;
+
+
+(* ::Subsubsection:: *)
+(*PDCoefficient*)
+
+
+PDCoefficient[expr_] :=
+    Module[ {expr1},
+        If[ !PDLinearQ[expr],
+            Message[PDCoefficient::nonlinear];
+            Throw[expr]
+        ];
+        expr1 = Expand[expr];
+        Join[
+            Cases[expr1,PD[x__]*rest_.:>{{x},rest}],
+            Cases[expr1,rest_/;FreeQ[rest,_PD]:>{{},rest}]
+        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],Total[#[[All,2]]]]&]
+    ]//Catch;
+
+
+PDLinearQ[expr_] :=
+    AllTrue[Cases[expr,_PD,All],Internal`LinearQ[expr,#]&];
 
 
 (* ::Subsubsection:: *)
