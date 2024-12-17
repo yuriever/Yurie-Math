@@ -94,6 +94,9 @@ PDCoefficient::nonlinear =
 (*PD|INT*)
 
 
+PD//Attributes =
+    {Orderless};
+
 pd_PD/;System`Private`HoldNotValidQ[pd] :=
     (
         System`Private`HoldSetValid[pd];
@@ -102,7 +105,7 @@ pd_PD/;System`Private`HoldNotValidQ[pd] :=
 
 
 PD/:PD[x__]PD[y__]:=
-    PD@@Sort@{x,y};
+    PD[x,y];
 
 PD/:Power[PD[x__],n_Integer]/;n>=2:=
     PD@@Flatten@ConstantArray[{x},n];
@@ -110,6 +113,9 @@ PD/:Power[PD[x__],n_Integer]/;n>=2:=
 PD[] :=
     1;
 
+
+INT//Attributes =
+    {Orderless};
 
 int_INT/;System`Private`HoldNotValidQ[int] :=
     (
@@ -119,7 +125,7 @@ int_INT/;System`Private`HoldNotValidQ[int] :=
 
 
 INT/:INT[x__]INT[y__]:=
-    INT@@Sort@{x,y};
+    INT[x,y];
 
 INT/:Power[INT[x__],n_Integer]/;n>=2:=
     INT@@Flatten@ConstantArray[{x},n];
@@ -302,7 +308,7 @@ cleanSolve[eqList_,varList_,opts:OptionsPattern[]] :=
 dealPDAndINT[head_,oldList_,newList_][expr_] :=
     With[ {rule = MapThread[Rule,{oldList,newList}]},
         expr//ReplaceAll[{
-            head[args__]:>head@@Sort@ReplaceAll[{args},rule]
+            head[args__]:>head@@ReplaceAll[{args},rule]
         }]
     ];
 
