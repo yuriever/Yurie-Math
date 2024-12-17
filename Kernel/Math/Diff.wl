@@ -219,7 +219,7 @@ integrateChange[expr_,eqList:{__Equal},oldList_List,newList_List,opts:OptionsPat
         Table[
             ReplaceAll[expr,oldToNew]*Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
             {oldToNew,oldToNewList}
-        ]//dealINT[oldList,newList]//integrateChangeStripList
+        ]//dealPDAndINT[INT,oldList,newList]//integrateChangeStripList
     ];
 
 integrateChange[expr_,eqList:{__Rule},oldList_List,newList_List,opts:OptionsPattern[]] :=
@@ -299,15 +299,11 @@ cleanSolve[eqList_,varList_,opts:OptionsPattern[]] :=
     ];
 
 
-dealINT[oldList_,newList_][expr_] :=
-    With[ {rule = MapThread[INT[#1]->INT[#2]&,{oldList,newList}]},
-        ReplaceAll[expr,rule]
-    ];
-
-
-dealPD[oldList_,newList_][expr_] :=
-    With[ {rule = MapThread[PD[#1]->PD[#2]&,{oldList,newList}]},
-        ReplaceAll[expr,rule]
+dealPDAndINT[head_,oldList_,newList_][expr_] :=
+    With[ {rule = MapThread[Rule,{oldList,newList}]},
+        expr//ReplaceAll[{
+            head[args__]:>head@@Sort@ReplaceAll[{args},rule]
+        }]
     ];
 
 
