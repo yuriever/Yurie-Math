@@ -107,8 +107,11 @@ pd_PD/;System`Private`HoldNotValidQ[pd] :=
 PD/:PD[x__]PD[y__]:=
     PD[x,y];
 
-PD/:Power[PD[x__],n_Integer]/;n>=2:=
+PD/:Power[PD[x__],n_Integer]/;n>=1:=
     PD@@Flatten@ConstantArray[{x},n];
+
+PD/:PD[x__]Power[PD[y_,rest___],-1]/;MemberQ[{x},y]:=
+    PD@@DeleteCases[{x},y,{1},1]/PD[rest];
 
 PD[] :=
     1;
@@ -129,6 +132,9 @@ INT/:INT[x__]INT[y__]:=
 
 INT/:Power[INT[x__],n_Integer]/;n>=2:=
     INT@@Flatten@ConstantArray[{x},n];
+
+INT/:INT[x__]Power[INT[y_,rest___],-1]/;MemberQ[{x},y]:=
+    INT@@DeleteCases[{x},y,{1},1]/INT[rest];
 
 INT[] :=
     1;

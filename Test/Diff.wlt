@@ -52,11 +52,35 @@ VerificationTest[
 ]
 
 VerificationTest[
+	PD[x]/PD[y]
+	,
+	PD[x]/PD[y]
+	,
+	TestID->"6-Diff.nb"
+]
+
+VerificationTest[
+	PD[x, y, z, z]/PD[z, x]
+	,
+	PD[y, z]
+	,
+	TestID->"7-Diff.nb"
+]
+
+VerificationTest[
+	PD[x, y, z, z]/PD[z, z, x, w]
+	,
+	PD[y]/PD[w]
+	,
+	TestID->"8-Diff.nb"
+]
+
+VerificationTest[
 	expr = PD[x, y]*f[x] + PD[x]*g[x] + h[y]
 	,
 	h[y] + g[x]*PD[x] + f[x]*PD[x, y]
 	,
-	TestID->"6-Diff.nb"
+	TestID->"9-Diff.nb"
 ]
 
 VerificationTest[
@@ -64,7 +88,7 @@ VerificationTest[
 	,
 	g[g[x]*PD[x]] + f[x]*PD[x, y]
 	,
-	TestID->"7-Diff.nb"
+	TestID->"10-Diff.nb"
 ]
 
 VerificationTest[
@@ -72,7 +96,7 @@ VerificationTest[
 	,
 	{{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
 	,
-	TestID->"8-Diff.nb"
+	TestID->"11-Diff.nb"
 ]
 
 VerificationTest[
@@ -82,7 +106,7 @@ VerificationTest[
 	,
 	{Yurie`Math`PDCoefficient::nonlinear}
 	,
-	TestID->"9-Diff.nb"
+	TestID->"12-Diff.nb"
 ]
 
 VerificationTest[
@@ -91,7 +115,7 @@ VerificationTest[
 	,
 	f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
 	,
-	TestID->"10-Diff.nb"
+	TestID->"13-Diff.nb"
 ]
 
 VerificationTest[
@@ -99,7 +123,7 @@ VerificationTest[
 	,
 	(-Derivative[0, 1, 0, 0][f][x, y, z, w])*Derivative[1, 0, 1, 1][g][x, y, z, w]
 	,
-	TestID->"11-Diff.nb"
+	TestID->"14-Diff.nb"
 ]
 
 VerificationTest[
@@ -107,7 +131,7 @@ VerificationTest[
 	,
 	f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
 	,
-	TestID->"12-Diff.nb"
+	TestID->"15-Diff.nb"
 ]
 
 VerificationTest[
@@ -116,7 +140,7 @@ VerificationTest[
 	,
 	(-f[x])*Derivative[1][f][x]
 	,
-	TestID->"13-Diff.nb"
+	TestID->"16-Diff.nb"
 ]
 
 VerificationTest[
@@ -124,7 +148,7 @@ VerificationTest[
 	,
 	-(1 - x)^a
 	,
-	TestID->"14-Diff.nb"
+	TestID->"17-Diff.nb"
 ]
 
 VerificationTest[
@@ -132,7 +156,7 @@ VerificationTest[
 	,
 	1/2
 	,
-	TestID->"15-Diff.nb"
+	TestID->"18-Diff.nb"
 ]
 
 VerificationTest[
@@ -140,7 +164,7 @@ VerificationTest[
 	,
 	{1/2, 1/2}
 	,
-	TestID->"16-Diff.nb"
+	TestID->"19-Diff.nb"
 ]
 
 VerificationTest[
@@ -148,7 +172,7 @@ VerificationTest[
 	,
 	-(1 - x)^a
 	,
-	TestID->"17-Diff.nb"
+	TestID->"20-Diff.nb"
 ]
 
 VerificationTest[
@@ -156,7 +180,7 @@ VerificationTest[
 	,
 	-(1 - x)^a
 	,
-	TestID->"18-Diff.nb"
+	TestID->"21-Diff.nb"
 ]
 
 VerificationTest[
@@ -164,7 +188,7 @@ VerificationTest[
 	,
 	2^(1 + a)*t^a*INT[t]
 	,
-	TestID->"19-Diff.nb"
+	TestID->"22-Diff.nb"
 ]
 
 VerificationTest[
@@ -172,7 +196,7 @@ VerificationTest[
 	,
 	c*Derivative[1, 1][f][u, v] == 0
 	,
-	TestID->"20-Diff.nb"
+	TestID->"23-Diff.nb"
 ]
 
 VerificationTest[
@@ -180,7 +204,7 @@ VerificationTest[
 	,
 	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
 	,
-	TestID->"21-Diff.nb"
+	TestID->"24-Diff.nb"
 ]
 
 VerificationTest[
@@ -188,7 +212,7 @@ VerificationTest[
 	,
 	{g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
 	,
-	TestID->"22-Diff.nb"
+	TestID->"25-Diff.nb"
 ]
 
 VerificationTest[
@@ -196,7 +220,7 @@ VerificationTest[
 	,
 	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
 	,
-	TestID->"23-Diff.nb"
+	TestID->"26-Diff.nb"
 ]
 
 VerificationTest[
@@ -204,7 +228,7 @@ VerificationTest[
 	,
 	g[x] - 2*Sqrt[x]*Derivative[1][f][x]
 	,
-	TestID->"24-Diff.nb"
+	TestID->"27-Diff.nb"
 ]
 
 VerificationTest[
