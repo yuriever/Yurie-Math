@@ -16,6 +16,8 @@ Get["Yurie`Math`DLMF`"];
 
 Get["Yurie`Math`Gamma`"];
 
+Get["Yurie`Math`PolePinching`"];
+
 Get["Yurie`Math`Hyper`"];
 
 Get["Yurie`Math`Diff`"];
