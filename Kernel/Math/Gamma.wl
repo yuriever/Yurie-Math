@@ -160,17 +160,23 @@ gammaSplit[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[variable_,index_,gm_Gamma,OptionsPattern[]][expr_] :=
-    Module[ {solution,residue},
-        gammaTakeResidueCheckAndThrow[variable,index,gm][expr];
+gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
+    Module[ {expr1,solution,residue},
+        expr1=
+            If[ FreeQ[expr,_multiGamma],
+                expr,
+                (*Else*)
+                gammaFrom[expr,"Transformation"->{"MultiGamma"}]
+            ];
+        gammaTakeResidueCheckAndThrow[variable,index,gmarg][expr1];
         solution =
-            Part[Solve[gm[[1]]==-index,{variable}],1,1];
+            Part[Solve[gmarg==-index,{variable}],1,1];
         residue =
             If[ OptionValue["SimplePole"]===True,
-                Residue[gm,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
-                    ReplaceAll[expr/gm,solution],
+                Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
+                    ReplaceAll[expr1/Gamma[gmarg],solution],
                 (*Else*)
-                Residue[expr,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
+                Residue[expr1,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ]//gammaFactorSimplify;
         gammaTakeResidueIfShowPole[OptionValue["ShowPole"]][residue,solution]
     ]//Catch;
@@ -180,7 +186,7 @@ gammaTakeResidue[] :=
     CellPrint@{
         ExpressionCell[
             ToExpression[
-                "gammaTakeResidue[x,n,Gamma[2x+1],\"ShowPole\"->True]@Gamma[2x+1]",
+                "gammaTakeResidue[x,n,2x+1,\"ShowPole\"->True]@Gamma[2x+1]",
                  StandardForm,
                  Defer
             ],
@@ -201,16 +207,16 @@ gammaTakeResidue[] :=
 (*Helper*)
 
 
-gammaTakeResidueCheckAndThrow[variable_,index_,gm_Gamma][expr_] :=
+gammaTakeResidueCheckAndThrow[variable_,index_,gmarg_][expr_] :=
     Which[
         !FreeQ[expr,index],
             Message[gammaTakeResidue::indexConflict,index];
             Throw[expr],
-        !Internal`LinearQ[gm[[1]],{variable}],
-            Message[gammaTakeResidue::gammaNotMatchVar,gm,variable];
+        !Internal`LinearQ[gmarg,{variable}],
+            Message[gammaTakeResidue::gammaNotMatchVar,HoldForm[Gamma][gmarg],variable];
             Throw[expr],
-        FreeQ[expr,gm],
-            Message[gammaTakeResidue::gammaNotInExpr,gm];
+        FreeQ[expr,Gamma[gmarg]],
+            Message[gammaTakeResidue::gammaNotInExpr,HoldForm[Gamma][gmarg]];
             Throw[0]
     ];
 

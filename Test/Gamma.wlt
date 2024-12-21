@@ -116,7 +116,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[-x]][Gamma[x]]
+	gammaTakeResidue[x, n, -x][Gamma[x]]
 	,
 	Quiet[0]
 	,
@@ -126,7 +126,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, x, Gamma[-x]][Gamma[x]]
+	gammaTakeResidue[x, x, -x][Gamma[x]]
 	,
 	Quiet[Gamma[x]]
 	,
@@ -136,7 +136,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[f[x]]][Gamma[x]]
+	gammaTakeResidue[x, n, f[x]][Gamma[x]]
 	,
 	Quiet[Gamma[x]]
 	,
@@ -146,7 +146,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[y, n, Gamma[f[x]]][Gamma[x]]
+	gammaTakeResidue[y, n, f[x]][Gamma[x]]
 	,
 	Quiet[Gamma[x]]
 	,
@@ -156,7 +156,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[-x], "ShowPole" -> True][Gamma[-x]]
+	gammaTakeResidue[x, n, -x, "ShowPole" -> True][Gamma[-x]]
 	,
 	{-((-1)^n/n!), x -> n}
 	,
@@ -164,7 +164,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[x], "ShowPole" -> False][Gamma[x]]
+	gammaTakeResidue[x, n, x, "ShowPole" -> False][Gamma[x]]
 	,
 	(-1)^n/n!
 	,
@@ -172,7 +172,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[x], "ShowPole" -> Return][Gamma[x]]
+	gammaTakeResidue[x, n, x, "ShowPole" -> Return][Gamma[x]]
 	,
 	x -> -n
 	,
@@ -180,7 +180,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[(-a)*x]][Gamma[(-a)*x]*Gamma[x]]
+	gammaTakeResidue[x, n, (-a)*x][Gamma[(-a)*x]*Gamma[x]]
 	,
 	-(((-1)^n*Gamma[n/a])/(a*n!))
 	,
@@ -188,7 +188,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x, n, Gamma[x], "SimplePole" -> False][Gamma[x]^2]
+	gammaTakeResidue[x, n, x, "SimplePole" -> False][Gamma[x]^2]
 	,
 	(2*(-1)^(2*n)*PolyGamma[0, 1 + n])/n!^2
 	,
@@ -204,7 +204,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x[1], n[1], Gamma[-x[1]], "ShowPole" -> False][Gamma[-x]]
+	gammaTakeResidue[x[1], n[1], -x[1], "ShowPole" -> False][Gamma[-x]]
 	,
 	Quiet[0]
 	,
@@ -214,7 +214,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x[1], n[1], Gamma[-x[1]], "ShowPole" -> False][Gamma[-x[1]]]
+	gammaTakeResidue[x[1], n[1], -x[1], "ShowPole" -> False][Gamma[-x[1]]]
 	,
 	-((-1)^n[1]/n[1]!)
 	,
@@ -222,7 +222,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaTakeResidue[x[1], n[1], Gamma[x[1]], "SimplePole" -> False][Gamma[x[1]]^2]
+	gammaTakeResidue[x[1], n[1], x[1], "SimplePole" -> False][Gamma[x[1]]^2]
 	,
 	(2*(-1)^(2*n[1])*PolyGamma[0, 1 + n[1]])/n[1]!^2
 	,
