@@ -142,20 +142,6 @@ focus::usage =
     "simplify the arguments of the specified heads.";
 
 
-(* ::Subsection:: *)
-(*Deprecation*)
-
-
-powerBaseSimplify::usage =
-    "simplify the power bases.";
-
-trigPhaseSimplify::usage =
-    "reduce the phase factor in trigonometric functions.";
-
-separateBy::usage =
-    "separate the elements by whether or not satisfying the criteria.";
-
-
 (* ::Section:: *)
 (*Private*)
 
@@ -533,40 +519,6 @@ focus[pattern_,operation_:Simplify][expr_] :=
         (head:pattern)[arg_]:>head@operation@arg,
         (head:pattern)[args__]:>head@@Map[operation,{args}]
     },All]&;
-
-
-(* ::Subsection:: *)
-(*Deprecation*)
-
-
-powerBaseSimplify::deprecation =
-    "this function has been superseded by focus.";
-
-powerBaseSimplify[simplify_:Simplify][expr_] :=
-    (
-        Message[powerBaseSimplify::deprecation];
-        expr//Replace[#,Power[x_,n_]:>Power[simplify@Together[x],n],All]&
-    );
-
-
-trigPhaseSimplify::deprecation =
-    "this function has been superseded by trigPhaseReduce.";
-
-trigPhaseSimplify[vars__][expr_] :=
-    (
-        Message[trigPhaseSimplify::deprecation];
-        trigPhaseReduce[vars][expr]
-    );
-
-
-separateBy::deprecation =
-    "this function has been superseded by separate.";
-
-separateBy[crit_][expr_] :=
-    (
-        Message[separateBy::deprecation];
-        separate[crit][expr]
-    );
 
 
 (* ::Subsection:: *)

@@ -19,9 +19,6 @@ Needs["Yurie`Math`Constant`"];
 hyperSplit::usage =
     "split a product into a list containing Hypergeometric2F1 factors and the rests.";
 
-hyperRegToUnreg::usage =
-    "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
-
 hyperUnregularize::usage =
     "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
@@ -84,10 +81,6 @@ hyperTo::symbolNotEnough =
     "there are `` more Hypergeometric functions than the number of specified symbols."
 
 
-hyperRegToUnreg::deprecation =
-    "this function has been superseded by hyperUnregularize.";
-
-
 (* ::Subsection:: *)
 (*hyperSplit*)
 
@@ -106,14 +99,7 @@ hyperSplit[expr_] :=
 
 
 (* ::Subsection:: *)
-(*hyperRegToUnreg*)
-
-
-hyperRegToUnreg[expr_] :=
-    (
-        Message[hyperRegToUnreg::deprecation];
-        expr//hyperUnregularize
-    );
+(*hyperUnregularize*)
 
 
 hyperUnregularize[expr_] :=

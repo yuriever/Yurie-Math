@@ -1,3 +1,14 @@
+<!-- Deprecation.wl -->
+
+* `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
+
+* `#!wl powerBaseSimplify` - simplify the power bases.
+
+* `#!wl trigPhaseSimplify` - reduce the phase factor in trigonometric functions.
+
+* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
+
+
 <!-- Diff.wl -->
 
 * `#!wl PD` - head of partial derivative that acts on the rest of the expression.
@@ -62,8 +73,6 @@
 
 * `#!wl hyperSplit` - split a product into a list containing Hypergeometric2F1 factors and the rests.
 
-* `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
-
 * `#!wl hyperUnregularize` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
 
 * `#!wl hyperTaylor` - head used by hyperToTaylor.
@@ -117,6 +126,11 @@
 * `#!wl jordanBlock` - jordanBlock[dim_Integer,a_OffDiagonal,b_Diagonal:1] jordanBlock[dim_Integer,a_].
 
 * `#!wl sparseBlockMatrix` - SparseArray\`SparseBlockMatrix.
+
+
+<!-- PolePinching.wl -->
+
+* `#!wl test` - test
 
 
 <!-- Quest.wl -->
@@ -229,9 +243,3 @@
 * `#!wl freeze` - screen subexpressions matching the pattern and then perform the operation.
 
 * `#!wl focus` - simplify the arguments of the specified heads.
-
-* `#!wl powerBaseSimplify` - simplify the power bases.
-
-* `#!wl trigPhaseSimplify` - reduce the phase factor in trigonometric functions.
-
-* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.

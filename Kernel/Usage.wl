@@ -1,3 +1,18 @@
+(* Deprecation.wl *)
+
+hyperRegToUnreg::usage =
+	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
+
+powerBaseSimplify::usage =
+	"simplify the power bases.";
+
+trigPhaseSimplify::usage =
+	"reduce the phase factor in trigonometric functions.";
+
+separateBy::usage =
+	"separate the elements by whether or not satisfying the criteria.";
+
+
 (* Diff.wl *)
 
 PD::usage =
@@ -87,9 +102,6 @@ multiGammaReduceByBarnesLemma::usage =
 hyperSplit::usage =
 	"split a product into a list containing Hypergeometric2F1 factors and the rests.";
 
-hyperRegToUnreg::usage =
-	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
-
 hyperUnregularize::usage =
 	"convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
 
@@ -167,6 +179,12 @@ jordanBlock::usage =
 
 sparseBlockMatrix::usage =
 	"SparseArray`SparseBlockMatrix.";
+
+
+(* PolePinching.wl *)
+
+test::usage =
+	"test";
 
 
 (* Quest.wl *)
@@ -332,12 +350,3 @@ freeze::usage =
 
 focus::usage =
 	"simplify the arguments of the specified heads.";
-
-powerBaseSimplify::usage =
-	"simplify the power bases.";
-
-trigPhaseSimplify::usage =
-	"reduce the phase factor in trigonometric functions.";
-
-separateBy::usage =
-	"separate the elements by whether or not satisfying the criteria.";

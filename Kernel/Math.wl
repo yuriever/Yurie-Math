@@ -34,6 +34,8 @@ Get["Yurie`Math`Index`"];
 
 (*Get["Yurie`Math`Plot`"];*)
 
+Get["Yurie`Math`Deprecation`"];
+
 
 (* ::Section:: *)
 (*End*)
