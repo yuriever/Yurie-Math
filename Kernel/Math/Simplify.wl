@@ -205,9 +205,15 @@ AS[assumption_] :=
 SSA[assumption_][expr_] :=
     Simplify[expr,assumption];
 
+SSA[assumption_,excludedFormList_List][expr_] :=
+    Simplify[expr,assumption,ExcludedForms->excludedFormList];
+
 
 FSA[assumption_][expr_] :=
     FullSimplify[expr,assumption];
+
+FSA[assumption_,excludedFormList_List][expr_] :=
+    FullSimplify[expr,assumption,ExcludedForms->excludedFormList];
 
 
 FEA[assumption_][expr_] :=
@@ -444,10 +450,10 @@ vanishing[expr_] :=
 (*swap*)
 
 
-swap[a_Symbol,b_Symbol][expr_] :=
+swap[a:Except[{_,_}],b:Except[{_,_}]][expr_] :=
     expr//ReplaceAll[{a->b,b->a}];
 
-swap[pairs:{_Symbol,_Symbol}...][expr_] :=
+swap[pairs:{_,_}...][expr_] :=
     expr//ReplaceAll[Flatten@Map[{#[[1]]->#[[2]],#[[2]]->#[[1]]}&,{pairs}]];
 
 
