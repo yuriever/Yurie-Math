@@ -110,6 +110,50 @@ VerificationTest[
 ]
 
 VerificationTest[
+	INT[x, y]/INT[x]
+	,
+	INT[y]
+	,
+	TestID->"13-Head.nb"
+]
+
+VerificationTest[
+	INT[x, y, z, x]
+	,
+	Quiet[INT[x, y, z]]
+	,
+	{Yurie`Math`INT::duplicate}
+	,
+	TestID->"14-Head.nb"
+]
+
+VerificationTest[
+	SUM[x, y]/SUM[x]
+	,
+	SUM[y]
+	,
+	TestID->"15-Head.nb"
+]
+
+VerificationTest[
+	SUM[x, y, z, x]
+	,
+	Quiet[SUM[x, y, z]]
+	,
+	{Yurie`Math`SUM::duplicate}
+	,
+	TestID->"16-Head.nb"
+]
+
+VerificationTest[
+	SUM[x]/SUM[x, y]
+	,
+	1/SUM[y]
+	,
+	TestID->"17-Head.nb"
+]
+
+VerificationTest[
 	ClearAll["`*"];
 	End[]
 	,

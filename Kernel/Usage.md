@@ -69,6 +69,8 @@
 
 * `#!wl INT` - head of integral that acts on the rest of the expression.
 
+* `#!wl SUM` - head of sum that acts on the rest of the expression.
+
 * `#!wl PDCoefficient` - collect the coefficients of PD[___].
 
 

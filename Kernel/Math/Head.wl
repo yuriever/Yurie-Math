@@ -20,6 +20,8 @@ PD::usage =
 INT::usage =
     "head of integral that acts on the rest of the expression."
 
+SUM::usage =
+    "head of sum that acts on the rest of the expression."
 
 PDCoefficient::usage =
     "collect the coefficients of PD[___].";
@@ -43,22 +45,28 @@ Begin["`Private`"];
 PDCoefficient::nonlinear =
     "the expression is nonlinear with respect to PD[__]."
 
+INT::duplicate =
+    "the original expression contains duplicate integral(s) with respect to ``."
+
+SUM::duplicate =
+    "the original expression contains duplicate sum(s) with respect to ``.";
+
 
 (* ::Subsection:: *)
 (*Main*)
 
 
 (* ::Subsubsection:: *)
-(*PD|INT*)
+(*PD*)
 
 
 PD//Attributes =
     {Orderless};
 
-pd_PD/;System`Private`HoldNotValidQ[pd] :=
+head_PD/;System`Private`HoldNotValidQ[head] :=
     (
-        System`Private`HoldSetValid[pd];
-        System`Private`HoldSetNoEntry[pd]
+        System`Private`HoldSetValid[head];
+        System`Private`HoldSetNoEntry[head]
     );
 
 
@@ -75,26 +83,75 @@ PD[] :=
     1;
 
 
+(* ::Subsubsection:: *)
+(*INT*)
+
+
 INT//Attributes =
     {Orderless};
 
-int_INT/;System`Private`HoldNotValidQ[int] :=
+head_INT/;System`Private`HoldNotValidQ[head] :=
     (
-        System`Private`HoldSetValid[int];
-        System`Private`HoldSetNoEntry[int]
+        Quiet[
+            System`Private`HoldSetValid[head],
+            {INT::duplicate}
+        ];
+        System`Private`HoldSetNoEntry[head]
     );
 
 
 INT/:INT[x__]INT[y__]:=
     INT[x,y];
 
-INT/:Power[INT[x__],n_Integer]/;n>=2:=
-    INT@@Flatten@ConstantArray[{x},n];
+HoldPattern[INT][x__]/;!DuplicateFreeQ[{x}] :=
+    (
+        Message[
+            INT::duplicate,
+            Row[Select[Tally[{x}],Last[#]>=2&][[All,1]],","]
+        ];
+        INT@@DeleteDuplicates[{x}]
+    );
 
 INT/:INT[x__]Power[INT[y_,rest___],-1]/;MemberQ[{x},y]:=
     INT@@DeleteCases[{x},y,{1},1]/INT[rest];
 
 INT[] :=
+    1;
+
+
+(* ::Subsubsection:: *)
+(*SUM*)
+
+
+SUM//Attributes =
+    {Orderless};
+
+head_SUM/;System`Private`HoldNotValidQ[head] :=
+    (
+        Quiet[
+            System`Private`HoldSetValid[head],
+            {SUM::duplicate}
+        ];
+        System`Private`HoldSetNoEntry[head]
+    );
+
+
+SUM/:SUM[x__]SUM[y__]:=
+    SUM[x,y];
+
+HoldPattern[SUM][x__]/;!DuplicateFreeQ[{x}] :=
+    (
+        Message[
+            SUM::duplicate,
+            Row[Select[Tally[{x}],Last[#]>=2&][[All,1]],","]
+        ];
+        SUM@@DeleteDuplicates[{x}]
+    );
+
+SUM/:SUM[x__]Power[SUM[y_,rest___],-1]/;MemberQ[{x},y]:=
+    SUM@@DeleteCases[{x},y,{1},1]/SUM[rest];
+
+SUM[] :=
     1;
 
 
