@@ -199,6 +199,8 @@
 
 * `#!wl module` - operator form of Module.
 
+* `#!wl rep` - operator form of ReplaceAll.
+
 * `#!wl times` - operator form of Times.
 
 * `#!wl plus` - operator form of Plus.

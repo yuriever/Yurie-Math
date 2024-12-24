@@ -282,6 +282,9 @@ with::usage =
 module::usage =
 	"operator form of Module.";
 
+rep::usage =
+	"operator form of ReplaceAll.";
+
 times::usage =
 	"operator form of Times.";
 

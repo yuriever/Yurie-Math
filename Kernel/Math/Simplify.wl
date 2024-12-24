@@ -55,6 +55,12 @@ module::usage =
     "operator form of Module.";
 
 
+rep::usage =
+    "operator form of ReplaceAll.";
+
+part::usage =
+    "operator form of Part, GeneralUtilities`Slice.";
+
 times::usage =
     "operator form of Times.";
 
@@ -72,9 +78,6 @@ solve::usage =
 
 solveFirst::usage =
     "operator form of Solve + First.";
-
-part::usage =
-    "operator form of Part, GeneralUtilities`Slice.";
 
 collect::usage =
     "operator form of Collect.";
@@ -283,6 +286,14 @@ module[localVarList_List] :=
     ];
 
 
+rep[rules___][expr_] :=
+    ReplaceAll[expr,Flatten[{rules}]];
+
+
+part :=
+    GeneralUtilities`Slice;
+
+
 times[args___][expr_] :=
     Times[expr,args];
 
@@ -305,10 +316,6 @@ solve[args___][expr_] :=
 
 solveFirst[args___][expr_] :=
     First@Solve[expr,args];
-
-
-part :=
-    GeneralUtilities`Slice;
 
 
 collect[var_,head_:Identity][expr_] :=
