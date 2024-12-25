@@ -72,7 +72,10 @@ separateBy[crit_][expr_] :=
 
 gammaTakeResidue[variable_,index_,gm_Gamma,opts:OptionsPattern[]][expr_] :=
     (
-        Message[General::deprecation,"this argument pattern","gammaTakeResidue[x,n,x+1]"];
+        Message[General::deprecation,
+            "gammaTakeResidue[_,_,Gamma[_]]",
+            "gammaTakeResidue[_,_,_]"
+        ];
         gammaTakeResidue[variable,index,gm[[1]],opts][expr]
     );
 
