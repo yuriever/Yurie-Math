@@ -62,7 +62,8 @@ gammaFrom//Options = {
 
 gammaTakeResidue//Options = {
     "SimplePole"->True,
-    "ShowPole"->False
+    "ShowPole"->False,
+    "ShowGammaReplacement"->False
 };
 
 
@@ -161,7 +162,7 @@ gammaSplit[expr_] :=
 
 
 gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
-    Module[ {expr1,solution,residue},
+    Module[ {expr1,solution,residue,gammaList},
         expr1=
             If[ FreeQ[expr,_multiGamma],
                 expr,
@@ -171,6 +172,8 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
         gammaTakeResidueCheckAndThrow[variable,index,gmarg][expr1];
         solution =
             Part[Solve[gmarg==-index,{variable}],1,1];
+        gammaList=
+            Cases[expr1,Gamma[arg_]/;!FreeQ[arg,variable]:>arg,All]//Map[{#,ReplaceAll[#,solution]}&];
         residue =
             If[ OptionValue["SimplePole"]===True,
                 Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
@@ -178,7 +181,7 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
                 (*Else*)
                 Residue[expr1,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ]//gammaFactorSimplify;
-        gammaTakeResidueIfShowPole[OptionValue["ShowPole"]][residue,solution]
+        gammaTakeResidueIfShowPole[OptionValue["ShowPole"],OptionValue["ShowGammaReplacement"]][residue,solution,gammaList]
     ]//Catch;
 
 
@@ -225,15 +228,22 @@ gammaFactorSimplify[expr_] :=
     expr//ReplaceAll[gm_Gamma:>Simplify@gm];
 
 
-gammaTakeResidueIfShowPole[True][residue_,solution_] :=
-    {residue,solution};
+gammaTakeResidueIfShowPole[True,True][residue_,solution_,gammaList_] :=
+    {residue,solution,gammaList};
 
-gammaTakeResidueIfShowPole[False][residue_,solution_] :=
+gammaTakeResidueIfShowPole[False,False][residue_,solution_,gammaList_] :=
     residue;
 
-gammaTakeResidueIfShowPole[fun_Symbol][residue_,solution_] :=
+gammaTakeResidueIfShowPole[True,False][residue_,solution_,gammaList_] :=
+    {residue,solution};
+
+gammaTakeResidueIfShowPole[False,True][residue_,solution_,gammaList_] :=
+    {residue,gammaList};
+
+gammaTakeResidueIfShowPole[fun1_Symbol,fun2_Symbol][residue_,solution_,gammaList_] :=
     (
-        fun[solution];
+        fun1[solution];
+        fun2@TableForm[gammaList];
         residue
     );
 

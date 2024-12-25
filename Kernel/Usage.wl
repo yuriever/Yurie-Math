@@ -285,6 +285,9 @@ module::usage =
 rep::usage =
 	"operator form of ReplaceAll.";
 
+part::usage =
+	"operator form of Part, GeneralUtilities`Slice.";
+
 times::usage =
 	"operator form of Times.";
 
@@ -302,9 +305,6 @@ solve::usage =
 
 solveFirst::usage =
 	"operator form of Solve + First.";
-
-part::usage =
-	"operator form of Part, GeneralUtilities`Slice.";
 
 collect::usage =
 	"operator form of Collect.";

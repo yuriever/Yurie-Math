@@ -1,6 +1,6 @@
 {"gammaFrom" -> {0, {"Transformation", "ActivateGamma"}}, 
- "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole"}}, 
- "multiGammaSimplify" -> {0, {"Assumptions"}}, 
+ "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole", 
+    "ShowGammaReplacement"}}, "multiGammaSimplify" -> {0, {"Assumptions"}}, 
  "diffChange" -> {0, 0, 0, 0, 0, {"FirstSolution"}}, 
  "integrateChange" -> {0, 0, 0, 0, {"FirstSolution"}}, 
  "freeze" -> {0, 0, {"Transformation"}}, 

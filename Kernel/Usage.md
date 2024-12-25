@@ -201,6 +201,8 @@
 
 * `#!wl rep` - operator form of ReplaceAll.
 
+* `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
+
 * `#!wl times` - operator form of Times.
 
 * `#!wl plus` - operator form of Plus.
@@ -212,8 +214,6 @@
 * `#!wl solve` - operator form of Solve.
 
 * `#!wl solveFirst` - operator form of Solve + First.
-
-* `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
 
 * `#!wl collect` - operator form of Collect.
 
