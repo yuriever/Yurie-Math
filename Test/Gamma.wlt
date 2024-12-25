@@ -116,9 +116,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-	SetOptions[gammaTakeResidue, "ShowPole" -> False, "ShowGammaReplacement" -> False]
+	SetOptions[gammaTakeResidue, "ShowPole" -> False]
 	,
-	{"SimplePole" -> True, "ShowPole" -> False, "ShowGammaReplacement" -> False}
+	{"SimplePole" -> True, "ShowPole" -> False}
 	,
 	TestID->"14-Gamma.nb"
 ]
