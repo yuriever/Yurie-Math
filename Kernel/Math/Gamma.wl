@@ -62,8 +62,7 @@ gammaFrom//Options = {
 
 gammaTakeResidue//Options = {
     "SimplePole"->True,
-    "ShowPole"->True,
-    "ShowGammaReplacement"->True
+    "ShowPole"->True
 };
 
 
@@ -163,7 +162,7 @@ gammaSplit[expr_] :=
 
 gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
     Module[ {expr1,solution,residue,gammaList},
-        expr1=
+        expr1 =
             If[ FreeQ[expr,_multiGamma],
                 expr,
                 (*Else*)
@@ -172,7 +171,7 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
         gammaTakeResidueCheckAndThrow[variable,index,gmarg][expr1];
         solution =
             Part[Solve[gmarg==-index,{variable}],1,1];
-        gammaList=
+        gammaList =
             Cases[expr1,Gamma[arg_]/;!FreeQ[arg,variable]:>arg,All]//Map[{#,Simplify@ReplaceAll[#,solution]}&];
         residue =
             If[ OptionValue["SimplePole"]===True,
@@ -181,8 +180,7 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
                 (*Else*)
                 Residue[expr1,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ]//gammaFactorSimplify;
-        gammaTakeResidueIfShowPole[OptionValue["ShowPole"]][solution];
-        gammaTakeResidueIfShowGammaReplacement[OptionValue["ShowGammaReplacement"]][gammaList];
+        gammaTakeResidueIfShowPoleData[OptionValue["ShowPole"],variable,index,solution][gammaList];
         residue
     ]//Catch;
 
@@ -230,17 +228,31 @@ gammaFactorSimplify[expr_] :=
     expr//ReplaceAll[gm_Gamma:>Simplify@gm];
 
 
-gammaTakeResidueIfShowPole[True][solution_] :=
-    Echo[solution];
+gammaTakeResidueIfShowPoleData[True,variable_,index_,solution_][gammaList_] :=
+    Module[ {sign,gammaListNew},
+        sign =
+            Simplify[Sign@Coefficient[solution[[2]],index]];
+        gammaListNew =
+            Switch[sign,
+                1,
+                    separate[Simplify[Coefficient[#[[1]],variable]>0]&][gammaList],
+                -1,
+                    separate[Simplify[Coefficient[#[[1]],variable]<0]&][gammaList],
+                _,
+                    gammaList
+            ];
+        Echo[solution];
+        Print@Grid[
+            {Map[gammaListGrid,gammaListNew]},
+            Spacings->{2,0},
+            Alignment->Top
+        ];
+    ];
 
-gammaTakeResidueIfShowPole[False][solution_]:=
-    Null;
+gammaListGrid[list_] :=
+    Grid[list,Alignment->{Left,Center},Spacings->{1,0.5},Dividers->{True,{{True}}},FrameStyle->LightGray]
 
-
-gammaTakeResidueIfShowGammaReplacement[True][gammaList_] :=
-    Print@TableForm[gammaList,TableSpacing->{0.5,2}];
-
-gammaTakeResidueIfShowGammaReplacement[False][gammaList_] :=
+gammaTakeResidueIfShowPoleData[False,___][_] :=
     Null;
 
 
