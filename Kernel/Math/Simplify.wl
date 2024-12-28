@@ -76,9 +76,6 @@ limit::usage =
 solve::usage =
     "operator form of Solve.";
 
-solveFirst::usage =
-    "operator form of Solve + First.";
-
 collect::usage =
     "operator form of Collect.";
 
@@ -286,7 +283,7 @@ module[localVarList_List] :=
     ];
 
 
-rep[rules___][expr_] :=
+rep[rules:(_Rule|_RuleDelayed)...][expr_] :=
     ReplaceAll[expr,Flatten[{rules}]];
 
 
@@ -312,10 +309,6 @@ limit[direction_][expr_] :=
 
 solve[args___][expr_] :=
     Solve[expr,args];
-
-
-solveFirst[args___][expr_] :=
-    First@Solve[expr,args];
 
 
 collect[var_,head_:Identity][expr_] :=

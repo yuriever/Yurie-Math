@@ -244,7 +244,7 @@ gammaTakeResidueIfShowPoleData[True,variable_,index_,solution_][gammaList_] :=
         Echo[solution];
         Print@Grid[
             {Map[gammaListGrid,gammaListNew]},
-            Spacings->{2,0},
+            Spacings->{1,0},
             Alignment->Top
         ];
     ];
