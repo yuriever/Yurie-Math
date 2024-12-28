@@ -28,27 +28,11 @@ VerificationTest[
 ]
 
 VerificationTest[
-	indexize[{x, Null}]
-	,
-	x
-	,
-	TestID->"3-Index.nb"
-]
-
-VerificationTest[
 	indexize[x, a]
 	,
 	xa
 	,
-	TestID->"4-Index.nb"
-]
-
-VerificationTest[
-	indexize[{x, a}]
-	,
-	xa
-	,
-	TestID->"5-Index.nb"
+	TestID->"3-Index.nb"
 ]
 
 VerificationTest[
@@ -56,15 +40,103 @@ VerificationTest[
 	,
 	x12
 	,
+	TestID->"4-Index.nb"
+]
+
+VerificationTest[
+	indexize["x", 1, Null]
+	,
+	x1
+	,
+	TestID->"5-Index.nb"
+]
+
+VerificationTest[
+	indexize["x", "a"]
+	,
+	xa
+	,
 	TestID->"6-Index.nb"
 ]
 
 VerificationTest[
-	indexize[{x, 1, 2}]
+	indexize[x]
 	,
-	x12
+	indexize[x]
 	,
 	TestID->"7-Index.nb"
+]
+
+VerificationTest[
+	{indexify[x, 1, 2]}
+	,
+	{x1, x2}
+	,
+	TestID->"8-Index.nb"
+]
+
+VerificationTest[
+	{indexify[{x}, 1, 2]}
+	,
+	{x1, x2}
+	,
+	TestID->"9-Index.nb"
+]
+
+VerificationTest[
+	{indexify[{x, y}, 1, 2]}
+	,
+	{x1, y1, x2, y2}
+	,
+	TestID->"10-Index.nb"
+]
+
+VerificationTest[
+	{indexify[{x, y}, Null]}
+	,
+	{x, y}
+	,
+	TestID->"11-Index.nb"
+]
+
+VerificationTest[
+	{indexify[{x, y}, Null, a]}
+	,
+	{x, y, xa, ya}
+	,
+	TestID->"12-Index.nb"
+]
+
+VerificationTest[
+	{indexify["x", 1, 2]}
+	,
+	{x1, x2}
+	,
+	TestID->"13-Index.nb"
+]
+
+VerificationTest[
+	indexify[{}, 1, 2]
+	,
+	indexify[{}, 1, 2]
+	,
+	TestID->"14-Index.nb"
+]
+
+VerificationTest[
+	indexify[{x, y}]
+	,
+	indexify[{x, y}]
+	,
+	TestID->"15-Index.nb"
+]
+
+VerificationTest[
+	indexify[x]
+	,
+	indexify[x]
+	,
+	TestID->"16-Index.nb"
 ]
 
 VerificationTest[
@@ -72,7 +144,7 @@ VerificationTest[
 	,
 	xa + xb + x[] + x[a + b] + y[0]
 	,
-	TestID->"8-Index.nb"
+	TestID->"17-Index.nb"
 ]
 
 VerificationTest[
@@ -80,7 +152,7 @@ VerificationTest[
 	,
 	xa + xb + Superscript[x, c] + Superscript[x, d]
 	,
-	TestID->"9-Index.nb"
+	TestID->"18-Index.nb"
 ]
 
 VerificationTest[
@@ -88,7 +160,7 @@ VerificationTest[
 	,
 	xc + xd + Subscript[x, a] + Subscript[x, b]
 	,
-	TestID->"10-Index.nb"
+	TestID->"19-Index.nb"
 ]
 
 VerificationTest[
@@ -96,7 +168,7 @@ VerificationTest[
 	,
 	x + xa + xb + x[] + y[0]
 	,
-	TestID->"11-Index.nb"
+	TestID->"20-Index.nb"
 ]
 
 VerificationTest[
@@ -104,7 +176,7 @@ VerificationTest[
 	,
 	x + x[] + x[a] + x[b] + y[0]
 	,
-	TestID->"12-Index.nb"
+	TestID->"21-Index.nb"
 ]
 
 VerificationTest[
@@ -112,7 +184,7 @@ VerificationTest[
 	,
 	x + Subscript[x, a] + Subscript[x, b] + x[] + y[0]
 	,
-	TestID->"13-Index.nb"
+	TestID->"22-Index.nb"
 ]
 
 VerificationTest[
@@ -120,7 +192,7 @@ VerificationTest[
 	,
 	x + Superscript[x, a] + Superscript[x, b] + x[] + y[0]
 	,
-	TestID->"14-Index.nb"
+	TestID->"23-Index.nb"
 ]
 
 VerificationTest[
@@ -130,7 +202,7 @@ VerificationTest[
 	,
 	{Yurie`Math`indexSplit::optnotmatch}
 	,
-	TestID->"15-Index.nb"
+	TestID->"24-Index.nb"
 ]
 
 VerificationTest[
@@ -138,7 +210,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"16-Index.nb"
+	TestID->"25-Index.nb"
 ]
 
 VerificationTest[
@@ -146,7 +218,7 @@ VerificationTest[
 	,
 	{z, z[b], z[1], z[b1]}
 	,
-	TestID->"17-Index.nb"
+	TestID->"26-Index.nb"
 ]
 
 VerificationTest[
@@ -154,7 +226,7 @@ VerificationTest[
 	,
 	{z, z[b], z[1], z[b1]}
 	,
-	TestID->"18-Index.nb"
+	TestID->"27-Index.nb"
 ]
 
 VerificationTest[
@@ -162,7 +234,7 @@ VerificationTest[
 	,
 	{z, zb, z[1], zb[1]}
 	,
-	TestID->"19-Index.nb"
+	TestID->"28-Index.nb"
 ]
 
 VerificationTest[
@@ -170,7 +242,7 @@ VerificationTest[
 	,
 	{z, zb, z[1], zb[1]}
 	,
-	TestID->"20-Index.nb"
+	TestID->"29-Index.nb"
 ]
 
 VerificationTest[
@@ -178,7 +250,7 @@ VerificationTest[
 	,
 	{z[0], zb[0], zb}
 	,
-	TestID->"21-Index.nb"
+	TestID->"30-Index.nb"
 ]
 
 VerificationTest[
@@ -186,7 +258,7 @@ VerificationTest[
 	,
 	{z[0], zb[0], z[b]}
 	,
-	TestID->"22-Index.nb"
+	TestID->"31-Index.nb"
 ]
 
 VerificationTest[
@@ -194,7 +266,7 @@ VerificationTest[
 	,
 	Hold[x1 + x2]
 	,
-	TestID->"23-Index.nb"
+	TestID->"32-Index.nb"
 ]
 
 VerificationTest[
@@ -202,7 +274,7 @@ VerificationTest[
 	,
 	HoldComplete[x1]
 	,
-	TestID->"24-Index.nb"
+	TestID->"33-Index.nb"
 ]
 
 VerificationTest[
@@ -210,7 +282,7 @@ VerificationTest[
 	,
 	Inactive[f][x1]
 	,
-	TestID->"25-Index.nb"
+	TestID->"34-Index.nb"
 ]
 
 VerificationTest[
@@ -218,7 +290,7 @@ VerificationTest[
 	,
 	Hold[x[1] + x[2]]
 	,
-	TestID->"26-Index.nb"
+	TestID->"35-Index.nb"
 ]
 
 VerificationTest[
@@ -226,7 +298,7 @@ VerificationTest[
 	,
 	HoldComplete[x[1]]
 	,
-	TestID->"27-Index.nb"
+	TestID->"36-Index.nb"
 ]
 
 VerificationTest[
@@ -234,7 +306,7 @@ VerificationTest[
 	,
 	Inactive[f][x[1]]
 	,
-	TestID->"28-Index.nb"
+	TestID->"37-Index.nb"
 ]
 
 VerificationTest[
@@ -242,7 +314,7 @@ VerificationTest[
 	,
 	0
 	,
-	TestID->"29-Index.nb"
+	TestID->"38-Index.nb"
 ]
 
 VerificationTest[
@@ -250,7 +322,7 @@ VerificationTest[
 	,
 	x2
 	,
-	TestID->"30-Index.nb"
+	TestID->"39-Index.nb"
 ]
 
 VerificationTest[
@@ -258,7 +330,7 @@ VerificationTest[
 	,
 	x12
 	,
-	TestID->"31-Index.nb"
+	TestID->"40-Index.nb"
 ]
 
 VerificationTest[
@@ -266,7 +338,7 @@ VerificationTest[
 	,
 	x1 - x2
 	,
-	TestID->"32-Index.nb"
+	TestID->"41-Index.nb"
 ]
 
 VerificationTest[
@@ -274,7 +346,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"33-Index.nb"
+	TestID->"42-Index.nb"
 ]
 
 VerificationTest[
@@ -282,7 +354,7 @@ VerificationTest[
 	,
 	FullForm[phat1]
 	,
-	TestID->"34-Index.nb"
+	TestID->"43-Index.nb"
 ]
 
 VerificationTest[
@@ -290,7 +362,7 @@ VerificationTest[
 	,
 	FullForm[Subscript[phat, 1]]
 	,
-	TestID->"35-Index.nb"
+	TestID->"44-Index.nb"
 ]
 
 VerificationTest[
@@ -298,7 +370,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"36-Index.nb"
+	TestID->"45-Index.nb"
 ]
 
 VerificationTest[

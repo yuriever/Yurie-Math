@@ -107,7 +107,9 @@
 
 <!-- Index.wl -->
 
-* `#!wl indexize` - join the variable and index into a symbol.
+* `#!wl indexize` - join the variable and index(s) into a symbol.
+
+* `#!wl indexify` - join the variable(s) and index(s) into a sequence of symbols.
 
 * `#!wl indexJoin` - join indexed variables into symbols in the expression.
 

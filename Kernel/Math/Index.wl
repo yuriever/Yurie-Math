@@ -15,7 +15,10 @@ Needs["Yurie`Math`"];
 
 
 indexize::usage =
-    "join the variable and index into a symbol.";
+    "join the variable and index(s) into a symbol.";
+
+indexify::usage =
+    "join the variable(s) and index(s) into a sequence of symbols.";
 
 indexJoin::usage =
     "join indexed variables into symbols in the expression.";
@@ -73,28 +76,36 @@ $indexTypeP =
 
 
 (* ::Subsection:: *)
-(*indexize*)
+(*indexize|indexify*)
 
 
 (* ::Subsubsection:: *)
 (*Main*)
 
 
-indexize[var_,index_] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>indexToString[index]];
+indexize[var:_Symbol|_String,indices__] :=
+    indexizeKernel[var,indices];
 
-indexize[{var_,index_}] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>indexToString[index]];
 
-indexize[var_,indices__] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>StringJoin@Map[indexToString,{indices}]];
+indexify[var:_Symbol|_String,labels__] :=
+    Map[indexizeKernel[var,#]&,{labels}]//Apply[Sequence];
 
-indexize[{var_,indices__}] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>StringJoin@Map[indexToString,{indices}]];
+indexify[varList:{(_Symbol|_String)..},labels__] :=
+    Outer[indexizeKernel,varList,{labels}]//Transpose//Flatten//Apply[Sequence];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
+
+
+indexizeKernel[var_String,index_] :=
+    ToExpression[var<>indexToString[index]];
+
+indexizeKernel[var_String,indices__] :=
+    ToExpression@StringJoin[var,Map[indexToString,{indices}]];
+
+indexizeKernel[var_Symbol,index__] :=
+    indexizeKernel[ToString[var,FormatType->InputForm],index];
 
 
 indexToString[Null] :=

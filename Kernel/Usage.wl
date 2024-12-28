@@ -151,7 +151,10 @@ wilsonPolynomialFromHyper::usage =
 (* Index.wl *)
 
 indexize::usage =
-	"join the variable and index into a symbol.";
+	"join the variable and index(s) into a symbol.";
+
+indexify::usage =
+	"join the variable(s) and index(s) into a sequence of symbols.";
 
 indexJoin::usage =
 	"join indexed variables into symbols in the expression.";
