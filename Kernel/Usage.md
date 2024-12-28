@@ -8,6 +8,8 @@
 
 * `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
 
+* `#!wl solveFirst` - operator form of Solve + First.
+
 
 <!-- Diff.wl -->
 
@@ -212,8 +214,6 @@
 * `#!wl limit` - opeartor form of Limit.
 
 * `#!wl solve` - operator form of Solve.
-
-* `#!wl solveFirst` - operator form of Solve + First.
 
 * `#!wl collect` - operator form of Collect.
 

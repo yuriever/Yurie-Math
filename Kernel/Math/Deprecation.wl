@@ -26,6 +26,9 @@ trigPhaseSimplify::usage =
 separateBy::usage =
     "separate the elements by whether or not satisfying the criteria.";
 
+solveFirst::usage =
+    "operator form of Solve + First.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -77,6 +80,13 @@ gammaTakeResidue[variable_,index_,gm_Gamma,opts:OptionsPattern[]][expr_] :=
             "gammaTakeResidue[_,_,_]"
         ];
         gammaTakeResidue[variable,index,gm[[1]],opts][expr]
+    );
+
+
+solveFirst[args___][expr_] :=
+    (
+        Message[General::deprecation0,"solveFirst"];
+        First@Solve[expr,args]
     );
 
 

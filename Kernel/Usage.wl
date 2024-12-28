@@ -12,6 +12,9 @@ trigPhaseSimplify::usage =
 separateBy::usage =
 	"separate the elements by whether or not satisfying the criteria.";
 
+solveFirst::usage =
+	"operator form of Solve + First.";
+
 
 (* Diff.wl *)
 
@@ -302,9 +305,6 @@ limit::usage =
 
 solve::usage =
 	"operator form of Solve.";
-
-solveFirst::usage =
-	"operator form of Solve + First.";
 
 collect::usage =
 	"operator form of Collect.";
