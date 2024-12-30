@@ -187,6 +187,8 @@
 
 * `#!wl FE` - FunctionExpand.
 
+* `#!wl FES` - FunctionExpand + Simplify.
+
 * `#!wl AS` - operator form of Assuming.
 
 * `#!wl SSA` - Simplify + Assuming.

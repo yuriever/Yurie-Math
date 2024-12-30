@@ -29,6 +29,9 @@ FS::usage =
 FE::usage =
     "FunctionExpand.";
 
+FES::usage =
+    "FunctionExpand + Simplify.";
+
 AS::usage =
     "operator form of Assuming.";
 
@@ -198,6 +201,10 @@ FE :=
     FunctionExpand;
 
 
+FES :=
+    FunctionExpand/*Simplify;
+
+
 AS[assumption_] :=
     Function[expr,Assuming[assumption,expr],{HoldAll}];
 
@@ -283,7 +290,7 @@ module[localVarList_List] :=
     ];
 
 
-rep[rules:(_Rule|_RuleDelayed)...][expr_] :=
+rep[rules___][expr_] :=
     ReplaceAll[expr,Flatten[{rules}]];
 
 

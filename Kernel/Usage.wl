@@ -264,6 +264,9 @@ FS::usage =
 FE::usage =
 	"FunctionExpand.";
 
+FES::usage =
+	"FunctionExpand + Simplify.";
+
 AS::usage =
 	"operator form of Assuming.";
 
