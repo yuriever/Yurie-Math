@@ -44,6 +44,9 @@ FSA::usage =
 FEA::usage =
     "FunctionExpand + Assuming.";
 
+FESA::usage =
+    "FunctionExpand + Simplify + Assuming.";
+
 
 modularize::usage =
     "modularize scoping constructions.";
@@ -157,35 +160,6 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
-
-
-SSA//Options =
-    Options@Simplify;
-
-FSA//Options =
-    Options@FullSimplify;
-
-FEA//Options =
-    Options@FunctionExpand;
-
-series//Options =
-    Options@Series;
-
-limit//Options =
-    Options@Limit;
-
-solve//Options =
-    Options@Solve;
-
-solveFirst//Options =
-    Options@Solve;
-
-collect//Options =
-    Options@Collect;
-
-
-(* ::Subsection:: *)
 (*Operator form*)
 
 
@@ -225,6 +199,13 @@ FSA[assumption_,excludedFormList_List][expr_] :=
 
 FEA[assumption_][expr_] :=
     FunctionExpand[expr,assumption];
+
+
+FESA[assumption_][expr_] :=
+    Simplify[FunctionExpand[expr,assumption],assumption];
+
+FESA[assumption_,excludedFormList_List][expr_] :=
+    Simplify[FunctionExpand[expr,assumption],assumption,ExcludedForms->excludedFormList];
 
 
 modularize//Attributes =

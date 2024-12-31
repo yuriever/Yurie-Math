@@ -197,6 +197,8 @@
 
 * `#!wl FEA` - FunctionExpand + Assuming.
 
+* `#!wl FESA` - FunctionExpand + Simplify + Assuming.
+
 * `#!wl modularize` - modularize scoping constructions.
 
 * `#!wl block` - operator form of Block.

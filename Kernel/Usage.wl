@@ -279,6 +279,9 @@ FSA::usage =
 FEA::usage =
 	"FunctionExpand + Assuming.";
 
+FESA::usage =
+	"FunctionExpand + Simplify + Assuming.";
+
 modularize::usage =
 	"modularize scoping constructions.";
 
