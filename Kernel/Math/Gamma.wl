@@ -220,7 +220,7 @@ gammaTakeResidueCheckAndThrow[variable_,index_,gmarg_][expr_] :=
             Throw[expr],
         FreeQ[expr,Gamma[gmarg]],
             Message[gammaTakeResidue::gammaNotInExpr,HoldForm[Gamma][gmarg]];
-            Throw[0]
+            Throw[expr]
     ];
 
 
