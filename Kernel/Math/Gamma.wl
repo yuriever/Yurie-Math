@@ -86,7 +86,7 @@ gammaTakeResidue::gammaNotMatchVar =
     "the argument of the factor `` should be a linear function of the variable ``.";
 
 gammaTakeResidue::gammaNotInExpr =
-    "the factor `` does not appear in the expression, and the residue vanishes.";
+    "the factor `` does not appear in the expression.";
 
 
 multiGammaReduceByBarnesLemma::notMatch =

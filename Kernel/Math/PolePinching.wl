@@ -67,7 +67,6 @@ multiGammaPoleAnalysisKernel[varList_List,poleIndexList_List,isolatePoleData:{{_
 (*Helper*)
 
 
-
 getPoleData[isolatePoleData_List][mg_multiGamma] :=
     Join[
         Map[<|"Argument"->#,"Type"->"Gamma"|>&,mg[[1]]],

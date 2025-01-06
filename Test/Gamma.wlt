@@ -126,7 +126,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[x, n, -x][Gamma[x]]
 	,
-	Quiet[0]
+	Quiet[Gamma[x]]
 	,
 	{Yurie`Math`gammaTakeResidue::gammaNotInExpr}
 	,
@@ -190,7 +190,7 @@ VerificationTest[
 VerificationTest[
 	gammaTakeResidue[x[1], n[1], -x[1]][Gamma[-x]]
 	,
-	Quiet[0]
+	Quiet[Gamma[-x]]
 	,
 	{Yurie`Math`gammaTakeResidue::gammaNotInExpr}
 	,
