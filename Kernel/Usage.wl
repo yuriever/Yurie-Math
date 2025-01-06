@@ -211,7 +211,7 @@ matJordan::usage =
 	"matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
 matAngularMomentum::usage =
-	StringJoin["spin-j representation of angular momentum.\n", "The column/row indices run from j to -j."];
+	StringJoin["spin-j representation of angular momentum in the unit of hbar.\n", "The column/row indices run from j to -j."];
 
 
 (* Quest.wl *)

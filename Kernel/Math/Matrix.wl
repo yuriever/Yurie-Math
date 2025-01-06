@@ -24,7 +24,7 @@ matJordan::usage =
     "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
 matAngularMomentum::usage =
-    "spin-j representation of angular momentum.\n"<>
+    "spin-j representation of angular momentum in the unit of hbar.\n"<>
     "The column/row indices run from j to -j.";
 
 

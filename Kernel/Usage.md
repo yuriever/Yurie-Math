@@ -149,7 +149,7 @@
 
 * `#!wl matJordan` - matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
 
-* `#!wl matAngularMomentum` - spin-j representation of angular momentum. The column/row indices run from j to -j.
+* `#!wl matAngularMomentum` - spin-j representation of angular momentum in the unit of hbar. The column/row indices run from j to -j.
 
 
 <!-- Quest.wl -->
