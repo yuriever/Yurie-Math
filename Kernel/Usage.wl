@@ -15,6 +15,9 @@ separateBy::usage =
 solveFirst::usage =
 	"operator form of Solve + First.";
 
+jordanBlock::usage =
+	"matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+
 
 (* Diff.wl *)
 
@@ -178,6 +181,24 @@ indexToDiffBack::usage =
 	"x12->x1-x2.";
 
 
+(* Lie.wl *)
+
+lie::usage =
+	"simple Lie algebras.";
+
+lieSimpleRoot::usage =
+	"orthogonal simple roots of simple Lie algebras.";
+
+lieCartan::usage =
+	"Cartan matrix of simple Lie algebras.";
+
+lieCartanInverse::usage =
+	"inverse Cartan matrix of simple Lie algebras.";
+
+lieDynkinDiagram::usage =
+	"Dynkin diagram of simple Lie algebras.";
+
+
 (* Matrix.wl *)
 
 matSquareQ::usage =
@@ -186,17 +207,11 @@ matSquareQ::usage =
 matComm::usage =
 	"matComm[a,b]=a.b-b.a.";
 
-jordanBlock::usage =
-	StringJoin["jordanBlock[dim_Integer,a_OffDiagonal,b_Diagonal:1]\n", "jordanBlock[dim_Integer,a_]."];
+matJordan::usage =
+	"matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
-sparseBlockMatrix::usage =
-	"SparseArray`SparseBlockMatrix.";
-
-
-(* PolePinching.wl *)
-
-test::usage =
-	"test";
+matAngularMomentum::usage =
+	StringJoin["spin-j representation of angular momentum.\n", "The column/row indices run from j to -j."];
 
 
 (* Quest.wl *)

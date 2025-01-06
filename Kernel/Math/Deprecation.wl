@@ -29,6 +29,9 @@ separateBy::usage =
 solveFirst::usage =
     "operator form of Solve + First.";
 
+jordanBlock::usage =
+    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -87,6 +90,13 @@ solveFirst[args___][expr_] :=
     (
         Message[General::deprecation0,"solveFirst"];
         First@Solve[expr,args]
+    );
+
+
+jordanBlock[args__] :=
+    (
+        Message[General::deprecation,"jordanBlock","matJordan"];
+        matJordan[args]
     );
 
 

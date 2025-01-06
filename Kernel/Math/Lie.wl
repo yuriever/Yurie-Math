@@ -85,12 +85,19 @@ lieSimpleQ[_] :=
 (*exceptional isomorphisms*)
 
 lie["B",1] = lie["A",1];
+
 lie["C",1] = lie["A",1];
+
 lie["C",2] = lie["B",2];
+
 (*lie["D",2] = lie[{"A",1},{"A",1}];*)
+
 lie["D",3] = lie["A",3];
+
 (*lie["E",3] = lie[{"A",1},{"A",2}];*)
+
 lie["E",4] = lie["A",4];
+
 lie["E",5] = lie["D",5];
 
 

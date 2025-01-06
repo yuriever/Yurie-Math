@@ -10,6 +10,8 @@
 
 * `#!wl solveFirst` - operator form of Solve + First.
 
+* `#!wl jordanBlock` - matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
+
 
 <!-- Diff.wl -->
 
@@ -126,20 +128,28 @@
 * `#!wl indexToDiffBack` - x12->x1-x2.
 
 
+<!-- Lie.wl -->
+
+* `#!wl lie` - simple Lie algebras.
+
+* `#!wl lieSimpleRoot` - orthogonal simple roots of simple Lie algebras.
+
+* `#!wl lieCartan` - Cartan matrix of simple Lie algebras.
+
+* `#!wl lieCartanInverse` - inverse Cartan matrix of simple Lie algebras.
+
+* `#!wl lieDynkinDiagram` - Dynkin diagram of simple Lie algebras.
+
+
 <!-- Matrix.wl -->
 
 * `#!wl matSquareQ` - testing if is a square matrix.
 
 * `#!wl matComm` - matComm[a,b]=a.b-b.a.
 
-* `#!wl jordanBlock` - jordanBlock[dim_Integer,a_OffDiagonal,b_Diagonal:1] jordanBlock[dim_Integer,a_].
+* `#!wl matJordan` - matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
 
-* `#!wl sparseBlockMatrix` - SparseArray\`SparseBlockMatrix.
-
-
-<!-- PolePinching.wl -->
-
-* `#!wl test` - test
+* `#!wl matAngularMomentum` - spin-j representation of angular momentum. The column/row indices run from j to -j.
 
 
 <!-- Quest.wl -->

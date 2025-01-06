@@ -20,12 +20,12 @@ matSquareQ::usage =
 matComm::usage =
     "matComm[a,b]=a.b-b.a.";
 
-jordanBlock::usage =
-    "jordanBlock[dim_Integer,a_OffDiagonal,b_Diagonal:1]\n"<>
-    "jordanBlock[dim_Integer,a_].";
+matJordan::usage =
+    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
-sparseBlockMatrix::usage =
-    "SparseArray`SparseBlockMatrix.";
+matAngularMomentum::usage =
+    "spin-j representation of angular momentum.\n"<>
+    "The column/row indices run from j to -j.";
 
 
 (* ::Section:: *)
@@ -54,8 +54,8 @@ matComm[x_,y_] :=
     x . y-y . x;
 
 
-jordanBlock[dim_Integer,a_,b_:1] :=
-    SparseArray[
+matJordan[dim_Integer,a_,b_:1] :=
+    Normal@SparseArray[
         {
             {i_,i_}:>a,
             {i_,j_}/;j==i+1:>b
@@ -63,12 +63,36 @@ jordanBlock[dim_Integer,a_,b_:1] :=
         {dim,dim}
     ];
 
-jordanBlock[dim_Integer,a_] :=
-    jordanBlock[dim,a,1];
+matJordan[dim_Integer,a_] :=
+    matJordan[dim,a,1];
 
 
-sparseBlockMatrix :=
-    SparseArray`SparseBlockMatrix;
+matAngularMomentum[j_]["z"] :=
+    matAngularMomentum[j]["z"] =
+        Normal@SparseArray[{{i_,i_}:>id[j][i]},{dim[j],dim[j]}];
+
+matAngularMomentum[j_][-1] :=
+    matAngularMomentum[j][-1] =
+        Normal@SparseArray[{{i1_,i_}/;i-i1==-1:>Sqrt[(j-id[j][i]+1)(j+id[j][i])]},{dim[j],dim[j]}];
+
+matAngularMomentum[j_][1] :=
+    matAngularMomentum[j][1] =
+        Normal@SparseArray[{{i1_,i_}/;i-i1==1:>Sqrt[(j+id[j][i]+1)(j-id[j][i])]},{dim[j],dim[j]}];
+
+matAngularMomentum[j_]["x"] :=
+    matAngularMomentum[j]["x"] =
+        (matAngularMomentum[j][1]+matAngularMomentum[j][-1])/2;
+
+matAngularMomentum[j_]["y"] :=
+    matAngularMomentum[j]["y"] =
+        (matAngularMomentum[j][1]-matAngularMomentum[j][-1])/(2 I);
+
+
+dim[j_] :=
+    2j+1;
+
+id[j_][i_] :=
+    1-i+j;
 
 
 (* ::Subsection:: *)
