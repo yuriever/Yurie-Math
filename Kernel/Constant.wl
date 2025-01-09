@@ -158,10 +158,6 @@ DLMFData = <|
         Pochhammer[a_,n_]:>
             (-1)^n*Pochhammer[-a-n+1,n]
     },
-    "5.2.6"->{
-        Pochhammer[a_,n_]:>
-            (-1)^n*Pochhammer[-a-n+1,n]
-    },
     "5.2.8.1"->{
         Pochhammer[a_,n_]/;Simplify[EvenQ[n]]:>
             2^n*Pochhammer[a/2,n/2]*Pochhammer[(a+1)/2,n/2]
@@ -388,11 +384,11 @@ DLMFData = <|
             (I*Sqrt[\[Pi]]*(z+Sqrt[-1+z^2])^(-(1/2)-a))/(Sqrt[2]*(-1+z^2)^(1/4))
     },
     (*Wilson polynomial*)
-    "WilsonPolynomialToHyper"->{
+    "WilsonToHyper"->{
         wilsonPolynomial[a_,b_,c_,d_,n_,x_]:>
             (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*HypergeometricPFQ[{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1]
     },
-    "WilsonPolynomialFromHyper"->{
+    "WilsonFromHyper"->{
         HoldPattern[HypergeometricPFQ[{-n_,a_,b_,c_},{d_,e_,f_},1]]/;Simplify[a+b+c-d-e-f+1-n==0]:>
             (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*wilsonPolynomial[(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2]
     },
