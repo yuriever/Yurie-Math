@@ -85,14 +85,14 @@ DLMFPreprocess[expr_] :=
     expr//ReplaceRepeated[DLMFData["15.1.2"]];
 
 
-DLMFKernel[rule_String,ifIgnoreCondition_][expr_] :=
-    expr//ReplaceAll[getRuleIgnoringCondition[ifIgnoreCondition,rule]];
-
 DLMFKernel[{rule_String},ifIgnoreCondition_][expr_] :=
     expr//ReplaceAll[getRuleIgnoringCondition[ifIgnoreCondition,rule]];
 
 DLMFKernel[{rule_String,ruleRest__String},ifIgnoreCondition_][expr_] :=
     expr//DLMFKernel[{rule},ifIgnoreCondition]//DLMFKernel[{ruleRest},ifIgnoreCondition];
+
+DLMFKernel[rule_String,ifIgnoreCondition_][expr_] :=
+    expr//DLMFKernel[{rule},ifIgnoreCondition];
 
 
 getRuleIgnoringCondition[True,ruleOrItsList_] :=
