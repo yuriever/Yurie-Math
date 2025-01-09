@@ -228,11 +228,11 @@ jacobiPhiFromHyper[expr_] :=
 
 
 wilsonPolynomialToHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["WilsonPolynomialToHyper"]]//ReplaceAll[head_HypergeometricPFQ:>Simplify[head]];
+    expr//ReplaceAll[DLMFData["WilsonToHyper"]]//ReplaceAll[head_HypergeometricPFQ:>Simplify[head]];
 
 
 wilsonPolynomialFromHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["WilsonPolynomialFromHyper"]]//ReplaceAll[head_wilsonPolynomial:>Simplify[head]];
+    expr//ReplaceAll[DLMFData["WilsonFromHyper"]]//ReplaceAll[head_wilsonPolynomial:>Simplify[head]];
 
 
 (* ::Subsection:: *)
