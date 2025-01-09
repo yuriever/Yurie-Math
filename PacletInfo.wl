@@ -24,7 +24,7 @@ PacletObject[
         "Root" -> "Utility",
         "Context" -> {
           "Yurie`Math`Info`",
-          "Yurie`Math`DLMFWorkflow`"
+          "Yurie`Math`DLMFDev`"
         }
       },
       {
