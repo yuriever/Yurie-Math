@@ -16,6 +16,9 @@ Needs["Yurie`Math`Constant`"];
 (*Public*)
 
 
+gammaSimplify::usage =
+    "simplify Gamma factors in the expression.\n Developer`GammaSimplify";
+
 gammaFrom::usage =
     "expand everything to Gamma factors.";
 
@@ -94,6 +97,14 @@ multiGammaReduceByBarnesLemma::notMatch =
 
 multiGammaReduceByBarnesLemma::notProduct =
     "this function only handles product-type expression."
+
+
+(* ::Subsection:: *)
+(*gammaSimplify*)
+
+
+gammaSimplify :=
+    Developer`GammaSimplify;
 
 
 (* ::Subsection:: *)

@@ -52,6 +52,8 @@
 
 <!-- Gamma.wl -->
 
+* `#!wl gammaSimplify` - simplify Gamma factors in the expression.\n Developer\`GammaSimplify
+
 * `#!wl gammaFrom` - expand everything to Gamma factors.
 
 * `#!wl gammaSplit` - split a product into a list containing Gamma factors and the rests.

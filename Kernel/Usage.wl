@@ -72,6 +72,9 @@ dyeOff::usage =
 
 (* Gamma.wl *)
 
+gammaSimplify::usage =
+	"simplify Gamma factors in the expression.\n Developer`GammaSimplify";
+
 gammaFrom::usage =
 	"expand everything to Gamma factors.";
 
