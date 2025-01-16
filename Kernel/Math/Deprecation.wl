@@ -32,6 +32,12 @@ solveFirst::usage =
 jordanBlock::usage =
     "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
+gammaSplit::usage =
+    "split a product into a list containing Gamma factors and the rests.";
+
+hyperSplit::usage =
+    "split a product into a list containing Hypergeometric2F1 factors and the rests.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -97,6 +103,20 @@ jordanBlock[args__] :=
     (
         Message[General::deprecation,"jordanBlock","matJordan"];
         matJordan[args]
+    );
+
+
+gammaSplit[expr_] :=
+    (
+        Message[General::deprecation,"gammaSplit","gammaSeparate"];
+        gammaSeparate[expr]
+    );
+
+
+hyperSplit[expr_] :=
+    (
+        Message[General::deprecation,"hyperSplit","hyperSeparate"];
+        hyperSeparate[expr]
     );
 
 

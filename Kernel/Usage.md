@@ -12,6 +12,10 @@
 
 * `#!wl jordanBlock` - matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
 
+* `#!wl gammaSplit` - split a product into a list containing Gamma factors and the rests.
+
+* `#!wl hyperSplit` - split a product into a list containing Hypergeometric2F1 factors and the rests.
+
 
 <!-- Diff.wl -->
 
@@ -56,7 +60,7 @@
 
 * `#!wl gammaFrom` - expand everything to Gamma factors.
 
-* `#!wl gammaSplit` - split a product into a list containing Gamma factors and the rests.
+* `#!wl gammaSeparate` - split a product into a list containing Gamma factors and the rests.
 
 * `#!wl gammaTakeResidue` - take residue of Gamma factors.
 
@@ -82,7 +86,7 @@
 
 <!-- Hyper.wl -->
 
-* `#!wl hyperSplit` - split a product into a list containing Hypergeometric2F1 factors and the rests.
+* `#!wl hyperSeparate` - split a product into a list containing Hypergeometric2F1 factors and the rests.
 
 * `#!wl hyperUnregularize` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
 

@@ -16,7 +16,7 @@ Needs["Yurie`Math`Constant`"];
 (*Public*)
 
 
-hyperSplit::usage =
+hyperSeparate::usage =
     "split a product into a list containing Hypergeometric2F1 factors and the rests.";
 
 hyperUnregularize::usage =
@@ -82,19 +82,19 @@ hyperTo::symbolNotEnough =
 
 
 (* ::Subsection:: *)
-(*hyperSplit*)
+(*hyperSeparate*)
 
 
-hyperSplit[expr:_Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ] :=
+hyperSeparate[expr:_Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ] :=
     {expr,1};
 
-hyperSplit[expr_Times] :=
+hyperSeparate[expr_Times] :=
     {
         Select[expr,!FreeQ[#,Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]&],
         Select[expr,FreeQ[Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]]
     };
 
-hyperSplit[expr_] :=
+hyperSeparate[expr_] :=
     {1,expr};
 
 

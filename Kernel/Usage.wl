@@ -18,6 +18,12 @@ solveFirst::usage =
 jordanBlock::usage =
 	"matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
+gammaSplit::usage =
+	"split a product into a list containing Gamma factors and the rests.";
+
+hyperSplit::usage =
+	"split a product into a list containing Hypergeometric2F1 factors and the rests.";
+
 
 (* Diff.wl *)
 
@@ -78,7 +84,7 @@ gammaSimplify::usage =
 gammaFrom::usage =
 	"expand everything to Gamma factors.";
 
-gammaSplit::usage =
+gammaSeparate::usage =
 	"split a product into a list containing Gamma factors and the rests.";
 
 gammaTakeResidue::usage =
@@ -114,7 +120,7 @@ PDCoefficient::usage =
 
 (* Hyper.wl *)
 
-hyperSplit::usage =
+hyperSeparate::usage =
 	"split a product into a list containing Hypergeometric2F1 factors and the rests.";
 
 hyperUnregularize::usage =

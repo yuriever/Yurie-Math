@@ -76,7 +76,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaSplit[F[a]*Gamma[x]*Gamma[y]]
+	gammaSeparate[F[a]*Gamma[x]*Gamma[y]]
 	,
 	{Gamma[x]*Gamma[y], F[a]}
 	,
@@ -84,7 +84,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaSplit[Gamma[x]*Gamma[y]*H[a]]
+	gammaSeparate[Gamma[x]*Gamma[y]*H[a]]
 	,
 	{Gamma[x]*Gamma[y], H[a]}
 	,
@@ -92,7 +92,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaSplit[Gamma[x]]
+	gammaSeparate[Gamma[x]]
 	,
 	{Gamma[x], 1}
 	,
@@ -100,7 +100,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaSplit[Gamma[x] + Gamma[y]]
+	gammaSeparate[Gamma[x] + Gamma[y]]
 	,
 	{1, Gamma[x] + Gamma[y]}
 	,
@@ -108,7 +108,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	gammaSplit[x]
+	gammaSeparate[x]
 	,
 	{1, x}
 	,

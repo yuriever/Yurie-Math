@@ -22,7 +22,7 @@ gammaSimplify::usage =
 gammaFrom::usage =
     "expand everything to Gamma factors.";
 
-gammaSplit::usage =
+gammaSeparate::usage =
     "split a product into a list containing Gamma factors and the rests.";
 
 gammaTakeResidue::usage =
@@ -147,19 +147,19 @@ gammaActivateHead[False][expr_] :=
 
 
 (* ::Subsection:: *)
-(*gammaSplit*)
+(*gammaSeparate*)
 
 
-gammaSplit[expr_Gamma] :=
+gammaSeparate[expr_Gamma] :=
     {expr,1};
 
-gammaSplit[expr_Times] :=
+gammaSeparate[expr_Times] :=
     {
         Select[expr,!FreeQ[#,Gamma]&],
         Select[expr,FreeQ[Gamma]]
     };
 
-gammaSplit[expr_] :=
+gammaSeparate[expr_] :=
     {1,expr};
 
 
