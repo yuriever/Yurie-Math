@@ -87,11 +87,11 @@ indexize[var:_Symbol|_String,indices__] :=
     indexizeKernel[var,indices];
 
 
-indexify[var:_Symbol|_String,labels__] :=
-    Map[indexizeKernel[var,#]&,{labels}]//Apply[Sequence];
+indexify[var:_Symbol|_String,indices__] :=
+    Map[indexizeKernel[var,#]&,{indices}]//Apply[Sequence];
 
-indexify[varList:{(_Symbol|_String)..},labels__] :=
-    Outer[indexizeKernel,varList,{labels}]//Transpose//Flatten//Apply[Sequence];
+indexify[varList:{(_Symbol|_String)..},indices__] :=
+    Outer[indexizeKernel,varList,{indices}]//Transpose//Flatten//Apply[Sequence];
 
 
 (* ::Subsubsection:: *)
@@ -184,17 +184,17 @@ indexJoinKernel[varList_List,OptionsPattern[]][expr_] :=
             Construct,
                 expr//ReplaceAll[
                     var_Symbol[index_]/;MatchQ[var,varP]&&AtomQ[index]&&indexQ[indexQFunction][indexToString[index]]:>
-                        RuleCondition@indexize[var,index]
+                        RuleCondition@indexizeKernel[var,index]
                 ],
             Subscript,
                 expr//ReplaceAll[
                     Subscript[var_,index_]/;MatchQ[var,varP]&&AtomQ[index]&&indexQ[indexQFunction][indexToString[index]]:>
-                        RuleCondition@indexize[var,index]
+                        RuleCondition@indexizeKernel[var,index]
                 ],
             Superscript,
                 expr//ReplaceAll[
                     Superscript[var_,index_]/;MatchQ[var,varP]&&AtomQ[index]&&indexQ[indexQFunction][indexToString[index]]:>
-                        RuleCondition@indexize[var,index]
+                        RuleCondition@indexizeKernel[var,index]
                 ]
         ]
     ]//Catch;
