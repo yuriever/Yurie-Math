@@ -3,246 +3,246 @@
 (*Simplify.nb*)
 
 VerificationTest[
-	Begin["Global`"];
+    Begin["Global`"];
 	ClearAll["`*"]
-	,
-	Null
-	,
-	TestID->"0-Simplify.nb"
+    ,
+    Null
+    ,
+    TestID->"0-Simplify.nb"
 ]
 
 VerificationTest[
-	Get["Yurie`Math`"]
-	,
-	Null
-	,
-	TestID->"1-Simplify.nb"
+    Get["Yurie`Math`"]
+    ,
+    Null
+    ,
+    TestID->"1-Simplify.nb"
 ]
 
 VerificationTest[
-	expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
-	powerCollect[a][powerCollect[b][expr]]
-	,
-	(-w^(1 + a))^b*(w*(x - y)*z)^a
-	,
-	TestID->"2-Simplify.nb"
+    expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
+    powerCollect[a][powerCollect[b][expr]]
+    ,
+    (-w^(1 + a))^b*(w*(x - y)*z)^a
+    ,
+    TestID->"2-Simplify.nb"
 ]
 
 VerificationTest[
-	powerCollect[a][powerCollect[b][expr]] == powerCollect[b, a][expr]
-	,
-	True
-	,
-	TestID->"3-Simplify.nb"
+    powerCollect[a][powerCollect[b][expr]] == powerCollect[b, a][expr]
+    ,
+    True
+    ,
+    TestID->"3-Simplify.nb"
 ]
 
 VerificationTest[
-	powerCollect[a, b][expr]
-	,
-	(-w)^b*(w^(1 + b)*(x - y)*z)^a
-	,
-	TestID->"4-Simplify.nb"
+    powerCollect[a, b][expr]
+    ,
+    (-w)^b*(w^(1 + b)*(x - y)*z)^a
+    ,
+    TestID->"4-Simplify.nb"
 ]
 
 VerificationTest[
-	powerApart[expr]
-	,
-	(w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
-	,
-	TestID->"5-Simplify.nb"
+    powerApart[expr]
+    ,
+    (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
+    ,
+    TestID->"5-Simplify.nb"
 ]
 
 VerificationTest[
-	powerTogether[expr]
-	,
-	(-1)^b*w^(a + b + a*b)*((x - y)*z)^a
-	,
-	TestID->"6-Simplify.nb"
+    powerTogether[expr]
+    ,
+    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    ,
+    TestID->"6-Simplify.nb"
 ]
 
 VerificationTest[
-	powerSim[expr]
-	,
-	(-1)^b*w^(a + b + a*b)*((x - y)*z)^a
-	,
-	TestID->"7-Simplify.nb"
+    powerSim[expr]
+    ,
+    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    ,
+    TestID->"7-Simplify.nb"
 ]
 
 VerificationTest[
-	expr = {(-1)^a*x^a, (-x)^a, 1/x^2, I^a*x^a, (I*x)^(4*a), 1/x^2}; 
-	powerApart[expr]
-	,
-	{(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-	,
-	TestID->"8-Simplify.nb"
+    expr = {(-1)^a*x^a, (-x)^a, 1/x^2, I^a*x^a, (I*x)^(4*a), 1/x^2}; 
+    powerApart[expr]
+    ,
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
+    ,
+    TestID->"8-Simplify.nb"
 ]
 
 VerificationTest[
-	powerTogether[expr]
-	,
-	{(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-	,
-	TestID->"9-Simplify.nb"
+    powerTogether[expr]
+    ,
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
+    ,
+    TestID->"9-Simplify.nb"
 ]
 
 VerificationTest[
-	powerSim[expr]
-	,
-	{(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-	,
-	TestID->"10-Simplify.nb"
+    powerSim[expr]
+    ,
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
+    ,
+    TestID->"10-Simplify.nb"
 ]
 
 VerificationTest[
-	m = n; 
-	Table[m, {n, 2}]
-	,
-	{1, 2}
-	,
-	TestID->"11-Simplify.nb"
+    m = n; 
+    Table[m, {n, 2}]
+    ,
+    {1, 2}
+    ,
+    TestID->"11-Simplify.nb"
 ]
 
 VerificationTest[
-	modularize[Table[m, {n, 2}]]
-	,
-	{n, n}
-	,
-	TestID->"12-Simplify.nb"
+    modularize[Table[m, {n, 2}]]
+    ,
+    {n, n}
+    ,
+    TestID->"12-Simplify.nb"
 ]
 
 VerificationTest[
-	{block[{n = 1}][m], m, n}
-	,
-	{1, n, n}
-	,
-	TestID->"13-Simplify.nb"
+    {block[{n = 1}][m], m, n}
+    ,
+    {1, n, n}
+    ,
+    TestID->"13-Simplify.nb"
 ]
 
 VerificationTest[
-	{module[{m = 1}][m], m, n}
-	,
-	{1, n, n}
-	,
-	TestID->"14-Simplify.nb"
+    {module[{m = 1}][m], m, n}
+    ,
+    {1, n, n}
+    ,
+    TestID->"14-Simplify.nb"
 ]
 
 VerificationTest[
-	ClearAll[m]; 
-	,
-	Null
-	,
-	TestID->"15-Simplify.nb"
+    ClearAll[m]; 
+    ,
+    Null
+    ,
+    TestID->"15-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseReduce[k][Sin[(-Pi)*k + a]]
-	,
-	(-1)^k*Sin[a]
-	,
-	TestID->"16-Simplify.nb"
+    trigPhaseReduce[k][Sin[(-Pi)*k + a]]
+    ,
+    (-1)^k*Sin[a]
+    ,
+    TestID->"16-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
-	,
-	Cos[b]*Sin[a]
-	,
-	TestID->"17-Simplify.nb"
+    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
+    ,
+    Cos[b]*Sin[a]
+    ,
+    TestID->"17-Simplify.nb"
 ]
 
 VerificationTest[
-	trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
-	,
-	(-1)^k*Cos[b]*Cos[c]*Sin[a]
-	,
-	TestID->"18-Simplify.nb"
+    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
+    ,
+    (-1)^k*Cos[b]*Cos[c]*Sin[a]
+    ,
+    TestID->"18-Simplify.nb"
 ]
 
 VerificationTest[
-	separate[EvenQ][Range[10]]
-	,
-	{{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
-	,
-	TestID->"19-Simplify.nb"
+    separate[EvenQ][Range[10]]
+    ,
+    {{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
+    ,
+    TestID->"19-Simplify.nb"
 ]
 
 VerificationTest[
-	separate[FreeQ[s]][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])]
-	,
-	{Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
-	,
-	TestID->"20-Simplify.nb"
+    separate[FreeQ[s]][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])]
+    ,
+    {Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
+    ,
+    TestID->"20-Simplify.nb"
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
-	,
-	{s[x], x[s[x]], x[x[s[x]]]}
-	,
-	TestID->"21-Simplify.nb"
+    freeze[x, Simplify, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
+    ,
+    {s[x], x[s[x]], x[x[s[x]]]}
+    ,
+    TestID->"21-Simplify.nb"
 ]
 
 VerificationTest[
-	freeze[x, Simplify, 2, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
-	,
-	{s[x], x[s[x]], x[x[x]]}
-	,
-	TestID->"22-Simplify.nb"
+    freeze[x, Simplify, 2, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
+    ,
+    {s[x], x[s[x]], x[x[x]]}
+    ,
+    TestID->"22-Simplify.nb"
 ]
 
 VerificationTest[
-	freeze[x, Simplify, "Transformation" -> {s, t}][NestList[x, x, 2]]
-	,
-	{s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
-	,
-	TestID->"23-Simplify.nb"
+    freeze[x, Simplify, "Transformation" -> {s, t}][NestList[x, x, 2]]
+    ,
+    {s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
+    ,
+    TestID->"23-Simplify.nb"
 ]
 
 VerificationTest[
-	expr = f[a^2 + b^2 + 2*a*b] + g[a^2 + b^2 + 2*a*b, 2]
-	,
-	f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
-	,
-	TestID->"24-Simplify.nb"
+    expr = f[a^2 + b^2 + 2*a*b] + g[a^2 + b^2 + 2*a*b, 2]
+    ,
+    f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
+    ,
+    TestID->"24-Simplify.nb"
 ]
 
 VerificationTest[
-	focus[f][expr]
-	,
-	f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
-	,
-	TestID->"25-Simplify.nb"
+    focus[f][expr]
+    ,
+    f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
+    ,
+    TestID->"25-Simplify.nb"
 ]
 
 VerificationTest[
-	focus[f, Identity][expr]
-	,
-	f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
-	,
-	TestID->"26-Simplify.nb"
+    focus[f, Identity][expr]
+    ,
+    f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
+    ,
+    TestID->"26-Simplify.nb"
 ]
 
 VerificationTest[
-	focus[f | g][expr]
-	,
-	f[(a + b)^2] + g[(a + b)^2, 2]
-	,
-	TestID->"27-Simplify.nb"
+    focus[f | g][expr]
+    ,
+    f[(a + b)^2] + g[(a + b)^2, 2]
+    ,
+    TestID->"27-Simplify.nb"
 ]
 
 VerificationTest[
-	focus[f[a^2 + 2*a*b + b^2], h][expr]
-	,
-	g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
-	,
-	TestID->"28-Simplify.nb"
+    focus[f[a^2 + 2*a*b + b^2], h][expr]
+    ,
+    g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
+    ,
+    TestID->"28-Simplify.nb"
 ]
 
 VerificationTest[
-	ClearAll["`*"];
+    ClearAll["`*"];
 	End[]
-	,
-	"Global`"
-	,
-	TestID->"∞-Simplify.nb"
+    ,
+    "Global`"
+    ,
+    TestID->"∞-Simplify.nb"
 ]
