@@ -468,19 +468,19 @@ freeze//Attributes =
     {HoldAll};
 
 freeze[args___][expr_] :=
-    With[ {sep = ArgumentsOptions[freeze[args],{1,3},<|"Head"->Hold,"OptionsMode"->"Shortest"|>]},
+    With[ {sep = ArgumentsOptions[freeze[args],{1,3},<|"Head"->HoldComplete,"OptionsMode"->"Shortest"|>]},
         freezeKernel[sep][expr]/;!FailureQ[sep]
     ];
 
 
-freezeKernel[{Hold[pattern_],Hold[opts___]}][expr_] :=
-    freezeKernel[{Hold[pattern,Simplify,Infinity],Hold[opts]}][expr];
+freezeKernel[{HoldComplete[pattern_],HoldComplete[opts___]}][expr_] :=
+    freezeKernel[{HoldComplete[pattern,Simplify,Infinity],HoldComplete[opts]}][expr];
 
-freezeKernel[{Hold[pattern_,operation_],Hold[opts___]}][expr_] :=
-    freezeKernel[{Hold[pattern,operation,Infinity],Hold[opts]}][expr];
+freezeKernel[{HoldComplete[pattern_,operation_],HoldComplete[opts___]}][expr_] :=
+    freezeKernel[{HoldComplete[pattern,operation,Infinity],HoldComplete[opts]}][expr];
 
-freezeKernel[{Hold[pattern_,operation_,level_],Hold[opts___]}][expr_] :=
-    Module[ {frozenExpr,subExprList,tempList,ruleList,inverseRuleList,trans,inverseTrans},
+freezeKernel[{HoldComplete[pattern_,operation_,level_],HoldComplete[opts___]}][expr_] :=
+    Module[ {trans,inverseTrans,subExprList,tempList,ruleList,inverseRuleList},
         {trans,inverseTrans} = OptionValue[freeze,{opts},"Transformation"];
         subExprList =
             DeleteDuplicates@Cases[expr,pattern,level];
@@ -490,12 +490,7 @@ freezeKernel[{Hold[pattern_,operation_,level_],Hold[opts___]}][expr_] :=
             MapThread[Rule[#1,trans[#2]]&,{subExprList,tempList}];
         inverseRuleList =
             MapThread[Rule[#1,inverseTrans[#2]]&,{tempList,subExprList}];
-        frozenExpr =
-            Replace[expr,ruleList,level];
-        If[ freeze`Debug,
-            Return@{frozenExpr,ruleList,inverseRuleList}
-        ];
-        frozenExpr//operation//ReplaceAll[inverseRuleList]
+        Replace[expr,ruleList,level]//operation//ReplaceAll[inverseRuleList]
     ];
 
 
