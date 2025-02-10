@@ -240,6 +240,9 @@ gammaFactorSimplify[expr_] :=
 
 
 gammaTakeResidueIfShowPoleData[True,variable_,index_,solution_][gammaList_] :=
+    Echo[solution];
+
+gammaTakeResidueIfShowPoleData[Full,variable_,index_,solution_][gammaList_] :=
     Module[ {sign,gammaListNew},
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
@@ -259,6 +262,7 @@ gammaTakeResidueIfShowPoleData[True,variable_,index_,solution_][gammaList_] :=
             Alignment->Top
         ];
     ];
+
 
 gammaListGrid[list_] :=
     Grid[list,Alignment->{Left,Center},Spacings->{1,0.5},Dividers->{True,{{True}}},FrameStyle->LightGray]
