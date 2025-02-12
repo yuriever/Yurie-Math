@@ -231,9 +231,13 @@
 
 * `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
 
+* `#!wl plus` - operator form of Plus.
+
+* `#!wl minus` - operator form of Minus.
+
 * `#!wl times` - operator form of Times.
 
-* `#!wl plus` - operator form of Plus.
+* `#!wl divide` - operator form of Divide.
 
 * `#!wl series` - operator form of Series + Normal.
 

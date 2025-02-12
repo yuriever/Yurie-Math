@@ -67,11 +67,17 @@ rep::usage =
 part::usage =
     "operator form of Part, GeneralUtilities`Slice.";
 
+plus::usage =
+    "operator form of Plus.";
+
+minus::usage =
+    "operator form of Minus.";
+
 times::usage =
     "operator form of Times.";
 
-plus::usage =
-    "operator form of Plus.";
+divide::usage =
+    "operator form of Divide.";
 
 series::usage =
     "operator form of Series + Normal.";
@@ -279,12 +285,20 @@ part :=
     GeneralUtilities`Slice;
 
 
+plus[args___][expr_] :=
+    Plus[expr,args];
+
+
+minus[args___][expr_] :=
+    Subtract[expr,Plus[args]];
+
+
 times[args___][expr_] :=
     Times[expr,args];
 
 
-plus[args___][expr_] :=
-    Plus[expr,args];
+divide[args___][expr_] :=
+    Divide[expr,Times[args]];
 
 
 series[args___][expr_] :=

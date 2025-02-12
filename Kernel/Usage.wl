@@ -330,11 +330,17 @@ rep::usage =
 part::usage =
     "operator form of Part, GeneralUtilities`Slice.";
 
+plus::usage =
+    "operator form of Plus.";
+
+minus::usage =
+    "operator form of Minus.";
+
 times::usage =
     "operator form of Times.";
 
-plus::usage =
-    "operator form of Plus.";
+divide::usage =
+    "operator form of Divide.";
 
 series::usage =
     "operator form of Series + Normal.";
