@@ -72,6 +72,10 @@
 
 * `#!wl multiGammaReduceByBarnesLemma` - reduce the multi-Gamma symbol by the Barnes lemmas.
 
+* `#!wl relationMellinBarnes` - Mellin-Barnes relation.
+
+* `#!wl relationFeynman` - Feynman-Schwinger relation.
+
 
 <!-- Head.wl -->
 

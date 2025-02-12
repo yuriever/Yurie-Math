@@ -42,6 +42,13 @@ multiGammaReduceByBarnesLemma::usage =
     "reduce the multi-Gamma symbol by the Barnes lemmas.";
 
 
+relationMellinBarnes::usage =
+    "Mellin-Barnes relation.";
+
+relationFeynman::usage =
+    "Feynman-Schwinger relation.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -451,6 +458,22 @@ multiGammaReduceBySecondBarnesLemma[numPlus_,numMinus_,denomPlus_,numPlusMinusSu
 
 multiGammaFactorSimplify[expr_] :=
     expr//ReplaceAll[HoldPattern[multiGamma[num_List,denom_List]]:>multiGamma[Simplify@num,Simplify@denom]];
+
+
+(* ::Subsection:: *)
+(*relationMellinBarnes|relationFeynman*)
+
+
+relationMellinBarnes[expr:Power[x_+y__,a_],x_,s_] :=
+    With[ {mg = Simplify@multiGamma[{-a+s,-s},{-a}]},
+        expr->mg*x^s*Plus[y]^(-s+a)*INT[s]
+    ];
+
+
+relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_] :=
+    With[ {mg = Simplify@multiGamma[{-a-b},{-a,-b}]},
+        expr->mg*s^(-b-1)*(x+s*y)^(a+b)*INT[s]
+    ];
 
 
 (* ::Subsection:: *)
