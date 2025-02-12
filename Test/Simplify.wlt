@@ -20,12 +20,44 @@ VerificationTest[
 ]
 
 VerificationTest[
+    times[y, z][x]
+    ,
+    x*y*z
+    ,
+    TestID->"2-Simplify.nb"
+]
+
+VerificationTest[
+    divide[y, z][x]
+    ,
+    x/(y*z)
+    ,
+    TestID->"3-Simplify.nb"
+]
+
+VerificationTest[
+    plus[y, z][x]
+    ,
+    x + y + z
+    ,
+    TestID->"4-Simplify.nb"
+]
+
+VerificationTest[
+    minus[y, z][x]
+    ,
+    x - y - z
+    ,
+    TestID->"5-Simplify.nb"
+]
+
+VerificationTest[
     expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
     powerCollect[a][powerCollect[b][expr]]
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"2-Simplify.nb"
+    TestID->"6-Simplify.nb"
 ]
 
 VerificationTest[
@@ -33,7 +65,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"3-Simplify.nb"
+    TestID->"7-Simplify.nb"
 ]
 
 VerificationTest[
@@ -41,7 +73,7 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"4-Simplify.nb"
+    TestID->"8-Simplify.nb"
 ]
 
 VerificationTest[
@@ -49,7 +81,7 @@ VerificationTest[
     ,
     (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
     ,
-    TestID->"5-Simplify.nb"
+    TestID->"9-Simplify.nb"
 ]
 
 VerificationTest[
@@ -57,7 +89,7 @@ VerificationTest[
     ,
     (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
     ,
-    TestID->"6-Simplify.nb"
+    TestID->"10-Simplify.nb"
 ]
 
 VerificationTest[
@@ -65,7 +97,7 @@ VerificationTest[
     ,
     (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
     ,
-    TestID->"7-Simplify.nb"
+    TestID->"11-Simplify.nb"
 ]
 
 VerificationTest[
@@ -74,7 +106,7 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"8-Simplify.nb"
+    TestID->"12-Simplify.nb"
 ]
 
 VerificationTest[
@@ -82,7 +114,7 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"9-Simplify.nb"
+    TestID->"13-Simplify.nb"
 ]
 
 VerificationTest[
@@ -90,7 +122,7 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"10-Simplify.nb"
+    TestID->"14-Simplify.nb"
 ]
 
 VerificationTest[
@@ -99,7 +131,7 @@ VerificationTest[
     ,
     {1, 2}
     ,
-    TestID->"11-Simplify.nb"
+    TestID->"15-Simplify.nb"
 ]
 
 VerificationTest[
@@ -107,7 +139,7 @@ VerificationTest[
     ,
     {n, n}
     ,
-    TestID->"12-Simplify.nb"
+    TestID->"16-Simplify.nb"
 ]
 
 VerificationTest[
@@ -115,7 +147,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"13-Simplify.nb"
+    TestID->"17-Simplify.nb"
 ]
 
 VerificationTest[
@@ -123,7 +155,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"14-Simplify.nb"
+    TestID->"18-Simplify.nb"
 ]
 
 VerificationTest[
@@ -131,7 +163,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"15-Simplify.nb"
+    TestID->"19-Simplify.nb"
 ]
 
 VerificationTest[
@@ -139,7 +171,7 @@ VerificationTest[
     ,
     (-1)^k*Sin[a]
     ,
-    TestID->"16-Simplify.nb"
+    TestID->"20-Simplify.nb"
 ]
 
 VerificationTest[
@@ -147,7 +179,7 @@ VerificationTest[
     ,
     Cos[b]*Sin[a]
     ,
-    TestID->"17-Simplify.nb"
+    TestID->"21-Simplify.nb"
 ]
 
 VerificationTest[
@@ -155,7 +187,7 @@ VerificationTest[
     ,
     (-1)^k*Cos[b]*Cos[c]*Sin[a]
     ,
-    TestID->"18-Simplify.nb"
+    TestID->"22-Simplify.nb"
 ]
 
 VerificationTest[
@@ -163,7 +195,7 @@ VerificationTest[
     ,
     {{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
     ,
-    TestID->"19-Simplify.nb"
+    TestID->"23-Simplify.nb"
 ]
 
 VerificationTest[
@@ -171,7 +203,7 @@ VerificationTest[
     ,
     {Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
     ,
-    TestID->"20-Simplify.nb"
+    TestID->"24-Simplify.nb"
 ]
 
 VerificationTest[
@@ -179,7 +211,7 @@ VerificationTest[
     ,
     {s[x], x[s[x]], x[x[s[x]]]}
     ,
-    TestID->"21-Simplify.nb"
+    TestID->"25-Simplify.nb"
 ]
 
 VerificationTest[
@@ -187,7 +219,7 @@ VerificationTest[
     ,
     {s[x], x[s[x]], x[x[x]]}
     ,
-    TestID->"22-Simplify.nb"
+    TestID->"26-Simplify.nb"
 ]
 
 VerificationTest[
@@ -195,7 +227,7 @@ VerificationTest[
     ,
     {s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
     ,
-    TestID->"23-Simplify.nb"
+    TestID->"27-Simplify.nb"
 ]
 
 VerificationTest[
@@ -203,7 +235,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"24-Simplify.nb"
+    TestID->"28-Simplify.nb"
 ]
 
 VerificationTest[
@@ -211,7 +243,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"25-Simplify.nb"
+    TestID->"29-Simplify.nb"
 ]
 
 VerificationTest[
@@ -219,7 +251,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"26-Simplify.nb"
+    TestID->"30-Simplify.nb"
 ]
 
 VerificationTest[
@@ -227,7 +259,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[(a + b)^2, 2]
     ,
-    TestID->"27-Simplify.nb"
+    TestID->"31-Simplify.nb"
 ]
 
 VerificationTest[
@@ -235,7 +267,7 @@ VerificationTest[
     ,
     g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
     ,
-    TestID->"28-Simplify.nb"
+    TestID->"32-Simplify.nb"
 ]
 
 VerificationTest[
