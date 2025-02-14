@@ -91,17 +91,20 @@ diffComm[x_,y_] :=
 (*diffChange*)
 
 
-diffChange[expr_,eqList:{__Equal},oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
-    expr//ReplaceAll[getFunctionRuleList[eqList,oldList,newList,funList,FilterRules[{opts,Options@diffChange},Options@getFunctionRuleList]]]//
-        (*convert old variables to new ones.*)
-        ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
-            diffChangeStripList;
-
-diffChange[expr_,eqList:{__Rule},oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
-    diffChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,funList,opts];
-
 diffChange[eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]][expr_] :=
-    diffChange[expr,eqList,oldList,newList,funList,opts];
+    diffChangeKernel[expr,eqList,oldList,newList,funList,opts];
+
+diffChange[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
+    diffChangeKernel[expr,eqList,oldList,newList,funList,opts];
+
+
+diffChangeKernel[expr_,eqList1:{(_Equal|_Rule|_RuleDelayed)..},oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
+    With[ {eqList = eqList1//ReplaceAll[Rule|RuleDelayed->Equal]},
+        expr//ReplaceAll[getFunctionRuleList[eqList,oldList,newList,funList,FilterRules[{opts,Options@diffChange},Options@getFunctionRuleList]]]//
+            (*convert old variables to new ones.*)
+            ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
+                diffChangeStripList
+    ];
 
 
 diffChange[] :=
@@ -129,8 +132,23 @@ diffChange[] :=
 (*integrateChange*)
 
 
-integrateChange[expr_,eqList:{__Equal},oldList_List,newList_List,opts:OptionsPattern[]] :=
-    Module[ {oldToNew,oldToNewList},
+integrateChange[eqList_List,oldList_List,newList_List,opts:OptionsPattern[]][expr_] :=
+    integrateChangeKernel[expr,eqList,oldList,newList,opts];
+
+integrateChange[expr_,eqList_List,oldList_List,newList_List,opts:OptionsPattern[]] :=
+    integrateChangeKernel[expr,eqList,oldList,newList,opts];
+
+integrateChange[eqList_List,oldList_List,newList_List,signOfJacobian:-1|1,opts:OptionsPattern[]][expr_] :=
+    signOfJacobian*integrateChangeKernel[expr,eqList,oldList,newList,opts];
+
+integrateChange[expr_,eqList_List,oldList_List,newList_List,signOfJacobian:-1|1,opts:OptionsPattern[]] :=
+    signOfJacobian*integrateChangeKernel[expr,eqList,oldList,newList,opts];
+
+
+integrateChangeKernel[expr_,eqList1:{(_Equal|_Rule|_RuleDelayed)..},oldList_List,newList_List,opts:OptionsPattern[integrateChange]] :=
+    Module[ {oldToNew,oldToNewList,eqList},
+        eqList =
+            eqList1//ReplaceAll[Rule|RuleDelayed->Equal];
         oldToNewList =
             cleanSolve[eqList,oldList,FilterRules[{opts,Options@integrateChange},Options@cleanSolve]];
         Table[
@@ -138,12 +156,6 @@ integrateChange[expr_,eqList:{__Equal},oldList_List,newList_List,opts:OptionsPat
             {oldToNew,oldToNewList}
         ]//dealPDAndINT[INT,oldList,newList]//integrateChangeStripList
     ];
-
-integrateChange[expr_,eqList:{__Rule},oldList_List,newList_List,opts:OptionsPattern[]] :=
-    integrateChange[expr,ReplaceAll[eqList,Rule->Equal],oldList,newList,opts];
-
-integrateChange[eqList_List,oldList_List,newList_List,opts:OptionsPattern[]][expr_] :=
-    integrateChange[expr,eqList,oldList,newList,opts];
 
 
 integrateChange[] :=

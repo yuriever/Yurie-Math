@@ -62,23 +62,23 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t, {x == t^2}, {t}, {x}]
+    integrateChange[t^a, {t == 1 - x}, {t}, {x}, -1]
     ,
-    1/2
+    (1 - x)^a
     ,
     TestID->"7-Diff.nb"
 ]
 
 VerificationTest[
-    integrateChange[t, {x == t^2}, {t}, {x}, "FirstSolution" -> False]
+    integrateChange[{t == 1 - x}, {t}, {x}, -1][t^a]
     ,
-    {1/2, 1/2}
+    (1 - x)^a
     ,
     TestID->"8-Diff.nb"
 ]
 
 VerificationTest[
-    integrateChange[t^a, {t -> 1 - x}, {t}, {x}]
+    integrateChange[{t == 1 - x}, {t}, {x}][t^a]
     ,
     -(1 - x)^a
     ,
@@ -86,7 +86,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[{t -> 1 - x}, {t}, {x}][t^a]
+    integrateChange[t^a, {t -> 1 - x}, {t}, {x}]
     ,
     -(1 - x)^a
     ,
@@ -94,11 +94,35 @@ VerificationTest[
 ]
 
 VerificationTest[
+    integrateChange[t^a, {t :> 1 - x}, {t}, {x}]
+    ,
+    -(1 - x)^a
+    ,
+    TestID->"11-Diff.nb"
+]
+
+VerificationTest[
+    integrateChange[t, {x == t^2}, {t}, {x}]
+    ,
+    1/2
+    ,
+    TestID->"12-Diff.nb"
+]
+
+VerificationTest[
+    integrateChange[t, {x == t^2}, {t}, {x}, "FirstSolution" -> False]
+    ,
+    {1/2, 1/2}
+    ,
+    TestID->"13-Diff.nb"
+]
+
+VerificationTest[
     integrateChange[{x == 2*t}, {x}, {t}][INT[x]*x^a]
     ,
     2^(1 + a)*t^a*INT[t]
     ,
-    TestID->"11-Diff.nb"
+    TestID->"14-Diff.nb"
 ]
 
 VerificationTest[
@@ -106,7 +130,7 @@ VerificationTest[
     ,
     c*Derivative[1, 1][f][u, v] == 0
     ,
-    TestID->"12-Diff.nb"
+    TestID->"15-Diff.nb"
 ]
 
 VerificationTest[
@@ -114,7 +138,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"13-Diff.nb"
+    TestID->"16-Diff.nb"
 ]
 
 VerificationTest[
@@ -122,7 +146,7 @@ VerificationTest[
     ,
     {g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
     ,
-    TestID->"14-Diff.nb"
+    TestID->"17-Diff.nb"
 ]
 
 VerificationTest[
@@ -130,7 +154,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"15-Diff.nb"
+    TestID->"18-Diff.nb"
 ]
 
 VerificationTest[
@@ -138,7 +162,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"16-Diff.nb"
+    TestID->"19-Diff.nb"
 ]
 
 VerificationTest[
