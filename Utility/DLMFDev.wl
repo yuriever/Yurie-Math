@@ -11,7 +11,7 @@ Needs["Yurie`Math`"];
 
 Needs["Yurie`MathForm`"];
 
-Needs["Yurie`Math`Info`"];
+Needs["Yurie`Math`Info`"]//Quiet;
 
 Needs["Yurie`Math`Constant`"];
 
