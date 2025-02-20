@@ -223,10 +223,16 @@ matComm::usage =
     "matComm[a,b]=a.b-b.a.";
 
 matJordan::usage =
-    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+    StringJoin["Jordan matrix.", "\nmatJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1]."];
 
 matAngularMomentum::usage =
-    StringJoin["spin-j representation of angular momentum in the unit of hbar.\n", "The column/row indices run from j to -j."];
+    StringJoin["spin-j representation of angular momentum in the unit of hbar.", "\nThe column/row indices run from j to -j."];
+
+matPauli::usage =
+    "Pauli matrix.";
+
+matDirac::usage =
+    StringJoin["Dirac matrix.", "\nThe default metric signature is (-,+,+,+)."];
 
 
 (* Quest.wl *)
