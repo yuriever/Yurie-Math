@@ -20,12 +20,21 @@ matSquareQ::usage =
 matComm::usage =
     "matComm[a,b]=a.b-b.a.";
 
+
 matJordan::usage =
-    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+    "Jordan matrix."<>
+    "\nmatJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
 matAngularMomentum::usage =
-    "spin-j representation of angular momentum in the unit of hbar.\n"<>
-    "The column/row indices run from j to -j.";
+    "spin-j representation of angular momentum in the unit of hbar."<>
+    "\nThe column/row indices run from j to -j.";
+
+matPauli::usage =
+    "Pauli matrix.";
+
+matDirac::usage =
+    "Dirac matrix."<>
+    "\nThe default metric signature is (-,+,+,+).";
 
 
 (* ::Section:: *)
@@ -93,6 +102,35 @@ dim[j_] :=
 
 id[j_][i_] :=
     1-i+j;
+
+
+matPauli[1] =
+    matPauli["x"] =
+        {{0,1},{1,0}};
+
+matPauli[2] =
+    matPauli["y"] =
+        {{0,-I},{I,0}};
+
+matPauli[3] =
+    matPauli["z"] =
+        {{1,0},{0,-1}};
+
+matPauli[0] =
+    matPauli["t"] =
+        {{1,0},{0,1}};
+
+
+matDirac[i:1|2|3] :=
+    matDirac[i] =
+        {{0,matPauli[i]},{-matPauli[i],0}}//ArrayFlatten;
+
+matDirac[0] =
+        {{0,0,1,0},{0,0,0,1},{1,0,0,0},{0,1,0,0}};
+
+
+matDirac[5] =
+        {{-1,0,0,0},{0,-1,0,0},{0,0,1,0},{0,0,0,1}};
 
 
 (* ::Subsection:: *)
