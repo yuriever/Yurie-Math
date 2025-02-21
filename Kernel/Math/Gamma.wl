@@ -473,8 +473,8 @@ multiGammaFactorSimplify[expr_] :=
 
 
 relationMellinBarnes[expr:Power[y_,a_],x_,s_] :=
-    With[ {mg = Simplify@multiGamma[{-a+s,-s},{-a}]},
-        expr->mg*x^s*Plus[y-x]^(-s+a)*INT[s]
+    With[ {mg = Simplify@multiGamma[{-a+s,-s},{-a}],rest = Simplify[y-x]},
+        expr->mg*x^s*rest^(-s+a)*INT[s]
     ];
 
 

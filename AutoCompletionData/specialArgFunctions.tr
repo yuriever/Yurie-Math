@@ -2,7 +2,7 @@
  "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole"}}, 
  "multiGammaSimplify" -> {0, {"Assumptions"}}, 
  "diffChange" -> {0, 0, 0, 0, 0, {"FirstSolution"}}, 
- "integrateChange" -> {0, 0, 0, 0, {"FirstSolution"}}, 
+ "integrateChange" -> {0, 0, 0, 0, 0, {"FirstSolution"}}, 
  "freeze" -> {0, 0, {"Transformation"}}, 
  "indexJoin" -> {0, {"IndexPosition", "IndexType"}}, 
  "indexSplit" -> {0, {"IndexPosition", "IndexType"}}, 
