@@ -313,8 +313,14 @@ solve[args___][expr_] :=
     Solve[expr,args];
 
 
-collect[var_,head_:Identity][expr_] :=
+collect[var_][expr_] :=
+    Collect[expr,var];
+
+collect[var_,head_][expr_] :=
     Collect[expr,var,head];
+
+collect[var_,head_,head2_][expr_] :=
+    Collect[expr,var,head,head2];
 
 
 (* ::Subsection::Closed:: *)
