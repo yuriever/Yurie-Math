@@ -194,13 +194,15 @@
 
 * `#!wl isC` - complex numbers.
 
-* `#!wl linearQ` - whether the expression is linear with respect to the variables.
-
 * `#!wl presentQ` - Not + FreeQ.
 
-* `#!wl patternPresentQ` - Internal\`PatternPresentQ.
+* `#!wl linearQ` - linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.
 
-* `#!wl patternFreeQ` - Internal\`PatternFreeQ.
+* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: whether the expression is syntactically negative.
+
+* `#!wl patternPresentQ` - patternPresentQ[expr]: whether any pattern occurs in the expression.
+
+* `#!wl patternFreeQ` - patternFreeQ[expr]: whether no pattern occurs in the expression.
 
 
 <!-- Simplify.wl -->

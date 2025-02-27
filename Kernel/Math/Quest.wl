@@ -57,18 +57,20 @@ isC::usage =
     "complex numbers.";
 
 
-linearQ::usage =
-    "whether the expression is linear with respect to the variables.";
-
 presentQ::usage =
     "Not + FreeQ.";
 
+linearQ::usage =
+    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
+
+syntacticNegativeQ::usage =
+    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
 
 patternPresentQ::usage =
-    "Internal`PatternPresentQ.";
+    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
 
 patternFreeQ::usage =
-    "Internal`PatternFreeQ.";
+    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
 
 
 (* ::Section:: *)
@@ -216,21 +218,19 @@ isC[] :=
     True;
 
 
-(*Internal`LinearQ will return False if the expression does not contain the variables.*)
-
-linearQ[vars__][expr_] :=
-    Internal`LinearQ[expr,{vars}];
-
-(*linearQ[vars__][expr_] :=
-    PolynomialQ[expr,{vars}]&&
-        Max@Total[GroebnerBasis`DistributedTermsList[expr,vars][[1,All,1]],{2}]<=1;*)
-
-
 presentQ[expr_,args__] :=
     Not@FreeQ[expr,args];
 
 presentQ[form_][expr_] :=
     Not@FreeQ[expr,form];
+
+
+linearQ :=
+    Internal`LinearQ;
+
+
+syntacticNegativeQ :=
+    Internal`SyntacticNegativeQ;
 
 
 patternPresentQ :=

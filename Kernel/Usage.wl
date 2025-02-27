@@ -276,17 +276,20 @@ isRN0::usage =
 isC::usage =
     "complex numbers.";
 
-linearQ::usage =
-    "whether the expression is linear with respect to the variables.";
-
 presentQ::usage =
     "Not + FreeQ.";
 
+linearQ::usage =
+    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
+
+syntacticNegativeQ::usage =
+    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
+
 patternPresentQ::usage =
-    "Internal`PatternPresentQ.";
+    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
 
 patternFreeQ::usage =
-    "Internal`PatternFreeQ.";
+    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
 
 
 (* Simplify.wl *)
