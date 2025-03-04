@@ -411,8 +411,5 @@ separate::usage =
 freeze::usage =
     "freeze subexpressions matching the pattern and then perform the operation.";
 
-freezeNegative::usage =
-    "freeze subexpressions matching the pattern, regard them as syntactically negative quantities and then perform the operation.";
-
 focus::usage =
     "simplify the arguments of the specified heads.";
