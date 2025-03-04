@@ -110,7 +110,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t, {x == t^2}, {t}, {x}, "FirstSolution" -> False]
+    integrateChange[t, {x == t^2}, {t}, {x}, "Solution" -> All]
     ,
     {1/2, 1/2}
     ,
@@ -118,11 +118,37 @@ VerificationTest[
 ]
 
 VerificationTest[
+    integrateChange[t, {x == t^2}, {t}, {x}, "Solution" -> {1, 2}]
+    ,
+    {1/2, 1/2}
+    ,
+    TestID->"14-Diff.nb"
+]
+
+VerificationTest[
+    integrateChange[t, {x == t^2}, {t}, {x}, "Solution" -> 1 ;; 2]
+    ,
+    {1/2, 1/2}
+    ,
+    TestID->"15-Diff.nb"
+]
+
+VerificationTest[
+    integrateChange[t, {x == t^2}, {t}, {x}, "Solution" -> 3]
+    ,
+    Quiet[{{t -> -Sqrt[x]}, {t -> Sqrt[x]}}]
+    ,
+    {Yurie`Math`Diff`Private`cleanSolve::argx}
+    ,
+    TestID->"16-Diff.nb"
+]
+
+VerificationTest[
     integrateChange[{x == 2*t}, {x}, {t}][INT[x]*x^a]
     ,
     2^(1 + a)*t^a*INT[t]
     ,
-    TestID->"14-Diff.nb"
+    TestID->"17-Diff.nb"
 ]
 
 VerificationTest[
@@ -130,7 +156,7 @@ VerificationTest[
     ,
     c*Derivative[1, 1][f][u, v] == 0
     ,
-    TestID->"15-Diff.nb"
+    TestID->"18-Diff.nb"
 ]
 
 VerificationTest[
@@ -138,15 +164,15 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"16-Diff.nb"
+    TestID->"19-Diff.nb"
 ]
 
 VerificationTest[
-    diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}, "FirstSolution" -> False]
+    diffChange[g[t] + Derivative[1][f][t], {x == t^2}, {t}, {x}, {f[t], g[t]}, "Solution" -> All]
     ,
     {g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
     ,
-    TestID->"17-Diff.nb"
+    TestID->"20-Diff.nb"
 ]
 
 VerificationTest[
@@ -154,7 +180,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"18-Diff.nb"
+    TestID->"21-Diff.nb"
 ]
 
 VerificationTest[
@@ -162,7 +188,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"19-Diff.nb"
+    TestID->"22-Diff.nb"
 ]
 
 VerificationTest[

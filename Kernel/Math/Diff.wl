@@ -54,8 +54,10 @@ Begin["`Private`"];
 (*Option*)
 
 
-cleanSolve//Options =
-    {"FirstSolution"->True};
+cleanSolve//Options = {
+    "Solution"->1,
+    "ShowSolution"->False
+};
 
 getFunctionRuleList//Options =
     Options@cleanSolve;
@@ -99,12 +101,14 @@ diffChange[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:Options
 
 
 diffChangeKernel[expr_,eqList1:{(_Equal|_Rule|_RuleDelayed)..},oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
-    With[ {eqList = eqList1//ReplaceAll[Rule|RuleDelayed->Equal]},
+    Module[ {eqList},
+        eqList =
+            eqList1//ReplaceAll[Rule|RuleDelayed->Equal];
         expr//ReplaceAll[getFunctionRuleList[eqList,oldList,newList,funList,FilterRules[{opts,Options@diffChange},Options@getFunctionRuleList]]]//
             (*convert old variables to new ones.*)
             ReplaceAll[cleanSolve[eqList,oldList,FilterRules[{opts,Options@diffChange},Options@cleanSolve]]]//
                 diffChangeStripList
-    ];
+    ]//Catch;
 
 
 diffChange[] :=
@@ -155,7 +159,7 @@ integrateChangeKernel[expr_,eqList1:{(_Equal|_Rule|_RuleDelayed)..},oldList_List
             ReplaceAll[expr,oldToNew]*Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
             {oldToNew,oldToNewList}
         ]//dealPDAndINT[INT,oldList,newList]//integrateChangeStripList
-    ];
+    ]//Catch;
 
 
 integrateChange[] :=
@@ -220,11 +224,43 @@ getVarPositionList[fun_,variableList_] :=
     Flatten[Map[Position[fun,#]&,variableList],{{1},{2,3}}];
 
 
+cleanSolve::argx =
+    "the option \"Solution\" accepts a valid Part operation on the solution list."
+
+cleanSolve::nosoln =
+    "no solution found.";
+
 cleanSolve[eqList_,varList_,opts:OptionsPattern[]] :=
-    If[ OptionValue["FirstSolution"]===True,
-        Solve[eqList,varList]//Take[#,1]&//Normal//ReplaceAll[C[_]->0],
-        (*Else*)
-        Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0]
+    Module[ {solutionList,solution},
+        solutionList =
+            Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0];
+        solution =
+            (* Throw exception if Part operation is invalid. *)
+            Quiet[
+                Check[
+                    solutionList[[OptionValue["Solution"]]],
+                    Message[cleanSolve::argx];
+                    Throw[solutionList],
+                    {Part::pkspec1,Part::partw}
+                ],
+                {Part::pkspec1,Part::partw}
+            ];
+        solution =
+            (* If solution is a list of rules, convert it to a list of lists. *)
+            (* Throw exception if solution is empty. *)
+            Which[
+                MatchQ[solution,{__Rule}],
+                    {solution},
+                MatchQ[solution,{__List}],
+                    solution,
+                solution==={},
+                    Message[cleanSolve::nosoln];
+                    Throw[solution]
+            ];
+        If[ OptionValue["ShowSolution"]===True,
+            Echo@Column@solution
+        ];
+        solution
     ];
 
 
