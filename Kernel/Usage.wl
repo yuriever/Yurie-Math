@@ -409,7 +409,10 @@ separate::usage =
     "separate the elements by whether or not satisfying the criteria.";
 
 freeze::usage =
-    "screen subexpressions matching the pattern and then perform the operation.";
+    "freeze subexpressions matching the pattern and then perform the operation.";
+
+freezeNegative::usage =
+    "freeze subexpressions matching the pattern, regard them as syntactically negative quantities and then perform the operation.";
 
 focus::usage =
     "simplify the arguments of the specified heads.";

@@ -283,6 +283,8 @@
 
 * `#!wl separate` - separate the elements by whether or not satisfying the criteria.
 
-* `#!wl freeze` - screen subexpressions matching the pattern and then perform the operation.
+* `#!wl freeze` - freeze subexpressions matching the pattern and then perform the operation.
+
+* `#!wl freezeNegative` - freeze subexpressions matching the pattern, regard them as syntactically negative quantities and then perform the operation.
 
 * `#!wl focus` - simplify the arguments of the specified heads.

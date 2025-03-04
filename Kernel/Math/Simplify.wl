@@ -148,7 +148,10 @@ separate::usage =
     "separate the elements by whether or not satisfying the criteria.";
 
 freeze::usage =
-    "screen subexpressions matching the pattern and then perform the operation.";
+    "freeze subexpressions matching the pattern and then perform the operation.";
+
+freezeNegative::usage =
+    "freeze subexpressions matching the pattern, regard them as syntactically negative quantities and then perform the operation.";
 
 focus::usage =
     "simplify the arguments of the specified heads.";
@@ -491,6 +494,13 @@ freeze[args___][expr_] :=
     With[ {sep = ArgumentsOptions[freeze[args],{1,3},<|"Head"->HoldComplete,"OptionsMode"->"Shortest"|>]},
         freezeKernel[sep][expr]/;!FailureQ[sep]
     ];
+
+
+freezeNegative//Attributes =
+    {HoldAll};
+
+freezeNegative[args___][expr_] :=
+    freeze[args,"Transformation"->{-#&,-#&}][expr];
 
 
 freezeKernel[{HoldComplete[pattern_],HoldComplete[opts___]}][expr_] :=
