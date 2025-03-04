@@ -207,51 +207,11 @@ VerificationTest[
 ]
 
 VerificationTest[
-    freeze[x, Simplify, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
-    ,
-    {s[x], x[s[x]], x[x[s[x]]]}
-    ,
-    TestID->"25-Simplify.nb"
-]
-
-VerificationTest[
-    freeze[x, Simplify, 2, "Transformation" -> {Identity, s}][NestList[x, x, 2]]
-    ,
-    {s[x], x[s[x]], x[x[x]]}
-    ,
-    TestID->"26-Simplify.nb"
-]
-
-VerificationTest[
-    freeze[x, Simplify, "Transformation" -> {s, t}][NestList[x, x, 2]]
-    ,
-    {s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
-    ,
-    TestID->"27-Simplify.nb"
-]
-
-VerificationTest[
-    freeze[a, PowerExpand][((-a)*c)^b]
-    ,
-    (-1)^b*a^b*c^b
-    ,
-    TestID->"28-Simplify.nb"
-]
-
-VerificationTest[
-    freezeNegative[a, PowerExpand][((-a)*c)^b]
-    ,
-    (-a)^b*c^b
-    ,
-    TestID->"29-Simplify.nb"
-]
-
-VerificationTest[
     expr = f[a^2 + b^2 + 2*a*b] + g[a^2 + b^2 + 2*a*b, 2]
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"30-Simplify.nb"
+    TestID->"25-Simplify.nb"
 ]
 
 VerificationTest[
@@ -259,7 +219,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"31-Simplify.nb"
+    TestID->"26-Simplify.nb"
 ]
 
 VerificationTest[
@@ -267,7 +227,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"32-Simplify.nb"
+    TestID->"27-Simplify.nb"
 ]
 
 VerificationTest[
@@ -275,7 +235,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[(a + b)^2, 2]
     ,
-    TestID->"33-Simplify.nb"
+    TestID->"28-Simplify.nb"
 ]
 
 VerificationTest[
@@ -283,7 +243,7 @@ VerificationTest[
     ,
     g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
     ,
-    TestID->"34-Simplify.nb"
+    TestID->"29-Simplify.nb"
 ]
 
 VerificationTest[
