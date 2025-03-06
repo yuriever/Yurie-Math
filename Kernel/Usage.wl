@@ -228,12 +228,6 @@ matJordan::usage =
 matAngularMomentum::usage =
     StringJoin["spin-j representation of angular momentum in the unit of hbar.", "\nThe column/row indices run from j to -j."];
 
-matPauli::usage =
-    "Pauli matrix.";
-
-matDirac::usage =
-    StringJoin["Dirac matrix.", "\nThe default metric signature is (-,+,+,+)."];
-
 
 (* Quest.wl *)
 

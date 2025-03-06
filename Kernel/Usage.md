@@ -161,10 +161,6 @@
 
 * `#!wl matAngularMomentum` - spin-j representation of angular momentum in the unit of hbar. The column/row indices run from j to -j.
 
-* `#!wl matPauli` - Pauli matrix.
-
-* `#!wl matDirac` - Dirac matrix. The default metric signature is (-,+,+,+).
-
 
 <!-- Quest.wl -->
 

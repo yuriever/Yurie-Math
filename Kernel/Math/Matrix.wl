@@ -29,13 +29,6 @@ matAngularMomentum::usage =
     "spin-j representation of angular momentum in the unit of hbar."<>
     "\nThe column/row indices run from j to -j.";
 
-matPauli::usage =
-    "Pauli matrix.";
-
-matDirac::usage =
-    "Dirac matrix."<>
-    "\nThe default metric signature is (-,+,+,+).";
-
 
 (* ::Section:: *)
 (*Private*)
@@ -102,35 +95,6 @@ dim[j_] :=
 
 id[j_][i_] :=
     1-i+j;
-
-
-matPauli[1] =
-    matPauli["x"] =
-        {{0,1},{1,0}};
-
-matPauli[2] =
-    matPauli["y"] =
-        {{0,-I},{I,0}};
-
-matPauli[3] =
-    matPauli["z"] =
-        {{1,0},{0,-1}};
-
-matPauli[0] =
-    matPauli["t"] =
-        {{1,0},{0,1}};
-
-
-matDirac[i:1|2|3] :=
-    matDirac[i] =
-        {{0,matPauli[i]},{-matPauli[i],0}}//ArrayFlatten;
-
-matDirac[0] =
-    {{0,0,1,0},{0,0,0,1},{1,0,0,0},{0,1,0,0}};
-
-
-matDirac[5] =
-    {{-1,0,0,0},{0,-1,0,0},{0,0,1,0},{0,0,0,1}};
 
 
 (* ::Subsection:: *)
