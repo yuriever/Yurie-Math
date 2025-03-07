@@ -9,11 +9,19 @@ BeginPackage["Yurie`Math`Label`"];
 
 Needs["Yurie`Math`"];
 
+
+(* ::Text:: *)
+(*BeginDeveloper*)
+
+
 Needs["Yurie`Base`"];
 
 ClearAll["Yurie`Math`Label`*"];
-ClearAll["Yurie`Math`Label`Private`*"];
+ClearAll["Yurie`Math`Label`*`*"];
 
+
+(* ::Text:: *)
+(*EndDeveloper*)
 
 
 (* ::Section:: *)
@@ -25,6 +33,22 @@ label::usage =
 
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";
+
+
+labelToZero::usage =
+    "x1->0.";
+
+labelToEqual::usage =
+    "x1->x2.";
+
+labelToDiff::usage =
+    "x1->x12+x2.";
+
+labelToDiffZero::usage =
+    "x1->x12, x2->0.";
+
+labelToDiffBack::usage =
+    "x12->x1-x2.";
 
 
 (* ::Section:: *)
@@ -77,12 +101,33 @@ $emptyLabelP =
 
 
 label//Options = {
-    "LabelPosition"->Symbol
+    "LabelPosition"->Construct
 };
 
 
 labelConvert//Options = {
     "LabelType"->All
+};
+
+
+labelToZero//Options = {
+    "LabelPosition"->Construct
+};
+
+labelToEqual//Options = {
+    "LabelPosition"->Construct
+};
+
+labelToDiff//Options = {
+    "LabelPosition"->Construct
+};
+
+labelToDiffZero//Options = {
+    "LabelPosition"->Construct
+};
+
+labelToDiffBack//Options = {
+    "LabelPosition"->Construct
 };
 
 
@@ -202,7 +247,7 @@ labelToString[lab_] :=
 (*Main*)
 
 
-labelConvert[var_Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
+labelConvert[var_Symbol|vars__Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
     Catch[
         With[ {type = checkLabelType@OptionValue["LabelType"]},
             labelConvertKernel[{var,vars},checkLabelPosition@pos1,checkLabelPosition@pos2,type][expr]
@@ -211,7 +256,7 @@ labelConvert[var_Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPosi
         expr&
     ];
 
-labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
+labelConvert[__,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
     Catch[
         Message[labelConvert::posequal,pos1,pos2];
         Throw[expr]
@@ -287,6 +332,117 @@ symbolFromStringOrStringExpression[expr_String] :=
 
 symbolFromStringOrStringExpression[expr_StringExpression] :=
     First@expr;
+
+
+(* ::Subsection:: *)
+(*labelTo*)
+
+
+(* ::Subsubsection:: *)
+(*Main*)
+
+
+labelToZero[vars__Symbol,opts:OptionsPattern[]][labels__] :=
+    Catch[
+        ReplaceAll[
+            labelRulePrototype[
+                (#[[1]]->0)&,
+                checkLabelPosition@OptionValue["LabelPosition"]
+            ][vars][padSymbolToRule[labels]]
+        ],
+        _,
+        Identity&
+    ];
+
+
+labelToEqual[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+    Catch[
+        ReplaceAll[
+            labelRulePrototype[
+                (#[[1]]->#[[2]])&,
+                checkLabelPosition@OptionValue["LabelPosition"]
+            ][vars][rules]
+        ],
+        _,
+        Identity&
+    ];
+
+
+labelToDiff[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+    Catch[
+        ReplaceAll[
+            labelRulePrototype[
+                (#[[1]]->#[[2]]+#[[3]])&,
+                checkLabelPosition@OptionValue["LabelPosition"]
+            ][vars][rules]
+        ],
+        _,
+        Identity&
+    ]
+
+
+labelToDiffZero[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+    Catch[
+        ReplaceAll[
+            labelRulePrototype[
+                {#[[1]]->#[[3]],#[[2]]->0}&,
+                checkLabelPosition@OptionValue["LabelPosition"]
+            ][vars][rules]
+        ],
+        _,
+        Identity&
+    ]
+
+
+labelToDiffBack[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+    Catch[
+        ReplaceAll[
+            labelRulePrototype[
+                (#[[3]]->#[[1]]-#[[2]])&,
+                checkLabelPosition@OptionValue["LabelPosition"]
+            ][vars][rules]
+        ],
+        _,
+        Identity&
+    ]
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+labelRulePrototype::usage =
+    "generate rules from prototype function.";
+
+
+labelRulePrototype[proto_,pos_][var_Symbol][rule_Rule] :=
+    proto@Map[
+        labelKernel[pos,var,#]&,extractLabelFromRule[rule]
+    ];
+
+labelRulePrototype[proto_,pos_][var_Symbol][rules__Rule] :=
+    Flatten@Map[labelRulePrototype[proto,pos][var],{rules}];
+
+labelRulePrototype[proto_,pos_][vars__Symbol][rule_Rule] :=
+    Flatten@Map[labelRulePrototype[proto,pos][#][rule]&,{vars}];
+
+labelRulePrototype[proto_,pos_][vars__Symbol][rules__Rule] :=
+    Flatten@Outer[labelRulePrototype[proto,pos][#1][#2]&,{vars},{rules}];
+
+
+extractLabelFromRule::usage =
+    "extract labels and difference of labels from rule.";
+
+extractLabelFromRule[Rule[lab1_,lab2_]] :=
+    (* 1->2 returns {1,2,12} *)
+    {lab1,lab2,ToString[lab1]<>ToString[lab2]};
+
+
+padSymbolToRule::usage =
+    "pad symbols to identical rules, used in indexToZero.";
+
+padSymbolToRule[vars__] :=
+    Map[#->#&,{vars}]//Apply[Sequence];
 
 
 (* ::Subsection:: *)
