@@ -204,6 +204,21 @@ label::usage =
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";
 
+labelToZero::usage =
+    "x1->0.";
+
+labelToEqual::usage =
+    "x1->x2.";
+
+labelToDiff::usage =
+    "x1->x12+x2.";
+
+labelToDiffZero::usage =
+    "x1->x12, x2->0.";
+
+labelToDiffBack::usage =
+    "x12->x1-x2.";
+
 
 (* Lie.wl *)
 

@@ -144,6 +144,16 @@
 
 * `#!wl labelConvert` - convert the labeled object(s) according to the two specified label positions.
 
+* `#!wl labelToZero` - x1->0.
+
+* `#!wl labelToEqual` - x1->x2.
+
+* `#!wl labelToDiff` - x1->x12+x2.
+
+* `#!wl labelToDiffZero` - x1->x12, x2->0.
+
+* `#!wl labelToDiffBack` - x12->x1-x2.
+
 
 <!-- Lie.wl -->
 

@@ -5,6 +5,13 @@
  "integrateChange" -> {0, 0, 0, {"Solution", "ShowSolution"}, 
    {"Solution", "ShowSolution"}, {"Solution", "ShowSolution"}}, 
  "label" -> {0, 0, {"LabelPosition"}}, "labelConvert" -> {{"LabelType"}}, 
+ "labelToZero" -> {0, {"LabelPosition"}, {"LabelPosition"}, 
+   {"LabelPosition"}}, "labelToEqual" -> {0, {"LabelPosition"}, 
+   {"LabelPosition"}, {"LabelPosition"}}, 
+ "labelToDiff" -> {0, {"LabelPosition"}, {"LabelPosition"}, 
+   {"LabelPosition"}}, "labelToDiffZero" -> {0, {"LabelPosition"}, 
+   {"LabelPosition"}, {"LabelPosition"}}, "labelToDiffBack" -> 
+  {0, {"LabelPosition"}, {"LabelPosition"}, {"LabelPosition"}}, 
  "DLMF" -> {{"5.5.5", "BinomialSwapA", "BinomialSwapN", "PochhammerSwapA", 
     "5.2.8.1", "5.2.8.2", "15.1.2", "15.4.20", "15.5.11", "15.5.12", 
     "15.5.13", "15.5.14", "15.5.15", "15.5.16", "15.5.17", "15.5.18", 

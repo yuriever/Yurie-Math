@@ -90,6 +90,46 @@ VerificationTest[
 ]
 
 VerificationTest[
+    labelToZero[z, zb][1, 2]
+    ,
+    ReplaceAll[{z[1] -> 0, z[2] -> 0, zb[1] -> 0, zb[2] -> 0}]
+    ,
+    TestID->"10-Label.nb"
+]
+
+VerificationTest[
+    labelToEqual[z, zb][1 -> 2]
+    ,
+    ReplaceAll[{z[1] -> z[2], zb[1] -> zb[2]}]
+    ,
+    TestID->"11-Label.nb"
+]
+
+VerificationTest[
+    labelToDiff[z, zb][1 -> 2]
+    ,
+    ReplaceAll[{z[1] -> z[2] + z["12"], zb[1] -> zb[2] + zb["12"]}]
+    ,
+    TestID->"12-Label.nb"
+]
+
+VerificationTest[
+    labelToDiffZero[z, zb][1 -> 2]
+    ,
+    ReplaceAll[{z[1] -> z["12"], z[2] -> 0, zb[1] -> zb["12"], zb[2] -> 0}]
+    ,
+    TestID->"13-Label.nb"
+]
+
+VerificationTest[
+    labelToDiffBack[z, zb][1 -> 2]
+    ,
+    ReplaceAll[{z["12"] -> z[1] - z[2], zb["12"] -> zb[1] - zb[2]}]
+    ,
+    TestID->"14-Label.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,
