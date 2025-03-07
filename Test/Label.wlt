@@ -80,6 +80,16 @@ VerificationTest[
 ]
 
 VerificationTest[
+    MatrixForm[Outer[{#1, #2} -> labelConvert[{x, y}, #1 -> #2][{x1, x[1], Subscript[x, 1], Superscript[x, 1]}] & , {Symbol, Construct, Subscript, Superscript}, {Symbol, Construct, Subscript, Superscript}]]
+    ,
+    Quiet[MatrixForm[{{{Symbol, Symbol} -> {x1, x[1], Subscript[x, 1], Superscript[x, 1]}, {Symbol, Construct} -> {x[1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Symbol, Subscript} -> {Subscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Symbol, Superscript} -> {Superscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}}, {{Construct, Symbol} -> {x1, x1, Subscript[x, 1], Superscript[x, 1]}, {Construct, Construct} -> {x1, x[1], Subscript[x, 1], Superscript[x, 1]}, {Construct, Subscript} -> {x1, Subscript[x, 1], Subscript[x, 1], Superscript[x, 1]}, {Construct, Superscript} -> {x1, Superscript[x, 1], Subscript[x, 1], Superscript[x, 1]}}, {{Subscript, Symbol} -> {x1, x[1], x1, Superscript[x, 1]}, {Subscript, Construct} -> {x1, x[1], x[1], Superscript[x, 1]}, {Subscript, Subscript} -> {x1, x[1], Subscript[x, 1], Superscript[x, 1]}, {Subscript, Superscript} -> {x1, x[1], Superscript[x, 1], Superscript[x, 1]}}, {{Superscript, Symbol} -> {x1, x[1], Subscript[x, 1], x1}, {Superscript, Construct} -> {x1, x[1], Subscript[x, 1], x[1]}, {Superscript, Subscript} -> {x1, x[1], Subscript[x, 1], Subscript[x, 1]}, {Superscript, Superscript} -> {x1, x[1], Subscript[x, 1], Superscript[x, 1]}}}]]
+    ,
+    {Yurie`Math`labelConvert::posequal,Yurie`Math`labelConvert::posequal,Yurie`Math`labelConvert::posequal,General::stop}
+    ,
+    TestID->"9-Label.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,
