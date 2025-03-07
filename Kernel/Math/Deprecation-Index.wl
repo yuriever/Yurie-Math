@@ -20,7 +20,6 @@ indexize::usage =
 indexify::usage =
     "join the variable(s) and index(s) into a sequence of symbols.";
 
-
 indexJoin::usage =
     "join indexed variables into symbols in the expression.";
 
@@ -61,21 +60,14 @@ Begin["`Private`"];
 
 
 $indexPositionP::usage =
-    "pattern of index positions, used by indexJoin|indexSplit.";
-
-$indexPositionP =
-    Construct|Subscript|Superscript;
-
-
-$indexPositionP2::usage =
-    "pattern of index positions, used by indexTo* functions.";
-
-$indexPositionP2 =
-    Symbol|Construct|Subscript|Superscript;
-
+    "pattern of index positions.";
 
 $indexTypeP::usage =
     "pattern of index types.";
+
+
+$indexPositionP =
+    Construct|Subscript|Superscript;
 
 $indexTypeP =
     "PositiveInteger"|"PositiveIntegerOrSingleLetter"|"PositiveIntegerOrGreekLetter"|
@@ -92,23 +84,14 @@ $indexTypeP =
 
 
 indexize[var:_Symbol|_String,indices__] :=
-    (
-        Message[General::deprecation0,"indexize"];
-        indexizeKernel[var,indices]
-    );
+    indexizeKernel[var,indices];
 
 
 indexify[var:_Symbol|_String,indices__] :=
-    (
-        Message[General::deprecation0,"indexify"];
-        Map[indexizeKernel[var,#]&,{indices}]//Apply[Sequence]
-    );
+    Map[indexizeKernel[var,#]&,{indices}]//Apply[Sequence];
 
 indexify[varList:{(_Symbol|_String)..},indices__] :=
-    (
-        Message[General::deprecation0,"indexify"];
-        Outer[indexizeKernel,varList,{indices}]//Transpose//Flatten//Apply[Sequence]
-    );
+    Outer[indexizeKernel,varList,{indices}]//Transpose//Flatten//Apply[Sequence];
 
 
 (* ::Subsubsection:: *)
@@ -180,16 +163,10 @@ indexSplit::optnotmatch =
 
 
 indexJoin[vars__Symbol,opts:OptionsPattern[]][expr_] :=
-    (
-        Message[General::deprecation0,"indexJoin"];
-        indexJoinKernel[{vars},FilterRules[{opts,Options@indexJoin},Options@indexJoinKernel]][expr]
-    );
+    indexJoinKernel[{vars},FilterRules[{opts,Options@indexJoin},Options@indexJoinKernel]][expr];
 
 indexJoin[varList:{__Symbol},opts:OptionsPattern[]][expr_] :=
-    (
-        Message[General::deprecation0,"indexJoin"];
-        indexJoinKernel[varList,FilterRules[{opts,Options@indexJoin},Options@indexJoinKernel]][expr]
-    );
+    indexJoinKernel[varList,FilterRules[{opts,Options@indexJoin},Options@indexJoinKernel]][expr];
 
 
 indexJoinKernel[varList_List,OptionsPattern[]][expr_] :=
@@ -224,16 +201,10 @@ indexJoinKernel[varList_List,OptionsPattern[]][expr_] :=
 
 
 indexSplit[vars__Symbol,opts:OptionsPattern[]][expr_] :=
-    (
-        Message[General::deprecation0,"indexSplit"];
-        indexSplitKernel[{vars},FilterRules[{opts,Options@indexSplit},Options@indexSplitKernel]][expr]
-    );
+    indexSplitKernel[{vars},FilterRules[{opts,Options@indexSplit},Options@indexSplitKernel]][expr];
 
 indexSplit[varList:{__Symbol},opts:OptionsPattern[]][expr_] :=
-    (
-        Message[General::deprecation0,"indexSplit"];
-        indexSplitKernel[varList,FilterRules[{opts,Options@indexSplit},Options@indexSplitKernel]][expr]
-    );
+    indexSplitKernel[varList,FilterRules[{opts,Options@indexSplit},Options@indexSplitKernel]][expr];
 
 
 indexSplitKernel[varList_List,OptionsPattern[]][expr_] :=
@@ -303,54 +274,37 @@ indexQ[fun_Symbol][str_] :=
 (*Main*)
 
 
-indexToZero[heads__][indexs__] :=
-    (
-        Message[General::deprecation0,"indexToZero"];
-        ReplaceAll[indexRulePrototype[(#[[1]]->0)&,padSymbolToRule[indexs],{heads}]]
-    );
+indexToZero[heads__][indexs__][expr_] :=
+    expr//ReplaceAll[indexRulePrototype[(#[[1]]->0)&,padSymbolToRule[indexs],{heads}]];
 
 
-indexToEqual[heads__][rules__Rule] :=
-    (
-        Message[General::deprecation0,"indexToEqual"];
-        ReplaceAll[indexRulePrototype[(#[[1]]->#[[2]])&,{rules},{heads}]]
-    );
+indexToEqual[heads__][rules__Rule][expr_] :=
+    expr//ReplaceAll[indexRulePrototype[(#[[1]]->#[[2]])&,{rules},{heads}]];
 
 
-indexToDiff[heads__][rules__Rule] :=
-    (
-        Message[General::deprecation0,"indexToDiff"];
-        ReplaceAll[indexRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,{rules},{heads}]]
-    );
+indexToDiff[heads__][rules__Rule][expr_] :=
+    expr//ReplaceAll[indexRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,{rules},{heads}]];
 
 
-indexToDiffZero[heads__][rules__Rule] :=
-    (
-        Message[General::deprecation0,"indexToDiffZero"];
-        ReplaceAll[indexRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,{rules},{heads}]]
-    );
+indexToDiffZero[heads__][rules__Rule][expr_] :=
+    expr//ReplaceAll[indexRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,{rules},{heads}]];
 
 
-indexToDiffBack[heads__][rules__Rule] :=
-    (
-        Message[General::deprecation0,"indexToDiffBack"];
-        ReplaceAll[indexRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,{rules},{heads}]]
-    );
+indexToDiffBack[heads__][rules__Rule][expr_] :=
+    expr//ReplaceAll[indexRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,{rules},{heads}]];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-indexRulePrototype::usage =
-    "generate rules from prototype function.";
+(*get rules from prototype function.*)
 
-indexRulePrototype[proto_,position_,ruleList_List,headList_List] :=
-    Flatten@Outer[indexRulePrototypeSingle[proto,position,#1,#2]&,ruleList,headList];
+indexRulePrototype[proto_,ruleList_List,headList_List] :=
+    Flatten@Outer[indexRulePrototype[proto,#1,#2]&,ruleList,headList];
 
-
-indexRulePrototypeSingle[proto_,position_,rule_Rule,head_Symbol] :=
-    proto@indexize2[position,head,extractIndexFromRule[rule]];
+indexRulePrototype[proto_,rule_Rule,head_Symbol] :=
+    proto@indexize2[head,extractIndexFromRule[rule]];
 
 
 (*extract indices and difference of indices from rule.*)
@@ -368,7 +322,7 @@ padSymbolToRule[heads__] :=
 
 (*indexize symbols with indices.*)
 
-indexize2[type_][head_,indexList_List] :=
+indexize2[head_,indexList_List] :=
     Map[ToExpression[ToString[head,FormatType->InputForm]<>indexToString@#]&,indexList];
 
 
