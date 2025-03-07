@@ -1,3 +1,24 @@
+<!-- Deprecation-Index.wl -->
+
+* `#!wl indexize` - join the variable and index(s) into a symbol.
+
+* `#!wl indexify` - join the variable(s) and index(s) into a sequence of symbols.
+
+* `#!wl indexJoin` - join indexed variables into symbols in the expression.
+
+* `#!wl indexSplit` - split symbols into indexed variables in the expression.
+
+* `#!wl indexToZero` - x1->0.
+
+* `#!wl indexToEqual` - x1->x2.
+
+* `#!wl indexToDiff` - x1->x12+x2.
+
+* `#!wl indexToDiffZero` - x1->x12,x2->0.
+
+* `#!wl indexToDiffBack` - x12->x1-x2.
+
+
 <!-- Deprecation.wl -->
 
 * `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
@@ -117,25 +138,11 @@
 * `#!wl wilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
 
 
-<!-- Index.wl -->
+<!-- Label.wl -->
 
-* `#!wl indexize` - join the variable and index(s) into a symbol.
+* `#!wl label` - join the variable(s) and label(s) into a (sequence of) labeled object(s).
 
-* `#!wl indexify` - join the variable(s) and index(s) into a sequence of symbols.
-
-* `#!wl indexJoin` - join indexed variables into symbols in the expression.
-
-* `#!wl indexSplit` - split symbols into indexed variables in the expression.
-
-* `#!wl indexToZero` - x1->0.
-
-* `#!wl indexToEqual` - x1->x2.
-
-* `#!wl indexToDiff` - x1->x12+x2.
-
-* `#!wl indexToDiffZero` - x1->x12,x2->0.
-
-* `#!wl indexToDiffBack` - x12->x1-x2.
+* `#!wl labelConvert` - convert the labeled object(s) according to the two specified label positions.
 
 
 <!-- Lie.wl -->

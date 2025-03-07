@@ -1,3 +1,33 @@
+(* Deprecation-Index.wl *)
+
+indexize::usage =
+    "join the variable and index(s) into a symbol.";
+
+indexify::usage =
+    "join the variable(s) and index(s) into a sequence of symbols.";
+
+indexJoin::usage =
+    "join indexed variables into symbols in the expression.";
+
+indexSplit::usage =
+    "split symbols into indexed variables in the expression.";
+
+indexToZero::usage =
+    "x1->0.";
+
+indexToEqual::usage =
+    "x1->x2.";
+
+indexToDiff::usage =
+    "x1->x12+x2.";
+
+indexToDiffZero::usage =
+    "x1->x12,x2->0.";
+
+indexToDiffBack::usage =
+    "x12->x1-x2.";
+
+
 (* Deprecation.wl *)
 
 hyperRegToUnreg::usage =
@@ -166,34 +196,13 @@ wilsonPolynomialFromHyper::usage =
     "convert Hypergeometric4F3 to Wilson polynomial.";
 
 
-(* Index.wl *)
+(* Label.wl *)
 
-indexize::usage =
-    "join the variable and index(s) into a symbol.";
+label::usage =
+    "join the variable(s) and label(s) into a (sequence of) labeled object(s).";
 
-indexify::usage =
-    "join the variable(s) and index(s) into a sequence of symbols.";
-
-indexJoin::usage =
-    "join indexed variables into symbols in the expression.";
-
-indexSplit::usage =
-    "split symbols into indexed variables in the expression.";
-
-indexToZero::usage =
-    "x1->0.";
-
-indexToEqual::usage =
-    "x1->x2.";
-
-indexToDiff::usage =
-    "x1->x12+x2.";
-
-indexToDiffZero::usage =
-    "x1->x12,x2->0.";
-
-indexToDiffBack::usage =
-    "x12->x1-x2.";
+labelConvert::usage =
+    "convert the labeled object(s) according to the two specified label positions.";
 
 
 (* Lie.wl *)
