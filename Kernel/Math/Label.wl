@@ -56,23 +56,17 @@ $labelPositionP::usage =
     "pattern of label positions.";
 
 $labelPositionP =
-    Symbol|Construct|Subscript|Superscript;
-
-
-$labelPositionP2::usage =
-    "pattern of label positions except for Symbol.";
-
-$labelPositionP2 =
-    Construct|Subscript|Superscript;
+    Symbol|Construct|Function|Subscript|Superscript;
 
 
 $labelTypeP::usage =
     "pattern of label types.";
 
 $labelTypeP =
+    All|
     "PositiveInteger"|"PositiveIntegerOrSingleLetter"|"PositiveIntegerOrGreekLetter"|
     "NaturalNumber"|"NaturalNumberOrSingleLetter"|"NaturalNumberOrGreekLetter"|
-    All|_Symbol;
+    _Symbol|_Function|_RightComposition|_Composition;
 
 
 $emptyLabelP::usage =
@@ -185,7 +179,10 @@ label[var_,_,pos:Except[$labelPositionP]] :=
 labelKernel[position:$labelPositionP,var_,lab:$emptyLabelP] :=
     var;
 
-labelKernel[position:$labelPositionP2,var_,lab_] :=
+labelKernel[position:Construct|Function,var_,lab_] :=
+    var[lab];
+
+labelKernel[position:Subscript|Superscript,var_,lab_] :=
     position[var,lab];
 
 labelKernel[Symbol,var_,lab_] :=
@@ -232,7 +229,7 @@ labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPo
 labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
     With[ {varP = Alternatives@@varList},
         Switch[pos1,
-            Construct,
+            Construct|Function,
                 expr//ReplaceAll[
                     (var:varP)[lab_]/;AtomQ[lab]&&labelQ[type,labelToString[lab]]:>
                         RuleCondition@labelKernel2[pos2,var,lab]
@@ -249,7 +246,7 @@ labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
                             RuleCondition@symbolFromStringOrStringExpression@StringReplace[
                                 ToString[symbol,FormatType->InputForm],
                                 StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
-                                    pos2[ToExpression@var,ToExpression@lab]
+                                    labelKernel2[pos2,ToExpression@var,ToExpression@lab]
                             ]
                     ]
                 ]
@@ -263,7 +260,10 @@ labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
 
 (* Unlike labelKernel, labelKernel2 does not handle empty label. *)
 
-labelKernel2[position:$labelPositionP2,var_,lab_] :=
+labelKernel2[position:Construct|Function,var_,lab_] :=
+    var[lab];
+
+labelKernel2[position:Subscript|Superscript,var_,lab_] :=
     position[var,lab];
 
 labelKernel2[Symbol,var_,lab_] :=
