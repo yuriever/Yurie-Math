@@ -140,28 +140,28 @@ returnEqualLabelPosition[pos1_,pos2_,return_] :=
 (*Main*)
 
 
-label[var:_Symbol,lab_,pos:$labelPositionP:Construct] :=
+label[var:_Symbol,lab_,pos:$labelPositionP:Function] :=
     Catch[
         labelKernel[pos,var,lab],
         _,
         HoldComplete[var]&
     ];
 
-label[var:_Symbol,labList_List,pos:$labelPositionP:Construct] :=
+label[var:_Symbol,labList_List,pos:$labelPositionP:Function] :=
     Catch[
         Map[labelKernel[pos,var,#]&,labList]//Apply[Sequence],
         _,
         HoldComplete[var]&
     ];
 
-label[varList:{__Symbol},lab_,pos:$labelPositionP:Construct] :=
+label[varList:{__Symbol},lab_,pos:$labelPositionP:Function] :=
     Catch[
         Map[labelKernel[pos,#,lab]&,varList]//Apply[Sequence],
         _,
         HoldComplete[varList]&
     ];
 
-label[varList:{__Symbol},labList_List,pos:$labelPositionP:Construct] :=
+label[varList:{__Symbol},labList_List,pos:$labelPositionP:Function] :=
     Catch[
         Outer[labelKernel[pos,#1,#2]&,varList,labList]//Transpose//Flatten//Apply[Sequence],
         _,
@@ -310,7 +310,7 @@ symbolFromStringOrStringExpression[expr_StringExpression] :=
 (*Main*)
 
 
-labelToZero[var_Symbol|{vars__Symbol},(label:Except[_List])|{labels__},pos:$labelPositionP:Construct] :=
+labelToZero[var_Symbol|{vars__Symbol},(label:Except[_List])|{labels__},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->0)&,pos,{var,vars},Map[#->#&,{label,labels}]]
@@ -320,7 +320,7 @@ labelToZero[var_Symbol|{vars__Symbol},(label:Except[_List])|{labels__},pos:$labe
     ];
 
 
-labelToEqual[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
+labelToEqual[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->#[[2]])&,pos,{var,vars},{rule,rules}]
@@ -330,7 +330,7 @@ labelToEqual[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositio
     ];
 
 
-labelToDiff[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
+labelToDiff[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,pos,{var,vars},{rule,rules}]
@@ -340,7 +340,7 @@ labelToDiff[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPosition
     ];
 
 
-labelToDiffZero[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
+labelToDiffZero[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,pos,{var,vars},{rule,rules}]
@@ -350,7 +350,7 @@ labelToDiffZero[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPosi
     ];
 
 
-labelToDiffBack[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
+labelToDiffBack[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,pos,{var,vars},{rule,rules}]
