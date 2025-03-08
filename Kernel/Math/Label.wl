@@ -10,20 +10,6 @@ BeginPackage["Yurie`Math`Label`"];
 Needs["Yurie`Math`"];
 
 
-(* ::Text:: *)
-(*BeginDeveloper*)
-
-
-Needs["Yurie`Base`"];
-
-ClearAll["Yurie`Math`Label`*"];
-ClearAll["Yurie`Math`Label`*`*"];
-
-
-(* ::Text:: *)
-(*EndDeveloper*)
-
-
 (* ::Section:: *)
 (*Public*)
 
@@ -100,34 +86,8 @@ $emptyLabelP =
 (*Option*)
 
 
-label//Options = {
-    "LabelPosition"->Construct
-};
-
-
 labelConvert//Options = {
     "LabelType"->All
-};
-
-
-labelToZero//Options = {
-    "LabelPosition"->Construct
-};
-
-labelToEqual//Options = {
-    "LabelPosition"->Construct
-};
-
-labelToDiff//Options = {
-    "LabelPosition"->Construct
-};
-
-labelToDiffZero//Options = {
-    "LabelPosition"->Construct
-};
-
-labelToDiffBack//Options = {
-    "LabelPosition"->Construct
 };
 
 
@@ -135,17 +95,47 @@ labelToDiffBack//Options = {
 (*Message*)
 
 
-label::posnotmatch =
-    "the label position `` should be one of the followings:\n``."
-
 label::typenotmatch =
     "the label type `` should be one of the followings:\n``."
+
+label::posnotmatch =
+    "the label position `` should be one of the followings:\n``."
 
 label::badlab =
     "the label `` should be symbol, string, or nonnegative integer when the label position is Symbol."
 
 labelConvert::posequal =
     "the two label positions `` and `` should be different.";
+
+
+checkAndThrowLabelType[type:$labelTypeP] :=
+    type;
+
+checkAndThrowLabelType[type:Except[$labelTypeP]] :=
+    (
+        Message[label::typenotmatch,type,$labelTypeP];
+        Throw[Null,"typenotmatch"]
+    );
+
+
+throwBadLabel[lab_] :=
+    (
+        Message[label::badlab,lab];
+        Throw[Null,"badlab"]
+    );
+
+
+returnWrongLabelPosition[pos_,return_] :=
+    (
+        Message[label::posnotmatch,pos,$labelPositionP];
+        HoldComplete[return]
+    );
+
+returnEqualLabelPosition[pos1_,pos2_,return_] :=
+    (
+        Message[labelConvert::posequal,pos1,pos2];
+        HoldComplete[return]
+    );
 
 
 (* ::Subsection:: *)
@@ -156,61 +146,40 @@ labelConvert::posequal =
 (*Main*)
 
 
-label[var:_Symbol,lab_,opts:OptionsPattern[]] :=
+label[var:_Symbol,lab_,pos:$labelPositionP:Construct] :=
     Catch[
-        labelKernel[checkLabelPosition@OptionValue["LabelPosition"],var,lab],
+        labelKernel[pos,var,lab],
         _,
-        var&
+        HoldComplete[var]&
     ];
 
-label[var:_Symbol,labList_List,opts:OptionsPattern[]] :=
+label[var:_Symbol,labList_List,pos:$labelPositionP:Construct] :=
     Catch[
-        With[ {position = checkLabelPosition@OptionValue["LabelPosition"]},
-            Map[labelKernel[position,var,#]&,labList]//Apply[Sequence]
-        ],
+        Map[labelKernel[pos,var,#]&,labList]//Apply[Sequence],
         _,
-        var&
+        HoldComplete[var]&
     ];
 
-label[varList:{__Symbol},lab_,opts:OptionsPattern[]] :=
+label[varList:{__Symbol},lab_,pos:$labelPositionP:Construct] :=
     Catch[
-        With[ {position = checkLabelPosition@OptionValue["LabelPosition"]},
-            Map[labelKernel[position,#,lab]&,varList]//Apply[Sequence]
-        ],
+        Map[labelKernel[pos,#,lab]&,varList]//Apply[Sequence],
         _,
-        varList&
+        HoldComplete[varList]&
     ];
 
-label[varList:{__Symbol},labList_List,opts:OptionsPattern[]] :=
+label[varList:{__Symbol},labList_List,pos:$labelPositionP:Construct] :=
     Catch[
-        With[ {position = checkLabelPosition@OptionValue["LabelPosition"]},
-            Outer[labelKernel[position,#1,#2]&,varList,labList]//Transpose//Flatten//Apply[Sequence]
-        ],
+        Outer[labelKernel[pos,#1,#2]&,varList,labList]//Transpose//Flatten//Apply[Sequence],
         _,
-        varList&
+        HoldComplete[varList]&
     ];
+
+label[var_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,var];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
-
-
-checkLabelPosition[opt_] :=
-    If[ !MatchQ[opt,$labelPositionP],
-        Message[label::posnotmatch,opt,$labelPositionP];
-        Throw[Null,"posnotmatch"],
-        (*Else*)
-        opt
-    ];
-
-
-checkLabelType[opt_] :=
-    If[ !MatchQ[opt,$labelTypeP],
-        Message[label::typenotmatch,opt,$labelTypeP];
-        Throw[Null,"typenotmatch"],
-        (*Else*)
-        opt
-    ];
 
 
 labelKernel[position:$labelPositionP,var_,lab:$emptyLabelP] :=
@@ -233,10 +202,7 @@ labelToString[lab_Integer?NonNegative] :=
     ToString@lab;
 
 labelToString[lab_] :=
-    (
-        Message[label::badlab,lab];
-        Throw[Null,"badlab"]
-    );
+    throwBadLabel[lab];
 
 
 (* ::Subsection:: *)
@@ -247,20 +213,20 @@ labelToString[lab_] :=
 (*Main*)
 
 
-labelConvert[var_Symbol|vars__Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
+labelConvert[var_Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
     Catch[
-        With[ {type = checkLabelType@OptionValue["LabelType"]},
-            labelConvertKernel[{var,vars},checkLabelPosition@pos1,checkLabelPosition@pos2,type][expr]
+        With[ {type = checkAndThrowLabelType@OptionValue["LabelType"]},
+            labelConvertKernel[{var,vars},pos1,pos2,type][expr]
         ],
         _,
-        expr&
+        HoldComplete[expr]&
     ];
 
-labelConvert[__,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
-    Catch[
-        Message[labelConvert::posequal,pos1,pos2];
-        Throw[expr]
-    ];
+labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
+    returnEqualLabelPosition[pos1,pos2,expr];
+
+labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
+    returnWrongLabelPosition[{pos1,pos2},expr];
 
 
 labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
@@ -294,6 +260,8 @@ labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
 (* ::Subsubsection:: *)
 (*Helper*)
 
+
+(* Unlike labelKernel, labelKernel2 does not handle empty label. *)
 
 labelKernel2[position:$labelPositionP2,var_,lab_] :=
     position[var,lab];
@@ -342,69 +310,70 @@ symbolFromStringOrStringExpression[expr_StringExpression] :=
 (*Main*)
 
 
-labelToZero[vars__Symbol,opts:OptionsPattern[]][labels__] :=
+labelToZero[var_Symbol|{vars__Symbol},(label:Except[_List])|{labels__},pos:$labelPositionP:Construct] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[
-                (#[[1]]->0)&,
-                checkLabelPosition@OptionValue["LabelPosition"]
-            ][vars][padSymbolToRule[labels]]
+            labelRulePrototype[(#[[1]]->0)&,pos,{var,vars},Map[#->#&,{label,labels}]]
         ],
         _,
-        Identity&
+        HoldComplete[Identity]&
     ];
 
 
-labelToEqual[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+labelToEqual[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[
-                (#[[1]]->#[[2]])&,
-                checkLabelPosition@OptionValue["LabelPosition"]
-            ][vars][rules]
+            labelRulePrototype[(#[[1]]->#[[2]])&,pos,{var,vars},{rule,rules}]
         ],
         _,
-        Identity&
+        HoldComplete[Identity]&
     ];
 
 
-labelToDiff[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+labelToDiff[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[
-                (#[[1]]->#[[2]]+#[[3]])&,
-                checkLabelPosition@OptionValue["LabelPosition"]
-            ][vars][rules]
+            labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,pos,{var,vars},{rule,rules}]
         ],
         _,
-        Identity&
-    ]
+        HoldComplete[Identity]&
+    ];
 
 
-labelToDiffZero[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+labelToDiffZero[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[
-                {#[[1]]->#[[3]],#[[2]]->0}&,
-                checkLabelPosition@OptionValue["LabelPosition"]
-            ][vars][rules]
+            labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,pos,{var,vars},{rule,rules}]
         ],
         _,
-        Identity&
-    ]
+        HoldComplete[Identity]&
+    ];
 
 
-labelToDiffBack[vars__Symbol,opts:OptionsPattern[]][rules__Rule] :=
+labelToDiffBack[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Construct] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[
-                (#[[3]]->#[[1]]-#[[2]])&,
-                checkLabelPosition@OptionValue["LabelPosition"]
-            ][vars][rules]
+            labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,pos,{var,vars},{rule,rules}]
         ],
         _,
-        Identity&
-    ]
+        HoldComplete[Identity]&
+    ];
+
+
+labelToZero[_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,Identity];
+
+labelToEqual[_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,Identity];
+
+labelToDiff[_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,Identity];
+
+labelToDiffZero[_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,Identity];
+
+labelToDiffBack[_,_,pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,Identity];
 
 
 (* ::Subsubsection:: *)
@@ -415,19 +384,19 @@ labelRulePrototype::usage =
     "generate rules from prototype function.";
 
 
-labelRulePrototype[proto_,pos_][var_Symbol][rule_Rule] :=
+labelRulePrototype[proto_,pos_,{var_Symbol},{rule_Rule}] :=
     proto@Map[
         labelKernel[pos,var,#]&,extractLabelFromRule[rule]
     ];
 
-labelRulePrototype[proto_,pos_][var_Symbol][rules__Rule] :=
-    Flatten@Map[labelRulePrototype[proto,pos][var],{rules}];
+labelRulePrototype[proto_,pos_,{var_Symbol},{rules__Rule}] :=
+    Flatten@Map[labelRulePrototype[proto,pos,{var},{#}]&,{rules}];
 
-labelRulePrototype[proto_,pos_][vars__Symbol][rule_Rule] :=
-    Flatten@Map[labelRulePrototype[proto,pos][#][rule]&,{vars}];
+labelRulePrototype[proto_,pos_,{vars__Symbol},{rule_Rule}] :=
+    Flatten@Map[labelRulePrototype[proto,pos,{#},{rule}]&,{vars}];
 
-labelRulePrototype[proto_,pos_][vars__Symbol][rules__Rule] :=
-    Flatten@Outer[labelRulePrototype[proto,pos][#1][#2]&,{vars},{rules}];
+labelRulePrototype[proto_,pos_,{vars__Symbol},{rules__Rule}] :=
+    Flatten@Outer[labelRulePrototype[proto,pos,{#1},{#2}]&,{vars},{rules}];
 
 
 extractLabelFromRule::usage =
@@ -436,13 +405,6 @@ extractLabelFromRule::usage =
 extractLabelFromRule[Rule[lab1_,lab2_]] :=
     (* 1->2 returns {1,2,12} *)
     {lab1,lab2,ToString[lab1]<>ToString[lab2]};
-
-
-padSymbolToRule::usage =
-    "pad symbols to identical rules, used in indexToZero.";
-
-padSymbolToRule[vars__] :=
-    Map[#->#&,{vars}]//Apply[Sequence];
 
 
 (* ::Subsection:: *)
