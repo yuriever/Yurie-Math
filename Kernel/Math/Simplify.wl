@@ -483,9 +483,9 @@ separate[crit_][expr_] :=
 (*freeze*)
 
 
-freeze::badPattern =
+freeze::badInput =
     "The input `1` or `2` is invalid."<>
-    "\nHint: Verbatim should be used to match _Rule|_List."<>
+    "\nHint: to match _Rule|_List, Verbatim should be adopted."<>
     "\nHint: the default transformation should be a pair of functions.";
 
 
@@ -502,7 +502,7 @@ freeze[
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,OptionValue["DefaultTransformation"],level,expr],
-        _,
+        "badInput",
         HoldComplete[expr]&
     ];
 
@@ -514,7 +514,7 @@ freezeNegative[
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,{-#&,-#&},level,expr],
-        _,
+        "badInput",
         HoldComplete[expr]&
     ];
 
@@ -563,8 +563,8 @@ patternAndTransformation[(Rule|RuleDelayed)[pattern_,{fun_,funInv_}],{_,_}] :=
 
 patternAndTransformation[pattern_,default_] :=
     (
-        Message[freeze::badPattern,pattern,default];
-        Throw[Null]
+        Message[freeze::badInput,pattern,default];
+        Throw[Null,"badInput"]
     );
 
 

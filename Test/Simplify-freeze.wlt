@@ -76,7 +76,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[_Rule, Throw][{a -> b, c -> d, {a, b}}]]
+    fixTempSymbol[Catch[freeze[_Rule, Throw][{a -> b, c -> d, {a, b}}]]]
     ,
     {C[1], C[2], {a, b}}
     ,
@@ -84,7 +84,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[Verbatim[Rule][a, _], Throw][{a -> b, c -> d, {a, b}}]]
+    fixTempSymbol[Catch[freeze[Verbatim[Rule][a, _], Throw][{a -> b, c -> d, {a, b}}]]]
     ,
     {C[1], c -> d, {a, b}}
     ,
@@ -94,15 +94,15 @@ VerificationTest[
 VerificationTest[
     freeze[a -> _, Throw][{a -> b, c -> d, {a, b}}]
     ,
-    Quiet[a -> _]
+    Quiet[HoldComplete[{a -> b, c -> d, {a, b}}]]
     ,
-    {Yurie`Math`freeze::badPattern}
+    {Yurie`Math`freeze::badInput}
     ,
     TestID->"11-Simplify-freeze.nb"
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[_List, Throw][{a -> b, c -> d, {a, b}}]]
+    fixTempSymbol[Catch[freeze[_List, Throw][{a -> b, c -> d, {a, b}}]]]
     ,
     {a -> b, c -> d, C[1]}
     ,
@@ -110,7 +110,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[_List, Throw, All][{a -> b, c -> d, {a, b}, {c, d}}]]
+    fixTempSymbol[Catch[freeze[_List, Throw, All][{a -> b, c -> d, {a, b}, {c, d}}]]]
     ,
     {a -> b, c -> d, C[1], C[2]}
     ,
@@ -118,7 +118,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[_List, Throw, All][{a -> b, c -> d}]]
+    fixTempSymbol[Catch[freeze[_List, Throw, All][{a -> b, c -> d}]]]
     ,
     C[1]
     ,
@@ -126,7 +126,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[{__}, Throw][{a -> b, c -> d, {a, b}, {c, d}}]]
+    fixTempSymbol[Catch[freeze[{__}, Throw][{a -> b, c -> d, {a, b}, {c, d}}]]]
     ,
     {C[1] -> C[2], C[3] -> C[4], {C[1], C[2]}, {C[3], C[4]}}
     ,
@@ -134,7 +134,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[{a}, Throw][{a -> b, c -> d, {a, b}, {c, d}}]]
+    fixTempSymbol[Catch[freeze[{a}, Throw][{a -> b, c -> d, {a, b}, {c, d}}]]]
     ,
     {C[1] -> b, c -> d, {C[1], b}, {c, d}}
     ,
@@ -142,7 +142,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[Verbatim[List][__], Throw][{a -> b, c -> d, {a, b}, {c, d}}]]
+    fixTempSymbol[Catch[freeze[Verbatim[List][__], Throw][{a -> b, c -> d, {a, b}, {c, d}}]]]
     ,
     {a -> b, c -> d, C[1], C[2]}
     ,
@@ -150,7 +150,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[Verbatim[List][a, ___], Throw][{a -> b, c -> d, {a, b}, {c, d}}]]
+    fixTempSymbol[Catch[freeze[Verbatim[List][a, ___], Throw][{a -> b, c -> d, {a, b}, {c, d}}]]]
     ,
     {a -> b, c -> d, C[1], {c, d}}
     ,
@@ -166,7 +166,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fixTempSymbol[freeze[dot[_, _], Throw][expr]]
+    fixTempSymbol[Catch[freeze[dot[_, _], Throw][expr]]]
     ,
     C[1] + 2*C[2] + C[3]*f[x] + h[C[1], C[1]]
     ,
