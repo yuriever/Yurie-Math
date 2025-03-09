@@ -198,6 +198,46 @@ VerificationTest[
 ]
 
 VerificationTest[
+    freezeNegative[a, PowerExpand][((-a)*b)^(Δ - 1)]
+    ,
+    (-a)^(-1 + Δ)*b^(-1 + Δ)
+    ,
+    TestID->"24-Simplify-freeze.nb"
+]
+
+VerificationTest[
+    freezeNegative[b, PowerExpand][((-a)*b)^(Δ - 1)]
+    ,
+    a^(-1 + Δ)*(-b)^(-1 + Δ)
+    ,
+    TestID->"25-Simplify-freeze.nb"
+]
+
+VerificationTest[
+    freezeNegative[a | b, PowerExpand][((-a)*b)^(Δ - 1)]
+    ,
+    (-1)^(-1 + Δ)*(-a)^(-1 + Δ)*(-b)^(-1 + Δ)
+    ,
+    TestID->"26-Simplify-freeze.nb"
+]
+
+VerificationTest[
+    freezeNegative[{a -> {f, g}, b}, PowerExpand][((-a)*a[]*b)^(Δ - 1)]
+    ,
+    (-b)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)
+    ,
+    TestID->"27-Simplify-freeze.nb"
+]
+
+VerificationTest[
+    freezeNegative[{a -> {f, g}, b -> {h, k}}, PowerExpand][((-a)*a[]*b)^(Δ - 1)]
+    ,
+    (-1)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)*h[k[b]]^(-1 + Δ)
+    ,
+    TestID->"28-Simplify-freeze.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,
