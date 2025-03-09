@@ -150,6 +150,9 @@ separate::usage =
 freeze::usage =
     "freeze subexpressions matching the pattern and then perform the operation.";
 
+freezeNegative::usage =
+    "variant of freeze. Negative is used as the default transformation.";
+
 focus::usage =
     "simplify the arguments of the specified heads.";
 
@@ -481,32 +484,60 @@ separate[crit_][expr_] :=
 
 
 freeze::badPattern =
-    "The input `1` is invalid. Verbatim should be used to match _Rule|_List.";
+    "The input `1` or `2` is invalid."<>
+    "\nHint: Verbatim should be used to match _Rule|_List."<>
+    "\nHint: the default transformation should be a pair of functions.";
 
 
-freeze[patternOrItsList_,operation_:Identity,level_:Infinity][expr_] :=
-    freezeKernel[patternOrItsList,operation,level,expr]//Catch;
+freeze//Options = {
+    "DefaultTransformation"->{Identity,Identity}
+};
 
 
-freezeKernel[pattern_,operation_,level_,expr_] :=
+freeze[
+    patternOrItsList_,
+    operation:_Symbol|_Function|_Composition|_RightComposition:Identity,
+    level:_Integer|_List|Infinity|All:Infinity,
+    opts:OptionsPattern[]
+][expr_] :=
+    Catch[
+        freezeKernel[patternOrItsList,operation,OptionValue["DefaultTransformation"],level,expr],
+        _,
+        HoldComplete[expr]&
+    ];
+
+
+freezeNegative[
+    patternOrItsList_,
+    operation:_Symbol|_Function|_Composition|_RightComposition:Identity,
+    level:_Integer|_List|Infinity|All:Infinity
+][expr_] :=
+    Catch[
+        freezeKernel[patternOrItsList,operation,{-#&,-#&},level,expr],
+        _,
+        HoldComplete[expr]&
+    ];
+
+
+freezeKernel[pattern_,operation_,default_,level_,expr_] :=
     Module[ {ruleList,ruleInvList},
         {ruleList,ruleInvList} =
-            prepareFrozenRuleList[pattern,level,expr];
+            prepareFrozenRuleList[pattern,default,level,expr];
         Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
     ];
 
-freezeKernel[{patterns__},operation_,level_,expr_] :=
+freezeKernel[{patterns__},operation_,default_,level_,expr_] :=
     Module[ {ruleList,ruleInvList},
         {ruleList,ruleInvList} =
-            Map[prepareFrozenRuleList[#,level,expr]&,{patterns}]//Transpose//MapApply[Join];
+            Map[prepareFrozenRuleList[#,default,level,expr]&,{patterns}]//Transpose//MapApply[Join];
         Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
     ];
 
 
-prepareFrozenRuleList[pattern1_,level_,expr_] :=
+prepareFrozenRuleList[pattern1_,default_,level_,expr_] :=
     Module[ {pattern,fun,funInv,subExprList,tempList},
         {pattern,fun,funInv} =
-            patternAndTransformation[pattern1];
+            patternAndTransformation[pattern1,default];
         subExprList =
             DeleteDuplicates@Cases[expr,pattern,level];
         tempList =
@@ -518,19 +549,22 @@ prepareFrozenRuleList[pattern1_,level_,expr_] :=
     ];
 
 
-patternAndTransformation[pattern:Except[_Rule|_RuleDelayed]] :=
+patternAndTransformation[pattern:Except[_Rule|_RuleDelayed],default:{_,_}] :=
+    {pattern,Sequence@@default};
+
+patternAndTransformation[(Rule|RuleDelayed)[pattern_,Positive],{_,_}] :=
     {pattern,Identity,Identity};
 
-patternAndTransformation[(Rule|RuleDelayed)[pattern_,Negative]] :=
+patternAndTransformation[(Rule|RuleDelayed)[pattern_,Negative],{_,_}] :=
     {pattern,-#&,-#&};
 
-patternAndTransformation[(Rule|RuleDelayed)[pattern_,{fun_,funInv_}]] :=
+patternAndTransformation[(Rule|RuleDelayed)[pattern_,{fun_,funInv_}],{_,_}] :=
     {pattern,fun,funInv};
 
-patternAndTransformation[pattern_] :=
+patternAndTransformation[pattern_,default_] :=
     (
-        Message[freeze::badPattern,pattern];
-        Throw[pattern]
+        Message[freeze::badPattern,pattern,default];
+        Throw[Null]
     );
 
 

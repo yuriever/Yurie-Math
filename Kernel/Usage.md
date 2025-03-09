@@ -298,4 +298,6 @@
 
 * `#!wl freeze` - freeze subexpressions matching the pattern and then perform the operation.
 
+* `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
+
 * `#!wl focus` - simplify the arguments of the specified heads.

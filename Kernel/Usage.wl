@@ -429,5 +429,8 @@ separate::usage =
 freeze::usage =
     "freeze subexpressions matching the pattern and then perform the operation.";
 
+freezeNegative::usage =
+    "variant of freeze. Negative is used as the default transformation.";
+
 focus::usage =
     "simplify the arguments of the specified heads.";
