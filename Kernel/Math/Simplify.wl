@@ -496,7 +496,7 @@ freeze//Options = {
 
 freeze[
     patternOrItsList_,
-    operation:_Symbol|_Function|_Composition|_RightComposition:Identity,
+    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Identity,
     level:_Integer|_List|Infinity|All:Infinity,
     opts:OptionsPattern[]
 ][expr_] :=
@@ -509,7 +509,7 @@ freeze[
 
 freezeNegative[
     patternOrItsList_,
-    operation:_Symbol|_Function|_Composition|_RightComposition:Identity,
+    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Identity,
     level:_Integer|_List|Infinity|All:Infinity
 ][expr_] :=
     Catch[
