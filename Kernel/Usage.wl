@@ -405,21 +405,6 @@ powerSim::usage =
 deltaSim::usage =
     "simplify Delta functions.";
 
-fracSimplify::usage =
-    "simplify the numerator and denominator.";
-
-trigPhaseReduce::usage =
-    "reduce the phase factor in trigonometric functions.";
-
-collectDerivative::usage =
-    "collect by derivatives.";
-
-stripPattern::usage =
-    "strip off pattern-related functions in expressions.";
-
-vanishing::usage =
-    "Simplify + Flatten + DeleteDuplicates.";
-
 swap::usage =
     "swap two symbols in an expression.";
 
@@ -434,3 +419,30 @@ freezeNegative::usage =
 
 focus::usage =
     "simplify the arguments of the specified heads.";
+
+focusPower::usage =
+    "simplify the arguments of Power.";
+
+focusPowerBase::usage =
+    "simplify the base of Power.";
+
+focusPowerExponent::usage =
+    "simplify the exponent of Power.";
+
+fracSimplify::usage =
+    "simplify the numerator and denominator.";
+
+powerPhaseReduce::usage =
+    "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
+
+trigPhaseReduce::usage =
+    "reduce the phase factor in trigonometric functions.";
+
+collectDerivative::usage =
+    "collect by derivatives.";
+
+stripPattern::usage =
+    "strip off pattern-related functions in expressions.";
+
+vanishing::usage =
+    "Simplify + Flatten + DeleteDuplicates.";

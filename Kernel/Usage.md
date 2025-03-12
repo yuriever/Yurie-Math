@@ -282,16 +282,6 @@
 
 * `#!wl deltaSim` - simplify Delta functions.
 
-* `#!wl fracSimplify` - simplify the numerator and denominator.
-
-* `#!wl trigPhaseReduce` - reduce the phase factor in trigonometric functions.
-
-* `#!wl collectDerivative` - collect by derivatives.
-
-* `#!wl stripPattern` - strip off pattern-related functions in expressions.
-
-* `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
-
 * `#!wl swap` - swap two symbols in an expression.
 
 * `#!wl separate` - separate the elements by whether or not satisfying the criteria.
@@ -301,3 +291,21 @@
 * `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
 
 * `#!wl focus` - simplify the arguments of the specified heads.
+
+* `#!wl focusPower` - simplify the arguments of Power.
+
+* `#!wl focusPowerBase` - simplify the base of Power.
+
+* `#!wl focusPowerExponent` - simplify the exponent of Power.
+
+* `#!wl fracSimplify` - simplify the numerator and denominator.
+
+* `#!wl powerPhaseReduce` - reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
+
+* `#!wl trigPhaseReduce` - reduce the phase factor in trigonometric functions.
+
+* `#!wl collectDerivative` - collect by derivatives.
+
+* `#!wl stripPattern` - strip off pattern-related functions in expressions.
+
+* `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.

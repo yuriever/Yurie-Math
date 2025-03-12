@@ -93,7 +93,7 @@ collect::usage =
 
 
 (* ::Subsection:: *)
-(*Simplification*)
+(*Unsafe simplification*)
 
 
 exprTogether::usage =
@@ -123,14 +123,50 @@ deltaSim::usage =
 
 
 (* ::Subsection:: *)
-(*Misc*)
+(*Simplification*)
+
+
+swap::usage =
+    "swap two symbols in an expression.";
+
+
+separate::usage =
+    "separate the elements by whether or not satisfying the criteria.";
+
+
+freeze::usage =
+    "freeze subexpressions matching the pattern and then perform the operation.";
+
+freezeNegative::usage =
+    "variant of freeze. Negative is used as the default transformation.";
+
+
+focus::usage =
+    "simplify the arguments of the specified heads.";
+
+focusPower::usage =
+    "simplify the arguments of Power.";
+
+focusPowerBase::usage =
+    "simplify the base of Power.";
+
+focusPowerExponent::usage =
+    "simplify the exponent of Power.";
 
 
 fracSimplify::usage =
     "simplify the numerator and denominator.";
 
+powerPhaseReduce::usage =
+    "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
+
 trigPhaseReduce::usage =
     "reduce the phase factor in trigonometric functions.";
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
 
 collectDerivative::usage =
     "collect by derivatives.";
@@ -140,21 +176,6 @@ stripPattern::usage =
 
 vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
-
-swap::usage =
-    "swap two symbols in an expression.";
-
-separate::usage =
-    "separate the elements by whether or not satisfying the criteria.";
-
-freeze::usage =
-    "freeze subexpressions matching the pattern and then perform the operation.";
-
-freezeNegative::usage =
-    "variant of freeze. Negative is used as the default transformation.";
-
-focus::usage =
-    "simplify the arguments of the specified heads.";
 
 
 (* ::Section:: *)
@@ -326,8 +347,8 @@ collect[var_,head_,head2_][expr_] :=
     Collect[expr,var,head,head2];
 
 
-(* ::Subsection::Closed:: *)
-(*Simplification*)
+(* ::Subsection:: *)
+(*Unsafe simplification*)
 
 
 (* ::Subsubsection:: *)
@@ -397,64 +418,7 @@ powerCollectKernel[power_,rest__][expr_] :=
 
 
 (* ::Subsection:: *)
-(*Misc*)
-
-
-(* ::Subsubsection:: *)
-(*fracSimplify*)
-
-
-fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
-    simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]];
-
-
-(* ::Subsubsection:: *)
-(*trigPhaseReduce*)
-
-
-trigPhaseReduce[vars__][expr_] :=
-    expr//ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Expand@arg]//
-        trigPhaseReduceKernel[vars]//
-            ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Simplify@arg];
-
-
-trigPhaseReduceKernel[var_][expr_] :=
-    expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
-
-trigPhaseReduceKernel[var_,rest__][expr_] :=
-    trigPhaseReduceKernel[rest][
-        trigPhaseReduceKernel[var][expr]
-    ];
-
-
-(* ::Subsubsection:: *)
-(*collectDerivative*)
-
-
-collectDerivative[var_Symbol,operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][var][___],operation];
-
-collectDerivative[varList_List,operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][#][___]&/@varList,operation];
-
-
-(* ::Subsubsection:: *)
-(*stripPattern*)
-
-
-stripPattern//Attributes =
-    {HoldAll};
-
-stripPattern[expr_,head_:Defer] :=
-    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
-
-
-(* ::Subsubsection:: *)
-(*vanishing*)
-
-
-vanishing[expr_] :=
-    expr//Simplify//Flatten//DeleteDuplicates;
+(*Simplification*)
 
 
 (* ::Subsubsection:: *)
@@ -496,7 +460,7 @@ freeze//Options = {
 
 freeze[
     patternOrItsList_,
-    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Identity,
+    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
     level:_Integer|_List|Infinity|All:Infinity,
     opts:OptionsPattern[]
 ][expr_] :=
@@ -509,7 +473,7 @@ freeze[
 
 freezeNegative[
     patternOrItsList_,
-    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Identity,
+    operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
     level:_Integer|_List|Infinity|All:Infinity
 ][expr_] :=
     Catch[
@@ -572,16 +536,184 @@ patternAndTransformation[pattern_,default_] :=
 (*focus*)
 
 
-focus//Attributes =
-    {HoldAll};
-
-
 focus[pattern_,operation_:Simplify][expr_] :=
     expr//Replace[#,{
         (head:pattern):>operation@head,
         (head:pattern)[arg_]:>head@operation@arg,
         (head:pattern)[args__]:>head@@Map[operation,{args}]
     },All]&;
+
+
+focusPower[operation_:Simplify][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[operation@base,operation@exponent]
+    },All]&;
+
+
+focusPowerBase[operation_:Simplify][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[operation@base,exponent]
+    },All]&;
+
+
+focusPowerExponent[operation_:Simplify][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[base,operation@exponent]
+    },All]&;
+
+
+(* ::Subsubsection:: *)
+(*fracSimplify*)
+
+
+fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
+    simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]];
+
+
+(* ::Subsubsection:: *)
+(*powerPhaseReduce*)
+
+
+powerPhaseReduce//Options = {
+    "ExtraCondition"->(True&),
+    "ShowIndeterminate"->False
+};
+
+
+powerPhaseReduce[assume_,opts:OptionsPattern[]][expr_] :=
+    expr//reducePhaseBy[assume,OptionValue["ExtraCondition"]]//
+        reducePhaseOnly[assume];
+
+powerPhaseReduce[assume_,antiholo_,opts:OptionsPattern[]][expr_] :=
+    expr//reducePhaseBy[assume,listToPattern@antiholo,OptionValue["ExtraCondition"]]//
+        reducePhaseOnly[assume];
+
+powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
+    Module[ {res,indet,extra = OptionValue["ExtraCondition"],show = OptionValue["ShowIndeterminate"]},
+        If[ TrueQ@show,
+            {res,indet} =
+                expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,extra,show];
+            If[ indet=!={},
+                indet[[1]]//Print
+            ],
+            (*Else*)
+            res =
+                expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,extra,show]
+        ];
+        res//reducePhaseOnly[assume]
+    ];
+
+
+reducePhaseBy[assume_,extra_][expr_] :=
+    expr//ReplaceAll[
+        power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
+            Power[-base,exponent]*Exp[I*\[Pi]*exponent]
+    ];
+
+reducePhaseBy[assume_,antiholoP_,extra_][expr_] :=
+    expr//ReplaceAll[
+        power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
+            If[ FreeQ[base,antiholoP],
+                Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                (*Else*)
+                Power[-base,exponent]*Exp[-I*\[Pi]*exponent]
+            ]
+    ];
+
+reducePhaseBy[assume_,holoP_,antiholoP_,extra_,False][expr_] :=
+    expr//ReplaceAll[
+        power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
+            Which[
+                !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
+                    Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
+                    Power[-base,exponent]*Exp[-I*\[Pi]*exponent],
+                True,
+                    Power[base,exponent]
+            ]
+    ];
+
+reducePhaseBy[assume_,holoP_,antiholoP_,extra_,True][expr_] :=
+    Reap[
+        expr//ReplaceAll[
+            power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
+                Which[
+                    !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
+                        Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                    !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
+                        Power[-base,exponent]*Exp[-I*\[Pi]*exponent],
+                    True,
+                        Sow[Power[base,exponent],"indet"]
+                ]
+        ],
+        "indet"
+    ];
+
+
+reducePhaseOnly[assume_][res_] :=
+    res//ReplaceAll[
+        sub:Exp[_Complex*\[Pi]*_.]:>Simplify[sub,assume]
+    ];
+
+
+listToPattern[list_List] :=
+    Alternatives@@list;
+
+listToPattern[other_] :=
+    other;
+
+
+(* ::Subsubsection:: *)
+(*trigPhaseReduce*)
+
+
+trigPhaseReduce[vars__][expr_] :=
+    expr//ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Expand@arg]//
+        trigPhaseReduceKernel[vars]//
+            ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Simplify@arg];
+
+
+trigPhaseReduceKernel[var_][expr_] :=
+    expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
+
+trigPhaseReduceKernel[var_,rest__][expr_] :=
+    trigPhaseReduceKernel[rest][
+        trigPhaseReduceKernel[var][expr]
+    ];
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
+
+(* ::Subsubsection:: *)
+(*collectDerivative*)
+
+
+collectDerivative[var_Symbol,operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][var][___],operation];
+
+collectDerivative[varList_List,operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][#][___]&/@varList,operation];
+
+
+(* ::Subsubsection:: *)
+(*stripPattern*)
+
+
+stripPattern//Attributes =
+    {HoldAll};
+
+stripPattern[expr_,head_:Defer] :=
+    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
+
+
+(* ::Subsubsection:: *)
+(*vanishing*)
+
+
+vanishing[expr_] :=
+    expr//Simplify//Flatten//DeleteDuplicates;
 
 
 (* ::Subsection:: *)
