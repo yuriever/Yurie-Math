@@ -20,174 +20,19 @@ VerificationTest[
 ]
 
 VerificationTest[
-    times[y, z][x]
+    swap[a, b][{a, b, c, d}]
     ,
-    x*y*z
+    {b, a, c, d}
     ,
     TestID->"2-Simplify.nb"
 ]
 
 VerificationTest[
-    divide[y, z][x]
+    swap[{a, b}, {c, d}][{a, b, c, d}]
     ,
-    x/(y*z)
+    {b, a, d, c}
     ,
     TestID->"3-Simplify.nb"
-]
-
-VerificationTest[
-    plus[y, z][x]
-    ,
-    x + y + z
-    ,
-    TestID->"4-Simplify.nb"
-]
-
-VerificationTest[
-    minus[y, z][x]
-    ,
-    x - y - z
-    ,
-    TestID->"5-Simplify.nb"
-]
-
-VerificationTest[
-    expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
-    powerCollect[a][powerCollect[b][expr]]
-    ,
-    (-w^(1 + a))^b*(w*(x - y)*z)^a
-    ,
-    TestID->"6-Simplify.nb"
-]
-
-VerificationTest[
-    powerCollect[a][powerCollect[b][expr]] == powerCollect[b, a][expr]
-    ,
-    True
-    ,
-    TestID->"7-Simplify.nb"
-]
-
-VerificationTest[
-    powerCollect[a, b][expr]
-    ,
-    (-w)^b*(w^(1 + b)*(x - y)*z)^a
-    ,
-    TestID->"8-Simplify.nb"
-]
-
-VerificationTest[
-    powerApart[expr]
-    ,
-    (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
-    ,
-    TestID->"9-Simplify.nb"
-]
-
-VerificationTest[
-    powerTogether[expr]
-    ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
-    ,
-    TestID->"10-Simplify.nb"
-]
-
-VerificationTest[
-    powerSim[expr]
-    ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
-    ,
-    TestID->"11-Simplify.nb"
-]
-
-VerificationTest[
-    expr = {(-1)^a*x^a, (-x)^a, 1/x^2, I^a*x^a, (I*x)^(4*a), 1/x^2}; 
-    powerApart[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"12-Simplify.nb"
-]
-
-VerificationTest[
-    powerTogether[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"13-Simplify.nb"
-]
-
-VerificationTest[
-    powerSim[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"14-Simplify.nb"
-]
-
-VerificationTest[
-    m = n; 
-    Table[m, {n, 2}]
-    ,
-    {1, 2}
-    ,
-    TestID->"15-Simplify.nb"
-]
-
-VerificationTest[
-    modularize[Table[m, {n, 2}]]
-    ,
-    {n, n}
-    ,
-    TestID->"16-Simplify.nb"
-]
-
-VerificationTest[
-    {block[{n = 1}][m], m, n}
-    ,
-    {1, n, n}
-    ,
-    TestID->"17-Simplify.nb"
-]
-
-VerificationTest[
-    {module[{m = 1}][m], m, n}
-    ,
-    {1, n, n}
-    ,
-    TestID->"18-Simplify.nb"
-]
-
-VerificationTest[
-    ClearAll[m]; 
-    ,
-    Null
-    ,
-    TestID->"19-Simplify.nb"
-]
-
-VerificationTest[
-    trigPhaseReduce[k][Sin[(-Pi)*k + a]]
-    ,
-    (-1)^k*Sin[a]
-    ,
-    TestID->"20-Simplify.nb"
-]
-
-VerificationTest[
-    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
-    ,
-    Cos[b]*Sin[a]
-    ,
-    TestID->"21-Simplify.nb"
-]
-
-VerificationTest[
-    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
-    ,
-    (-1)^k*Cos[b]*Cos[c]*Sin[a]
-    ,
-    TestID->"22-Simplify.nb"
 ]
 
 VerificationTest[
@@ -195,7 +40,7 @@ VerificationTest[
     ,
     {{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
     ,
-    TestID->"23-Simplify.nb"
+    TestID->"4-Simplify.nb"
 ]
 
 VerificationTest[
@@ -203,7 +48,7 @@ VerificationTest[
     ,
     {Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
     ,
-    TestID->"24-Simplify.nb"
+    TestID->"5-Simplify.nb"
 ]
 
 VerificationTest[
@@ -211,7 +56,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"25-Simplify.nb"
+    TestID->"6-Simplify.nb"
 ]
 
 VerificationTest[
@@ -219,7 +64,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"26-Simplify.nb"
+    TestID->"7-Simplify.nb"
 ]
 
 VerificationTest[
@@ -227,7 +72,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"27-Simplify.nb"
+    TestID->"8-Simplify.nb"
 ]
 
 VerificationTest[
@@ -235,7 +80,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[(a + b)^2, 2]
     ,
-    TestID->"28-Simplify.nb"
+    TestID->"9-Simplify.nb"
 ]
 
 VerificationTest[
@@ -243,7 +88,111 @@ VerificationTest[
     ,
     g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
     ,
-    TestID->"29-Simplify.nb"
+    TestID->"10-Simplify.nb"
+]
+
+VerificationTest[
+    focusPower[f][x^a]
+    ,
+    f[x]^f[a]
+    ,
+    TestID->"11-Simplify.nb"
+]
+
+VerificationTest[
+    focusPowerBase[f][x^a]
+    ,
+    f[x]^a
+    ,
+    TestID->"12-Simplify.nb"
+]
+
+VerificationTest[
+    focusPowerExponent[f][x^a]
+    ,
+    x^f[a]
+    ,
+    TestID->"13-Simplify.nb"
+]
+
+VerificationTest[
+    trigPhaseReduce[k][Sin[(-Pi)*k + a]]
+    ,
+    (-1)^k*Sin[a]
+    ,
+    TestID->"14-Simplify.nb"
+]
+
+VerificationTest[
+    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]]
+    ,
+    Cos[b]*Sin[a]
+    ,
+    TestID->"15-Simplify.nb"
+]
+
+VerificationTest[
+    trigPhaseReduce[k][Sin[3*Pi*k + a]*Cos[Pi*k + b]*Cos[Pi*k + c]]
+    ,
+    (-1)^k*Cos[b]*Cos[c]*Sin[a]
+    ,
+    TestID->"16-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ > 0 && χb > 0][(-χ)^a*(-χb)^b]
+    ,
+    E^(I*a*Pi + I*b*Pi)*χ^a*χb^b
+    ,
+    TestID->"17-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ > 0 && χb > 0, χb][(-χ)^a*(-χb)^b]
+    ,
+    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    ,
+    TestID->"18-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ > 0 && χb > 0, χ, χb][(-χ)^a*(-χb)^b]
+    ,
+    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    ,
+    TestID->"19-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ > 0 && χb > 0, {χ}, {χb}][(-χ)^a*(-χb)^b]
+    ,
+    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    ,
+    TestID->"20-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ, χb][(-χ - c)^a*(-χb - c)^b]
+    ,
+    E^(I*a*Pi - I*b*Pi)*(c + χ)^a*(c + χb)^b
+    ,
+    TestID->"21-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ | c, χb][(-χ - c)^a*(-χb - c)^b]
+    ,
+    E^(I*a*Pi)*(c + χ)^a*(-c - χb)^b
+    ,
+    TestID->"22-Simplify.nb"
+]
+
+VerificationTest[
+    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ, χb | c][(-χ - c)^a*(-χb - c)^b]
+    ,
+    ((-c - χ)^a*(c + χb)^b)/E^(I*b*Pi)
+    ,
+    TestID->"23-Simplify.nb"
 ]
 
 VerificationTest[
