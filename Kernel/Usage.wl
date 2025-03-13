@@ -177,6 +177,12 @@ label::usage =
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";
 
+labelJoin::usage =
+    "labelConvert: Function|Subscript|Superscript->Symbol.";
+
+labelSplit::usage =
+    "labelConvert: Symbol->Function|Subscript|Superscript.";
+
 labelToZero::usage =
     "x1->0.";
 

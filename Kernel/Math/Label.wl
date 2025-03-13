@@ -20,6 +20,12 @@ label::usage =
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";
 
+labelJoin::usage =
+    "labelConvert: Function|Subscript|Superscript->Symbol.";
+
+labelSplit::usage =
+    "labelConvert: Symbol->Function|Subscript|Superscript.";
+
 
 labelToZero::usage =
     "x1->0.";
@@ -56,7 +62,7 @@ $labelPositionP::usage =
     "pattern of label positions.";
 
 $labelPositionP =
-    Symbol|Construct|Function|Subscript|Superscript;
+    Symbol|Function|Subscript|Superscript;
 
 
 $labelTypeP::usage =
@@ -83,6 +89,12 @@ $emptyLabelP =
 labelConvert//Options = {
     "LabelType"->All
 };
+
+labelJoin//Options =
+    Options@labelConvert;
+
+labelSplit//Options =
+    Options@labelConvert;
 
 
 (* ::Subsection:: *)
@@ -179,7 +191,7 @@ label[var_,_,pos:Except[$labelPositionP]] :=
 labelKernel[position:$labelPositionP,var_,lab:$emptyLabelP] :=
     var;
 
-labelKernel[position:Construct|Function,var_,lab_] :=
+labelKernel[position:Function,var_,lab_] :=
     var[lab];
 
 labelKernel[position:Subscript|Superscript,var_,lab_] :=
@@ -226,10 +238,17 @@ labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPo
     returnWrongLabelPosition[{pos1,pos2},expr];
 
 
+labelJoin[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[var,pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
+
+labelSplit[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[var,Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
+
+
 labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
     With[ {varP = Alternatives@@varList},
         Switch[pos1,
-            Construct|Function,
+            Function,
                 expr//ReplaceAll[
                     (var:varP)[lab_]/;AtomQ[lab]&&labelQ[type,labelToString[lab]]:>
                         RuleCondition@labelKernel2[pos2,var,lab]
@@ -260,7 +279,7 @@ labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
 
 (* Unlike labelKernel, labelKernel2 does not handle empty label. *)
 
-labelKernel2[position:Construct|Function,var_,lab_] :=
+labelKernel2[position:Function,var_,lab_] :=
     var[lab];
 
 labelKernel2[position:Subscript|Superscript,var_,lab_] :=

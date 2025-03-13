@@ -4,6 +4,7 @@
  "diffChange" -> {0, 0, 0, 0, 0, {"Solution", "ShowSolution"}}, 
  "integrateChange" -> {0, 0, 0, {"Solution", "ShowSolution"}, 
    {"Solution", "ShowSolution"}}, "labelConvert" -> {{"LabelType"}}, 
+ "labelJoin" -> {0, {"LabelType"}}, "labelSplit" -> {0, {"LabelType"}}, 
  "freeze" -> {0, 0, {"DefaultTransformation"}, {"DefaultTransformation"}}, 
  "powerPhaseReduce" -> {0, 0, 0, {"ExtraCondition", "ShowIndeterminate"}}, 
  "DLMF" -> {{"5.5.5", "BinomialSwapA", "BinomialSwapN", "PochhammerSwapA", 

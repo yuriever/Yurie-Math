@@ -125,6 +125,10 @@
 
 * `#!wl labelConvert` - convert the labeled object(s) according to the two specified label positions.
 
+* `#!wl labelJoin` - labelConvert: Function|Subscript|Superscript->Symbol.
+
+* `#!wl labelSplit` - labelConvert: Symbol->Function|Subscript|Superscript.
+
 * `#!wl labelToZero` - x1->0.
 
 * `#!wl labelToEqual` - x1->x2.
