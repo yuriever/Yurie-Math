@@ -14,29 +14,29 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
-hyperRegToUnreg::usage =
-    "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
+(*hyperRegToUnreg::usage =
+    "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";*)
 
-powerBaseSimplify::usage =
-    "simplify the power bases.";
+(*powerBaseSimplify::usage =
+    "simplify the power bases.";*)
 
-trigPhaseSimplify::usage =
-    "reduce the phase factor in trigonometric functions.";
+(*trigPhaseSimplify::usage =
+    "reduce the phase factor in trigonometric functions.";*)
 
-separateBy::usage =
-    "separate the elements by whether or not satisfying the criteria.";
+(*separateBy::usage =
+    "separate the elements by whether or not satisfying the criteria.";*)
 
-solveFirst::usage =
-    "operator form of Solve + First.";
+(*solveFirst::usage =
+    "operator form of Solve + First.";*)
 
-jordanBlock::usage =
-    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+(*jordanBlock::usage =
+    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";*)
 
-gammaSplit::usage =
-    "split a product into a list containing Gamma factors and the rests.";
+(*gammaSplit::usage =
+    "split a product into a list containing Gamma factors and the rests.";*)
 
-hyperSplit::usage =
-    "split a product into a list containing Hypergeometric2F1 factors and the rests.";
+(*hyperSplit::usage =
+    "split a product into a list containing Hypergeometric2F1 factors and the rests.";*)
 
 
 (* ::Section:: *)

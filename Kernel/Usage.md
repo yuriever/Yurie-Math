@@ -19,25 +19,6 @@
 * `#!wl indexToDiffBack` - x12->x1-x2.
 
 
-<!-- Deprecation.wl -->
-
-* `#!wl hyperRegToUnreg` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
-
-* `#!wl powerBaseSimplify` - simplify the power bases.
-
-* `#!wl trigPhaseSimplify` - reduce the phase factor in trigonometric functions.
-
-* `#!wl separateBy` - separate the elements by whether or not satisfying the criteria.
-
-* `#!wl solveFirst` - operator form of Solve + First.
-
-* `#!wl jordanBlock` - matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
-
-* `#!wl gammaSplit` - split a product into a list containing Gamma factors and the rests.
-
-* `#!wl hyperSplit` - split a product into a list containing Hypergeometric2F1 factors and the rests.
-
-
 <!-- Diff.wl -->
 
 * `#!wl jacobianMatrix` - jacobianMatrix.
