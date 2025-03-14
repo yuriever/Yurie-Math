@@ -104,7 +104,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerSim[gammaTakeResidue[s, n, -s, "ShowPole" -> False][(ReplaceAll[hyperMellinBarnes -> Identity])[hyperToMellinBarnes[s][Hypergeometric2F1[a, b, c, z]]]]]
+    SSA[isN[n] && z > 0][gammaTakeResidue[s, n, -s, "ShowPole" -> False][(ReplaceAll[hyperMellinBarnes -> Identity])[hyperToMellinBarnes[s][Hypergeometric2F1[a, b, c, z]]]]]
     ,
     -((z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n]))
     ,

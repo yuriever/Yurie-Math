@@ -28,76 +28,52 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerCollect[a][powerCollect[b][expr]]
+    unsafePowerApart[expr]
     ,
-    (-w^(1 + a))^b*(w*(x - y)*z)^a
+    (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
     ,
     TestID->"3-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
-    powerCollect[a][powerCollect[b][expr]] == powerCollect[b, a][expr]
+    unsafePowerTogether[expr]
     ,
-    True
+    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
     ,
     TestID->"4-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
-    powerCollect[a, b][expr]
+    unsafePowerSimplify[expr]
     ,
-    (-w)^b*(w^(1 + b)*(x - y)*z)^a
+    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
     ,
     TestID->"5-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
-    powerApart[expr]
+    expr = {(-1)^a*x^a, (-x)^a, 1/x^2, I^a*x^a, (I*x)^(4*a), 1/x^2}; 
+    unsafePowerApart[expr]
     ,
-    (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
     TestID->"6-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
-    powerTogether[expr]
+    unsafePowerTogether[expr]
     ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
     TestID->"7-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
-    powerSim[expr]
+    unsafePowerSimplify[expr]
     ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
     TestID->"8-Simplify-unsafe.nb"
-]
-
-VerificationTest[
-    expr = {(-1)^a*x^a, (-x)^a, 1/x^2, I^a*x^a, (I*x)^(4*a), 1/x^2}; 
-    powerApart[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"9-Simplify-unsafe.nb"
-]
-
-VerificationTest[
-    powerTogether[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"10-Simplify-unsafe.nb"
-]
-
-VerificationTest[
-    powerSim[expr]
-    ,
-    {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
-    ,
-    TestID->"11-Simplify-unsafe.nb"
 ]
 
 VerificationTest[
