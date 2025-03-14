@@ -19,6 +19,11 @@
 * `#!wl indexToDiffBack` - x12->x1-x2.
 
 
+<!-- Deprecation.wl -->
+
+* `#!wl fracSimplify` - simplify the numerator and denominator.
+
+
 <!-- Diff.wl -->
 
 * `#!wl jacobianMatrix` - jacobianMatrix.
@@ -259,28 +264,22 @@
 
 <!-- SimplifyUnsafe.wl -->
 
-* `#!wl exprTogether` - take powers, logs and abs together.
+* `#!wl unsafePowerTogether` - take powers together.
 
-* `#!wl exprApart` - take powers, logs and abs apart.
+* `#!wl unsafePowerApart` - take powers apart, similar to PowerExpand.
 
-* `#!wl exprSim` - simplify powers, logs and abs.
+* `#!wl unsafePowerSimplify` - simplify powers.
 
-* `#!wl powerTogether` - take powers together.
+* `#!wl unsafeExprTogether` - take powers, logs and abs together.
 
-* `#!wl powerApart` - take powers apart, similar to PowerExpand.
+* `#!wl unsafeExprApart` - take powers, logs and abs apart.
 
-* `#!wl powerCollect` - collect powers by exponents.
+* `#!wl unsafeExprSimplify` - simplify powers, logs and abs.
 
-* `#!wl powerSim` - simplify powers.
-
-* `#!wl deltaSim` - simplify Delta functions.
+* `#!wl unsafeDeltaSimplify` - simplify Delta functions.
 
 
 <!-- Simplify.wl -->
-
-* `#!wl swap` - swap two symbols in an expression.
-
-* `#!wl separate` - separate the elements by whether or not satisfying the criteria.
 
 * `#!wl freeze` - freeze subexpressions matching the pattern and then perform the operation.
 
@@ -290,19 +289,29 @@
 
 * `#!wl focusDeep` - simplify the arguments of the specified heads recursively. Replace[#1,#2,All]&
 
-* `#!wl focusPower` - simplify the arguments of Power. Replace[#1,#2,All]&
+* `#!wl fracFocus` - simplify the numerator and denominator of fractions. ReplaceAll
 
-* `#!wl focusPowerBase` - simplify the base of Power. Replace[#1,#2,All]&
+* `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto numerator and denominator.
 
-* `#!wl focusPowerExponent` - simplify the exponent of Power. Replace[#1,#2,All]&
+* `#!wl powerFocus` - simplify the arguments of powers. Replace[#1,#2,All]&
 
-* `#!wl focusFrac` - simplify the numerator and denominator of fractions. ReplaceAll
+* `#!wl powerBaseFocus` - simplify the bases of powers. Replace[#1,#2,All]&
+
+* `#!wl powerExponentFocus` - simplify the exponents of powers. Replace[#1,#2,All]&
+
+* `#!wl powerBaseTogether` - make together the bases of powers.
+
+* `#!wl powerExponentCollect` - collect powers by the exponents.
 
 * `#!wl powerPhaseReduce` - reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
 
-* `#!wl trigPhaseReduce` - reduce the phase factor in trigonometric functions.
+* `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
 
 * `#!wl collectDerivative` - collect by derivatives.
+
+* `#!wl swap` - swap two symbols in an expression.
+
+* `#!wl separate` - separate the elements by whether or not satisfying the criteria.
 
 * `#!wl stripPattern` - strip off pattern-related functions in expressions.
 

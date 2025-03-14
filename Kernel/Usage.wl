@@ -28,6 +28,12 @@ indexToDiffBack::usage =
     "x12->x1-x2.";
 
 
+(* Deprecation.wl *)
+
+fracSimplify::usage =
+    "simplify the numerator and denominator.";
+
+
 (* Diff.wl *)
 
 jacobianMatrix::usage =
@@ -369,38 +375,29 @@ relationPowerMono::usage =
 
 (* SimplifyUnsafe.wl *)
 
-exprTogether::usage =
-    "take powers, logs and abs together.";
-
-exprApart::usage =
-    "take powers, logs and abs apart.";
-
-exprSim::usage =
-    "simplify powers, logs and abs.";
-
-powerTogether::usage =
+unsafePowerTogether::usage =
     "take powers together.";
 
-powerApart::usage =
+unsafePowerApart::usage =
     "take powers apart, similar to PowerExpand.";
 
-powerCollect::usage =
-    "collect powers by exponents.";
-
-powerSim::usage =
+unsafePowerSimplify::usage =
     "simplify powers.";
 
-deltaSim::usage =
+unsafeExprTogether::usage =
+    "take powers, logs and abs together.";
+
+unsafeExprApart::usage =
+    "take powers, logs and abs apart.";
+
+unsafeExprSimplify::usage =
+    "simplify powers, logs and abs.";
+
+unsafeDeltaSimplify::usage =
     "simplify Delta functions.";
 
 
 (* Simplify.wl *)
-
-swap::usage =
-    "swap two symbols in an expression.";
-
-separate::usage =
-    "separate the elements by whether or not satisfying the criteria.";
 
 freeze::usage =
     "freeze subexpressions matching the pattern and then perform the operation.";
@@ -414,26 +411,41 @@ focus::usage =
 focusDeep::usage =
     StringJoin["simplify the arguments of the specified heads recursively.", "\nReplace[#1,#2,All]&"];
 
-focusPower::usage =
-    StringJoin["simplify the arguments of Power.", "\nReplace[#1,#2,All]&"];
-
-focusPowerBase::usage =
-    StringJoin["simplify the base of Power.", "\nReplace[#1,#2,All]&"];
-
-focusPowerExponent::usage =
-    StringJoin["simplify the exponent of Power.", "\nReplace[#1,#2,All]&"];
-
-focusFrac::usage =
+fracFocus::usage =
     StringJoin["simplify the numerator and denominator of fractions.", "\nReplaceAll"];
+
+fracReduce::usage =
+    "reduce the fraction by multiplying a common factor onto numerator and denominator.";
+
+powerFocus::usage =
+    StringJoin["simplify the arguments of powers.", "\nReplace[#1,#2,All]&"];
+
+powerBaseFocus::usage =
+    StringJoin["simplify the bases of powers.", "\nReplace[#1,#2,All]&"];
+
+powerExponentFocus::usage =
+    StringJoin["simplify the exponents of powers.", "\nReplace[#1,#2,All]&"];
+
+powerBaseTogether::usage =
+    "make together the bases of powers.";
+
+powerExponentCollect::usage =
+    "collect powers by the exponents.";
 
 powerPhaseReduce::usage =
     "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
 
 trigPhaseReduce::usage =
-    "reduce the phase factor in trigonometric functions.";
+    "reduce phase factors in trigonometric functions by the given assumptions.";
 
 collectDerivative::usage =
     "collect by derivatives.";
+
+swap::usage =
+    "swap two symbols in an expression.";
+
+separate::usage =
+    "separate the elements by whether or not satisfying the criteria.";
 
 stripPattern::usage =
     "strip off pattern-related functions in expressions.";
