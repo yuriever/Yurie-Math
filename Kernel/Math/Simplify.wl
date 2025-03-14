@@ -369,16 +369,16 @@ powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
 reducePhaseBy[assume_,extra_][expr_] :=
     expr//ReplaceAll[
         power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
-            Power[-base,exponent]*Exp[I*\[Pi]*exponent]
+            Exp[I*\[Pi]*exponent]*Power[-base,exponent]
     ];
 
 reducePhaseBy[assume_,antiholoP_,extra_][expr_] :=
     expr//ReplaceAll[
         power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
             If[ FreeQ[base,antiholoP],
-                Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                Exp[I*\[Pi]*exponent]*Power[-base,exponent],
                 (*Else*)
-                Power[-base,exponent]*Exp[-I*\[Pi]*exponent]
+                Exp[-I*\[Pi]*exponent]*Power[-base,exponent]
             ]
     ];
 
@@ -387,9 +387,9 @@ reducePhaseBy[assume_,holoP_,antiholoP_,extra_,False][expr_] :=
         power:Power[base_,exponent_]/;Simplify[base<0,assume]&&extra[power]:>
             Which[
                 !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
-                    Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                    Exp[I*\[Pi]*exponent]*Power[-base,exponent],
                 !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
-                    Power[-base,exponent]*Exp[-I*\[Pi]*exponent],
+                    Exp[-I*\[Pi]*exponent]*Power[-base,exponent],
                 True,
                     Power[base,exponent]
             ]
