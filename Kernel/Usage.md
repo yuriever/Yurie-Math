@@ -74,10 +74,6 @@
 
 * `#!wl multiGammaReduceByBarnesLemma` - reduce the multi-Gamma symbol by the Barnes lemmas.
 
-* `#!wl relationMellinBarnes` - Mellin-Barnes relation.
-
-* `#!wl relationFeynman` - Feynman-Schwinger relation.
-
 
 <!-- Head.wl -->
 
@@ -201,6 +197,15 @@
 * `#!wl patternPresentQ` - patternPresentQ[expr]: whether any pattern occurs in the expression.
 
 * `#!wl patternFreeQ` - patternFreeQ[expr]: whether no pattern occurs in the expression.
+
+
+<!-- Relation.wl -->
+
+* `#!wl relationMellinBarnes` - Mellin-Barnes relation.
+
+* `#!wl relationFeynman` - Feynman-Schwinger relation.
+
+* `#!wl relationPowerMono` - relation for branch cut of Power at zero.
 
 
 <!-- Simplify.wl -->

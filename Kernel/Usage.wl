@@ -105,12 +105,6 @@ multiGammaSimplify::usage =
 multiGammaReduceByBarnesLemma::usage =
     "reduce the multi-Gamma symbol by the Barnes lemmas.";
 
-relationMellinBarnes::usage =
-    "Mellin-Barnes relation.";
-
-relationFeynman::usage =
-    "Feynman-Schwinger relation.";
-
 
 (* Head.wl *)
 
@@ -287,6 +281,18 @@ patternPresentQ::usage =
 
 patternFreeQ::usage =
     "patternFreeQ[expr]: whether no pattern occurs in the expression.";
+
+
+(* Relation.wl *)
+
+relationMellinBarnes::usage =
+    "Mellin-Barnes relation.";
+
+relationFeynman::usage =
+    "Feynman-Schwinger relation.";
+
+relationPowerMono::usage =
+    "relation for branch cut of Power at zero.";
 
 
 (* Simplify.wl *)
