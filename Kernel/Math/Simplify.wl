@@ -9,23 +9,13 @@ BeginPackage["Yurie`Math`Simplify`"];
 
 Needs["Yurie`Math`"];
 
-Needs["Yurie`Math`Constant`"];
-
 
 (* ::Section:: *)
 (*Public*)
 
 
 (* ::Subsection:: *)
-(*Simplification*)
-
-
-swap::usage =
-    "swap two symbols in an expression.";
-
-
-separate::usage =
-    "separate the elements by whether or not satisfying the criteria.";
+(*freeze*)
 
 
 freeze::usage =
@@ -33,6 +23,10 @@ freeze::usage =
 
 freezeNegative::usage =
     "variant of freeze. Negative is used as the default transformation.";
+
+
+(* ::Subsection:: *)
+(*focus*)
 
 
 focus::usage =
@@ -44,39 +38,78 @@ focusDeep::usage =
     "\nReplace[#1,#2,All]&";
 
 
-focusPower::usage =
-    "simplify the arguments of Power."<>
-    "\nReplace[#1,#2,All]&";
+(* ::Subsection:: *)
+(*Frac*)
 
-focusPowerBase::usage =
-    "simplify the base of Power."<>
-    "\nReplace[#1,#2,All]&";
 
-focusPowerExponent::usage =
-    "simplify the exponent of Power."<>
-    "\nReplace[#1,#2,All]&";
-
-focusFrac::usage =
+fracFocus::usage =
     "simplify the numerator and denominator of fractions."<>
     "\nReplaceAll";
+
+fracReduce::usage =
+    "reduce the fraction by multiplying a common factor onto numerator and denominator.";
+
+
+(* ::Subsection:: *)
+(*Power*)
+
+
+powerFocus::usage =
+    "simplify the arguments of powers."<>
+    "\nReplace[#1,#2,All]&";
+
+powerBaseFocus::usage =
+    "simplify the bases of powers."<>
+    "\nReplace[#1,#2,All]&";
+
+powerExponentFocus::usage =
+    "simplify the exponents of powers."<>
+    "\nReplace[#1,#2,All]&";
+
+
+powerBaseTogether::usage =
+    "make together the bases of powers.";
+
+
+powerExponentCollect::usage =
+    "collect powers by the exponents.";
 
 
 powerPhaseReduce::usage =
     "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
 
+
+(* ::Subsection:: *)
+(*Trig*)
+
+
 trigPhaseReduce::usage =
-    "reduce the phase factor in trigonometric functions.";
+    "reduce phase factors in trigonometric functions by the given assumptions.";
+
+
+(* ::Subsection:: *)
+(*Derivative*)
+
+
+collectDerivative::usage =
+    "collect by derivatives.";
 
 
 (* ::Subsection:: *)
 (*Misc*)
 
 
-collectDerivative::usage =
-    "collect by derivatives.";
+swap::usage =
+    "swap two symbols in an expression.";
+
+
+separate::usage =
+    "separate the elements by whether or not satisfying the criteria.";
+
 
 stripPattern::usage =
     "strip off pattern-related functions in expressions.";
+
 
 vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
@@ -94,32 +127,6 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Simplification*)
-
-
-(* ::Subsubsection:: *)
-(*swap*)
-
-
-swap[a:Except[{_,_}],b:Except[{_,_}]][expr_] :=
-    expr//ReplaceAll[{a->b,b->a}];
-
-swap[pairs:{_,_}...][expr_] :=
-    expr//ReplaceAll[Flatten@Map[{#[[1]]->#[[2]],#[[2]]->#[[1]]}&,{pairs}]];
-
-
-(* ::Subsubsection:: *)
-(*separate*)
-
-
-separate[crit_][expr_] :=
-    {
-        Select[expr,crit[#]&],
-        Select[expr,!crit[#]&]
-    };
-
-
-(* ::Subsubsection:: *)
 (*freeze*)
 
 
@@ -208,7 +215,7 @@ patternAndTransformation[pattern_,default_] :=
     );
 
 
-(* ::Subsubsection:: *)
+(* ::Subsection:: *)
 (*focus*)
 
 
@@ -228,28 +235,101 @@ focusDeep[pattern_,operation_:Simplify][expr_] :=
     },All]&;
 
 
-focusPower[operation_:Simplify][expr_] :=
+(* ::Subsection:: *)
+(*Frac*)
+
+
+fracFocus[operation_:Simplify,factor_:1][expr_] :=
+    expr//ReplaceAll[{
+        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation[factor*Numerator[subexpr]]/operation[factor*Denominator[subexpr]]
+    }];
+
+
+fracReduce[operation_:Simplify,factor_:1][expr_] :=
+    operation[factor*Numerator[expr]]/operation[factor*Denominator[expr]];
+
+
+(* ::Subsection:: *)
+(*Power*)
+
+
+powerFocus[operation_:Simplify][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[operation@base,operation@exponent]
     },All]&;
 
 
-focusPowerBase[operation_:Simplify][expr_] :=
+powerBaseFocus[operation_:Simplify][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[operation@base,exponent]
     },All]&;
 
 
-focusPowerExponent[operation_:Simplify][expr_] :=
+powerExponentFocus[operation_:Simplify][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[base,operation@exponent]
     },All]&;
 
 
-focusFrac[simplify_:Simplify,factor_:1][expr_] :=
-    expr//ReplaceAll[{
-        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>simplify[factor*Numerator[subexpr]]/simplify[factor*Denominator[subexpr]]
-    }];
+(* ::Subsubsection:: *)
+(*powerBaseTogether*)
+
+
+powerBaseTogether[expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>
+            Power[
+                Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
+                exponent
+            ]
+    },All]&;
+
+
+(* ::Subsubsection:: *)
+(*powerExponentCollect*)
+
+
+powerExponentCollect[powers___][expr_] :=
+    powerExponentCollectKernel[powers][expr]//Activate;
+
+
+powerExponentCollectKernel[][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[]];
+
+powerExponentCollectKernel[power_][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[power]];
+
+powerExponentCollectKernel[power_,rest__][expr_] :=
+    powerExponentCollectKernel[rest][
+        powerExponentCollectKernel[power][expr]
+    ];
+
+
+ruleCollectPower[power_] :=
+    ruleCollectPower[power] =
+        {
+            IgnoringInactive[(x_^a_)^b_]:>
+                x^(a*b),
+            IgnoringInactive[x_^(power*k1_.+rest1_.)*y_^(power*k2_.+rest2_.)]:>
+                With[ {var = Simplify[x^k1*y^k2]},
+                    If[ IntegerQ[x]||IntegerQ[y],
+                        Inactivate[var^power,Power|Sqrt],
+                        var^power
+                    ]
+                ]*x^rest1*y^rest2
+        };
+
+ruleCollectPower[] = {
+    IgnoringInactive[(x_^a_)^b_]:>
+        x^(a*b),
+    IgnoringInactive[x_^(power_*k1_.+rest1_.)*y_^(power_*k2_.+rest2_.)]:>
+        With[ {var = Simplify[x^k1*y^k2]},
+            If[ IntegerQ[x]||IntegerQ[y],
+                Inactivate[var^power,Power|Sqrt],
+                var^power
+            ]
+        ]*x^rest1*y^rest2
+};
 
 
 (* ::Subsubsection:: *)
@@ -264,11 +344,11 @@ powerPhaseReduce//Options = {
 
 powerPhaseReduce[assume_,opts:OptionsPattern[]][expr_] :=
     expr//reducePhaseBy[assume,OptionValue["ExtraCondition"]]//
-        focusPowerExponent[Simplify];
+        powerExponentFocus[Simplify];
 
 powerPhaseReduce[assume_,antiholo_,opts:OptionsPattern[]][expr_] :=
     expr//reducePhaseBy[assume,listToPattern@antiholo,OptionValue["ExtraCondition"]]//
-        focusPowerExponent[Simplify];
+        powerExponentFocus[Simplify];
 
 powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
     Module[ {res,indet,extra = OptionValue["ExtraCondition"],show = OptionValue["ShowIndeterminate"]},
@@ -282,7 +362,7 @@ powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
             res =
                 expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,extra,show]
         ];
-        res//focusPowerExponent[Simplify]
+        res//powerExponentFocus[Simplify]
     ];
 
 
@@ -339,6 +419,10 @@ listToPattern[other_] :=
     other;
 
 
+(* ::Subsection:: *)
+(*Trig*)
+
+
 (* ::Subsubsection:: *)
 (*trigPhaseReduce*)
 
@@ -358,8 +442,16 @@ trigPhaseReduceKernel[var_,rest__][expr_] :=
     ];
 
 
+ruleTrigPhase[var_] :=
+    ruleTrigPhase[var] =
+        {
+            (h:Sin|Cos|Csc|Sec)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
+            (h:Tan|Cot)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>h[rest]
+        };
+
+
 (* ::Subsection:: *)
-(*Misc*)
+(*Derivative*)
 
 
 (* ::Subsubsection:: *)
@@ -371,6 +463,32 @@ collectDerivative[var_Symbol,operation_:Identity][expr_] :=
 
 collectDerivative[varList_List,operation_:Identity][expr_] :=
     Collect[expr,Derivative[___][#][___]&/@varList,operation];
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
+
+(* ::Subsubsection:: *)
+(*swap*)
+
+
+swap[a:Except[{_,_}],b:Except[{_,_}]][expr_] :=
+    expr//ReplaceAll[{a->b,b->a}];
+
+swap[pairs:{_,_}...][expr_] :=
+    expr//ReplaceAll[Flatten@Map[{#[[1]]->#[[2]],#[[2]]->#[[1]]}&,{pairs}]];
+
+
+(* ::Subsubsection:: *)
+(*separate*)
+
+
+separate[crit_][expr_] :=
+    {
+        Select[expr,crit[#]&],
+        Select[expr,!crit[#]&]
+    };
 
 
 (* ::Subsubsection:: *)
