@@ -226,76 +226,7 @@ matAngularMomentum::usage =
     StringJoin["spin-j representation of angular momentum in the unit of hbar.", "\nThe column/row indices run from j to -j."];
 
 
-(* Quest.wl *)
-
-isN::usage =
-    "zero or positive integers.";
-
-isZ::usage =
-    "integers.";
-
-isZP::usage =
-    "positive integers.";
-
-isZN::usage =
-    "negative integers.";
-
-isZP0::usage =
-    "zero or positive integers.";
-
-isZN0::usage =
-    "zero or negative integers.";
-
-isQ::usage =
-    "rational numbers.";
-
-isR::usage =
-    "real numbers.";
-
-isRP::usage =
-    "positive real numbers.";
-
-isRN::usage =
-    "negative real numbers.";
-
-isRP0::usage =
-    "zero or positive real numbers.";
-
-isRN0::usage =
-    "zero or negative real numbers.";
-
-isC::usage =
-    "complex numbers.";
-
-presentQ::usage =
-    "Not + FreeQ.";
-
-linearQ::usage =
-    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
-
-syntacticNegativeQ::usage =
-    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
-
-patternPresentQ::usage =
-    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
-
-patternFreeQ::usage =
-    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
-
-
-(* Relation.wl *)
-
-relationMellinBarnes::usage =
-    "Mellin-Barnes relation.";
-
-relationFeynman::usage =
-    "Feynman-Schwinger relation.";
-
-relationPowerMono::usage =
-    "relation for branch cut of Power at zero.";
-
-
-(* Simplify.wl *)
+(* OperatorForm.wl *)
 
 SS::usage =
     "Simplify.";
@@ -366,6 +297,78 @@ solve::usage =
 collect::usage =
     "operator form of Collect.";
 
+
+(* Quest.wl *)
+
+isN::usage =
+    "zero or positive integers.";
+
+isZ::usage =
+    "integers.";
+
+isZP::usage =
+    "positive integers.";
+
+isZN::usage =
+    "negative integers.";
+
+isZP0::usage =
+    "zero or positive integers.";
+
+isZN0::usage =
+    "zero or negative integers.";
+
+isQ::usage =
+    "rational numbers.";
+
+isR::usage =
+    "real numbers.";
+
+isRP::usage =
+    "positive real numbers.";
+
+isRN::usage =
+    "negative real numbers.";
+
+isRP0::usage =
+    "zero or positive real numbers.";
+
+isRN0::usage =
+    "zero or negative real numbers.";
+
+isC::usage =
+    "complex numbers.";
+
+presentQ::usage =
+    "Not + FreeQ.";
+
+linearQ::usage =
+    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
+
+syntacticNegativeQ::usage =
+    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
+
+patternPresentQ::usage =
+    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
+
+patternFreeQ::usage =
+    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
+
+
+(* Relation.wl *)
+
+relationMellinBarnes::usage =
+    "Mellin-Barnes relation.";
+
+relationFeynman::usage =
+    "Feynman-Schwinger relation.";
+
+relationPowerMono::usage =
+    "relation for branch cut of Power at zero.";
+
+
+(* SimplifyUnsafe.wl *)
+
 exprTogether::usage =
     "take powers, logs and abs together.";
 
@@ -389,6 +392,9 @@ powerSim::usage =
 
 deltaSim::usage =
     "simplify Delta functions.";
+
+
+(* Simplify.wl *)
 
 swap::usage =
     "swap two symbols in an expression.";

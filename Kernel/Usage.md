@@ -160,6 +160,55 @@
 * `#!wl matAngularMomentum` - spin-j representation of angular momentum in the unit of hbar. The column/row indices run from j to -j.
 
 
+<!-- OperatorForm.wl -->
+
+* `#!wl SS` - Simplify.
+
+* `#!wl FS` - FullSimplify.
+
+* `#!wl FE` - FunctionExpand.
+
+* `#!wl FES` - FunctionExpand + Simplify.
+
+* `#!wl AS` - operator form of Assuming.
+
+* `#!wl SSA` - Simplify + Assuming.
+
+* `#!wl FSA` - FullSimplify + Assuming.
+
+* `#!wl FEA` - FunctionExpand + Assuming.
+
+* `#!wl FESA` - FunctionExpand + Simplify + Assuming.
+
+* `#!wl modularize` - modularize scoping constructions.
+
+* `#!wl block` - operator form of Block.
+
+* `#!wl with` - operator form of With.
+
+* `#!wl module` - operator form of Module.
+
+* `#!wl rep` - operator form of ReplaceAll.
+
+* `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
+
+* `#!wl plus` - operator form of Plus.
+
+* `#!wl minus` - operator form of Minus.
+
+* `#!wl times` - operator form of Times.
+
+* `#!wl divide` - operator form of Divide.
+
+* `#!wl series` - operator form of Series + Normal.
+
+* `#!wl limit` - opeartor form of Limit.
+
+* `#!wl solve` - operator form of Solve.
+
+* `#!wl collect` - operator form of Collect.
+
+
 <!-- Quest.wl -->
 
 * `#!wl isN` - zero or positive integers.
@@ -208,53 +257,7 @@
 * `#!wl relationPowerMono` - relation for branch cut of Power at zero.
 
 
-<!-- Simplify.wl -->
-
-* `#!wl SS` - Simplify.
-
-* `#!wl FS` - FullSimplify.
-
-* `#!wl FE` - FunctionExpand.
-
-* `#!wl FES` - FunctionExpand + Simplify.
-
-* `#!wl AS` - operator form of Assuming.
-
-* `#!wl SSA` - Simplify + Assuming.
-
-* `#!wl FSA` - FullSimplify + Assuming.
-
-* `#!wl FEA` - FunctionExpand + Assuming.
-
-* `#!wl FESA` - FunctionExpand + Simplify + Assuming.
-
-* `#!wl modularize` - modularize scoping constructions.
-
-* `#!wl block` - operator form of Block.
-
-* `#!wl with` - operator form of With.
-
-* `#!wl module` - operator form of Module.
-
-* `#!wl rep` - operator form of ReplaceAll.
-
-* `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
-
-* `#!wl plus` - operator form of Plus.
-
-* `#!wl minus` - operator form of Minus.
-
-* `#!wl times` - operator form of Times.
-
-* `#!wl divide` - operator form of Divide.
-
-* `#!wl series` - operator form of Series + Normal.
-
-* `#!wl limit` - opeartor form of Limit.
-
-* `#!wl solve` - operator form of Solve.
-
-* `#!wl collect` - operator form of Collect.
+<!-- SimplifyUnsafe.wl -->
 
 * `#!wl exprTogether` - take powers, logs and abs together.
 
@@ -271,6 +274,9 @@
 * `#!wl powerSim` - simplify powers.
 
 * `#!wl deltaSim` - simplify Delta functions.
+
+
+<!-- Simplify.wl -->
 
 * `#!wl swap` - swap two symbols in an expression.
 

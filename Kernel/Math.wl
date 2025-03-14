@@ -12,6 +12,8 @@ Get["Yurie`Math`Usage`"];
 
 Get["Yurie`Math`Quest`"];
 
+Get["Yurie`Math`OperatorForm`"]
+
 Get["Yurie`Math`DLMF`"];
 
 Get["Yurie`Math`Gamma`"];
@@ -23,6 +25,8 @@ Get["Yurie`Math`Head`"];
 Get["Yurie`Math`Diff`"];
 
 Get["Yurie`Math`Simplify`"];
+
+Get["Yurie`Math`SimplifyUnsafe`"];
 
 Get["Yurie`Math`Relation`"];
 
