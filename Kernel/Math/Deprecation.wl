@@ -39,6 +39,10 @@ Needs["Yurie`Math`"];
     "split a product into a list containing Hypergeometric2F1 factors and the rests.";*)
 
 
+fracSimplify::usage =
+    "simplify the numerator and denominator.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -117,6 +121,13 @@ hyperSplit[expr_] :=
     (
         Message[General::deprecation,"hyperSplit","hyperSeparate"];
         hyperSeparate[expr]
+    );
+
+
+fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
+    (
+        Message[General::deprecation,"fracSimplify","focusFrac"];
+        simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]]
     );
 
 
