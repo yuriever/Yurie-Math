@@ -594,7 +594,7 @@ powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
             {res,indet} =
                 expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,extra,show];
             If[ indet=!={},
-                indet[[1]]//Print
+                indet[[1]]//Echo
             ],
             (*Else*)
             res =
