@@ -12,6 +12,7 @@ VerificationTest[
 ]
 
 VerificationTest[
+    Get["Yurie`Base`"]; 
     Get["Yurie`Math`"]
     ,
     Null
