@@ -126,8 +126,8 @@ hyperSplit[expr_] :=
 
 fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
     (
-        Message[General::deprecation,"fracSimplify","focusFrac"];
-        simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]]
+        Message[General::deprecation,"fracSimplify","fracReduce"];
+        fracReduce[simplify,factor][expr]
     );
 
 

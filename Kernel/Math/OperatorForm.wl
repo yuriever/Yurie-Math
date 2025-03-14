@@ -9,8 +9,6 @@ BeginPackage["Yurie`Math`Simplify`"];
 
 Needs["Yurie`Math`"];
 
-Needs["Yurie`Math`Constant`"];
-
 
 (* ::Section:: *)
 (*Public*)
