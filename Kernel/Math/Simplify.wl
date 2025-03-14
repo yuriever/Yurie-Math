@@ -582,11 +582,11 @@ powerPhaseReduce//Options = {
 
 powerPhaseReduce[assume_,opts:OptionsPattern[]][expr_] :=
     expr//reducePhaseBy[assume,OptionValue["ExtraCondition"]]//
-        reducePhaseOnly[assume];
+        focusPowerExponent[Simplify];
 
 powerPhaseReduce[assume_,antiholo_,opts:OptionsPattern[]][expr_] :=
     expr//reducePhaseBy[assume,listToPattern@antiholo,OptionValue["ExtraCondition"]]//
-        reducePhaseOnly[assume];
+        focusPowerExponent[Simplify];
 
 powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
     Module[ {res,indet,extra = OptionValue["ExtraCondition"],show = OptionValue["ShowIndeterminate"]},
@@ -600,7 +600,7 @@ powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
             res =
                 expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,extra,show]
         ];
-        res//reducePhaseOnly[assume]
+        res//focusPowerExponent[Simplify]
     ];
 
 
@@ -647,12 +647,6 @@ reducePhaseBy[assume_,holoP_,antiholoP_,extra_,True][expr_] :=
                 ]
         ],
         "indet"
-    ];
-
-
-reducePhaseOnly[assume_][res_] :=
-    res//ReplaceAll[
-        sub:Exp[_Complex*\[Pi]*_.]:>Simplify[sub,assume]
     ];
 
 

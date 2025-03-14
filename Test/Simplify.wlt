@@ -142,7 +142,7 @@ VerificationTest[
 VerificationTest[
     powerPhaseReduce[χ > 0 && χb > 0][(-χ)^a*(-χb)^b]
     ,
-    E^(I*a*Pi + I*b*Pi)*χ^a*χb^b
+    E^(I*(a + b)*Pi)*χ^a*χb^b
     ,
     TestID->"17-Simplify.nb"
 ]
@@ -150,7 +150,7 @@ VerificationTest[
 VerificationTest[
     powerPhaseReduce[χ > 0 && χb > 0, χb][(-χ)^a*(-χb)^b]
     ,
-    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    E^(I*(a - b)*Pi)*χ^a*χb^b
     ,
     TestID->"18-Simplify.nb"
 ]
@@ -158,7 +158,7 @@ VerificationTest[
 VerificationTest[
     powerPhaseReduce[χ > 0 && χb > 0, χ, χb][(-χ)^a*(-χb)^b]
     ,
-    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    E^(I*(a - b)*Pi)*χ^a*χb^b
     ,
     TestID->"19-Simplify.nb"
 ]
@@ -166,7 +166,7 @@ VerificationTest[
 VerificationTest[
     powerPhaseReduce[χ > 0 && χb > 0, {χ}, {χb}][(-χ)^a*(-χb)^b]
     ,
-    E^(I*a*Pi - I*b*Pi)*χ^a*χb^b
+    E^(I*(a - b)*Pi)*χ^a*χb^b
     ,
     TestID->"20-Simplify.nb"
 ]
@@ -174,7 +174,7 @@ VerificationTest[
 VerificationTest[
     powerPhaseReduce[χ + c > 0 && χb + c > 0, χ, χb][(-χ - c)^a*(-χb - c)^b]
     ,
-    E^(I*a*Pi - I*b*Pi)*(c + χ)^a*(c + χb)^b
+    E^(I*(a - b)*Pi)*(c + χ)^a*(c + χb)^b
     ,
     TestID->"21-Simplify.nb"
 ]
