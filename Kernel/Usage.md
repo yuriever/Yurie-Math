@@ -286,15 +286,17 @@
 
 * `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
 
-* `#!wl focus` - simplify the arguments of the specified heads.
+* `#!wl focus` - simplify the arguments of the specified heads. ReplaceAll
 
-* `#!wl focusPower` - simplify the arguments of Power.
+* `#!wl focusDeep` - simplify the arguments of the specified heads recursively. Replace[#1,#2,All]&
 
-* `#!wl focusPowerBase` - simplify the base of Power.
+* `#!wl focusPower` - simplify the arguments of Power. Replace[#1,#2,All]&
 
-* `#!wl focusPowerExponent` - simplify the exponent of Power.
+* `#!wl focusPowerBase` - simplify the base of Power. Replace[#1,#2,All]&
 
-* `#!wl fracSimplify` - simplify the numerator and denominator.
+* `#!wl focusPowerExponent` - simplify the exponent of Power. Replace[#1,#2,All]&
+
+* `#!wl focusFrac` - simplify the numerator and denominator of fractions. ReplaceAll
 
 * `#!wl powerPhaseReduce` - reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
 

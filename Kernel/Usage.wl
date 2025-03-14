@@ -409,19 +409,22 @@ freezeNegative::usage =
     "variant of freeze. Negative is used as the default transformation.";
 
 focus::usage =
-    "simplify the arguments of the specified heads.";
+    StringJoin["simplify the arguments of the specified heads.", "\nReplaceAll"];
+
+focusDeep::usage =
+    StringJoin["simplify the arguments of the specified heads recursively.", "\nReplace[#1,#2,All]&"];
 
 focusPower::usage =
-    "simplify the arguments of Power.";
+    StringJoin["simplify the arguments of Power.", "\nReplace[#1,#2,All]&"];
 
 focusPowerBase::usage =
-    "simplify the base of Power.";
+    StringJoin["simplify the base of Power.", "\nReplace[#1,#2,All]&"];
 
 focusPowerExponent::usage =
-    "simplify the exponent of Power.";
+    StringJoin["simplify the exponent of Power.", "\nReplace[#1,#2,All]&"];
 
-fracSimplify::usage =
-    "simplify the numerator and denominator.";
+focusFrac::usage =
+    StringJoin["simplify the numerator and denominator of fractions.", "\nReplaceAll"];
 
 powerPhaseReduce::usage =
     "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";

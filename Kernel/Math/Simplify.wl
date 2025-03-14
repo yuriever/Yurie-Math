@@ -36,20 +36,30 @@ freezeNegative::usage =
 
 
 focus::usage =
-    "simplify the arguments of the specified heads.";
+    "simplify the arguments of the specified heads."<>
+    "\nReplaceAll";
+
+focusDeep::usage =
+    "simplify the arguments of the specified heads recursively."<>
+    "\nReplace[#1,#2,All]&";
+
 
 focusPower::usage =
-    "simplify the arguments of Power.";
+    "simplify the arguments of Power."<>
+    "\nReplace[#1,#2,All]&";
 
 focusPowerBase::usage =
-    "simplify the base of Power.";
+    "simplify the base of Power."<>
+    "\nReplace[#1,#2,All]&";
 
 focusPowerExponent::usage =
-    "simplify the exponent of Power.";
+    "simplify the exponent of Power."<>
+    "\nReplace[#1,#2,All]&";
 
+focusFrac::usage =
+    "simplify the numerator and denominator of fractions."<>
+    "\nReplaceAll";
 
-fracSimplify::usage =
-    "simplify the numerator and denominator.";
 
 powerPhaseReduce::usage =
     "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
@@ -203,6 +213,14 @@ patternAndTransformation[pattern_,default_] :=
 
 
 focus[pattern_,operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        (head:pattern):>operation@head,
+        (head:pattern)[arg_]:>head@operation@arg,
+        (head:pattern)[args__]:>head@@Map[operation,{args}]
+    }];
+
+
+focusDeep[pattern_,operation_:Simplify][expr_] :=
     expr//Replace[#,{
         (head:pattern):>operation@head,
         (head:pattern)[arg_]:>head@operation@arg,
@@ -228,12 +246,10 @@ focusPowerExponent[operation_:Simplify][expr_] :=
     },All]&;
 
 
-(* ::Subsubsection:: *)
-(*fracSimplify*)
-
-
-fracSimplify[simplify_:Simplify,factor_:1][expr_] :=
-    simplify[factor*Numerator[expr]]/simplify[factor*Denominator[expr]];
+focusFrac[simplify_:Simplify,factor_:1][expr_] :=
+    expr//ReplaceAll[{
+        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>simplify[factor*Numerator[subexpr]]/simplify[factor*Denominator[subexpr]]
+    }];
 
 
 (* ::Subsubsection:: *)
