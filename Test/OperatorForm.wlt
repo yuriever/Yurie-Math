@@ -1,6 +1,6 @@
 
 
-(*Simplify-operator-form.nb*)
+(*OperatorForm.nb*)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"0-Simplify-operator-form.nb"
+    TestID->"0-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Simplify-operator-form.nb"
+    TestID->"1-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     x*y*z
     ,
-    TestID->"2-Simplify-operator-form.nb"
+    TestID->"2-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     x/(y*z)
     ,
-    TestID->"3-Simplify-operator-form.nb"
+    TestID->"3-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     x + y + z
     ,
-    TestID->"4-Simplify-operator-form.nb"
+    TestID->"4-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,31 @@ VerificationTest[
     ,
     x - y - z
     ,
-    TestID->"5-Simplify-operator-form.nb"
+    TestID->"5-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve[{x, y}][{x == 0, y == 0}]
+    ,
+    {{x -> 0, y -> 0}}
+    ,
+    TestID->"6-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve1[{x, y}][{x == 0, y == 0}]
+    ,
+    {x -> 0, y -> 0}
+    ,
+    TestID->"7-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve1[{y, z}][x == 0]
+    ,
+    {}
+    ,
+    TestID->"8-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -57,7 +81,7 @@ VerificationTest[
     ,
     {1, 2}
     ,
-    TestID->"6-Simplify-operator-form.nb"
+    TestID->"9-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -65,7 +89,7 @@ VerificationTest[
     ,
     {n, n}
     ,
-    TestID->"7-Simplify-operator-form.nb"
+    TestID->"10-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -73,7 +97,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"8-Simplify-operator-form.nb"
+    TestID->"11-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -81,7 +105,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"9-Simplify-operator-form.nb"
+    TestID->"12-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -89,7 +113,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"10-Simplify-operator-form.nb"
+    TestID->"13-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -98,5 +122,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"∞-Simplify-operator-form.nb"
+    TestID->"∞-OperatorForm.nb"
 ]
