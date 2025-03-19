@@ -69,11 +69,6 @@ gammaTakeResidue//Options = {
 };
 
 
-multiGammaSimplify//Options = {
-    "Assumptions":>$Assumptions
-};
-
-
 (* ::Subsection:: *)
 (*Message*)
 
@@ -82,11 +77,14 @@ gammaFrom::noSuchKey =
     "the transformations are expected as a subset of ``.";
 
 
+gammaTakeResidue::notProduct =
+    "the expression is expected to be a product involving Gamma functions.";
+
 gammaTakeResidue::indexConflict =
     "the index `` conflicts with the expression.";
 
 gammaTakeResidue::gammaNotMatchVar =
-    "the argument of the factor `` should be a linear function of the variable ``.";
+    "the argument `` should be a linear function of the variable ``.";
 
 gammaTakeResidue::gammaNotInExpr =
     "the factor `` does not appear in the expression.";
@@ -96,7 +94,7 @@ multiGammaReduceByBarnesLemma::notMatch =
     "the multi-Gamma symbol cannot be reduced by the Barnes lemmas."
 
 multiGammaReduceByBarnesLemma::notProduct =
-    "this function only handles product-type expression."
+    "the expression is expected to be a product involving Gamma functions.";
 
 
 (* ::Subsection:: *)
@@ -125,18 +123,16 @@ gammaFrom[expr_,OptionsPattern[]] :=
                     gammaData//Lookup[opt]//Flatten,
                 True,
                     Message[gammaFrom::noSuchKey,gammaDataKeyList];
-                    expr//Throw
+                    HoldComplete[expr]//Throw
             ];
-        expr//ReplaceAll[ruleList]//gammaFactorSimplify2//gammaActivateHead[OptionValue["ActivateGamma"]]
+        expr//ReplaceAll[ruleList]//
+            ReplaceAll[gm_gamma:>Simplify@gm]//
+                gammaActivateHead[OptionValue["ActivateGamma"]]
     ]//Catch;
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
-
-
-gammaFactorSimplify2[expr_] :=
-    expr//ReplaceAll[gm_gamma:>Simplify@gm];
 
 
 gammaActivateHead[True][expr_] :=
@@ -153,11 +149,25 @@ gammaActivateHead[False][expr_] :=
 gammaSeparate[expr_Gamma] :=
     {expr,1};
 
+gammaSeparate[expr:Power[_Gamma,_]] :=
+    {expr,1};
+
+gammaSeparate[expr_multiGamma] :=
+    {gammaFrom[expr,"Transformation"->{"MultiGamma"}],1};
+
 gammaSeparate[expr_Times] :=
-    {
-        Select[expr,!FreeQ[#,Gamma]&],
-        Select[expr,FreeQ[Gamma]]
-    };
+    Module[ {expr1},
+        expr1 =
+            If[ FreeQ[expr,_multiGamma],
+                expr,
+                (*Else*)
+                gammaFrom[expr,"Transformation"->{"MultiGamma"}]
+            ];
+        {
+            Discard[expr,FreeQ[Gamma]],
+            Select[expr,FreeQ[Gamma]]
+        }
+    ];
 
 gammaSeparate[expr_] :=
     {1,expr};
@@ -171,7 +181,7 @@ gammaSeparate[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
+gammaTakeResidue[variable_,index_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr_] :=
     Module[ {expr1,solution,residue},
         expr1 =
             If[ FreeQ[expr,_multiGamma],
@@ -179,7 +189,7 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
                 (*Else*)
                 gammaFrom[expr,"Transformation"->{"MultiGamma"}]
             ];
-        gammaTakeResidueCheckAndThrow[variable,index,gmarg][expr1];
+        gammaTakeResidueCheck[variable,index,gmarg][expr1];
         solution =
             Part[Solve[gmarg==-index,{variable}],1,1];
         residue =
@@ -189,8 +199,9 @@ gammaTakeResidue[variable_,index_,gmarg_,OptionsPattern[]][expr_] :=
                 (*Else*)
                 Residue[expr1,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ];
-        gammaTakeResidueIfShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr1];
-        residue//gammaFactorSimplify//gammaTakeResidueHandleINT[expr1,variable]
+        ifShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr1];
+        residueSign[sign]*residue//ReplaceAll[gm_Gamma:>Simplify@gm]//
+            handleResidueWithINT[expr1,variable]
     ]//Catch;
 
 
@@ -219,28 +230,27 @@ gammaTakeResidue[] :=
 (*Helper*)
 
 
-gammaTakeResidueCheckAndThrow[variable_,index_,gmarg_][expr_] :=
+gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
+        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power],
+            Message[gammaTakeResidue::notProduct];
+            HoldComplete[expr]//Throw,
         !FreeQ[expr,index],
             Message[gammaTakeResidue::indexConflict,index];
-            Throw[expr],
+            HoldComplete[expr]//Throw,
         !Internal`LinearQ[gmarg,{variable}],
-            Message[gammaTakeResidue::gammaNotMatchVar,HoldForm[Gamma][gmarg],variable];
-            Throw[expr],
+            Message[gammaTakeResidue::gammaNotMatchVar,gmarg,variable];
+            HoldComplete[expr]//Throw,
         FreeQ[expr,Gamma[gmarg]],
             Message[gammaTakeResidue::gammaNotInExpr,HoldForm[Gamma][gmarg]];
-            Throw[expr]
+            HoldComplete[expr]//Throw
     ];
 
 
-gammaFactorSimplify[expr_] :=
-    expr//ReplaceAll[gm_Gamma:>Simplify@gm];
-
-
-gammaTakeResidueIfShowPoleData[True][solution_,___] :=
+ifShowPoleData[True][solution_,___] :=
     Echo[solution];
 
-gammaTakeResidueIfShowPoleData[Full][solution_,variable_,index_,expr1_] :=
+ifShowPoleData[Full][solution_,variable_,index_,expr1_] :=
     Module[ {sign,gammaList,gammaListNew},
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
@@ -263,20 +273,27 @@ gammaTakeResidueIfShowPoleData[Full][solution_,variable_,index_,expr1_] :=
         ];
     ];
 
+ifShowPoleData[False,___][_] :=
+    Null;
+
 
 gammaListGrid[list_] :=
     Grid[list,Alignment->{Left,Center},Spacings->{1,0.5},Dividers->{True,{{True}}},FrameStyle->LightGray]
 
-gammaTakeResidueIfShowPoleData[False,___][_] :=
-    Null;
 
-
-gammaTakeResidueHandleINT[expr_,variable_][residue_] :=
-    If[ FreeQ[expr,_INT*__],
+handleResidueWithINT[expr_,variable_][residue_] :=
+    If[ FreeQ[expr,_INT],
         residue,
         (*Else*)
         residue/INT[variable]
     ];
+
+
+residueSign[Right|-1] :=
+    -1;
+
+residueSign[Left|1] :=
+    1;
 
 
 (* ::Subsection:: *)
@@ -353,23 +370,24 @@ listComplement[list1_List,list2_List]/;Length[list1]>32 :=
 
 
 (* ::Subsection:: *)
-(*multiGammaReduce*)
+(*multiGammaSimplify*)
 
 
 (* ::Subsubsection:: *)
 (*Main*)
 
 
-multiGammaSimplify[expr_,OptionsPattern[]] :=
-    expr//ReplaceAll[mg_multiGamma:>multiGammaFunctionExpand[OptionValue["Assumptions"]][mg]];
+multiGammaSimplify[expr_,assume_:True] :=
+    expr//ReplaceAll[mg_multiGamma:>multiGammaFunctionExpand[assume][mg]];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-multiGammaFunctionExpand[assumption_][mg_] :=
-    mg//gammaFrom//Simplify//FunctionExpand//Simplify[#,Assumptions->assumption]&//gammaFrom//multiGammaFrom//Simplify;
+multiGammaFunctionExpand[assume_][mg_] :=
+    mg//gammaFrom//FunctionExpand//Simplify[#,assume]&//
+        gammaFrom//multiGammaFrom//Simplify;
 
 
 (* ::Subsection:: *)
