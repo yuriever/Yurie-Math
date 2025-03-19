@@ -86,6 +86,9 @@ limit::usage =
 solve::usage =
     "operator form of Solve.";
 
+solve1::usage =
+    "operator form of Solve + First.";
+
 collect::usage =
     "operator form of Collect.";
 
@@ -247,6 +250,9 @@ limit[direction_][expr_] :=
 
 solve[args___][expr_] :=
     Solve[expr,args];
+
+solve1[args___][expr_] :=
+    First[Solve[expr,args],{}];
 
 
 collect[var_][expr_] :=

@@ -300,6 +300,9 @@ limit::usage =
 solve::usage =
     "operator form of Solve.";
 
+solve1::usage =
+    "operator form of Solve + First.";
+
 collect::usage =
     "operator form of Collect.";
 

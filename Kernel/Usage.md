@@ -211,6 +211,8 @@
 
 * `#!wl solve` - operator form of Solve.
 
+* `#!wl solve1` - operator form of Solve + First.
+
 * `#!wl collect` - operator form of Collect.
 
 
