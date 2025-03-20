@@ -232,7 +232,7 @@ gammaTakeResidue[] :=
 
 gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
-        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power],
+        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_List],
             Message[gammaTakeResidue::notProduct];
             HoldComplete[expr]//Throw,
         !FreeQ[expr,index],
