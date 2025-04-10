@@ -65,7 +65,7 @@ relationPowerMono[base_,expanded_List,sign:1|-1:1] :=
         {powerP = Times@@Map[Power[#,exponent]&,expanded]},
         HoldComplete[
             Power[base,exponent_],
-            Exp[sign*I*\[Pi]*exponent]*powerP
+            Exp[sign*I*π*exponent]*powerP
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]
 
@@ -75,7 +75,7 @@ relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
         {powerP = Times@@Map[Power[#,exponent]&,expanded],powerM = Times@@Map[Power[#,-exponent]&,expanded2]},
         HoldComplete[
             Power[base,exponent_],
-            Exp[sign*I*\[Pi]*exponent]*powerP*powerM
+            Exp[sign*I*π*exponent]*powerP*powerM
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]
 

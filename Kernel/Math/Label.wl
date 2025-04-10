@@ -299,7 +299,7 @@ labelQ["PositiveIntegerOrSingleLetter",str_] :=
     StringMatchQ[str,RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
 
 labelQ["PositiveIntegerOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
 labelQ["NaturalNumber",str_] :=
     StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*"]];
@@ -308,7 +308,7 @@ labelQ["NaturalNumberOrSingleLetter",str_] :=
     StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
 
 labelQ["NaturalNumberOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
 labelQ[fun_Symbol,str_] :=
     fun[str];

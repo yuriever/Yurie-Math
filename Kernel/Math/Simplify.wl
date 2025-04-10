@@ -368,16 +368,16 @@ powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
 reducePhaseBy[assume_][expr_] :=
     expr//ReplaceAll[
         Power[base_,exponent_]/;Simplify[base<0,assume]:>
-            Exp[I*\[Pi]*exponent]*Power[-base,exponent]
+            Exp[I*π*exponent]*Power[-base,exponent]
     ];
 
 reducePhaseBy[assume_,antiholoP_][expr_] :=
     expr//ReplaceAll[
         Power[base_,exponent_]/;Simplify[base<0,assume]:>
             If[ FreeQ[base,antiholoP],
-                Exp[I*\[Pi]*exponent]*Power[-base,exponent],
+                Exp[I*π*exponent]*Power[-base,exponent],
                 (*Else*)
-                Exp[-I*\[Pi]*exponent]*Power[-base,exponent]
+                Exp[-I*π*exponent]*Power[-base,exponent]
             ]
     ];
 
@@ -386,9 +386,9 @@ reducePhaseBy[assume_,holoP_,antiholoP_,False][expr_] :=
         Power[base_,exponent_]/;Simplify[base<0,assume]:>
             Which[
                 !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
-                    Exp[I*\[Pi]*exponent]*Power[-base,exponent],
+                    Exp[I*π*exponent]*Power[-base,exponent],
                 !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
-                    Exp[-I*\[Pi]*exponent]*Power[-base,exponent],
+                    Exp[-I*π*exponent]*Power[-base,exponent],
                 True,
                     Power[base,exponent]
             ]
@@ -400,9 +400,9 @@ reducePhaseBy[assume_,holoP_,antiholoP_,True][expr_] :=
             Power[base_,exponent_]/;Simplify[base<0,assume]:>
                 Which[
                     !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
-                        Power[-base,exponent]*Exp[I*\[Pi]*exponent],
+                        Power[-base,exponent]*Exp[I*π*exponent],
                     !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
-                        Power[-base,exponent]*Exp[-I*\[Pi]*exponent],
+                        Power[-base,exponent]*Exp[-I*π*exponent],
                     True,
                         Sow[Power[base,exponent],"indet"]
                 ]
@@ -444,8 +444,8 @@ trigPhaseReduceKernel[var_,rest__][expr_] :=
 ruleTrigPhase[var_] :=
     ruleTrigPhase[var] =
         {
-            (h:Sin|Cos|Csc|Sec)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
-            (h:Tan|Cot)[k_.*\[Pi]*var+rest_.]/;IntegerQ[k]:>h[rest]
+            (h:Sin|Cos|Csc|Sec)[k_.*π*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
+            (h:Tan|Cot)[k_.*π*var+rest_.]/;IntegerQ[k]:>h[rest]
         };
 
 
