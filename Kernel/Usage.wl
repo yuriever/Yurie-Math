@@ -175,7 +175,7 @@ label::usage =
     "join the variable(s) and label(s) into a (sequence of) labeled object(s).";
 
 labelAt::usage =
-    "take special values of the labeled object(s).";
+    "take the specific value(s) of the labeled object(s).";
 
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";

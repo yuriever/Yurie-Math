@@ -156,11 +156,41 @@ VerificationTest[
 ]
 
 VerificationTest[
+    MatrixForm[Outer[{#1, #2} -> labelConvert[x, y, #1 -> #2][{x1, x[1], Subscript[x, 1], Superscript[x, 1]}] & , {Symbol, Function, Subscript, Superscript}, {Symbol, Function, Subscript, Superscript}]]
+    ,
+    Quiet[MatrixForm[{{{Symbol, Symbol} -> HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}], {Symbol, Function} -> {x[1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Symbol, Subscript} -> {Subscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Symbol, Superscript} -> {Superscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}}, {{Function, Symbol} -> {x1, x1, Subscript[x, 1], Superscript[x, 1]}, {Function, Function} -> HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}], {Function, Subscript} -> {x1, Subscript[x, 1], Subscript[x, 1], Superscript[x, 1]}, {Function, Superscript} -> {x1, Superscript[x, 1], Subscript[x, 1], Superscript[x, 1]}}, {{Subscript, Symbol} -> {x1, x[1], x1, Superscript[x, 1]}, {Subscript, Function} -> {x1, x[1], x[1], Superscript[x, 1]}, {Subscript, Subscript} -> HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}], {Subscript, Superscript} -> {x1, x[1], Superscript[x, 1], Superscript[x, 1]}}, {{Superscript, Symbol} -> {x1, x[1], Subscript[x, 1], x1}, {Superscript, Function} -> {x1, x[1], Subscript[x, 1], x[1]}, {Superscript, Subscript} -> {x1, x[1], Subscript[x, 1], Subscript[x, 1]}, {Superscript, Superscript} -> HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}]}}]]
+    ,
+    {Yurie`Math`labelConvert::posequal,Yurie`Math`labelConvert::posequal,Yurie`Math`labelConvert::posequal,General::stop}
+    ,
+    TestID->"17-Label.nb"
+]
+
+VerificationTest[
+    (labelJoin[x, y, #1][{x1, x[1], Subscript[x, 1], Superscript[x, 1]}] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    Quiet[{HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}], {x1, x1, Subscript[x, 1], Superscript[x, 1]}, {x1, x[1], x1, Superscript[x, 1]}, {x1, x[1], Subscript[x, 1], x1}}]
+    ,
+    {Yurie`Math`labelConvert::posequal}
+    ,
+    TestID->"18-Label.nb"
+]
+
+VerificationTest[
+    (labelSplit[x, y, #1][{x1, x[1], Subscript[x, 1], Superscript[x, 1]}] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    Quiet[{HoldComplete[{x1, x[1], Subscript[x, 1], Superscript[x, 1]}], {x[1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Subscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}, {Superscript[x, 1], x[1], Subscript[x, 1], Superscript[x, 1]}}]
+    ,
+    {Yurie`Math`labelConvert::posequal}
+    ,
+    TestID->"19-Label.nb"
+]
+
+VerificationTest[
     (labelToZero[{z, zb}, {1, 2}, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
     ,
     {ReplaceAll[{z1 -> 0, z2 -> 0, zb1 -> 0, zb2 -> 0}], ReplaceAll[{z[1] -> 0, z[2] -> 0, zb[1] -> 0, zb[2] -> 0}], ReplaceAll[{Subscript[z, 1] -> 0, Subscript[z, 2] -> 0, Subscript[zb, 1] -> 0, Subscript[zb, 2] -> 0}], ReplaceAll[{Superscript[z, 1] -> 0, Superscript[z, 2] -> 0, Superscript[zb, 1] -> 0, Superscript[zb, 2] -> 0}]}
     ,
-    TestID->"17-Label.nb"
+    TestID->"20-Label.nb"
 ]
 
 VerificationTest[
@@ -168,7 +198,7 @@ VerificationTest[
     ,
     {ReplaceAll[{z1 -> z2, zb1 -> zb2}], ReplaceAll[{z[1] -> z[2], zb[1] -> zb[2]}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, 2], Subscript[zb, 1] -> Subscript[zb, 2]}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, 2], Superscript[zb, 1] -> Superscript[zb, 2]}]}
     ,
-    TestID->"18-Label.nb"
+    TestID->"21-Label.nb"
 ]
 
 VerificationTest[
@@ -176,7 +206,7 @@ VerificationTest[
     ,
     {ReplaceAll[{z1 -> z12 + z2, zb1 -> zb12 + zb2}], ReplaceAll[{z[1] -> z[2] + z["12"], zb[1] -> zb[2] + zb["12"]}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, 2] + Subscript[z, "12"], Subscript[zb, 1] -> Subscript[zb, 2] + Subscript[zb, "12"]}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, 2] + Superscript[z, "12"], Superscript[zb, 1] -> Superscript[zb, 2] + Superscript[zb, "12"]}]}
     ,
-    TestID->"19-Label.nb"
+    TestID->"22-Label.nb"
 ]
 
 VerificationTest[
@@ -184,7 +214,7 @@ VerificationTest[
     ,
     {ReplaceAll[{z1 -> z12, z2 -> 0, zb1 -> zb12, zb2 -> 0}], ReplaceAll[{z[1] -> z["12"], z[2] -> 0, zb[1] -> zb["12"], zb[2] -> 0}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, "12"], Subscript[z, 2] -> 0, Subscript[zb, 1] -> Subscript[zb, "12"], Subscript[zb, 2] -> 0}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, "12"], Superscript[z, 2] -> 0, Superscript[zb, 1] -> Superscript[zb, "12"], Superscript[zb, 2] -> 0}]}
     ,
-    TestID->"20-Label.nb"
+    TestID->"23-Label.nb"
 ]
 
 VerificationTest[
@@ -192,7 +222,57 @@ VerificationTest[
     ,
     {ReplaceAll[{z12 -> z1 - z2, zb12 -> zb1 - zb2}], ReplaceAll[{z["12"] -> z[1] - z[2], zb["12"] -> zb[1] - zb[2]}], ReplaceAll[{Subscript[z, "12"] -> Subscript[z, 1] - Subscript[z, 2], Subscript[zb, "12"] -> Subscript[zb, 1] - Subscript[zb, 2]}], ReplaceAll[{Superscript[z, "12"] -> Superscript[z, 1] - Superscript[z, 2], Superscript[zb, "12"] -> Superscript[zb, 1] - Superscript[zb, 2]}]}
     ,
-    TestID->"21-Label.nb"
+    TestID->"24-Label.nb"
+]
+
+VerificationTest[
+    (labelToZero[z, zb, {1, 2}, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    {ReplaceAll[{z1 -> 0, z2 -> 0, zb1 -> 0, zb2 -> 0}], ReplaceAll[{z[1] -> 0, z[2] -> 0, zb[1] -> 0, zb[2] -> 0}], ReplaceAll[{Subscript[z, 1] -> 0, Subscript[z, 2] -> 0, Subscript[zb, 1] -> 0, Subscript[zb, 2] -> 0}], ReplaceAll[{Superscript[z, 1] -> 0, Superscript[z, 2] -> 0, Superscript[zb, 1] -> 0, Superscript[zb, 2] -> 0}]}
+    ,
+    TestID->"25-Label.nb"
+]
+
+VerificationTest[
+    (labelToEqual[z, zb, 1 -> 2, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    {ReplaceAll[{z1 -> z2, zb1 -> zb2}], ReplaceAll[{z[1] -> z[2], zb[1] -> zb[2]}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, 2], Subscript[zb, 1] -> Subscript[zb, 2]}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, 2], Superscript[zb, 1] -> Superscript[zb, 2]}]}
+    ,
+    TestID->"26-Label.nb"
+]
+
+VerificationTest[
+    (labelToDiff[z, zb, 1 -> 2, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    {ReplaceAll[{z1 -> z12 + z2, zb1 -> zb12 + zb2}], ReplaceAll[{z[1] -> z[2] + z["12"], zb[1] -> zb[2] + zb["12"]}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, 2] + Subscript[z, "12"], Subscript[zb, 1] -> Subscript[zb, 2] + Subscript[zb, "12"]}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, 2] + Superscript[z, "12"], Superscript[zb, 1] -> Superscript[zb, 2] + Superscript[zb, "12"]}]}
+    ,
+    TestID->"27-Label.nb"
+]
+
+VerificationTest[
+    (labelToDiffZero[z, zb, 1 -> 2, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    {ReplaceAll[{z1 -> z12, z2 -> 0, zb1 -> zb12, zb2 -> 0}], ReplaceAll[{z[1] -> z["12"], z[2] -> 0, zb[1] -> zb["12"], zb[2] -> 0}], ReplaceAll[{Subscript[z, 1] -> Subscript[z, "12"], Subscript[z, 2] -> 0, Subscript[zb, 1] -> Subscript[zb, "12"], Subscript[zb, 2] -> 0}], ReplaceAll[{Superscript[z, 1] -> Superscript[z, "12"], Superscript[z, 2] -> 0, Superscript[zb, 1] -> Superscript[zb, "12"], Superscript[zb, 2] -> 0}]}
+    ,
+    TestID->"28-Label.nb"
+]
+
+VerificationTest[
+    (labelToDiffBack[z, zb, 1 -> 2, #1] & ) /@ {Symbol, Function, Subscript, Superscript}
+    ,
+    {ReplaceAll[{z12 -> z1 - z2, zb12 -> zb1 - zb2}], ReplaceAll[{z["12"] -> z[1] - z[2], zb["12"] -> zb[1] - zb[2]}], ReplaceAll[{Subscript[z, "12"] -> Subscript[z, 1] - Subscript[z, 2], Subscript[zb, "12"] -> Subscript[zb, 1] - Subscript[zb, 2]}], ReplaceAll[{Superscript[z, "12"] -> Superscript[z, 1] - Superscript[z, 2], Superscript[zb, "12"] -> Superscript[zb, 1] - Superscript[zb, 2]}]}
+    ,
+    TestID->"29-Label.nb"
+]
+
+VerificationTest[
+    labelToZero[z, zb, {1, 2}, f]
+    ,
+    Quiet[HoldComplete[Identity]]
+    ,
+    {Yurie`Math`label::posnotmatch}
+    ,
+    TestID->"30-Label.nb"
 ]
 
 VerificationTest[
@@ -202,7 +282,17 @@ VerificationTest[
     ,
     {Yurie`Math`label::posnotmatch}
     ,
-    TestID->"22-Label.nb"
+    TestID->"31-Label.nb"
+]
+
+VerificationTest[
+    labelToZero[z, {-1}, Symbol]
+    ,
+    Quiet[HoldComplete[Identity]]
+    ,
+    {Yurie`Math`label::badlab}
+    ,
+    TestID->"32-Label.nb"
 ]
 
 VerificationTest[
@@ -212,7 +302,7 @@ VerificationTest[
     ,
     {Yurie`Math`label::badlab}
     ,
-    TestID->"23-Label.nb"
+    TestID->"33-Label.nb"
 ]
 
 VerificationTest[
