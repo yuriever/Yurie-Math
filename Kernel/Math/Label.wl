@@ -17,6 +17,11 @@ Needs["Yurie`Math`"];
 label::usage =
     "join the variable(s) and label(s) into a (sequence of) labeled object(s).";
 
+
+labelAt::usage =
+    "take special values of the labeled object(s)."
+
+
 labelConvert::usage =
     "convert the labeled object(s) according to the two specified label positions.";
 
@@ -184,6 +189,17 @@ label[var_,_,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,var];
 
 
+labelAt[var_Symbol,rules__Rule,pos:$labelPositionP:Function] :=
+    Catch[
+        Map[Thread,{rules}]//Flatten//MapAt[labelKernel[pos,var,#]&,{All,1}]//ReplaceAll,
+        _,
+        HoldComplete[{rules}]&
+    ];
+
+labelAt[var_,Longest[__],pos:Except[$labelPositionP]] :=
+    returnWrongLabelPosition[pos,var];
+
+
 (* ::Subsubsection:: *)
 (*Helper*)
 
@@ -241,8 +257,13 @@ labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPo
 labelJoin[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
     labelConvert[var,pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
 
+
 labelSplit[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
     labelConvert[var,Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
 
 
 labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
@@ -273,10 +294,6 @@ labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
     ];
 
 
-(* ::Subsubsection:: *)
-(*Helper*)
-
-
 (* Unlike labelKernel, labelKernel2 does not handle empty label. *)
 
 labelKernel2[position:Function,var_,lab_] :=
@@ -299,7 +316,7 @@ labelQ["PositiveIntegerOrSingleLetter",str_] :=
     StringMatchQ[str,RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
 
 labelQ["PositiveIntegerOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
+    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
 
 labelQ["NaturalNumber",str_] :=
     StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*"]];
@@ -308,7 +325,7 @@ labelQ["NaturalNumberOrSingleLetter",str_] :=
     StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
 
 labelQ["NaturalNumberOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
+    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
 
 labelQ[fun_Symbol,str_] :=
     fun[str];

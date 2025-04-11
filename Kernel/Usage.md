@@ -124,6 +124,8 @@
 
 * `#!wl label` - join the variable(s) and label(s) into a (sequence of) labeled object(s).
 
+* `#!wl labelAt` - take special values of the labeled object(s).
+
 * `#!wl labelConvert` - convert the labeled object(s) according to the two specified label positions.
 
 * `#!wl labelJoin` - labelConvert: Function|Subscript|Superscript->Symbol.
