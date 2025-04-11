@@ -17,9 +17,8 @@ Needs["Yurie`Math`"];
 label::usage =
     "join the variable(s) and label(s) into a (sequence of) labeled object(s).";
 
-
 labelAt::usage =
-    "take special values of the labeled object(s)."
+    "take the specific value(s) of the labeled object(s)."
 
 
 labelConvert::usage =
@@ -196,7 +195,7 @@ labelAt[var_Symbol,rules__Rule,pos:$labelPositionP:Function] :=
         HoldComplete[{rules}]&
     ];
 
-labelAt[var_,Longest[__],pos:Except[$labelPositionP]] :=
+labelAt[var_Symbol,Longest[__],pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,var];
 
 
@@ -238,28 +237,28 @@ labelToString[lab_] :=
 (*Main*)
 
 
-labelConvert[var_Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
+labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
     Catch[
         With[ {type = checkAndThrowLabelType@OptionValue["LabelType"]},
-            labelConvertKernel[{var,vars},pos1,pos2,type][expr]
+            labelConvertKernel[{vars},pos1,pos2,type][expr]
         ],
         _,
         HoldComplete[expr]&
     ];
 
-labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
+labelConvert[__Symbol,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
     returnEqualLabelPosition[pos1,pos2,expr];
 
-labelConvert[_,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
+labelConvert[__Symbol,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
     returnWrongLabelPosition[{pos1,pos2},expr];
 
 
-labelJoin[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[var,pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
+labelJoin[vars__Symbol|{vars__Symbol},pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[{vars},pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
 
 
-labelSplit[var_,pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[var,Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
+labelSplit[vars__Symbol|{vars__Symbol},pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[{vars},Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
 
 
 (* ::Subsubsection:: *)
@@ -346,69 +345,69 @@ symbolFromStringOrStringExpression[expr_StringExpression] :=
 (*Main*)
 
 
-labelToZero[var_Symbol|{vars__Symbol},(label:Except[_List])|{labels__},pos:$labelPositionP:Function] :=
+labelToZero[vars__Symbol|{vars__Symbol},labelList_List,pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[(#[[1]]->0)&,pos,{var,vars},Map[#->#&,{label,labels}]]
+            labelRulePrototype[(#[[1]]->0)&,pos,{vars},Map[#->#&,labelList]]
         ],
         _,
         HoldComplete[Identity]&
     ];
 
 
-labelToEqual[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToEqual[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[(#[[1]]->#[[2]])&,pos,{var,vars},{rule,rules}]
+            labelRulePrototype[(#[[1]]->#[[2]])&,pos,{vars},{rules}]
         ],
         _,
         HoldComplete[Identity]&
     ];
 
 
-labelToDiff[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiff[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,pos,{var,vars},{rule,rules}]
+            labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,pos,{vars},{rules}]
         ],
         _,
         HoldComplete[Identity]&
     ];
 
 
-labelToDiffZero[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiffZero[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,pos,{var,vars},{rule,rules}]
+            labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,pos,{vars},{rules}]
         ],
         _,
         HoldComplete[Identity]&
     ];
 
 
-labelToDiffBack[var_Symbol|{vars__Symbol},rule_Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiffBack[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
     Catch[
         ReplaceAll[
-            labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,pos,{var,vars},{rule,rules}]
+            labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,pos,{vars},{rules}]
         ],
         _,
         HoldComplete[Identity]&
     ];
 
 
-labelToZero[_,_,pos:Except[$labelPositionP]] :=
+labelToZero[__,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,Identity];
 
-labelToEqual[_,_,pos:Except[$labelPositionP]] :=
+labelToEqual[__,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,Identity];
 
-labelToDiff[_,_,pos:Except[$labelPositionP]] :=
+labelToDiff[__,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,Identity];
 
-labelToDiffZero[_,_,pos:Except[$labelPositionP]] :=
+labelToDiffZero[__,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,Identity];
 
-labelToDiffBack[_,_,pos:Except[$labelPositionP]] :=
+labelToDiffBack[__,pos:Except[$labelPositionP]] :=
     returnWrongLabelPosition[pos,Identity];
 
 
