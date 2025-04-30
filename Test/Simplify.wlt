@@ -92,7 +92,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerFocus[f][x^a]
+    focusPower[f][x^a]
     ,
     f[x]^f[a]
     ,
@@ -100,7 +100,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerBaseFocus[f][x^a]
+    focusPowerBase[f][x^a]
     ,
     f[x]^a
     ,
@@ -108,7 +108,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerExponentFocus[f][x^a]
+    focusPowerExponent[f][x^a]
     ,
     x^f[a]
     ,
@@ -116,7 +116,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    fracFocus[Simplify, Sqrt[1 - x]][1 + Sqrt[1 + x]/Sqrt[1 - x]]
+    focusFrac[fracReduce[Simplify, Sqrt[1 - x]]][1 + Sqrt[1 + x]/Sqrt[1 - x]]
     ,
     1 + Sqrt[1 - x^2]/(1 - x)
     ,

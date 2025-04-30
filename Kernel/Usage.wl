@@ -28,12 +28,6 @@ indexToDiffBack::usage =
     "x12->x1-x2.";
 
 
-(* Deprecation.wl *)
-
-fracSimplify::usage =
-    "simplify the numerator and denominator.";
-
-
 (* Diff.wl *)
 
 jacobianMatrix::usage =
@@ -417,6 +411,18 @@ focus::usage =
 focusDeep::usage =
     StringJoin["simplify the arguments of the specified heads recursively.", "\nReplace[#1,#2,All]&"];
 
+focusPower::usage =
+    "powerFocus";
+
+focusPowerBase::usage =
+    "powerBaseFocus";
+
+focusPowerExponent::usage =
+    "powerExponentFocus";
+
+focusFrac::usage =
+    "fracFocus";
+
 fracFocus::usage =
     StringJoin["simplify the numerator and denominator of fractions.", "\nReplaceAll"];
 
@@ -431,6 +437,9 @@ powerBaseFocus::usage =
 
 powerExponentFocus::usage =
     StringJoin["simplify the exponents of powers.", "\nReplace[#1,#2,All]&"];
+
+powerExpSeparate::usage =
+    "split a product into a list containing Exp factors and the rests.";
 
 powerBaseTogether::usage =
     "make together the bases of powers.";

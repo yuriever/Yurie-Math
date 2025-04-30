@@ -19,11 +19,6 @@
 * `#!wl indexToDiffBack` - x12->x1-x2.
 
 
-<!-- Deprecation.wl -->
-
-* `#!wl fracSimplify` - simplify the numerator and denominator.
-
-
 <!-- Diff.wl -->
 
 * `#!wl jacobianMatrix` - jacobianMatrix.
@@ -293,6 +288,14 @@
 
 * `#!wl focusDeep` - simplify the arguments of the specified heads recursively. Replace[#1,#2,All]&
 
+* `#!wl focusPower` - powerFocus
+
+* `#!wl focusPowerBase` - powerBaseFocus
+
+* `#!wl focusPowerExponent` - powerExponentFocus
+
+* `#!wl focusFrac` - fracFocus
+
 * `#!wl fracFocus` - simplify the numerator and denominator of fractions. ReplaceAll
 
 * `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto numerator and denominator.
@@ -302,6 +305,8 @@
 * `#!wl powerBaseFocus` - simplify the bases of powers. Replace[#1,#2,All]&
 
 * `#!wl powerExponentFocus` - simplify the exponents of powers. Replace[#1,#2,All]&
+
+* `#!wl powerExpSeparate` - split a product into a list containing Exp factors and the rests.
 
 * `#!wl powerBaseTogether` - make together the bases of powers.
 

@@ -38,9 +38,8 @@ Needs["Yurie`Math`"];
 (*hyperSplit::usage =
     "split a product into a list containing Hypergeometric2F1 factors and the rests.";*)
 
-
-fracSimplify::usage =
-    "simplify the numerator and denominator.";
+(* fracSimplify::usage =
+    "simplify the numerator and denominator."; *)
 
 
 (* ::Section:: *)
