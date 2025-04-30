@@ -246,10 +246,10 @@ labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPo
         HoldComplete[expr]&
     ];
 
-labelConvert[__Symbol,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
+labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
     returnEqualLabelPosition[pos1,pos2,expr];
 
-labelConvert[__Symbol,Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
+labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
     returnWrongLabelPosition[{pos1,pos2},expr];
 
 
