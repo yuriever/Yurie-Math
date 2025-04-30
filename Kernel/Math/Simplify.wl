@@ -37,6 +37,18 @@ focusDeep::usage =
     "simplify the arguments of the specified heads recursively."<>
     "\nReplace[#1,#2,All]&";
 
+focusPower::usage =
+    "powerFocus";
+
+focusPowerBase::usage =
+    "powerBaseFocus";
+
+focusPowerExponent::usage =
+    "powerExponentFocus";
+
+focusFrac::usage =
+    "fracFocus";
+
 
 (* ::Subsection:: *)
 (*Frac*)
@@ -65,6 +77,10 @@ powerBaseFocus::usage =
 powerExponentFocus::usage =
     "simplify the exponents of powers."<>
     "\nReplace[#1,#2,All]&";
+
+
+powerExpSeparate::usage =
+    "split a product into a list containing Exp factors and the rests.";
 
 
 powerBaseTogether::usage =
@@ -235,18 +251,31 @@ focusDeep[pattern_,operation_:Simplify][expr_] :=
     },All]&;
 
 
+focusPower :=
+    powerFocus;
+
+focusPowerBase :=
+    powerBaseFocus;
+
+focusPowerExponent :=
+    powerExponentFocus;
+
+focusFrac :=
+    fracFocus;
+
+
 (* ::Subsection:: *)
 (*Frac*)
 
 
-fracFocus[operation_:Simplify,factor_:1][expr_] :=
-    expr//ReplaceAll[{
-        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation[factor*Numerator[subexpr]]/operation[factor*Denominator[subexpr]]
-    }];
-
-
 fracReduce[operation_:Simplify,factor_:1][expr_] :=
     operation[factor*Numerator[expr]]/operation[factor*Denominator[expr]];
+
+
+fracFocus[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
+    }];
 
 
 (* ::Subsection:: *)
@@ -272,10 +301,27 @@ powerExponentFocus[operation_:Simplify][expr_] :=
 
 
 (* ::Subsubsection:: *)
+(*powerExpSeparate*)
+
+
+powerExpSeparate[expr:Power[E,_]] :=
+    {expr,1};
+
+powerExpSeparate[expr_Times] :=
+    {
+        Discard[expr,FreeQ[Power[E,_]]],
+        Select[expr,FreeQ[Power[E,_]]]
+    };
+
+powerExpSeparate[expr_] :=
+    {1,expr};
+
+
+(* ::Subsubsection:: *)
 (*powerBaseTogether*)
 
 
-powerBaseTogether[expr_] :=
+powerBaseTogether[][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>
             Power[
