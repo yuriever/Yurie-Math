@@ -164,8 +164,8 @@ gammaSeparate[expr_Times] :=
                 gammaFrom[expr,"Transformation"->{"MultiGamma"}]
             ];
         {
-            Discard[expr,FreeQ[Gamma]],
-            Select[expr,FreeQ[Gamma]]
+            Discard[expr1,FreeQ[Gamma]],
+            Select[expr1,FreeQ[Gamma]]
         }
     ];
 
