@@ -90,7 +90,7 @@ hyperSeparate[expr:_Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_Hyp
 
 hyperSeparate[expr_Times] :=
     {
-        Select[expr,!FreeQ[#,Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]&],
+        Discard[expr,FreeQ[Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]],
         Select[expr,FreeQ[Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ]]
     };
 
