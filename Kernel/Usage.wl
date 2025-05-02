@@ -406,37 +406,34 @@ freezeNegative::usage =
     "variant of freeze. Negative is used as the default transformation.";
 
 focus::usage =
-    StringJoin["simplify the arguments of the specified heads.", "\nReplaceAll"];
-
-focusDeep::usage =
-    StringJoin["simplify the arguments of the specified heads recursively.", "\nReplace[#1,#2,All]&"];
+    "simplify the arguments of the specified heads.";
 
 focusPower::usage =
-    "powerFocus";
+    "simplify the arguments of powers.";
 
 focusPowerBase::usage =
-    "powerBaseFocus";
+    "simplify the bases of powers.";
 
 focusPowerExponent::usage =
-    "powerExponentFocus";
+    "simplify the exponents of powers.";
 
 focusFrac::usage =
-    "fracFocus";
+    "simplify the numerator and denominator of fractions.";
 
 fracFocus::usage =
-    StringJoin["simplify the numerator and denominator of fractions.", "\nReplaceAll"];
+    "focusFrac";
 
 fracReduce::usage =
     "reduce the fraction by multiplying a common factor onto numerator and denominator.";
 
 powerFocus::usage =
-    StringJoin["simplify the arguments of powers.", "\nReplace[#1,#2,All]&"];
+    "focusPower";
 
 powerBaseFocus::usage =
-    StringJoin["simplify the bases of powers.", "\nReplace[#1,#2,All]&"];
+    "focusPowerBase";
 
 powerExponentFocus::usage =
-    StringJoin["simplify the exponents of powers.", "\nReplace[#1,#2,All]&"];
+    "focusPowerExponent";
 
 powerExpSeparate::usage =
     "split a product into a list containing Exp factors and the rests.";

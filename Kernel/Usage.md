@@ -284,27 +284,25 @@
 
 * `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
 
-* `#!wl focus` - simplify the arguments of the specified heads. ReplaceAll
+* `#!wl focus` - simplify the arguments of the specified heads.
 
-* `#!wl focusDeep` - simplify the arguments of the specified heads recursively. Replace[#1,#2,All]&
+* `#!wl focusPower` - simplify the arguments of powers.
 
-* `#!wl focusPower` - powerFocus
+* `#!wl focusPowerBase` - simplify the bases of powers.
 
-* `#!wl focusPowerBase` - powerBaseFocus
+* `#!wl focusPowerExponent` - simplify the exponents of powers.
 
-* `#!wl focusPowerExponent` - powerExponentFocus
+* `#!wl focusFrac` - simplify the numerator and denominator of fractions.
 
-* `#!wl focusFrac` - fracFocus
-
-* `#!wl fracFocus` - simplify the numerator and denominator of fractions. ReplaceAll
+* `#!wl fracFocus` - focusFrac
 
 * `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto numerator and denominator.
 
-* `#!wl powerFocus` - simplify the arguments of powers. Replace[#1,#2,All]&
+* `#!wl powerFocus` - focusPower
 
-* `#!wl powerBaseFocus` - simplify the bases of powers. Replace[#1,#2,All]&
+* `#!wl powerBaseFocus` - focusPowerBase
 
-* `#!wl powerExponentFocus` - simplify the exponents of powers. Replace[#1,#2,All]&
+* `#!wl powerExponentFocus` - focusPowerExponent
 
 * `#!wl powerExpSeparate` - split a product into a list containing Exp factors and the rests.
 

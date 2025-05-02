@@ -30,24 +30,19 @@ freezeNegative::usage =
 
 
 focus::usage =
-    "simplify the arguments of the specified heads."<>
-    "\nReplaceAll";
-
-focusDeep::usage =
-    "simplify the arguments of the specified heads recursively."<>
-    "\nReplace[#1,#2,All]&";
+    "simplify the arguments of the specified heads.";
 
 focusPower::usage =
-    "powerFocus";
+    "simplify the arguments of powers.";
 
 focusPowerBase::usage =
-    "powerBaseFocus";
+    "simplify the bases of powers.";
 
 focusPowerExponent::usage =
-    "powerExponentFocus";
+    "simplify the exponents of powers.";
 
 focusFrac::usage =
-    "fracFocus";
+    "simplify the numerator and denominator of fractions.";
 
 
 (* ::Subsection:: *)
@@ -55,8 +50,7 @@ focusFrac::usage =
 
 
 fracFocus::usage =
-    "simplify the numerator and denominator of fractions."<>
-    "\nReplaceAll";
+    "focusFrac";
 
 fracReduce::usage =
     "reduce the fraction by multiplying a common factor onto numerator and denominator.";
@@ -67,16 +61,13 @@ fracReduce::usage =
 
 
 powerFocus::usage =
-    "simplify the arguments of powers."<>
-    "\nReplace[#1,#2,All]&";
+    "focusPower";
 
 powerBaseFocus::usage =
-    "simplify the bases of powers."<>
-    "\nReplace[#1,#2,All]&";
+    "focusPowerBase";
 
 powerExponentFocus::usage =
-    "simplify the exponents of powers."<>
-    "\nReplace[#1,#2,All]&";
+    "focusPowerExponent";
 
 
 powerExpSeparate::usage =
@@ -146,6 +137,10 @@ Begin["`Private`"];
 (*freeze*)
 
 
+(* ::Subsubsection:: *)
+(*Main*)
+
+
 freeze::badInput =
     "The input `1` or `2` is invalid."<>
     "\nHint: to match _Rule|_List, Verbatim should be adopted."<>
@@ -197,6 +192,10 @@ freezeKernel[{patterns__},operation_,default_,level_,expr_] :=
     ];
 
 
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
 prepareFrozenRuleList[pattern1_,default_,level_,expr_] :=
     Module[ {pattern,fun,funInv,subExprList,tempList},
         {pattern,fun,funInv} =
@@ -242,26 +241,56 @@ focus[pattern_,operation_:Simplify][expr_] :=
         (head:pattern)[args__]:>head@@Map[operation,{args}]
     }];
 
-
-focusDeep[pattern_,operation_:Simplify][expr_] :=
+focus[pattern_,operation_,level_][expr_] :=
     expr//Replace[#,{
         (head:pattern):>operation@head,
         (head:pattern)[arg_]:>head@operation@arg,
         (head:pattern)[args__]:>head@@Map[operation,{args}]
-    },All]&;
+    },level]&;
 
 
-focusPower :=
-    powerFocus;
+focusPower[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>Power[operation@base,operation@exponent]
+    }];
 
-focusPowerBase :=
-    powerBaseFocus;
+focusPower[operation_,level_][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[operation@base,operation@exponent]
+    },level]&;
 
-focusPowerExponent :=
-    powerExponentFocus;
 
-focusFrac :=
-    fracFocus;
+focusPowerBase[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>Power[operation@base,exponent]
+    }];
+
+focusPowerBase[operation_,level_][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[operation@base,exponent]
+    },level]&;
+
+
+focusPowerExponent[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>Power[base,operation@exponent]
+    }];
+
+focusPowerExponent[operation_,level_][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[base,operation@exponent]
+    },level]&;
+
+
+focusFrac[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
+    }];
+
+focusFrac[operation_,level_][expr_] :=
+    expr//Replace[#,{
+        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
+    },level]&;
 
 
 (* ::Subsection:: *)
@@ -272,32 +301,24 @@ fracReduce[operation_:Simplify,factor_:1][expr_] :=
     operation[factor*Numerator[expr]]/operation[factor*Denominator[expr]];
 
 
-fracFocus[operation_:Simplify][expr_] :=
-    expr//ReplaceAll[{
-        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
-    }];
+fracFocus :=
+    focusFrac;
 
 
 (* ::Subsection:: *)
 (*Power*)
 
 
-powerFocus[operation_:Simplify][expr_] :=
-    expr//Replace[#,{
-        Power[base_,exponent_]:>Power[operation@base,operation@exponent]
-    },All]&;
+powerFocus :=
+    focusPower;
 
 
-powerBaseFocus[operation_:Simplify][expr_] :=
-    expr//Replace[#,{
-        Power[base_,exponent_]:>Power[operation@base,exponent]
-    },All]&;
+powerBaseFocus :=
+    focusPowerBase;
 
 
-powerExponentFocus[operation_:Simplify][expr_] :=
-    expr//Replace[#,{
-        Power[base_,exponent_]:>Power[base,operation@exponent]
-    },All]&;
+powerExponentFocus :=
+    focusPowerExponent;
 
 
 (* ::Subsubsection:: *)
@@ -322,13 +343,22 @@ powerExpSeparate[expr_] :=
 
 
 powerBaseTogether[][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>
+            Power[
+                Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
+                exponent
+            ]
+    }];
+
+powerBaseTogether[level_][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>
             Power[
                 Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
                 exponent
             ]
-    },All]&;
+    },level]&;
 
 
 (* ::Subsubsection:: *)
