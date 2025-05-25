@@ -78,9 +78,14 @@ Begin["`Private`"];
 (*Constant*)
 
 
-namedTypeP =
-    "PositiveInteger"|"PositiveIntegerOrSingleLetter"|"PositiveIntegerOrGreekLetter"|
-    "NaturalNumber"|"NaturalNumberOrSingleLetter"|"NaturalNumberOrGreekLetter";
+$labelTypeList = {
+    "PositiveInteger",
+    "PositiveIntegerOrSingleLetter",
+    "PositiveIntegerOrGreekLetter",
+    "NaturalNumber",
+    "NaturalNumberOrSingleLetter",
+    "NaturalNumberOrGreekLetter"
+};
 
 
 (* ::Subsection:: *)
@@ -102,14 +107,14 @@ labelSplit//Options =
 (*Message*)
 
 
-label::badsymbol =
+label::InvalidSymbol =
     "```` is not a valid labeled symbol."
 
-label::badlabel =
+label::InvalidLabel =
     "`` is not a valid label.";
 
-label::typenotmatch =
-    "the label type `` should be one of the followings:\n``."
+label::UndefinedType =
+    "the label type `` is undefined, and should be one of the followings:\n``."
 
 
 (* ::Subsection:: *)
@@ -152,48 +157,48 @@ labelKernel[Function,var_,lab_] :=
 
 labelKernel[Symbol,var_Symbol,lab_] :=
     Catch[
-        ToExpression[ToString[var,FormatType->InputForm]<>labelToString@lab],
-        "badlabel",
-        HoldComplete[var,#]&
+        ToExpression[ToString[var]<>labelToString[lab]],
+        "InvalidLabel",
+        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
     ];
 
 labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
     Catch[
         Pattern[
-            Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>labelToString@lab],
+            Evaluate@ToExpression[ToString[var]<>labelToString[lab]],
             pat
         ],
-        "badlabel",
-        HoldComplete[var,#]&
+        "InvalidLabel",
+        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
     ]
 
 labelKernel[Symbol,var_String,lab_] :=
     Catch[
-        ToExpression[var<>labelToString@lab],
-        "badlabel",
-        HoldComplete[var,#]&
+        ToExpression[var<>labelToString[lab]],
+        "InvalidLabel",
+        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
     ];
 
 labelKernel[Symbol,var_,lab_] :=
     (
-        Message[label::badsymbol,var,lab];
-        HoldComplete[var,lab]
+        Message[label::InvalidSymbol,var,lab];
+        Failure["InvalidSymbol",<|"Var"->var,"Label"->lab|>]
     );
 
 
 labelToString[lab_Integer?NonNegative] :=
-    ToString@lab;
+    ToString[lab];
 
 labelToString[lab_Symbol] :=
-    SymbolName@lab;
+    SymbolName[lab];
 
 labelToString[lab_String] :=
     lab;
 
 labelToString[lab_] :=
     (
-        Message[label::badlabel,lab];
-        Throw[lab,"badlabel"]
+        Message[label::InvalidLabel,lab];
+        Throw[lab,"InvalidLabel"]
     );
 
 
@@ -235,11 +240,11 @@ labelAtKernel[head_,var_,ruleList_] :=
 
 labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_,head2_],opts:OptionsPattern[]][expr_] :=
     With[ {type = OptionValue["LabelType"]},
-        If[ Head[type]=!=String||Head[type]===String&&MatchQ[type,namedTypeP],
+        If[ Head[type]=!=String||Head[type]===String&&MemberQ[$labelTypeList,type],
             labelConvertKernel[head1,head2,type][Alternatives[var,vars],expr],
             (*Else*)
-            Message[label::typenotmatch,type,namedTypeP];
-            HoldComplete[expr]
+            Message[label::UndefinedType,type,Column@$labelTypeList];
+            expr
         ]
     ];
 
@@ -259,12 +264,15 @@ labelConvertKernel[head1:Except[Function|Symbol],head2:Function|Symbol,type_][va
     ];
 
 labelConvertKernel[Symbol,head2:Except[Symbol],type_][varP_,expr_] :=
-    With[ {varStringP = Map[ToString[#,FormatType->InputForm]&,varP]},
+    With[ {varStringP = Map[ToString,varP]},
         expr//ReplaceAll[
             symbol_Symbol/;Context[symbol]=!="System`":>
-                symbolPrepare[stringSplit[symbol,varStringP,type],symbol,head2]
+                symbolPrepare[stringSplit[ToString[symbol],varStringP,type],symbol,head2]
         ]
     ];
+
+labelConvertKernel[head_,head_,type_][varP_,expr_] :=
+    expr;
 
 
 labelQ[All,_] :=
@@ -274,7 +282,7 @@ labelQ[type_String,lab_String] :=
     namedLabelQ[type,lab];
 
 labelQ[type_String,lab_] :=
-    namedLabelQ[type,ToString@lab];
+    namedLabelQ[type,ToString[lab]];
 
 labelQ[fun_,lab_] :=
     fun[lab];
@@ -287,7 +295,7 @@ namedLabelQ["PositiveIntegerOrSingleLetter",lab_String] :=
     Quiet@StringMatchQ[lab,RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
 
 namedLabelQ["PositiveIntegerOrGreekLetter",lab_String] :=
-    Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
+    Quiet@StringMatchQ[lab,RegularExpression["^$|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
 namedLabelQ["NaturalNumber",lab_String] :=
     Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*"]];
@@ -299,30 +307,32 @@ namedLabelQ["NaturalNumberOrGreekLetter",lab_String] :=
     Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
 
-stringSplit[symbol_,varStringP_,type_] :=
-    StringReplace[
-        ToString[symbol,FormatType->InputForm],
-        StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
-            {var,lab}
+stringSplit[str_,varP_,type_]/;StringStartsQ[str,varP] :=
+    str//StringReplace[
+        StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varP]&&labelQ[type,lab]:>{var,lab}
     ];
+
+stringSplit[str_,varP_,type_] :=
+    str;
 
 
 symbolPrepare[res_String,symbol_,head_] :=
     symbol;
 
 symbolPrepare[StringExpression[{var_,lab_}],symbol_,head_] :=
-    labelKernel[head,ToExpression@var,ToExpression@lab];
+    labelKernel[head,ToExpression[var],ToExpression[lab]];
 
 
 (* ::Subsection:: *)
 (*labelJoin|labelSplit*)
 
 
-labelJoin[vars_,head:posP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[{vars},head->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
+labelJoin[vars_,head_,opts:OptionsPattern[]][expr_] :=
+    labelConvert[vars,head->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
 
-labelSplit[vars_,head:posP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[{vars},Symbol->head,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
+
+labelSplit[vars_,head_,opts:OptionsPattern[]][expr_] :=
+    labelConvert[vars,Symbol->head,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
 
 
 (* ::Subsection:: *)
