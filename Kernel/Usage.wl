@@ -172,13 +172,13 @@ labelAt::usage =
     "take the specific value(s) of the labeled object(s).";
 
 labelConvert::usage =
-    "convert the labeled object(s) according to the two specified label positions.";
+    "convert the labeled object(s) according to the two specified label heads.";
 
 labelJoin::usage =
-    "labelConvert: Function|Subscript|Superscript->Symbol.";
+    "labelConvert: _->Symbol.";
 
 labelSplit::usage =
-    "labelConvert: Symbol->Function|Subscript|Superscript.";
+    "labelConvert: Symbol->_.";
 
 labelToZero::usage =
     "x1->0.";

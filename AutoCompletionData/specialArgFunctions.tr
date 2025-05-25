@@ -2,7 +2,7 @@
  "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole"}}, 
  "diffChange" -> {0, 0, 0, 0, 0, {"Solution", "ShowSolution"}}, 
  "integrateChange" -> {0, 0, 0, {"Solution", "ShowSolution"}, 
-   {"Solution", "ShowSolution"}}, "labelConvert" -> {{"LabelType"}}, 
+   {"Solution", "ShowSolution"}}, "labelConvert" -> {0, 0, {"LabelType"}}, 
  "labelJoin" -> {0, {"LabelType"}}, "labelSplit" -> {0, {"LabelType"}}, 
  "freeze" -> {0, 0, {"DefaultTransformation"}, {"DefaultTransformation"}}, 
  "powerPhaseReduce" -> {0, 0, 0, {"ShowIndeterminate"}}, 

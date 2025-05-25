@@ -121,11 +121,11 @@
 
 * `#!wl labelAt` - take the specific value(s) of the labeled object(s).
 
-* `#!wl labelConvert` - convert the labeled object(s) according to the two specified label positions.
+* `#!wl labelConvert` - convert the labeled object(s) according to the two specified label heads.
 
-* `#!wl labelJoin` - labelConvert: Function|Subscript|Superscript->Symbol.
+* `#!wl labelJoin` - labelConvert: _->Symbol.
 
-* `#!wl labelSplit` - labelConvert: Symbol->Function|Subscript|Superscript.
+* `#!wl labelSplit` - labelConvert: Symbol->_.
 
 * `#!wl labelToZero` - x1->0.
 
