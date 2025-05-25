@@ -110,8 +110,26 @@ labelSplit//Options =
 label::InvalidSymbol =
     "```` is not a valid labeled symbol."
 
+labelInvalidSymbolF[var_,lab_]:=
+    Failure["InvalidSymbol",<|
+        "MessageTemplate":>label::InvalidSymbol,
+        "MessageParameters"->{var,lab},
+        "Var"->var,
+        "Label"->lab
+    |>];
+
+
 label::InvalidLabel =
     "`` is not a valid label.";
+
+labelInvalidLabelF[var_,lab_]:=
+    Failure["InvalidLabel",<|
+        "MessageTemplate":>label::InvalidLabel,
+        "MessageParameters"->lab,
+        "Var"->var,
+        "Label"->lab
+    |>];
+
 
 label::UndefinedType =
     "the label type `` is undefined, and should be one of the followings:\n``."
@@ -159,7 +177,7 @@ labelKernel[Symbol,var_Symbol,lab_] :=
     Catch[
         ToExpression[ToString[var]<>labelToString[lab]],
         "InvalidLabel",
-        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
+        labelInvalidLabelF[var,#]&
     ];
 
 labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
@@ -169,21 +187,18 @@ labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
             pat
         ],
         "InvalidLabel",
-        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
+        labelInvalidLabelF[var,#]&
     ]
 
 labelKernel[Symbol,var_String,lab_] :=
     Catch[
         ToExpression[var<>labelToString[lab]],
         "InvalidLabel",
-        Failure["InvalidLabel",<|"Var"->var,"Label"->#|>]&
+        labelInvalidLabelF[var,#]&
     ];
 
 labelKernel[Symbol,var_,lab_] :=
-    (
-        Message[label::InvalidSymbol,var,lab];
-        Failure["InvalidSymbol",<|"Var"->var,"Label"->lab|>]
-    );
+    labelInvalidSymbolF[var,lab];
 
 
 labelToString[lab_Integer?NonNegative] :=
@@ -196,10 +211,7 @@ labelToString[lab_String] :=
     lab;
 
 labelToString[lab_] :=
-    (
-        Message[label::InvalidLabel,lab];
-        Throw[lab,"InvalidLabel"]
-    );
+    Throw[lab,"InvalidLabel"];
 
 
 (* ::Subsection:: *)
@@ -343,53 +355,29 @@ labelSplit[vars_,head_,opts:OptionsPattern[]][expr_] :=
 (*Main*)
 
 
-labelToZero[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],labelList_List,head:allPosP:Function] :=
-    Catch[
-        ReplaceAll[
-            labelRulePrototype[(#[[1]]->0)&,head,{vars},Map[#->#&,labelList]]
-        ],
-        _,
-        HoldComplete[Identity]&
+labelToZero[(List|Alternatives)[vars__]|var_,labelList_List,head_:Function] :=
+    ReplaceAll[
+        labelRulePrototype[(#[[1]]->0)&,head,{vars,var},Map[#->#&,labelList]]
     ];
 
-
-labelToEqual[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},head:allPosP:Function] :=
-    Catch[
-        ReplaceAll[
-            labelRulePrototype[(#[[1]]->#[[2]])&,head,{vars},{rules}]
-        ],
-        _,
-        HoldComplete[Identity]&
+labelToEqual[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+    ReplaceAll[
+        labelRulePrototype[(#[[1]]->#[[2]])&,head,{vars,var},{rules}]
     ];
 
-
-labelToDiff[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},head:allPosP:Function] :=
-    Catch[
-        ReplaceAll[
-            labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,head,{vars},{rules}]
-        ],
-        _,
-        HoldComplete[Identity]&
+labelToDiff[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+    ReplaceAll[
+        labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,head,{vars,var},{rules}]
     ];
 
-
-labelToDiffZero[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},head:allPosP:Function] :=
-    Catch[
-        ReplaceAll[
-            labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,head,{vars},{rules}]
-        ],
-        _,
-        HoldComplete[Identity]&
+labelToDiffZero[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+    ReplaceAll[
+        labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,head,{vars,var},{rules}]
     ];
 
-
-labelToDiffBack[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},head:allPosP:Function] :=
-    Catch[
-        ReplaceAll[
-            labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,head,{vars},{rules}]
-        ],
-        _,
-        HoldComplete[Identity]&
+labelToDiffBack[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+    ReplaceAll[
+        labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,head,{vars,var},{rules}]
     ];
 
 
@@ -400,19 +388,18 @@ labelToDiffBack[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol]
 labelRulePrototype::usage =
     "generate rules from prototype function.";
 
-
-labelRulePrototype[proto_,head_,{var_Symbol},{rule_Rule}] :=
+labelRulePrototype[proto_,head_,{var_},{rule_}] :=
     proto@Map[
         labelKernel[head,var,#]&,extractLabelFromRule[rule]
     ];
 
-labelRulePrototype[proto_,head_,{var_Symbol},{rules__Rule}] :=
+labelRulePrototype[proto_,head_,{var_},{rules__}] :=
     Flatten@Map[labelRulePrototype[proto,head,{var},{#}]&,{rules}];
 
-labelRulePrototype[proto_,head_,{vars__Symbol},{rule_Rule}] :=
+labelRulePrototype[proto_,head_,{vars__},{rule_}] :=
     Flatten@Map[labelRulePrototype[proto,head,{#},{rule}]&,{vars}];
 
-labelRulePrototype[proto_,head_,{vars__Symbol},{rules__Rule}] :=
+labelRulePrototype[proto_,head_,{vars__},{rules__}] :=
     Flatten@Outer[labelRulePrototype[proto,head,{#1},{#2}]&,{vars},{rules}];
 
 
