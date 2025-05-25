@@ -10,22 +10,6 @@ BeginPackage["Yurie`Math`Label`"];
 Needs["Yurie`Math`"];
 
 
-(* ::Text:: *)
-(*BeginDeveloper*)
-
-
-Needs["Yurie`Base`"];
-
-ClearAll["Yurie`Math`Label`*`*"];
-ClearAll["labelConvert"];
-ClearAll["label"];
-ClearAll["labelAt"];
-
-
-(* ::Text:: *)
-(*EndDeveloper*)
-
-
 (* ::Section:: *)
 (*Public*)
 
@@ -143,22 +127,18 @@ label::UndefinedType =
 (*Main*)
 
 
-label[var_,lab_,head_] :=
+label[var_,lab_,head_Symbol:Function] :=
     labelKernel[head,var,lab];
 
 
-label[var_,(List|Alternatives)[labs___],head_] :=
+label[var_,(List|Alternatives)[labs__],head_Symbol:Function] :=
     Map[labelKernel[head,var,#]&,Unevaluated@Sequence[labs]];
 
-label[(List|Alternatives)[vars___],lab_,head_] :=
+label[(List|Alternatives)[vars__],lab_,head_Symbol:Function] :=
     Map[labelKernel[head,#,lab]&,Unevaluated@Sequence[vars]];
 
-label[(List|Alternatives)[vars___],(List|Alternatives)[labs___],head_] :=
+label[(List|Alternatives)[vars__],(List|Alternatives)[labs__],head_Symbol:Function] :=
     Outer[labelKernel[head,#1,#2]&,Unevaluated@Sequence[vars],Unevaluated@Sequence[labs]];
-
-
-label[var_,lab_] :=
-    label[var,lab,Function];
 
 
 (* ::Subsubsection:: *)
@@ -222,24 +202,25 @@ labelToString[lab_] :=
 (*Main*)
 
 
-labelAt[var_,rules__Rule,Symbol] :=
-    (* Expand Alternatives into List when the head is Symbol. *)
-    labelAtKernel[Symbol,var,ReplaceAll[{rules},Verbatim[Alternatives][args__]:>List[args]]];
-
-labelAt[var_,rules__Rule,head_] :=
-    labelAtKernel[head,var,{rules}];
-
-
-labelAt[var_,rules__Rule] :=
-    labelAtKernel[Function,var,{rules}];
+labelAt[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
+    labelAtKernel[head,{vars,var},{rules}]//ReplaceAll;
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-labelAtKernel[head_,var_,ruleList_] :=
-    Map[Thread,ruleList]//Flatten//MapAt[labelKernel[head,var,#]&,{All,1}]//ReplaceAll;
+labelAtKernel[head_,{var_},ruleList_] :=
+    ruleList//expandRule//MapAt[labelKernel[head,var,#]&,{All,1}];
+
+labelAtKernel[head_,varList_List,ruleList_] :=
+    varList//Map[labelAtKernel[head,{#},ruleList]&]//Flatten;
+
+
+expandRule[ruleList_] :=
+    ruleList//
+        ReplaceAll[Verbatim[Alternatives][args__]:>List[args]]//
+            Map[Thread]//Flatten;
 
 
 (* ::Subsection:: *)
@@ -250,7 +231,7 @@ labelAtKernel[head_,var_,ruleList_] :=
 (*Main*)
 
 
-labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_,head2_],opts:OptionsPattern[]][expr_] :=
+labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_Symbol,head2_Symbol],opts:OptionsPattern[]][expr_] :=
     With[ {type = OptionValue["LabelType"]},
         If[ Head[type]=!=String||Head[type]===String&&MemberQ[$labelTypeList,type],
             labelConvertKernel[head1,head2,type][Alternatives[var,vars],expr],
@@ -339,11 +320,11 @@ symbolPrepare[StringExpression[{var_,lab_}],symbol_,head_] :=
 (*labelJoin|labelSplit*)
 
 
-labelJoin[vars_,head_,opts:OptionsPattern[]][expr_] :=
+labelJoin[vars_,head_Symbol:Function,opts:OptionsPattern[]][expr_] :=
     labelConvert[vars,head->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
 
 
-labelSplit[vars_,head_,opts:OptionsPattern[]][expr_] :=
+labelSplit[vars_,head_Symbol:Function,opts:OptionsPattern[]][expr_] :=
     labelConvert[vars,Symbol->head,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
 
 
@@ -355,27 +336,27 @@ labelSplit[vars_,head_,opts:OptionsPattern[]][expr_] :=
 (*Main*)
 
 
-labelToZero[(List|Alternatives)[vars__]|var_,labelList_List,head_:Function] :=
+labelToZero[(List|Alternatives)[vars__]|var_,labelList_List,head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[(#[[1]]->0)&,head,{vars,var},Map[#->#&,labelList]]
     ];
 
-labelToEqual[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+labelToEqual[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[(#[[1]]->#[[2]])&,head,{vars,var},{rules}]
     ];
 
-labelToDiff[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+labelToDiff[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,head,{vars,var},{rules}]
     ];
 
-labelToDiffZero[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+labelToDiffZero[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,head,{vars,var},{rules}]
     ];
 
-labelToDiffBack[(List|Alternatives)[vars__]|var_,rules__Rule,head_:Function] :=
+labelToDiffBack[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,head,{vars,var},{rules}]
     ];
