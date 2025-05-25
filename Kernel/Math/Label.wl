@@ -78,11 +78,9 @@ Begin["`Private`"];
 (*Constant*)
 
 
-typeP =
-    All|
+namedTypeP =
     "PositiveInteger"|"PositiveIntegerOrSingleLetter"|"PositiveIntegerOrGreekLetter"|
-    "NaturalNumber"|"NaturalNumberOrSingleLetter"|"NaturalNumberOrGreekLetter"|
-    _Symbol|_Function|_RightComposition|_Composition;
+    "NaturalNumber"|"NaturalNumberOrSingleLetter"|"NaturalNumberOrGreekLetter";
 
 
 (* ::Subsection:: *)
@@ -235,17 +233,12 @@ labelAtKernel[head_,var_,ruleList_] :=
 (*Main*)
 
 
-labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_,Symbol]][expr_] :=
-    labelConvertKernel[Alternatives[var,vars],head1,head2,type][expr]
-
-
-
 labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_,head2_],opts:OptionsPattern[]][expr_] :=
     With[ {type = OptionValue["LabelType"]},
-        If[ MatchQ[type,typeP],
-            labelConvertKernel[Alternatives[var,vars],head1,head2,type][expr],
+        If[ Head[type]=!=String||Head[type]===String&&MatchQ[type,namedTypeP],
+            labelConvertKernel[head1,head2,type][Alternatives[var,vars],expr],
             (*Else*)
-            Message[label::typenotmatch,type,typeP];
+            Message[label::typenotmatch,type,namedTypeP];
             HoldComplete[expr]
         ]
     ];
@@ -255,56 +248,21 @@ labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_,head2_],opts:OptionsPa
 (*Helper*)
 
 
-labelConvertKernel[varP_,Function,head:Except[Symbol]][expr_] :=
+labelConvertKernel[Function,head2:Except[Function],type_][varP_,expr_] :=
     expr//ReplaceAll[
-        (var:varP)[lab_]:>head[var,lab]
+        (var:varP)[lab_]/;labelQ[type,lab]:>labelKernel[head2,var,lab]
     ];
 
-labelConvertKernel[varP_,head:Except[Symbol],Function][expr_] :=
+labelConvertKernel[head1:Except[Function|Symbol],head2:Function|Symbol,type_][varP_,expr_] :=
     expr//ReplaceAll[
-        head[var:varP,lab_]:>var[lab]
+        head1[var:varP,lab_]/;labelQ[type,lab]:>labelKernel[head2,var,lab]
     ];
 
-
-
-
-
-
-labelConvertKernel[varP_,Function,head:Except[Symbol],type_][expr_] :=
-    expr//ReplaceAll[
-        (var:varP)[lab_]/;labelQ[type,lab]:>labelKernel[head,var,lab]
-    ];
-
-labelConvertKernel[varP_,head:Except[Symbol],Function,type_][expr_] :=
-    expr//ReplaceAll[
-        head[var:varP,lab_]/;labelQ[type,lab]:>var[lab]
-    ];
-
-labelConvertKernel[varP_,Superscript,head:Subscript|Function,type_][expr_] :=
-    expr//ReplaceAll[
-        Superscript[var:varP,lab_]/;labelQ[type,lab]:>labelKernel[head,var,lab]
-    ];
-
-
-labelConvertKernel[varP_,Function,Symbol,type_][expr_] :=
-    expr//ReplaceAll[
-        (var:varP)[lab_]/;AtomQ[lab]&&labelQ[type,lab]:>labelKernel[Symbol,var,lab]
-    ];
-
-labelConvertKernel[varP_,head:Subscript|Superscript,Symbol,type_][expr_] :=
-    expr//ReplaceAll[
-        head[var:varP,lab_]/;AtomQ[lab]&&labelQ[type,lab]:>labelKernel[Symbol,var,lab]
-    ];
-
-labelConvertKernel[varP_,Symbol,head2:Function|Subscript|Superscript,type_][expr_] :=
+labelConvertKernel[Symbol,head2:Except[Symbol],type_][varP_,expr_] :=
     With[ {varStringP = Map[ToString[#,FormatType->InputForm]&,varP]},
         expr//ReplaceAll[
-            symbol_Symbol:>
-                symbolFromStringOrStringExpression@StringReplace[
-                    ToString[symbol,FormatType->InputForm],
-                    StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
-                        labelKernel[head2,ToExpression@var,ToExpression@lab]
-                ]
+            symbol_Symbol/;Context[symbol]=!="System`":>
+                symbolPrepare[stringSplit[symbol,varStringP,type],symbol,head2]
         ]
     ];
 
@@ -312,33 +270,48 @@ labelConvertKernel[varP_,Symbol,head2:Function|Subscript|Superscript,type_][expr
 labelQ[All,_] :=
     True;
 
-labelQ[fun:_Symbol|_Function|_RightComposition|_Composition,lab_] :=
+labelQ[type_String,lab_String] :=
+    namedLabelQ[type,lab];
+
+labelQ[type_String,lab_] :=
+    namedLabelQ[type,ToString@lab];
+
+labelQ[fun_,lab_] :=
     fun[lab];
 
-labelQ["PositiveInteger",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|[1-9]\\d*"]];
 
-labelQ["PositiveIntegerOrSingleLetter",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
+namedLabelQ["PositiveInteger",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|[1-9]\\d*"]];
 
-labelQ["PositiveIntegerOrGreekLetter",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+namedLabelQ["PositiveIntegerOrSingleLetter",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
 
-labelQ["NaturalNumber",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*"]];
+namedLabelQ["PositiveIntegerOrGreekLetter",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
-labelQ["NaturalNumberOrSingleLetter",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
+namedLabelQ["NaturalNumber",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*"]];
 
-labelQ["NaturalNumberOrGreekLetter",lab_] :=
-    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+namedLabelQ["NaturalNumberOrSingleLetter",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
+
+namedLabelQ["NaturalNumberOrGreekLetter",lab_String] :=
+    Quiet@StringMatchQ[lab,RegularExpression["^$|0|[1-9]\\d*|[αβγδεζηθικλμνξοπρστυφχψω]"]];
 
 
-symbolFromStringOrStringExpression[expr_String] :=
-    ToExpression@expr;
+stringSplit[symbol_,varStringP_,type_] :=
+    StringReplace[
+        ToString[symbol,FormatType->InputForm],
+        StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
+            {var,lab}
+    ];
 
-symbolFromStringOrStringExpression[expr_StringExpression] :=
-    First@expr;
+
+symbolPrepare[res_String,symbol_,head_] :=
+    symbol;
+
+symbolPrepare[StringExpression[{var_,lab_}],symbol_,head_] :=
+    labelKernel[head,ToExpression@var,ToExpression@lab];
 
 
 (* ::Subsection:: *)
