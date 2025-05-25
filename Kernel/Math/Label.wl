@@ -110,6 +110,9 @@ labelSplit//Options =
 label::badsymbol =
     "```` is not a valid labeled symbol."
 
+label::badlabel =
+    "`` is not a valid label.";
+
 label::typenotmatch =
     "the label type `` should be one of the followings:\n``."
 
@@ -152,44 +155,35 @@ labelKernel[Function,var_,lab_] :=
     var[lab];
 
 
-labelKernel[Symbol,var_Symbol,lab_Integer?NonNegative] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab];
-
-labelKernel[Symbol,var_Symbol,lab_Symbol] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>SymbolName@lab];
-
-labelKernel[Symbol,var_Symbol,lab_String] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>lab];
-
-labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_Integer?NonNegative] :=
-    Pattern[
-        Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab],
-        pat
+labelKernel[Symbol,var_Symbol,lab_] :=
+    Catch[
+        ToExpression[ToString[var,FormatType->InputForm]<>labelToString@lab],
+        "badlabel",
+        HoldComplete[var,#]&
     ];
 
-labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_Integer?NonNegative] :=
-    Pattern[
-        Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab],
-        pat
+labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
+    Catch[
+        Pattern[
+            Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>labelToString@lab],
+            pat
+        ],
+        "badlabel",
+        HoldComplete[var,#]&
+    ]
+
+labelKernel[Symbol,var_String,lab_] :=
+    Catch[
+        ToExpression[var<>labelToString@lab],
+        "badlabel",
+        HoldComplete[var,#]&
     ];
-
-
-labelKernel[Symbol,var_String,lab_String] :=
-    ToExpression[var<>lab];
-
-labelKernel[Symbol,var_String,lab_Symbol] :=
-    ToExpression[var<>SymbolName@lab];
-
-labelKernel[Symbol,var_String,lab_Integer?NonNegative] :=
-    ToExpression[var<>ToString@lab];
 
 labelKernel[Symbol,var_,lab_] :=
     (
         Message[label::badsymbol,var,lab];
         HoldComplete[var,lab]
     );
-
-
 
 
 labelToString[lab_Integer?NonNegative] :=
@@ -200,6 +194,12 @@ labelToString[lab_Symbol] :=
 
 labelToString[lab_String] :=
     lab;
+
+labelToString[lab_] :=
+    (
+        Message[label::badlabel,lab];
+        Throw[lab,"badlabel"]
+    );
 
 
 (* ::Subsection:: *)
