@@ -74,7 +74,7 @@ VerificationTest[
     ,
     Quiet[{HoldComplete[x], x[-1], Subscript[x, -1], Superscript[x, -1]}]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"8-Label.nb"
 ]
@@ -92,7 +92,7 @@ VerificationTest[
     ,
     Quiet[{HoldComplete[{_ -> 1}], ReplaceAll[{x[_] -> 1}], ReplaceAll[{Subscript[x, _] -> 1}], ReplaceAll[{Superscript[x, _] -> 1}]}]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"10-Label.nb"
 ]
@@ -102,7 +102,7 @@ VerificationTest[
     ,
     Quiet[{HoldComplete[{2 -> 2, _ -> 1}], ReplaceAll[{x[2] -> 2, x[_] -> 1}], ReplaceAll[{Subscript[x, 2] -> 2, Subscript[x, _] -> 1}], ReplaceAll[{Superscript[x, 2] -> 2, Superscript[x, _] -> 1}]}]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"11-Label.nb"
 ]
@@ -120,7 +120,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[{_ -> 1}]]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"13-Label.nb"
 ]
@@ -290,7 +290,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Identity]]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"32-Label.nb"
 ]
@@ -300,7 +300,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Identity]]
     ,
-    {Yurie`Math`label::badlab}
+    {Yurie`Math`label::bad}
     ,
     TestID->"33-Label.nb"
 ]

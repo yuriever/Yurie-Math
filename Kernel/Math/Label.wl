@@ -10,6 +10,22 @@ BeginPackage["Yurie`Math`Label`"];
 Needs["Yurie`Math`"];
 
 
+(* ::Text:: *)
+(*BeginDeveloper*)
+
+
+Needs["Yurie`Base`"];
+
+ClearAll["Yurie`Math`Label`*`*"];
+ClearAll["labelConvert"];
+ClearAll["label"];
+ClearAll["labelAt"];
+
+
+(* ::Text:: *)
+(*EndDeveloper*)
+
+
 (* ::Section:: *)
 (*Public*)
 
@@ -62,28 +78,14 @@ Begin["`Private`"];
 (*Constant*)
 
 
-$labelPositionP::usage =
-    "pattern of label positions.";
+(* labelP =
+    _String|_Symbol|_Integer?NonNegative; *)
 
-$labelPositionP =
-    Symbol|Function|Subscript|Superscript;
-
-
-$labelTypeP::usage =
-    "pattern of label types.";
-
-$labelTypeP =
+typeP =
     All|
     "PositiveInteger"|"PositiveIntegerOrSingleLetter"|"PositiveIntegerOrGreekLetter"|
     "NaturalNumber"|"NaturalNumberOrSingleLetter"|"NaturalNumberOrGreekLetter"|
     _Symbol|_Function|_RightComposition|_Composition;
-
-
-$emptyLabelP::usage =
-    "pattern of empty label.";
-
-$emptyLabelP =
-    Null|\[FormalO];
 
 
 (* ::Subsection:: *)
@@ -105,47 +107,11 @@ labelSplit//Options =
 (*Message*)
 
 
+label::badsymbol =
+    "```` is not a valid labeled symbol."
+
 label::typenotmatch =
     "the label type `` should be one of the followings:\n``."
-
-label::posnotmatch =
-    "the label position `` should be one of the followings:\n``."
-
-label::badlab =
-    "the label `` should be symbol, string, or nonnegative integer when the label position is Symbol."
-
-labelConvert::posequal =
-    "the two label positions `` and `` should be different.";
-
-
-checkAndThrowLabelType[type:$labelTypeP] :=
-    type;
-
-checkAndThrowLabelType[type:Except[$labelTypeP]] :=
-    (
-        Message[label::typenotmatch,type,$labelTypeP];
-        Throw[Null,"typenotmatch"]
-    );
-
-
-throwBadLabel[lab_] :=
-    (
-        Message[label::badlab,lab];
-        Throw[Null,"badlab"]
-    );
-
-
-returnWrongLabelPosition[pos_,return_] :=
-    (
-        Message[label::posnotmatch,pos,$labelPositionP];
-        HoldComplete[return]
-    );
-
-returnEqualLabelPosition[pos1_,pos2_,return_] :=
-    (
-        Message[labelConvert::posequal,pos1,pos2];
-        HoldComplete[return]
-    );
 
 
 (* ::Subsection:: *)
@@ -156,77 +122,112 @@ returnEqualLabelPosition[pos1_,pos2_,return_] :=
 (*Main*)
 
 
-label[var:_Symbol,lab_,pos:$labelPositionP:Function] :=
-    Catch[
-        labelKernel[pos,var,lab],
-        _,
-        HoldComplete[var]&
-    ];
-
-label[var:_Symbol,labList_List,pos:$labelPositionP:Function] :=
-    Catch[
-        Map[labelKernel[pos,var,#]&,labList]//Apply[Sequence],
-        _,
-        HoldComplete[var]&
-    ];
-
-label[varList:{__Symbol},lab_,pos:$labelPositionP:Function] :=
-    Catch[
-        Map[labelKernel[pos,#,lab]&,varList]//Apply[Sequence],
-        _,
-        HoldComplete[varList]&
-    ];
-
-label[varList:{__Symbol},labList_List,pos:$labelPositionP:Function] :=
-    Catch[
-        Outer[labelKernel[pos,#1,#2]&,varList,labList]//Transpose//Flatten//Apply[Sequence],
-        _,
-        HoldComplete[varList]&
-    ];
-
-label[var_,_,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,var];
+label[var_,lab_,pos_] :=
+    labelKernel[pos,var,lab];
 
 
-labelAt[var_Symbol,rules__Rule,pos:$labelPositionP:Function] :=
-    Catch[
-        Map[Thread,{rules}]//Flatten//MapAt[labelKernel[pos,var,#]&,{All,1}]//ReplaceAll,
-        _,
-        HoldComplete[{rules}]&
-    ];
+label[var_,(List|Alternatives)[labs___],pos_] :=
+    Map[labelKernel[pos,var,#]&,Unevaluated@Sequence[labs]];
 
-labelAt[var_Symbol,Longest[__],pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,var];
+label[(List|Alternatives)[vars___],lab_,pos_] :=
+    Map[labelKernel[pos,#,lab]&,Unevaluated@Sequence[vars]];
+
+label[(List|Alternatives)[vars___],(List|Alternatives)[labs___],pos_] :=
+    Outer[labelKernel[pos,#1,#2]&,Unevaluated@Sequence[vars],Unevaluated@Sequence[labs]];
+
+
+label[var_,lab_] :=
+    label[var,lab,Function];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-labelKernel[position:$labelPositionP,var_,lab:$emptyLabelP] :=
-    var;
+labelKernel[head_,var_,lab_] :=
+    head[var,lab];
 
-labelKernel[position:Function,var_,lab_] :=
+
+labelKernel[Function,var_,lab_] :=
     var[lab];
 
-labelKernel[position:Subscript|Superscript,var_,lab_] :=
-    position[var,lab];
+
+labelKernel[Symbol,var_Symbol,lab_Integer?NonNegative] :=
+    ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab];
+
+labelKernel[Symbol,var_Symbol,lab_Symbol] :=
+    ToExpression[ToString[var,FormatType->InputForm]<>SymbolName@lab];
+
+labelKernel[Symbol,var_Symbol,lab_String] :=
+    ToExpression[ToString[var,FormatType->InputForm]<>lab];
+
+labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_Integer?NonNegative] :=
+    Pattern[
+        Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab],
+        pat
+    ];
+
+labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_Integer?NonNegative] :=
+    Pattern[
+        Evaluate@ToExpression[ToString[var,FormatType->InputForm]<>ToString@lab],
+        pat
+    ];
+
+
+labelKernel[Symbol,var_String,lab_String] :=
+    ToExpression[var<>lab];
+
+labelKernel[Symbol,var_String,lab_Symbol] :=
+    ToExpression[var<>SymbolName@lab];
+
+labelKernel[Symbol,var_String,lab_Integer?NonNegative] :=
+    ToExpression[var<>ToString@lab];
 
 labelKernel[Symbol,var_,lab_] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>labelToString[lab]];
+    (
+        Message[label::badsymbol,var,lab];
+        HoldComplete[var,lab]
+    );
 
 
-labelToString[lab_String] :=
-    lab;
 
-labelToString[lab_Symbol] :=
-    SymbolName@lab;
 
 labelToString[lab_Integer?NonNegative] :=
     ToString@lab;
 
-labelToString[lab_] :=
-    throwBadLabel[lab];
+labelToString[lab_Symbol] :=
+    SymbolName@lab;
+
+labelToString[lab_String] :=
+    lab;
+
+
+(* ::Subsection:: *)
+(*labelAt*)
+
+
+(* ::Subsubsection:: *)
+(*Main*)
+
+
+labelAt[var_,rules__Rule,Symbol] :=
+    (* Expand the head Alternatives into List when the position is Symbol. *)
+    labelAtKernel[Symbol,var,ReplaceAll[{rules},Verbatim[Alternatives][args__]:>List[args]]];
+
+labelAt[var_,rules__Rule,pos_] :=
+    labelAtKernel[pos,var,{rules}];
+
+
+labelAt[var_,rules__Rule] :=
+    labelAtKernel[Function,var,{rules}];
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+labelAtKernel[pos_,var_,ruleList_] :=
+    Map[Thread,ruleList]//Flatten//MapAt[labelKernel[pos,var,#]&,{All,1}]//ReplaceAll;
 
 
 (* ::Subsection:: *)
@@ -237,97 +238,83 @@ labelToString[lab_] :=
 (*Main*)
 
 
-labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1:$labelPositionP,pos2:$labelPositionP],opts:OptionsPattern[]][expr_]/;pos1=!=pos2 :=
-    Catch[
-        With[ {type = checkAndThrowLabelType@OptionValue["LabelType"]},
-            labelConvertKernel[{vars},pos1,pos2,type][expr]
-        ],
-        _,
-        HoldComplete[expr]&
+labelConvert[(List|Alternatives)[vars__]|var_,Rule[pos1_,pos2_],opts:OptionsPattern[]][expr_] :=
+    With[ {type = OptionValue["LabelType"]},
+        If[ MatchQ[type,typeP],
+            labelConvertKernel[Alternatives[var,vars],pos1,pos2,type][expr],
+            (*Else*)
+            Message[label::typenotmatch,type,typeP];
+            HoldComplete[expr]
+        ]
     ];
-
-labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;pos1===pos2 :=
-    returnEqualLabelPosition[pos1,pos2,expr];
-
-labelConvert[vars__Symbol|{vars__Symbol},Rule[pos1_,pos2_],OptionsPattern[]][expr_]/;!MatchQ[pos1,$labelPositionP]||!MatchQ[pos2,$labelPositionP] :=
-    returnWrongLabelPosition[{pos1,pos2},expr];
-
-
-labelJoin[vars__Symbol|{vars__Symbol},pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[{vars},pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
-
-
-labelSplit[vars__Symbol|{vars__Symbol},pos:$labelPositionP:Function,opts:OptionsPattern[]][expr_] :=
-    labelConvert[{vars},Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-labelConvertKernel[varList_List,pos1_,pos2_,type_][expr_] :=
-    With[ {varP = Alternatives@@varList},
-        Switch[pos1,
-            Function,
-                expr//ReplaceAll[
-                    (var:varP)[lab_]/;AtomQ[lab]&&labelQ[type,labelToString[lab]]:>
-                        RuleCondition@labelKernel2[pos2,var,lab]
-                ],
-            Subscript|Superscript,
-                expr//ReplaceAll[
-                    pos1[var:varP,lab_]/;AtomQ[lab]&&labelQ[type,labelToString[lab]]:>
-                        RuleCondition@labelKernel2[pos2,var,lab]
-                ],
-            Symbol,
-                With[ {varStringP = Map[ToString[#,FormatType->InputForm]&,varP]},
-                    expr//ReplaceAll[
-                        symbol_Symbol:>
-                            RuleCondition@symbolFromStringOrStringExpression@StringReplace[
-                                ToString[symbol,FormatType->InputForm],
-                                StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
-                                    labelKernel2[pos2,ToExpression@var,ToExpression@lab]
-                            ]
-                    ]
+labelConvertKernel[varP_,Function,pos:Except[Symbol],type_][expr_] :=
+    expr//ReplaceAll[
+        (var:varP)[lab_]/;labelQ[type,lab]:>labelKernel[pos,var,lab]
+    ];
+
+labelConvertKernel[varP_,pos:Except[Symbol],Function,type_][expr_] :=
+    expr//ReplaceAll[
+        pos[var:varP,lab_]/;labelQ[type,lab]:>var[lab]
+    ];
+
+labelConvertKernel[varP_,Superscript,pos:Subscript|Function,type_][expr_] :=
+    expr//ReplaceAll[
+        Superscript[var:varP,lab_]/;labelQ[type,lab]:>labelKernel[pos,var,lab]
+    ];
+
+
+labelConvertKernel[varP_,Function,Symbol,type_][expr_] :=
+    expr//ReplaceAll[
+        (var:varP)[lab_]/;AtomQ[lab]&&labelQ[type,lab]:>labelKernel[Symbol,var,lab]
+    ];
+
+labelConvertKernel[varP_,pos:Subscript|Superscript,Symbol,type_][expr_] :=
+    expr//ReplaceAll[
+        pos[var:varP,lab_]/;AtomQ[lab]&&labelQ[type,lab]:>labelKernel[Symbol,var,lab]
+    ];
+
+labelConvertKernel[varP_,Symbol,pos2:Function|Subscript|Superscript,type_][expr_] :=
+    With[ {varStringP = Map[ToString[#,FormatType->InputForm]&,varP]},
+        expr//ReplaceAll[
+            symbol_Symbol:>
+                symbolFromStringOrStringExpression@StringReplace[
+                    ToString[symbol,FormatType->InputForm],
+                    StartOfString~~Shortest[var__]~~Longest[lab__]~~EndOfString/;StringMatchQ[var,varStringP]&&labelQ[type,lab]:>
+                        labelKernel[pos2,ToExpression@var,ToExpression@lab]
                 ]
         ]
     ];
 
 
-(* Unlike labelKernel, labelKernel2 does not handle empty label. *)
-
-labelKernel2[position:Function,var_,lab_] :=
-    var[lab];
-
-labelKernel2[position:Subscript|Superscript,var_,lab_] :=
-    position[var,lab];
-
-labelKernel2[Symbol,var_,lab_] :=
-    ToExpression[ToString[var,FormatType->InputForm]<>labelToString[lab]];
-
-
 labelQ[All,_] :=
     True;
 
-labelQ["PositiveInteger",str_] :=
-    StringMatchQ[str,RegularExpression["^$|[1-9]\\d*"]];
+labelQ[fun:_Symbol|_Function|_RightComposition|_Composition,lab_] :=
+    fun[lab];
 
-labelQ["PositiveIntegerOrSingleLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
+labelQ["PositiveInteger",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|[1-9]\\d*"]];
 
-labelQ["PositiveIntegerOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+labelQ["PositiveIntegerOrSingleLetter",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|[1-9]\\d*|[^\\W_]"]];
 
-labelQ["NaturalNumber",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*"]];
+labelQ["PositiveIntegerOrGreekLetter",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
 
-labelQ["NaturalNumberOrSingleLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
+labelQ["NaturalNumber",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*"]];
 
-labelQ["NaturalNumberOrGreekLetter",str_] :=
-    StringMatchQ[str,RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
+labelQ["NaturalNumberOrSingleLetter",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[^\\W_]"]];
 
-labelQ[fun_Symbol,str_] :=
-    fun[str];
+labelQ["NaturalNumberOrGreekLetter",lab_] :=
+    Quiet@StringMatchQ[labelToString[lab],RegularExpression["^$|0|[1-9]\\d*|[\[Alpha]\[Beta]\[Gamma]\[Delta]\[CurlyEpsilon]\[Zeta]\[Eta]\[Theta]\[Iota]\[Kappa]\[Lambda]\[Mu]\[Nu]\[Xi]\[Omicron]\[Pi]\[Rho]\[Sigma]\[Tau]\[Upsilon]\[CurlyPhi]\[Chi]\[Psi]\[Omega]]"]];
 
 
 symbolFromStringOrStringExpression[expr_String] :=
@@ -338,6 +325,17 @@ symbolFromStringOrStringExpression[expr_StringExpression] :=
 
 
 (* ::Subsection:: *)
+(*labelJoin|labelSplit*)
+
+
+labelJoin[vars_,pos:posP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[{vars},pos->Symbol,FilterRules[{opts,Options@labelJoin},Options@labelConvert]][expr];
+
+labelSplit[vars_,pos:posP:Function,opts:OptionsPattern[]][expr_] :=
+    labelConvert[{vars},Symbol->pos,FilterRules[{opts,Options@labelSplit},Options@labelConvert]][expr];
+
+
+(* ::Subsection:: *)
 (*labelTo*)
 
 
@@ -345,7 +343,7 @@ symbolFromStringOrStringExpression[expr_StringExpression] :=
 (*Main*)
 
 
-labelToZero[vars__Symbol|{vars__Symbol},labelList_List,pos:$labelPositionP:Function] :=
+labelToZero[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],labelList_List,pos:allPosP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->0)&,pos,{vars},Map[#->#&,labelList]]
@@ -355,7 +353,7 @@ labelToZero[vars__Symbol|{vars__Symbol},labelList_List,pos:$labelPositionP:Funct
     ];
 
 
-labelToEqual[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToEqual[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},pos:allPosP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->#[[2]])&,pos,{vars},{rules}]
@@ -365,7 +363,7 @@ labelToEqual[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPos
     ];
 
 
-labelToDiff[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiff[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},pos:allPosP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[1]]->#[[2]]+#[[3]])&,pos,{vars},{rules}]
@@ -375,7 +373,7 @@ labelToDiff[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPosi
     ];
 
 
-labelToDiffZero[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiffZero[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},pos:allPosP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[{#[[1]]->#[[3]],#[[2]]->0}&,pos,{vars},{rules}]
@@ -385,7 +383,7 @@ labelToDiffZero[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$label
     ];
 
 
-labelToDiffBack[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$labelPositionP:Function] :=
+labelToDiffBack[vars__Symbol|{vars__Symbol}|Verbatim[Alternatives][vars__Symbol],rules__Rule|{rules__Rule},pos:allPosP:Function] :=
     Catch[
         ReplaceAll[
             labelRulePrototype[(#[[3]]->#[[1]]-#[[2]])&,pos,{vars},{rules}]
@@ -393,22 +391,6 @@ labelToDiffBack[vars__Symbol|{vars__Symbol},rules__Rule|{rules__Rule},pos:$label
         _,
         HoldComplete[Identity]&
     ];
-
-
-labelToZero[__,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,Identity];
-
-labelToEqual[__,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,Identity];
-
-labelToDiff[__,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,Identity];
-
-labelToDiffZero[__,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,Identity];
-
-labelToDiffBack[__,pos:Except[$labelPositionP]] :=
-    returnWrongLabelPosition[pos,Identity];
 
 
 (* ::Subsubsection:: *)
