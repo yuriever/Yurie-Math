@@ -94,7 +94,7 @@ labelSplit//Options =
 label::InvalidSymbol =
     "```` is not a valid labeled symbol."
 
-labelInvalidSymbolF[var_,lab_]:=
+labelInvalidSymbolF[var_,lab_] :=
     Failure["InvalidSymbol",<|
         "MessageTemplate":>label::InvalidSymbol,
         "MessageParameters"->{var,lab},
@@ -103,16 +103,16 @@ labelInvalidSymbolF[var_,lab_]:=
     |>];
 
 
-label::InvalidLabel =
+(* label::InvalidLabel =
     "`` is not a valid label.";
 
-labelInvalidLabelF[var_,lab_]:=
+labelInvalidLabelF[var_,lab_] :=
     Failure["InvalidLabel",<|
         "MessageTemplate":>label::InvalidLabel,
         "MessageParameters"->lab,
         "Var"->var,
         "Label"->lab
-    |>];
+    |>]; *)
 
 
 label::UndefinedType =
@@ -153,7 +153,26 @@ labelKernel[Function,var_,lab_] :=
     var[lab];
 
 
-labelKernel[Symbol,var_Symbol,lab_] :=
+labelKernel[Symbol,var_,lab_] :=
+    With[ {symbolname = ToString[var]<>ToString[lab]},
+        If[ Internal`SymbolNameQ[symbolname],
+            ToExpression[symbolname],
+            (*Else*)
+            labelInvalidSymbolF[var,lab]
+        ]
+    ];
+
+labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
+    With[ {symbolname = ToString[var]<>ToString[lab]},
+        If[ Internal`SymbolNameQ[symbolname],
+            Pattern[Evaluate@ToExpression[symbolname],pat],
+            (*Else*)
+            labelInvalidSymbolF[var,lab]
+        ]
+    ];
+
+
+(* labelKernel[Symbol,var_Symbol,lab_] :=
     Catch[
         ToExpression[ToString[var]<>labelToString[lab]],
         "InvalidLabel",
@@ -191,7 +210,7 @@ labelToString[lab_String] :=
     lab;
 
 labelToString[lab_] :=
-    Throw[lab,"InvalidLabel"];
+    Throw[lab,"InvalidLabel"]; *)
 
 
 (* ::Subsection:: *)

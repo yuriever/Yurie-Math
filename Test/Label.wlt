@@ -126,7 +126,7 @@ VerificationTest[
 VerificationTest[
     (label[x, -1, #1] & ) /@ {Symbol, Function, head}
     ,
-    {Failure["InvalidLabel", Association["MessageTemplate" :> Yurie`Math`label::InvalidLabel, "MessageParameters" -> -1, "Var" -> Global`x, "Label" -> -1]], x[-1], head[x, -1]}
+    {Failure["InvalidSymbol", Association["MessageTemplate" :> Yurie`Math`label::InvalidSymbol, "MessageParameters" -> {Global`x, -1}, "Var" -> Global`x, "Label" -> -1]], x[-1], head[x, -1]}
     ,
     TestID->"15-Label.nb"
 ]
@@ -214,7 +214,7 @@ VerificationTest[
 VerificationTest[
     labelAt[x, _ -> 1, Symbol]
     ,
-    ReplaceAll[{Failure["InvalidLabel", Association["MessageTemplate" :> Yurie`Math`label::InvalidLabel, "MessageParameters" -> _, "Var" -> Global`x, "Label" -> _]] -> 1}]
+    ReplaceAll[{Failure["InvalidSymbol", Association["MessageTemplate" :> Yurie`Math`label::InvalidSymbol, "MessageParameters" -> {Global`x, _}, "Var" -> Global`x, "Label" -> _]] -> 1}]
     ,
     TestID->"26-Label.nb"
 ]
@@ -222,7 +222,7 @@ VerificationTest[
 VerificationTest[
     labelAt[x, 2 -> 2, _ -> 1, Symbol]
     ,
-    ReplaceAll[{x2 -> 2, Failure["InvalidLabel", Association["MessageTemplate" :> Yurie`Math`label::InvalidLabel, "MessageParameters" -> _, "Var" -> Global`x, "Label" -> _]] -> 1}]
+    ReplaceAll[{x2 -> 2, Failure["InvalidSymbol", Association["MessageTemplate" :> Yurie`Math`label::InvalidSymbol, "MessageParameters" -> {Global`x, _}, "Var" -> Global`x, "Label" -> _]] -> 1}]
     ,
     TestID->"27-Label.nb"
 ]
@@ -352,7 +352,7 @@ VerificationTest[
 VerificationTest[
     labelToZero[z, {-1}, Symbol]
     ,
-    ReplaceAll[Failure["InvalidLabel", Association["MessageTemplate" :> Yurie`Math`label::InvalidLabel, "MessageParameters" -> -1, "Var" -> Global`z, "Label" -> -1]] -> 0]
+    ReplaceAll[Failure["InvalidSymbol", Association["MessageTemplate" :> Yurie`Math`label::InvalidSymbol, "MessageParameters" -> {Global`z, -1}, "Var" -> Global`z, "Label" -> -1]] -> 0]
     ,
     TestID->"43-Label.nb"
 ]
