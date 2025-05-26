@@ -103,18 +103,6 @@ labelInvalidSymbolF[var_,lab_] :=
     |>];
 
 
-(* label::InvalidLabel =
-    "`` is not a valid label.";
-
-labelInvalidLabelF[var_,lab_] :=
-    Failure["InvalidLabel",<|
-        "MessageTemplate":>label::InvalidLabel,
-        "MessageParameters"->lab,
-        "Var"->var,
-        "Label"->lab
-    |>]; *)
-
-
 label::UndefinedType =
     "the label type `` is undefined, and should be one of the followings:\n``."
 
@@ -154,7 +142,7 @@ labelKernel[Function,var_,lab_] :=
 
 
 labelKernel[Symbol,var_,lab_] :=
-    With[ {symbolname = ToString[var]<>ToString[lab]},
+    With[ {symbolname = varToString[var]<>ToString[lab]},
         If[ Internal`SymbolNameQ[symbolname],
             ToExpression[symbolname],
             (*Else*)
@@ -163,7 +151,7 @@ labelKernel[Symbol,var_,lab_] :=
     ];
 
 labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
-    With[ {symbolname = ToString[var]<>ToString[lab]},
+    With[ {symbolname = varToString[var]<>ToString[lab]},
         If[ Internal`SymbolNameQ[symbolname],
             Pattern[Evaluate@ToExpression[symbolname],pat],
             (*Else*)
@@ -172,45 +160,10 @@ labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
     ];
 
 
-(* labelKernel[Symbol,var_Symbol,lab_] :=
-    Catch[
-        ToExpression[ToString[var]<>labelToString[lab]],
-        "InvalidLabel",
-        labelInvalidLabelF[var,#]&
-    ];
+(* This option is to ensure symbols with format definitions will be converted correctly. *)
 
-labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
-    Catch[
-        Pattern[
-            Evaluate@ToExpression[ToString[var]<>labelToString[lab]],
-            pat
-        ],
-        "InvalidLabel",
-        labelInvalidLabelF[var,#]&
-    ]
-
-labelKernel[Symbol,var_String,lab_] :=
-    Catch[
-        ToExpression[var<>labelToString[lab]],
-        "InvalidLabel",
-        labelInvalidLabelF[var,#]&
-    ];
-
-labelKernel[Symbol,var_,lab_] :=
-    labelInvalidSymbolF[var,lab];
-
-
-labelToString[lab_Integer?NonNegative] :=
-    ToString[lab];
-
-labelToString[lab_Symbol] :=
-    SymbolName[lab];
-
-labelToString[lab_String] :=
-    lab;
-
-labelToString[lab_] :=
-    Throw[lab,"InvalidLabel"]; *)
+varToString[expr_] :=
+    ToString[expr,FormatType->InputForm];
 
 
 (* ::Subsection:: *)
@@ -267,19 +220,20 @@ labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_Symbol,head2_Symbol],op
 
 labelConvertKernel[Function,head2:Except[Function],type_][varP_,expr_] :=
     expr//ReplaceAll[
-        (var:varP)[lab_]/;labelQ[type,lab]:>labelKernel[head2,var,lab]
+        (* RuleCondition is to ensure the conversion can be preformed inside held expressions. *)
+        (var:varP)[lab_]/;labelQ[type,lab]:>RuleCondition@labelKernel[head2,var,lab]
     ];
 
 labelConvertKernel[head1:Except[Function|Symbol],head2:Function|Symbol,type_][varP_,expr_] :=
     expr//ReplaceAll[
-        head1[var:varP,lab_]/;labelQ[type,lab]:>labelKernel[head2,var,lab]
+        head1[var:varP,lab_]/;labelQ[type,lab]:>RuleCondition@labelKernel[head2,var,lab]
     ];
 
 labelConvertKernel[Symbol,head2:Except[Symbol],type_][varP_,expr_] :=
-    With[ {varStringP = Map[ToString,varP]},
+    With[ {varStringP = Map[varToString,varP]},
         expr//ReplaceAll[
             symbol_Symbol/;Context[symbol]=!="System`":>
-                symbolPrepare[stringSplit[ToString[symbol],varStringP,type],symbol,head2]
+                RuleCondition@symbolPrepare[stringSplit[varToString[symbol],varStringP,type],symbol,head2]
         ]
     ];
 
