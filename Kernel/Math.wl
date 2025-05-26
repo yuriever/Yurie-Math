@@ -36,12 +36,10 @@ Get["Yurie`Math`Dye`"];
 
 Get["Yurie`Math`Label`"];
 
-Get["Yurie`Math`Lie`"];
+(* Get["Yurie`Math`Lie`"]; *)
 
 (*Get["Yurie`Math`Plot`"];*)
 
-
-Get["Yurie`Math`Deprecation-Index`"];
 
 Get["Yurie`Math`Deprecation`"];
 
