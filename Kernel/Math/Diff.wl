@@ -187,11 +187,11 @@ integrateChange[] :=
 (*IBP*)
 
 
-IBP[fun_Symbol][expr_] :=
+IBP[fun_][expr_] :=
     expr//Expand//ReplaceAll[IBPRule[fun]];
 
-IBP[fun_Symbol,variables__Symbol][expr_] :=
-    expr//Expand//ReplaceAll[IBPRule[fun,variables]];
+IBP[fun_,vars__][expr_] :=
+    expr//Expand//ReplaceAll[IBPRule[fun,vars]];
 
 
 (* ::Subsection:: *)
@@ -326,7 +326,9 @@ cleanNumPairs[varOrderPairList_] :=
 getOrderOfVar[varList_,orderList_,varOrItsList_] :=
     Lookup[
         AssociationThread[varList->orderList],
-        varOrItsList
+        varOrItsList,
+        (* if the variable is not present in the variable list, return 0. *)
+        0
     ];
 
 
