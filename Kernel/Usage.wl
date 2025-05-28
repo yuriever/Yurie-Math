@@ -420,6 +420,9 @@ powerPhaseReduce::usage =
 trigPhaseReduce::usage =
     "reduce phase factors in trigonometric functions by the given assumptions.";
 
+deltaReduce::usage =
+    "reduce the Dirac delta function.";
+
 collectDerivative::usage =
     "collect by derivatives.";
 

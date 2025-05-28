@@ -95,6 +95,14 @@ trigPhaseReduce::usage =
 
 
 (* ::Subsection:: *)
+(*DiracDelta*)
+
+
+deltaReduce::usage =
+    "reduce the Dirac delta function."
+
+
+(* ::Subsection:: *)
 (*Derivative*)
 
 
@@ -523,6 +531,23 @@ ruleTrigPhase[var_] :=
             (h:Sin|Cos|Csc|Sec)[k_.*π*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
             (h:Tan|Cot)[k_.*π*var+rest_.]/;IntegerQ[k]:>h[rest]
         };
+
+
+(* ::Subsection:: *)
+(*DiracDelta*)
+
+
+deltaReduce[expr_] :=
+    expr//ReplaceRepeated[{
+        x_*DiracDelta[x_]:>
+            0,
+        x_*Derivative[m_][DiracDelta][x_]:>
+            -m*Derivative[m-1][DiracDelta][x],
+        Power[x_,n_]*DiracDelta[x_]/;Simplify[n>=1]:>
+            0,
+        Power[x_,n_]*Derivative[m_][DiracDelta][x_]/;Simplify[n>=1&&m>=1]:>
+            -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]
+    }];
 
 
 (* ::Subsection:: *)

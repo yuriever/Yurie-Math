@@ -293,6 +293,8 @@
 
 * `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
 
+* `#!wl deltaReduce` - reduce the Dirac delta function.
+
 * `#!wl collectDerivative` - collect by derivatives.
 
 * `#!wl swap` - swap two symbols in an expression.
