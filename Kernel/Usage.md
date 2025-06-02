@@ -1,16 +1,28 @@
 <!-- Diff.wl -->
 
-* `#!wl jacobianMatrix` - jacobianMatrix.
+* `#!wl PD` - head of partial derivative.
 
-* `#!wl jacobianDet` - jacobianDet.
+* `#!wl INT` - head of integral.
 
-* `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
+* `#!wl SUM` - head of sum.
+
+* `#!wl integrate` - operator form of Integrate.
+
+* `#!wl summation` - operator form of Sum.
 
 * `#!wl diffChange` - diffChange[expr,transformations,oldVars,newVars,functions]  diffChange[] gives the example.
 
 * `#!wl integrateChange` - integrateChange[expr,transformations,oldVars,newVars]  integrateChange[] gives the example.
 
 * `#!wl IBP` - integration by parts.
+
+* `#!wl jacobianMatrix` - jacobianMatrix.
+
+* `#!wl jacobianDet` - jacobianDet.
+
+* `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
+
+* `#!wl PDCoefficient` - collect the coefficients of PD[___].
 
 
 <!-- DLMF.wl -->
@@ -52,17 +64,6 @@
 * `#!wl multiGammaSimplify` - simplify the multi-Gamma symbol.
 
 * `#!wl multiGammaReduceByBarnesLemma` - reduce the multi-Gamma symbol by the Barnes lemmas.
-
-
-<!-- Head.wl -->
-
-* `#!wl PD` - head of partial derivative that acts on the rest of the expression.
-
-* `#!wl INT` - head of integral that acts on the rest of the expression.
-
-* `#!wl SUM` - head of sum that acts on the rest of the expression.
-
-* `#!wl PDCoefficient` - collect the coefficients of PD[___].
 
 
 <!-- Hyper.wl -->

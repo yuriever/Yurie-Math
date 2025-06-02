@@ -1,13 +1,19 @@
 (* Diff.wl *)
 
-jacobianMatrix::usage =
-    "jacobianMatrix.";
+PD::usage =
+    "head of partial derivative.";
 
-jacobianDet::usage =
-    "jacobianDet.";
+INT::usage =
+    "head of integral.";
 
-diffComm::usage =
-    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
+SUM::usage =
+    "head of sum.";
+
+integrate::usage =
+    "operator form of Integrate.";
+
+summation::usage =
+    "operator form of Sum.";
 
 diffChange::usage =
     StringJoin["diffChange[expr,transformations,oldVars,newVars,functions] \n", "diffChange[] gives the example."];
@@ -17,6 +23,18 @@ integrateChange::usage =
 
 IBP::usage =
     "integration by parts.";
+
+jacobianMatrix::usage =
+    "jacobianMatrix.";
+
+jacobianDet::usage =
+    "jacobianDet.";
+
+diffComm::usage =
+    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
+
+PDCoefficient::usage =
+    "collect the coefficients of PD[___].";
 
 
 (* DLMF.wl *)
@@ -74,21 +92,6 @@ multiGammaSimplify::usage =
 
 multiGammaReduceByBarnesLemma::usage =
     "reduce the multi-Gamma symbol by the Barnes lemmas.";
-
-
-(* Head.wl *)
-
-PD::usage =
-    "head of partial derivative that acts on the rest of the expression.";
-
-INT::usage =
-    "head of integral that acts on the rest of the expression.";
-
-SUM::usage =
-    "head of sum that acts on the rest of the expression.";
-
-PDCoefficient::usage =
-    "collect the coefficients of PD[___].";
 
 
 (* Hyper.wl *)

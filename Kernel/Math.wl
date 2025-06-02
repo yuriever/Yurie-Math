@@ -20,8 +20,6 @@ Get["Yurie`Math`Gamma`"];
 
 Get["Yurie`Math`Hyper`"];
 
-Get["Yurie`Math`Head`"];
-
 Get["Yurie`Math`Diff`"];
 
 Get["Yurie`Math`Simplify`"];
