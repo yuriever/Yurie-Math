@@ -2,7 +2,9 @@
 
 Math utilities.
 
+
 ## Documentation
+
 
 ## Install
 
@@ -26,17 +28,20 @@ Install manually:
     PacletDataRebuild[]
     ```
 
+
 ## Load
 
 ``` wl
 Needs["Yurie`Math`"]
 ```
 
+
 ## Upgrade
 
 ``` wl
 PacletInstall["Yurie/Math"]
 ```
+
 
 ## Uninstall
 
