@@ -20,9 +20,8 @@ relationMellinBarnes::usage =
 relationFeynman::usage =
     "Feynman-Schwinger relation.";
 
-
-relationPowerMono::usage =
-    "relation for branch cut of Power at zero.";
+relationPowerPhase::usage =
+    "relation for power phase.";
 
 
 (* ::Section:: *)
@@ -57,25 +56,32 @@ relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_] :=
 
 
 (* ::Subsection:: *)
-(*relationPowerMono*)
+(*relationPowerPhase*)
 
 
-relationPowerMono[base_,expanded_List,sign:1|-1:1] :=
+relationPowerPhase[base_,expanded_List,sign:1|-1:1] :=
     With[ {exponent = Unique[]},
-        {powerP = Times@@Map[Power[#,exponent]&,expanded]},
+        {
+            num = Times@@Map[Power[#,exponent]&,expanded],
+            rest = Power[Simplify[-base/Times@@expanded],exponent]
+        },
         HoldComplete[
             Power[base,exponent_],
-            Exp[sign*I*π*exponent]*powerP
+            Exp[sign*I*π*exponent]*num*rest
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]
 
 
-relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
+relationPowerPhase[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
     With[ {exponent = Unique[]},
-        {powerP = Times@@Map[Power[#,exponent]&,expanded],powerM = Times@@Map[Power[#,-exponent]&,expanded2]},
+        {
+            num = Times@@Map[Power[#,exponent]&,expanded],
+            denom = Times@@Map[Power[#,-exponent]&,expanded2],
+            rest = Power[Simplify[-base*Times@@expanded2/Times@@expanded],exponent]
+        },
         HoldComplete[
             Power[base,exponent_],
-            Exp[sign*I*π*exponent]*powerP*powerM
+            Exp[sign*I*π*exponent]*num*denom*rest
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]
 
