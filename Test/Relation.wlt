@@ -52,7 +52,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerMono[-χ, {χ}, 1]])[(-χ)^a]
+    (ReplaceAll[relationPowerPhase[-χ, {χ}, 1]])[(-χ)^a]
     ,
     E^(I*a*Pi)*χ^a
     ,
@@ -60,7 +60,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerMono[-χ, {χ}, -1]])[(-χ)^a]
+    (ReplaceAll[relationPowerPhase[-χ, {χ}, -1]])[(-χ)^a]
     ,
     χ^a/E^(I*a*Pi)
     ,
@@ -68,17 +68,17 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerMono[(-1 + χ)/χ, {χ - 1}, {χ}, 1]])[((-1 + χ)/χ)^a]
+    (ReplaceAll[relationPowerPhase[(-1 + χ)/χ, {1 - χ}, {χ}, 1]])[((-1 + χ)/χ)^a]
     ,
-    (E^(I*a*Pi)*(-1 + χ)^a)/χ^a
+    (E^(I*a*Pi)*(1 - χ)^a)/χ^a
     ,
     TestID->"8-Relation.nb"
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerMono[(-1 + χ)/χ, {χ - 1}, {χ}, -1]])[((-1 + χ)/χ)^a]
+    (ReplaceAll[relationPowerPhase[(-1 + χ)/χ, {1 - χ}, {χ}, -1]])[((-1 + χ)/χ)^a]
     ,
-    (-1 + χ)^a/(E^(I*a*Pi)*χ^a)
+    (1 - χ)^a/(E^(I*a*Pi)*χ^a)
     ,
     TestID->"9-Relation.nb"
 ]

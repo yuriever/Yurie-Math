@@ -1,3 +1,8 @@
+<!-- Deprecation.wl -->
+
+* `#!wl relationPowerMono` - relation for branch cut of Power at zero.
+
+
 <!-- Diff.wl -->
 
 * `#!wl PD` - head of partial derivative.
@@ -238,7 +243,7 @@
 
 * `#!wl relationFeynman` - Feynman-Schwinger relation.
 
-* `#!wl relationPowerMono` - relation for branch cut of Power at zero.
+* `#!wl relationPowerPhase` - relation for power phase.
 
 
 <!-- SimplifyUnsafe.wl -->

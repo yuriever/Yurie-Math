@@ -1,3 +1,9 @@
+(* Deprecation.wl *)
+
+relationPowerMono::usage =
+    "relation for branch cut of Power at zero.";
+
+
 (* Diff.wl *)
 
 PD::usage =
@@ -342,8 +348,8 @@ relationMellinBarnes::usage =
 relationFeynman::usage =
     "Feynman-Schwinger relation.";
 
-relationPowerMono::usage =
-    "relation for branch cut of Power at zero.";
+relationPowerPhase::usage =
+    "relation for power phase.";
 
 
 (* SimplifyUnsafe.wl *)
