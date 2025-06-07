@@ -309,9 +309,9 @@ labelSplit[vars_,head_Symbol:Function,opts:OptionsPattern[]][expr_] :=
 (*Main*)
 
 
-labelToZero[(List|Alternatives)[vars__]|var_,labelList_List,head_Symbol:Function] :=
+labelToZero[(List|Alternatives)[vars__]|var_,(List|Alternatives)[labels__]|label_,head_Symbol:Function] :=
     ReplaceAll[
-        labelRulePrototype[(#[[1]]->0)&,head,{vars,var},Map[#->#&,labelList]]
+        labelRulePrototype[(#[[1]]->0)&,head,{vars,var},Map[#->#&,{labels,label}]]
     ];
 
 labelToEqual[(List|Alternatives)[vars__]|var_,rules__Rule|{rules__Rule},head_Symbol:Function] :=
