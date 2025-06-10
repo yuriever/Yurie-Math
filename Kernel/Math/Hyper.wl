@@ -256,7 +256,7 @@ ruleF1[head_]:=
 
 
 AppellF1ToHyper[max_:Infinity,head_:Inactive[Sum]][expr_] :=
-    expr//ReplaceAll[ruleF1ToHyper[max,head]];
+    expr//ReplaceAll[ruleF1ToF21Sum[max,head]];
 
 
 ruleF1ToF21Sum[max_,head_]:=
