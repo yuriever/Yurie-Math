@@ -59,6 +59,13 @@ wilsonPolynomialFromHyper::usage =
     "convert Hypergeometric4F3 to Wilson polynomial.";
 
 
+AppellF1FromIntegral::usage =
+    "integral representation of Appell F1.";
+
+AppellF1ToHyper::usage =
+    "convert Appell F1 to summation of Hypergeometric2F1.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -233,6 +240,38 @@ wilsonPolynomialToHyper[expr_] :=
 
 wilsonPolynomialFromHyper[expr_] :=
     expr//ReplaceAll[DLMFData["WilsonFromHyper"]]//ReplaceAll[head_wilsonPolynomial:>Simplify[head]];
+
+
+(* ::Subsection:: *)
+(*AppellF1*)
+
+
+AppellF1FromIntegral[head_:Inactive][expr_] :=
+    expr//ReplaceAll[ruleF1[head]];
+
+
+ruleF1[head_]:=
+    u_^a_*(1-u_)^b_*(1-u_*x_)^c_*(1-u_*y_)^d_:>
+        Simplify[(Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,x,y]];
+
+
+AppellF1ToHyper[max_:Infinity,head_:Inactive[Sum]][expr_] :=
+    expr//ReplaceAll[ruleF1ToHyper[max,head]];
+
+
+ruleF1ToF21Sum[max_,head_]:=
+    Module[ {n},
+        (AppellF1|_[AppellF1])[a_,b1_,b2_,c_,x_,y_]:>
+            head[
+                (
+                    (Pochhammer[a,n] Pochhammer[b1,n] Pochhammer[b2,n] Pochhammer[c-a,n])/
+                    (n! Pochhammer[c+n-1,n] Pochhammer[c,2 n])
+                )*x^n*y^n*
+                Hypergeometric2F1[a+n,b1+n,c+2 n,x]*
+                Hypergeometric2F1[a+n,b2+n,c+2 n,y],
+                {n,0,max}
+            ]
+    ];
 
 
 (* ::Subsection:: *)

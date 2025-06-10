@@ -99,6 +99,10 @@
 
 * `#!wl wilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
 
+* `#!wl AppellF1FromIntegral` - integral representation of Appell F1.
+
+* `#!wl AppellF1ToHyper` - convert Appell F1 to summation of Hypergeometric2F1.
+
 
 <!-- Label.wl -->
 

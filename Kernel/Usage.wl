@@ -141,6 +141,12 @@ wilsonPolynomialToHyper::usage =
 wilsonPolynomialFromHyper::usage =
     "convert Hypergeometric4F3 to Wilson polynomial.";
 
+AppellF1FromIntegral::usage =
+    "integral representation of Appell F1.";
+
+AppellF1ToHyper::usage =
+    "convert Appell F1 to summation of Hypergeometric2F1.";
+
 
 (* Label.wl *)
 
