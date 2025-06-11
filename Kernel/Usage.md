@@ -103,6 +103,8 @@
 
 * `#!wl AppellF1ToHyper` - convert Appell F1 to summation of Hypergeometric2F1.
 
+* `#!wl hyperAppellF1` - head used by AppellF1ToHyper.
+
 
 <!-- Label.wl -->
 

@@ -65,6 +65,9 @@ AppellF1FromIntegral::usage =
 AppellF1ToHyper::usage =
     "convert Appell F1 to summation of Hypergeometric2F1.";
 
+hyperAppellF1::usage =
+    "head used by AppellF1ToHyper.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -255,23 +258,21 @@ ruleF1[head_]:=
         Simplify[(Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,x,y]];
 
 
-AppellF1ToHyper[max_:Infinity,head_:Inactive[Sum]][expr_] :=
-    expr//ReplaceAll[ruleF1ToF21Sum[max,head]];
+AppellF1ToHyper[n_][expr_] :=
+    expr//ReplaceAll[ruleF1ToF21Sum[n]];
 
 
-ruleF1ToF21Sum[max_,head_]:=
-    Module[ {n},
-        (AppellF1|_[AppellF1])[a_,b1_,b2_,c_,x_,y_]:>
-            head[
-                (
-                    (Pochhammer[a,n] Pochhammer[b1,n] Pochhammer[b2,n] Pochhammer[c-a,n])/
-                    (n! Pochhammer[c+n-1,n] Pochhammer[c,2 n])
-                )*x^n*y^n*
-                Hypergeometric2F1[a+n,b1+n,c+2 n,x]*
-                Hypergeometric2F1[a+n,b2+n,c+2 n,y],
-                {n,0,max}
-            ]
-    ];
+ruleF1ToF21Sum[n_]:=
+    (AppellF1|_[AppellF1])[a_,b1_,b2_,c_,x_,y_]:>
+        hyperAppellF1[
+            (
+                (Pochhammer[a,n] Pochhammer[b1,n] Pochhammer[b2,n] Pochhammer[c-a,n])/
+                (n! Pochhammer[c+n-1,n] Pochhammer[c,2 n])
+            )*x^n*y^n*
+            Hypergeometric2F1[a+n,b1+n,c+2 n,x]*
+            Hypergeometric2F1[a+n,b2+n,c+2 n,y]
+        ];
+
 
 
 (* ::Subsection:: *)

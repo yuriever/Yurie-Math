@@ -147,6 +147,9 @@ AppellF1FromIntegral::usage =
 AppellF1ToHyper::usage =
     "convert Appell F1 to summation of Hypergeometric2F1.";
 
+hyperAppellF1::usage =
+    "head used by AppellF1ToHyper.";
+
 
 (* Label.wl *)
 

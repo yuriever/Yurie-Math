@@ -558,7 +558,7 @@ deltaReduce[expr_] :=
 (*collectDerivative*)
 
 
-collectDerivative[var_Symbol,operation_:Identity][expr_] :=
+collectDerivative[var:Except[_List],operation_:Identity][expr_] :=
     Collect[expr,Derivative[___][var][___],operation];
 
 collectDerivative[varList_List,operation_:Identity][expr_] :=
