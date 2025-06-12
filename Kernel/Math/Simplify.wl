@@ -58,22 +58,17 @@ powerBaseFocus::usage =
 powerExponentFocus::usage =
     "simplify the exponent of powers.";
 
-
 powerSeparate::usage =
     "split a product into powers with specified base(s) and the rests.";
-
 
 powerBaseTogether::usage =
     "make together the specified base(s) of powers.";
 
-
 powerExpand::usage =
     "expand the powers with the specified base(s).";
 
-
 powerExponentCollect::usage =
     "collect powers by the specified exponent(s).";
-
 
 powerPhaseReduce::usage =
     "reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
@@ -254,7 +249,10 @@ focus[pattern_,operation_,level_][expr_] :=
 (*Frac*)
 
 
-fracReduce[operation_:Simplify,factor_:1][expr_] :=
+fracReduce[operation_:Simplify][expr_] :=
+    operation[Numerator[expr]]/operation[Denominator[expr]];
+
+fracReduce[operation_,factor_][expr_] :=
     operation[factor*Numerator[expr]]/operation[factor*Denominator[expr]];
 
 
@@ -342,6 +340,16 @@ powerSeparate[var_][expr_] :=
     {1,expr};
 
 
+basePattern[All] :=
+    _;
+
+basePattern[var_List] :=
+    Alternatives@@var;
+
+basePattern[var_] :=
+    var;
+
+
 (* ::Subsubsection:: *)
 (*powerBaseTogether*)
 
@@ -369,23 +377,13 @@ powerBaseTogether[var_][expr_] :=
 powerBaseTogether[var_,level_][expr_] :=
     With[ {baseP=basePattern[var]},
         expr//Replace[#,{
-            Power[base_,exponent_]:>
+            Power[base:baseP,exponent_]:>
                 Power[
                     Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
                     exponent
                 ]
         },level]&
     ];
-
-
-basePattern[var_List] :=
-    Alternatives@@{var};
-
-basePattern[var_Alternatives] :=
-    Alternatives@@var;
-
-basePattern[var_] :=
-    var;
 
 
 (* ::Subsubsection:: *)
