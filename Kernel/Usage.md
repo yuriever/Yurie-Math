@@ -58,7 +58,7 @@
 
 * `#!wl gammaFrom` - expand everything to Gamma factors.
 
-* `#!wl gammaSeparate` - split a product into a list containing Gamma factors and the rests.
+* `#!wl gammaSeparate` - split a product into Gamma factors and the rests.
 
 * `#!wl gammaTakeResidue` - take residue of Gamma factors.
 
@@ -73,7 +73,7 @@
 
 <!-- Hyper.wl -->
 
-* `#!wl hyperSeparate` - split a product into a list containing Hypergeometric2F1 factors and the rests.
+* `#!wl hyperSeparate` - split a product into Hypergeometric2F1 factors and the rests.
 
 * `#!wl hyperUnregularize` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
 
@@ -275,33 +275,27 @@
 
 * `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
 
-* `#!wl focus` - simplify the arguments of the specified heads.
+* `#!wl focus` - simplify the argument(s) of the specified head(s).
 
-* `#!wl focusPower` - simplify the arguments of powers.
+* `#!wl fracFocus` - simplify the numerator and denominator of fractions.
 
-* `#!wl focusPowerBase` - simplify the bases of powers.
+* `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto the numerator and denominator.
 
-* `#!wl focusPowerExponent` - simplify the exponents of powers.
+* `#!wl powerFocus` - simplify the base and exponent of powers.
 
-* `#!wl focusFrac` - simplify the numerator and denominator of fractions.
+* `#!wl powerBaseFocus` - simplify the base of powers.
 
-* `#!wl fracFocus` - focusFrac
+* `#!wl powerExponentFocus` - simplify the exponent of powers.
 
-* `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto numerator and denominator.
+* `#!wl powerSeparate` - split a product into powers with specified base(s) and the rests.
 
-* `#!wl powerFocus` - focusPower
+* `#!wl powerBaseTogether` - make together the specified base(s) of powers.
 
-* `#!wl powerBaseFocus` - focusPowerBase
+* `#!wl powerExpand` - expand the powers with the specified base(s).
 
-* `#!wl powerExponentFocus` - focusPowerExponent
+* `#!wl powerExponentCollect` - collect powers by the specified exponent(s).
 
-* `#!wl powerExpSeparate` - split a product into a list containing Exp factors and the rests.
-
-* `#!wl powerBaseTogether` - make together the bases of powers.
-
-* `#!wl powerExponentCollect` - collect powers by the exponents.
-
-* `#!wl powerPhaseReduce` - reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
+* `#!wl powerPhaseReduce` - reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
 
 * `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
 

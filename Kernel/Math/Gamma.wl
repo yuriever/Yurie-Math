@@ -23,7 +23,7 @@ gammaFrom::usage =
     "expand everything to Gamma factors.";
 
 gammaSeparate::usage =
-    "split a product into a list containing Gamma factors and the rests.";
+    "split a product into Gamma factors and the rests.";
 
 gammaTakeResidue::usage =
     "take residue of Gamma factors.";

@@ -17,7 +17,7 @@ Needs["Yurie`Math`Constant`"];
 
 
 hyperSeparate::usage =
-    "split a product into a list containing Hypergeometric2F1 factors and the rests.";
+    "split a product into Hypergeometric2F1 factors and the rests.";
 
 hyperUnregularize::usage =
     "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";

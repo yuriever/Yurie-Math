@@ -82,7 +82,7 @@ gammaFrom::usage =
     "expand everything to Gamma factors.";
 
 gammaSeparate::usage =
-    "split a product into a list containing Gamma factors and the rests.";
+    "split a product into Gamma factors and the rests.";
 
 gammaTakeResidue::usage =
     "take residue of Gamma factors.";
@@ -103,7 +103,7 @@ multiGammaReduceByBarnesLemma::usage =
 (* Hyper.wl *)
 
 hyperSeparate::usage =
-    "split a product into a list containing Hypergeometric2F1 factors and the rests.";
+    "split a product into Hypergeometric2F1 factors and the rests.";
 
 hyperUnregularize::usage =
     "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
@@ -391,49 +391,40 @@ freeze::usage =
     "freeze subexpressions matching the pattern and then perform the operation.";
 
 freezeNegative::usage =
-    "variant of freeze. Negative is used as the default transformation.";
+    StringJoin["variant of freeze.", "\nNegative is used as the default transformation."];
 
 focus::usage =
-    "simplify the arguments of the specified heads.";
-
-focusPower::usage =
-    "simplify the arguments of powers.";
-
-focusPowerBase::usage =
-    "simplify the bases of powers.";
-
-focusPowerExponent::usage =
-    "simplify the exponents of powers.";
-
-focusFrac::usage =
-    "simplify the numerator and denominator of fractions.";
+    "simplify the argument(s) of the specified head(s).";
 
 fracFocus::usage =
-    "focusFrac";
+    "simplify the numerator and denominator of fractions.";
 
 fracReduce::usage =
-    "reduce the fraction by multiplying a common factor onto numerator and denominator.";
+    "reduce the fraction by multiplying a common factor onto the numerator and denominator.";
 
 powerFocus::usage =
-    "focusPower";
+    "simplify the base and exponent of powers.";
 
 powerBaseFocus::usage =
-    "focusPowerBase";
+    "simplify the base of powers.";
 
 powerExponentFocus::usage =
-    "focusPowerExponent";
+    "simplify the exponent of powers.";
 
-powerExpSeparate::usage =
-    "split a product into a list containing Exp factors and the rests.";
+powerSeparate::usage =
+    "split a product into powers with specified base(s) and the rests.";
 
 powerBaseTogether::usage =
-    "make together the bases of powers.";
+    "make together the specified base(s) of powers.";
+
+powerExpand::usage =
+    "expand the powers with the specified base(s).";
 
 powerExponentCollect::usage =
-    "collect powers by the exponents.";
+    "collect powers by the specified exponent(s).";
 
 powerPhaseReduce::usage =
-    "reduce the phase factor in power function according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
+    "reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
 
 trigPhaseReduce::usage =
     "reduce phase factors in trigonometric functions by the given assumptions.";
