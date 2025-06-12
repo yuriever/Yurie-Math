@@ -329,7 +329,7 @@ powerSeparate[var_][expr:Power[base_,_]] :=
     ];
 
 powerSeparate[var_][expr_Times] :=
-    With[ { baseP=basePattern[var]},
+    With[ { baseP = basePattern[var]},
         {
             Discard[expr,FreeQ[Power[baseP,_]]],
             Select[expr,FreeQ[Power[baseP,_]]]
@@ -356,48 +356,40 @@ basePattern[var_] :=
 
 powerBaseTogether[][expr_] :=
     expr//ReplaceAll[{
-        Power[base_,exponent_]:>
-            Power[
-                Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
-                exponent
-            ]
+        Power[base_,exponent_]:>Power[togetherAndSimplify[base],exponent]
     }];
 
 powerBaseTogether[var_][expr_] :=
-    With[ {baseP=basePattern[var]},
+    With[ {baseP = basePattern[var]},
         expr//ReplaceAll[{
-            Power[base:baseP,exponent_]:>
-                Power[
-                    Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
-                    exponent
-                ]
+            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
         }]
     ];
 
 powerBaseTogether[var_,level_][expr_] :=
-    With[ {baseP=basePattern[var]},
+    With[ {baseP = basePattern[var]},
         expr//Replace[#,{
-            Power[base:baseP,exponent_]:>
-                Power[
-                    Together[base]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&,
-                    exponent
-                ]
+            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
         },level]&
     ];
+
+
+togetherAndSimplify[expr_] :=
+    Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
 
 
 (* ::Subsubsection:: *)
 (*powerExpand*)
 
 
-powerExpand[operation_:Simplify][expr_] :=
-    powerBaseTogether[]//PowerExpand//powerFocus[operation];
+powerExpand[][expr_] :=
+    expr//powerBaseTogether[]//PowerExpand//powerExponentFocus[Simplify];
 
-powerExpand[operation_,var_][expr_] :=
-    powerBaseTogether[]//PowerExpand[#,var]&//powerFocus[operation];
+powerExpand[var_][expr_] :=
+    expr//powerBaseTogether[var]//PowerExpand//powerExponentFocus[Simplify];
 
-powerExpand[operation_,var_,level_][expr_] :=
-    powerBaseTogether[level]//PowerExpand[#,var]&//powerFocus[operation,level];
+powerExpand[var_,level_][expr_] :=
+    expr//powerBaseTogether[var,level]//PowerExpand//powerExponentFocus[Simplify];
 
 
 (* ::Subsubsection:: *)
@@ -415,9 +407,7 @@ powerExponentCollectKernel[power_][expr_] :=
     expr//ReplaceRepeated[ruleCollectPower[power]];
 
 powerExponentCollectKernel[power_,rest__][expr_] :=
-    powerExponentCollectKernel[rest][
-        powerExponentCollectKernel[power][expr]
-    ];
+    expr//powerExponentCollectKernel[power]//powerExponentCollectKernel[rest];
 
 
 ruleCollectPower[power_] :=
@@ -434,17 +424,18 @@ ruleCollectPower[power_] :=
                 ]*x^rest1*y^rest2
         };
 
-ruleCollectPower[] = {
-    IgnoringInactive[(x_^a_)^b_]:>
-        x^(a*b),
-    IgnoringInactive[x_^(power_*k1_.+rest1_.)*y_^(power_*k2_.+rest2_.)]:>
-        With[ {var = Simplify[x^k1*y^k2]},
-            If[ IntegerQ[x]||IntegerQ[y],
-                Inactivate[var^power,Power|Sqrt],
-                var^power
-            ]
-        ]*x^rest1*y^rest2
-};
+ruleCollectPower[] =
+    {
+        IgnoringInactive[(x_^a_)^b_]:>
+            x^(a*b),
+        IgnoringInactive[x_^(power_*k1_.+rest1_.)*y_^(power_*k2_.+rest2_.)]:>
+            With[ {var = Simplify[x^k1*y^k2]},
+                If[ IntegerQ[x]||IntegerQ[y],
+                    Inactivate[var^power,Power|Sqrt],
+                    var^power
+                ]
+            ]*x^rest1*y^rest2
+    };
 
 
 (* ::Subsubsection:: *)
@@ -457,12 +448,10 @@ powerPhaseReduce//Options = {
 
 
 powerPhaseReduce[assume_,opts:OptionsPattern[]][expr_] :=
-    expr//reducePhaseBy[assume]//
-        powerExponentFocus[Simplify];
+    expr//reducePhaseBy[assume]//powerExponentFocus[Simplify];
 
 powerPhaseReduce[assume_,antiholo_,opts:OptionsPattern[]][expr_] :=
-    expr//reducePhaseBy[assume,listToPattern@antiholo]//
-        powerExponentFocus[Simplify];
+    expr//reducePhaseBy[assume,listToPattern@antiholo]//powerExponentFocus[Simplify];
 
 powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
     Module[ {res,indet,show = OptionValue["ShowIndeterminate"]},
