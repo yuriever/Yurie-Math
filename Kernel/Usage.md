@@ -295,8 +295,6 @@
 
 * `#!wl powerExponentCollect` - collect powers by the specified exponent(s).
 
-* `#!wl powerPhaseReduce` - reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.
-
 * `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
 
 * `#!wl deltaReduce` - reduce the Dirac delta function.

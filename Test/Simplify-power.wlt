@@ -180,59 +180,43 @@ VerificationTest[
 ]
 
 VerificationTest[
-    powerPhaseReduce[χ > 0 && χb > 0][(-χ)^a*(-χb)^b]
+    expr = (1 + a/b)^C[1]*(1 - a/b)^C[3]*(1 + x/y)^C[2]; 
     ,
-    E^(I*(a + b)*Pi)*χ^a*χb^b
+    Null
     ,
     TestID->"22-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerPhaseReduce[χ > 0 && χb > 0, χb][(-χ)^a*(-χb)^b]
+    powerExpand[][expr]
     ,
-    E^(I*(a - b)*Pi)*χ^a*χb^b
+    (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2])/y^C[2]
     ,
     TestID->"23-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerPhaseReduce[χ > 0 && χb > 0, χ, χb][(-χ)^a*(-χb)^b]
+    powerExpand[1 + x/y][expr]
     ,
-    E^(I*(a - b)*Pi)*χ^a*χb^b
+    ((1 - a/b)^C[3]*(1 + a/b)^C[1]*(x + y)^C[2])/y^C[2]
     ,
     TestID->"24-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerPhaseReduce[χ > 0 && χb > 0, {χ}, {χb}][(-χ)^a*(-χb)^b]
+    powerExpand[1 + x/y, 1][1 + expr]
     ,
-    E^(I*(a - b)*Pi)*χ^a*χb^b
+    1 + (1 - a/b)^C[3]*(1 + a/b)^C[1]*(1 + x/y)^C[2]
     ,
     TestID->"25-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ, χb][(-χ - c)^a*(-χb - c)^b]
+    powerExpand[1 + x/y, 2][1 + expr]
     ,
-    E^(I*(a - b)*Pi)*(c + χ)^a*(c + χb)^b
+    1 + ((1 - a/b)^C[3]*(1 + a/b)^C[1]*(x + y)^C[2])/y^C[2]
     ,
     TestID->"26-Simplify-power.nb"
-]
-
-VerificationTest[
-    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ | c, χb][(-χ - c)^a*(-χb - c)^b]
-    ,
-    E^(I*a*Pi)*(c + χ)^a*(-c - χb)^b
-    ,
-    TestID->"27-Simplify-power.nb"
-]
-
-VerificationTest[
-    powerPhaseReduce[χ + c > 0 && χb + c > 0, χ, χb | c][(-χ - c)^a*(-χb - c)^b]
-    ,
-    ((-c - χ)^a*(c + χb)^b)/E^(I*b*Pi)
-    ,
-    TestID->"28-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -240,7 +224,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"29-Simplify-power.nb"
+    TestID->"27-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -248,7 +232,7 @@ VerificationTest[
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"30-Simplify-power.nb"
+    TestID->"28-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -256,7 +240,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"31-Simplify-power.nb"
+    TestID->"29-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -264,7 +248,7 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"32-Simplify-power.nb"
+    TestID->"30-Simplify-power.nb"
 ]
 
 VerificationTest[

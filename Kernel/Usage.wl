@@ -423,9 +423,6 @@ powerExpand::usage =
 powerExponentCollect::usage =
     "collect powers by the specified exponent(s).";
 
-powerPhaseReduce::usage =
-    "reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
-
 trigPhaseReduce::usage =
     "reduce phase factors in trigonometric functions by the given assumptions.";
 

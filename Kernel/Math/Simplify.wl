@@ -70,9 +70,6 @@ powerExpand::usage =
 powerExponentCollect::usage =
     "collect powers by the specified exponent(s).";
 
-powerPhaseReduce::usage =
-    "reduce the phase factor in powers according to the assumptions and/or the specified holomorphic/antiholomorphic variables.";
-
 
 (* ::Subsection:: *)
 (*Trig*)
@@ -436,90 +433,6 @@ ruleCollectPower[] =
                 ]
             ]*x^rest1*y^rest2
     };
-
-
-(* ::Subsubsection:: *)
-(*powerPhaseReduce*)
-
-
-powerPhaseReduce//Options = {
-    "ShowIndeterminate"->False
-};
-
-
-powerPhaseReduce[assume_,opts:OptionsPattern[]][expr_] :=
-    expr//reducePhaseBy[assume]//powerExponentFocus[Simplify];
-
-powerPhaseReduce[assume_,antiholo_,opts:OptionsPattern[]][expr_] :=
-    expr//reducePhaseBy[assume,listToPattern@antiholo]//powerExponentFocus[Simplify];
-
-powerPhaseReduce[assume_,holo_,antiholo_,opts:OptionsPattern[]][expr_] :=
-    Module[ {res,indet,show = OptionValue["ShowIndeterminate"]},
-        If[ TrueQ@show,
-            {res,indet} =
-                expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,show];
-            If[ indet=!={},
-                indet[[1]]//Print
-            ],
-            (*Else*)
-            res =
-                expr//reducePhaseBy[assume,listToPattern@holo,listToPattern@antiholo,show]
-        ];
-        res//powerExponentFocus[Simplify]
-    ];
-
-
-reducePhaseBy[assume_][expr_] :=
-    expr//ReplaceAll[
-        Power[base_,exponent_]/;Simplify[base<0,assume]:>
-            Exp[I*π*exponent]*Power[-base,exponent]
-    ];
-
-reducePhaseBy[assume_,antiholoP_][expr_] :=
-    expr//ReplaceAll[
-        Power[base_,exponent_]/;Simplify[base<0,assume]:>
-            If[ FreeQ[base,antiholoP],
-                Exp[I*π*exponent]*Power[-base,exponent],
-                (*Else*)
-                Exp[-I*π*exponent]*Power[-base,exponent]
-            ]
-    ];
-
-reducePhaseBy[assume_,holoP_,antiholoP_,False][expr_] :=
-    expr//ReplaceAll[
-        Power[base_,exponent_]/;Simplify[base<0,assume]:>
-            Which[
-                !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
-                    Exp[I*π*exponent]*Power[-base,exponent],
-                !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
-                    Exp[-I*π*exponent]*Power[-base,exponent],
-                True,
-                    Power[base,exponent]
-            ]
-    ];
-
-reducePhaseBy[assume_,holoP_,antiholoP_,True][expr_] :=
-    Reap[
-        expr//ReplaceAll[
-            Power[base_,exponent_]/;Simplify[base<0,assume]:>
-                Which[
-                    !FreeQ[base,holoP]&&FreeQ[base,antiholoP],
-                        Power[-base,exponent]*Exp[I*π*exponent],
-                    !FreeQ[base,antiholoP]&&FreeQ[base,holoP],
-                        Power[-base,exponent]*Exp[-I*π*exponent],
-                    True,
-                        Sow[Power[base,exponent],"indet"]
-                ]
-        ],
-        "indet"
-    ];
-
-
-listToPattern[list_List] :=
-    Alternatives@@list;
-
-listToPattern[other_] :=
-    other;
 
 
 (* ::Subsection:: *)
