@@ -308,3 +308,5 @@
 * `#!wl stripPattern` - strip off pattern-related functions in expressions.
 
 * `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
+
+* `#!wl extractSymbol` - extract symbols from the expression.

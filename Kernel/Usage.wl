@@ -443,3 +443,6 @@ stripPattern::usage =
 
 vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
+
+extractSymbol::usage =
+    "extract symbols from the expression.";

@@ -115,6 +115,10 @@ vanishing::usage =
     "Simplify + Flatten + DeleteDuplicates.";
 
 
+extractSymbol::usage =
+    "extract symbols from the expression.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -541,6 +545,20 @@ stripPattern[expr_,head_:Defer] :=
 
 vanishing[expr_] :=
     expr//Simplify//Flatten//DeleteDuplicates;
+
+
+(* ::Subsubsection:: *)
+(*extractSymbol*)
+
+
+extractSymbol//Attributes =
+    {HoldFirst};
+
+extractSymbol[expr_,head_:List,exclusionList_:{}] :=
+    With[ {excludedContext=Join[{"System`"},exclusionList]},
+        System`Utilities`SymbolList[Unevaluated@expr,HoldComplete,excludedContext]//
+            Apply[HoldComplete]//ReplaceAll[HoldComplete[symbol_]:>symbol]//Apply[head]//Sort
+    ];
 
 
 (* ::Subsection:: *)
