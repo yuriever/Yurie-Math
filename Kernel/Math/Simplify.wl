@@ -567,8 +567,17 @@ extractVariable[expr_,exclusionList_:{}] :=
             res=Reduce`FreeVariables[expr],
             excludedContext=Join[{"System`"},exclusionList]
         },
-        Discard[res,AtomQ[#]&&MemberQ[excludedContext,Context[#]]&]
+        Select[res,variableQ[excludedContext]]
     ];
+
+variableQ[excludedContext_][var_Symbol] :=
+    !MemberQ[excludedContext,Context[var]];
+
+variableQ[_][var_?AtomQ] :=
+    !MemberQ[{PD,INT,SUM,Association},Head[var]];
+
+variableQ[_][var_] :=
+    True;
 
 
 (* ::Subsection:: *)
