@@ -213,7 +213,7 @@ integrate[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
     With[ {
         expr1 = Cases[expr,Except[_INT],1]//Apply[Times],
         int = DeleteCases[FirstCase[expr,INT[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-        fopts = FilterRules[{opts,Options@integrate},Options@Integrate]
+        fopts = Sequence@@FilterRules[{opts,Options@integrate},Options@Integrate]
     },
         Integrate[expr1,args,fopts]*INT@@int
     ];
@@ -221,7 +221,7 @@ integrate[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
 
 summation[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_SUM] :=
     With[ {
-        fopts = FilterRules[{opts,Options@summation},Options@Sum]
+        fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
     },
         Sum[expr,args,fopts]
     ];
@@ -230,7 +230,7 @@ summation[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_SUM] :=
     With[ {
         expr1 = Cases[expr,Except[_SUM],1]//Apply[Times],
         sum = DeleteCases[FirstCase[expr,SUM[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-        fopts = FilterRules[{opts,Options@summation},Options@Sum]
+        fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
     },
         Sum[expr1,args,fopts]*SUM@@sum
     ];
