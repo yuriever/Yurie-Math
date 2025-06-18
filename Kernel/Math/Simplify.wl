@@ -118,6 +118,9 @@ vanishing::usage =
 extractSymbol::usage =
     "extract symbols from the expression.";
 
+extractVariable::usage =
+    "extract variables from the expression.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -551,13 +554,20 @@ vanishing[expr_] :=
 (*extractSymbol*)
 
 
-extractSymbol//Attributes =
-    {HoldFirst};
+extractSymbol[expr_,exclusionList_:{}] :=
+    System`Utilities`SymbolList[expr,Identity,Join[{"System`"},exclusionList]];
 
-extractSymbol[expr_,head_:List,exclusionList_:{}] :=
-    With[ {excludedContext=Join[{"System`"},exclusionList]},
-        System`Utilities`SymbolList[Unevaluated@expr,HoldComplete,excludedContext]//
-            Apply[HoldComplete]//ReplaceAll[HoldComplete[symbol_]:>symbol]//Apply[head]//Sort
+
+(* ::Subsubsection:: *)
+(*extractVariable*)
+
+
+extractVariable[expr_,exclusionList_:{}] :=
+    With[ {
+            res=Reduce`FreeVariables[expr],
+            excludedContext=Join[{"System`"},exclusionList]
+        },
+        Discard[res,AtomQ[#]&&MemberQ[excludedContext,Context[#]]&]
     ];
 
 

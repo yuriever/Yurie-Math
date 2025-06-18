@@ -310,3 +310,5 @@
 * `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
 
 * `#!wl extractSymbol` - extract symbols from the expression.
+
+* `#!wl extractVariable` - extract variables from the expression.

@@ -446,3 +446,6 @@ vanishing::usage =
 
 extractSymbol::usage =
     "extract symbols from the expression.";
+
+extractVariable::usage =
+    "extract variables from the expression.";
