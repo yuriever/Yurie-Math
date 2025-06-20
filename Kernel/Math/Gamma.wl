@@ -17,7 +17,8 @@ Needs["Yurie`Math`Constant`"];
 
 
 gammaSimplify::usage =
-    "simplify Gamma factors in the expression.\n Developer`GammaSimplify";
+    "simplify Gamma factors in the expression."<>
+    "\nDeveloper`GammaSimplify";
 
 gammaFrom::usage =
     "expand everything to Gamma factors.";
@@ -181,27 +182,27 @@ gammaSeparate[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[variable_,index_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr_] :=
-    Module[ {expr1,solution,residue},
-        expr1 =
-            If[ FreeQ[expr,_multiGamma],
-                expr,
-                (*Else*)
-                gammaFrom[expr,"Transformation"->{"MultiGamma"}]
-            ];
-        gammaTakeResidueCheck[variable,index,gmarg][expr1];
+gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr1_] :=
+    Module[ {expr,isSpecificPole,index,pos,solution,residue},
+        expr =
+            expr1//gammaTakeResidueHandleMultiGamma;
+        {isSpecificPole,index,pos} =
+            index1//gammaTakeResidueGetIndex;
+        gammaTakeResidueCheck[variable,index,gmarg][expr];
         solution =
             Part[Solve[gmarg==-index,{variable}],1,1];
         residue =
             If[ OptionValue["SimplePole"]===True,
                 Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
-                    ReplaceAll[expr1/Gamma[gmarg],solution],
+                    ReplaceAll[expr/Gamma[gmarg],solution],
                 (*Else*)
-                Residue[expr1,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
+                Residue[expr,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ];
-        ifShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr1];
-        residueSign[sign]*residue//ReplaceAll[gm_Gamma:>Simplify@gm]//
-            handleResidueWithINT[expr1,variable]
+        gammaTakeResidueShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr];
+        residueSign[sign]*residue//
+            takeSpecificPole[isSpecificPole][index,pos]//
+            ReplaceAll[gm_Gamma:>Simplify[gm]]//
+            handleResidueWithINT[expr,variable]
     ]//Catch;
 
 
@@ -230,6 +231,21 @@ gammaTakeResidue[] :=
 (*Helper*)
 
 
+gammaTakeResidueHandleMultiGamma[expr_] :=
+    If[ FreeQ[expr,_multiGamma],
+        expr,
+        (*Else*)
+        gammaFrom[expr,"Transformation"->{"MultiGamma"}]
+    ];
+
+
+gammaTakeResidueGetIndex[(Rule|List)[index_,pos_]] :=
+    {True,index,pos};
+
+gammaTakeResidueGetIndex[index_] :=
+    {False,index,Null};
+
+
 gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
         !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_List],
@@ -247,10 +263,10 @@ gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     ];
 
 
-ifShowPoleData[True][solution_,___] :=
+gammaTakeResidueShowPoleData[True][solution_,___] :=
     Echo[solution];
 
-ifShowPoleData[Full][solution_,variable_,index_,expr1_] :=
+gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
     Module[ {sign,gammaList,gammaListNew},
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
@@ -273,12 +289,26 @@ ifShowPoleData[Full][solution_,variable_,index_,expr1_] :=
         ];
     ];
 
-ifShowPoleData[False,___][_] :=
+gammaTakeResidueShowPoleData[False,___][_] :=
     Null;
 
 
 gammaListGrid[list_] :=
     Grid[list,Alignment->{Left,Center},Spacings->{1,0.5},Dividers->{True,{{True}}},FrameStyle->LightGray]
+
+
+residueSign[Right|-1] :=
+    -1;
+
+residueSign[Left|1] :=
+    1;
+
+
+takeSpecificPole[True][index_,pos_] :=
+    ReplaceAll[index->pos];
+
+takeSpecificPole[False][index_,pos_] :=
+    Identity;
 
 
 handleResidueWithINT[expr_,variable_][residue_] :=
@@ -287,13 +317,6 @@ handleResidueWithINT[expr_,variable_][residue_] :=
         (*Else*)
         residue/INT[variable]
     ];
-
-
-residueSign[Right|-1] :=
-    -1;
-
-residueSign[Left|1] :=
-    1;
 
 
 (* ::Subsection:: *)
