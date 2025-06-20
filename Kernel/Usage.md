@@ -54,7 +54,7 @@
 
 <!-- Gamma.wl -->
 
-* `#!wl gammaSimplify` - simplify Gamma factors in the expression.\n Developer\`GammaSimplify
+* `#!wl gammaSimplify` - simplify Gamma factors in the expression. Developer\`GammaSimplify
 
 * `#!wl gammaFrom` - expand everything to Gamma factors.
 

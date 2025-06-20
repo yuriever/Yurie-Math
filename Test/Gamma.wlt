@@ -230,11 +230,43 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = Gamma[x]*INT[x]; 
+    ,
+    Null
+    ,
+    TestID->"27-Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[x, n, x][expr]
+    ,
+    (-1)^n/n!
+    ,
+    TestID->"28-Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[x, n -> 2, x][expr]
+    ,
+    1/2
+    ,
+    TestID->"29-Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[x, {n, 2}, x][expr]
+    ,
+    1/2
+    ,
+    TestID->"30-Gamma.nb"
+]
+
+VerificationTest[
     multiGamma[{}, {}]
     ,
     1
     ,
-    TestID->"27-Gamma.nb"
+    TestID->"31-Gamma.nb"
 ]
 
 VerificationTest[
@@ -242,7 +274,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"28-Gamma.nb"
+    TestID->"32-Gamma.nb"
 ]
 
 VerificationTest[
@@ -250,7 +282,7 @@ VerificationTest[
     ,
     multiGamma[{x, y}, {}]
     ,
-    TestID->"29-Gamma.nb"
+    TestID->"33-Gamma.nb"
 ]
 
 VerificationTest[
@@ -258,7 +290,7 @@ VerificationTest[
     ,
     multiGamma[{y}, {}]
     ,
-    TestID->"30-Gamma.nb"
+    TestID->"34-Gamma.nb"
 ]
 
 VerificationTest[
@@ -266,7 +298,7 @@ VerificationTest[
     ,
     f[multiGamma[{b}, {d}]] + multiGamma[{a}, {}] + multiGamma[{b, c}, {}]
     ,
-    TestID->"31-Gamma.nb"
+    TestID->"35-Gamma.nb"
 ]
 
 VerificationTest[
@@ -274,7 +306,7 @@ VerificationTest[
     ,
     (1 + multiGamma[{a}, {}])/x
     ,
-    TestID->"32-Gamma.nb"
+    TestID->"36-Gamma.nb"
 ]
 
 VerificationTest[
@@ -282,7 +314,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b, b}]*(1 + multiGamma[{a}, {}])
     ,
-    TestID->"33-Gamma.nb"
+    TestID->"37-Gamma.nb"
 ]
 
 VerificationTest[
@@ -290,7 +322,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b}]*(1 + multiGamma[{a, a}, {}])
     ,
-    TestID->"34-Gamma.nb"
+    TestID->"38-Gamma.nb"
 ]
 
 VerificationTest[
@@ -298,7 +330,7 @@ VerificationTest[
     ,
     multiGamma[{Gamma[x]}, {}]
     ,
-    TestID->"35-Gamma.nb"
+    TestID->"39-Gamma.nb"
 ]
 
 VerificationTest[
@@ -306,7 +338,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"36-Gamma.nb"
+    TestID->"40-Gamma.nb"
 ]
 
 VerificationTest[
@@ -316,7 +348,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"37-Gamma.nb"
+    TestID->"41-Gamma.nb"
 ]
 
 VerificationTest[
@@ -326,7 +358,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"38-Gamma.nb"
+    TestID->"42-Gamma.nb"
 ]
 
 VerificationTest[
@@ -334,7 +366,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, a1 + b3, a2 + b3, c}, {a1 + a2 + b1 + b2, a1 + a2 + b1 + b3, a1 + a2 + b2 + b3, d}]
     ,
-    TestID->"39-Gamma.nb"
+    TestID->"43-Gamma.nb"
 ]
 
 VerificationTest[
@@ -344,7 +376,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"40-Gamma.nb"
+    TestID->"44-Gamma.nb"
 ]
 
 VerificationTest[
@@ -354,7 +386,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"41-Gamma.nb"
+    TestID->"45-Gamma.nb"
 ]
 
 VerificationTest[
@@ -362,7 +394,7 @@ VerificationTest[
     ,
     t^a*multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"42-Gamma.nb"
+    TestID->"46-Gamma.nb"
 ]
 
 VerificationTest[
@@ -372,7 +404,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"43-Gamma.nb"
+    TestID->"47-Gamma.nb"
 ]
 
 VerificationTest[
@@ -382,7 +414,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
     ,
-    TestID->"44-Gamma.nb"
+    TestID->"48-Gamma.nb"
 ]
 
 VerificationTest[
@@ -392,7 +424,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::notProduct}
     ,
-    TestID->"45-Gamma.nb"
+    TestID->"49-Gamma.nb"
 ]
 
 VerificationTest[
@@ -400,7 +432,7 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"46-Gamma.nb"
+    TestID->"50-Gamma.nb"
 ]
 
 VerificationTest[

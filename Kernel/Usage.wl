@@ -76,7 +76,7 @@ dyeOff::usage =
 (* Gamma.wl *)
 
 gammaSimplify::usage =
-    "simplify Gamma factors in the expression.\n Developer`GammaSimplify";
+    StringJoin["simplify Gamma factors in the expression.", "\nDeveloper`GammaSimplify"];
 
 gammaFrom::usage =
     "expand everything to Gamma factors.";
