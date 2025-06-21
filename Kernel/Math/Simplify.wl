@@ -67,6 +67,9 @@ powerBaseTogether::usage =
 powerExpand::usage =
     "expand the powers with the specified base(s).";
 
+powerExpandFactor::usage =
+    "factor the base of powers and then expand.";
+
 powerExponentCollect::usage =
     "collect powers by the specified exponent(s).";
 
@@ -370,13 +373,6 @@ powerBaseTogether[var_][expr_] :=
         }]
     ];
 
-powerBaseTogether[var_,level_][expr_] :=
-    With[ {baseP = basePattern[var]},
-        expr//Replace[#,{
-            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
-        },level]&
-    ];
-
 
 togetherAndSimplify[expr_] :=
     Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
@@ -392,8 +388,16 @@ powerExpand[][expr_] :=
 powerExpand[var_][expr_] :=
     expr//powerBaseTogether[var]//PowerExpand//powerExponentFocus[Simplify];
 
-powerExpand[var_,level_][expr_] :=
-    expr//powerBaseTogether[var,level]//PowerExpand//powerExponentFocus[Simplify];
+
+(* ::Subsubsection:: *)
+(*powerExpandFactor*)
+
+
+powerExpandFactor[][expr_] :=
+    expr//powerBaseFocus[Factor]//PowerExpand//powerFocus[Simplify];
+
+powerExpandFactor[frozenVar_][expr_] :=
+    expr//powerBaseFocus[Factor]//freeze[frozenVar,PowerExpand]//powerFocus[Simplify];
 
 
 (* ::Subsubsection:: *)

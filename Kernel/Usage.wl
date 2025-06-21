@@ -420,6 +420,9 @@ powerBaseTogether::usage =
 powerExpand::usage =
     "expand the powers with the specified base(s).";
 
+powerExpandFactor::usage =
+    "factor the base of powers and then expand.";
+
 powerExponentCollect::usage =
     "collect powers by the specified exponent(s).";
 

@@ -293,6 +293,8 @@
 
 * `#!wl powerExpand` - expand the powers with the specified base(s).
 
+* `#!wl powerExpandFactor` - factor the base of powers and then expand.
+
 * `#!wl powerExponentCollect` - collect powers by the specified exponent(s).
 
 * `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
