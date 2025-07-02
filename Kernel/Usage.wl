@@ -102,53 +102,56 @@ multiGammaReduceByBarnesLemma::usage =
 
 (* Hyper.wl *)
 
-hyperSeparate::usage =
-    "split a product into Hypergeometric2F1 factors and the rests.";
-
-hyperUnregularize::usage =
-    "convert Hypergeometric2F1Regularized to Hypergeometric2F1.";
-
 hyperTaylor::usage =
     "head used by hyperToTaylor.";
 
 hyperMellinBarnes::usage =
     "head used by hyperToMellinBarnes and hyperToMellinBarnes2.";
 
-hyperToTaylor::usage =
-    "convert Hypergeometric2F1 factors to Taylor terms.";
+JacobiPhi::usage =
+    "Jacobi Phi, JacobiPhi[a,b,c,z], DLMF:15.9.11.";
 
-hyperToMellinBarnes::usage =
-    "convert Hypergeometric2F1 factors to Mellin-Barnes integrands.";
-
-hyperToMellinBarnes2::usage =
-    "convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).";
-
-jacobiPhi::usage =
-    "head of Jacobi Phi, jacobiPhi[a,b,c,z], DLMF:15.9.11.";
-
-jacobiPhiToHyper::usage =
-    "convert Jacobi Phi to Hypergeometric2F1.";
-
-jacobiPhiFromHyper::usage =
-    "convert Hypergeometric2F1 to Jacobi Phi.";
-
-wilsonPolynomial::usage =
-    "head of Wilson polynomial, wilsonPolynomial[a,b,c,d,n,x].";
-
-wilsonPolynomialToHyper::usage =
-    "convert Wilson polynomial to Hypergeometric4F3.";
-
-wilsonPolynomialFromHyper::usage =
-    "convert Hypergeometric4F3 to Wilson polynomial.";
-
-AppellF1FromIntegral::usage =
-    "integral representation of Appell F1.";
-
-AppellF1ToHyper::usage =
-    "convert Appell F1 to summation of Hypergeometric2F1.";
+WilsonPolynomial::usage =
+    "Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].";
 
 hyperAppellF1::usage =
     "head used by AppellF1ToHyper.";
+
+hyperSeparate::usage =
+    "split a product into hypergeometric functions and the rests.";
+
+hyperUnregularize::usage =
+    "convert regularized hypergeometric functions to the normal ones.";
+
+hyperRegularize::usage =
+    "convert hypergeometric functions to the regularized ones.";
+
+hyperToTaylor::usage =
+    "convert hypergeometric functions to Taylor terms.";
+
+hyperToMellinBarnes::usage =
+    "convert hypergeometric functions to Mellin-Barnes integrands.";
+
+hyperToMellinBarnes2::usage =
+    "convert hypergeometric functions to Mellin-Barnes integrands in terms of (1-z).";
+
+JacobiPhiToHyper::usage =
+    "convert Jacobi Phi to Hypergeometric2F1.";
+
+JacobiPhiFromHyper::usage =
+    "convert Hypergeometric2F1 to Jacobi Phi.";
+
+WilsonPolynomialToHyper::usage =
+    "convert Wilson polynomial to Hypergeometric4F3.";
+
+WilsonPolynomialFromHyper::usage =
+    "convert Hypergeometric4F3 to Wilson polynomial.";
+
+AppellF1FromIntegral::usage =
+    "convert integral representation of Appell F1.";
+
+AppellF1ToHyper::usage =
+    "convert Appell F1 to summation of Hypergeometric2F1.";
 
 
 (* Label.wl *)

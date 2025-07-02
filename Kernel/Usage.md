@@ -73,37 +73,39 @@
 
 <!-- Hyper.wl -->
 
-* `#!wl hyperSeparate` - split a product into Hypergeometric2F1 factors and the rests.
-
-* `#!wl hyperUnregularize` - convert Hypergeometric2F1Regularized to Hypergeometric2F1.
-
 * `#!wl hyperTaylor` - head used by hyperToTaylor.
 
 * `#!wl hyperMellinBarnes` - head used by hyperToMellinBarnes and hyperToMellinBarnes2.
 
-* `#!wl hyperToTaylor` - convert Hypergeometric2F1 factors to Taylor terms.
+* `#!wl JacobiPhi` - Jacobi Phi, JacobiPhi[a,b,c,z], DLMF:15.9.11.
 
-* `#!wl hyperToMellinBarnes` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands.
-
-* `#!wl hyperToMellinBarnes2` - convert Hypergeometric2F1 factors to Mellin-Barnes integrands in terms of (1-z).
-
-* `#!wl jacobiPhi` - head of Jacobi Phi, jacobiPhi[a,b,c,z], DLMF:15.9.11.
-
-* `#!wl jacobiPhiToHyper` - convert Jacobi Phi to Hypergeometric2F1.
-
-* `#!wl jacobiPhiFromHyper` - convert Hypergeometric2F1 to Jacobi Phi.
-
-* `#!wl wilsonPolynomial` - head of Wilson polynomial, wilsonPolynomial[a,b,c,d,n,x].
-
-* `#!wl wilsonPolynomialToHyper` - convert Wilson polynomial to Hypergeometric4F3.
-
-* `#!wl wilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
-
-* `#!wl AppellF1FromIntegral` - integral representation of Appell F1.
-
-* `#!wl AppellF1ToHyper` - convert Appell F1 to summation of Hypergeometric2F1.
+* `#!wl WilsonPolynomial` - Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].
 
 * `#!wl hyperAppellF1` - head used by AppellF1ToHyper.
+
+* `#!wl hyperSeparate` - split a product into hypergeometric functions and the rests.
+
+* `#!wl hyperUnregularize` - convert regularized hypergeometric functions to the normal ones.
+
+* `#!wl hyperRegularize` - convert hypergeometric functions to the regularized ones.
+
+* `#!wl hyperToTaylor` - convert hypergeometric functions to Taylor terms.
+
+* `#!wl hyperToMellinBarnes` - convert hypergeometric functions to Mellin-Barnes integrands.
+
+* `#!wl hyperToMellinBarnes2` - convert hypergeometric functions to Mellin-Barnes integrands in terms of (1-z).
+
+* `#!wl JacobiPhiToHyper` - convert Jacobi Phi to Hypergeometric2F1.
+
+* `#!wl JacobiPhiFromHyper` - convert Hypergeometric2F1 to Jacobi Phi.
+
+* `#!wl WilsonPolynomialToHyper` - convert Wilson polynomial to Hypergeometric4F3.
+
+* `#!wl WilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
+
+* `#!wl AppellF1FromIntegral` - convert integral representation of Appell F1.
+
+* `#!wl AppellF1ToHyper` - convert Appell F1 to summation of Hypergeometric2F1.
 
 
 <!-- Label.wl -->
