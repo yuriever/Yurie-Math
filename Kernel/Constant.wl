@@ -89,6 +89,10 @@ gammaData = <|
         Pochhammer[a_,n_]:>
             gamma[a+n]/gamma[a]
     },
+    "FactorialPower"->{
+        FactorialPower[a_,n_]:>
+            gamma[a+1]/gamma[a-n+1]
+    },
     "MultiGamma"->{
         HoldPattern[multiGamma[num_List,denom_List]]:>
             (Times@@Map[gamma,num])/(Times@@Map[gamma,denom])
@@ -350,24 +354,6 @@ DLMFData = <|
             ((z+Sqrt[-1+z^2])^(1/2+a)+(z+Sqrt[-1+z^2])^(-(1/2)-a))/(Sqrt[2π]*(-1+z^2)^(1/4)),
         LegendreQ[a_,1/2,3,z_]:>
             (I*Sqrt[π]*(z+Sqrt[-1+z^2])^(-(1/2)-a))/(Sqrt[2]*(-1+z^2)^(1/4))
-    },
-    (*Wilson polynomial*)
-    "WilsonToHyper"->{
-        wilsonPolynomial[a_,b_,c_,d_,n_,x_]:>
-            (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*HypergeometricPFQ[{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1]
-    },
-    "WilsonFromHyper"->{
-        HoldPattern[HypergeometricPFQ[{-n_,a_,b_,c_},{d_,e_,f_},1]]/;Simplify[a+b+c-d-e-f+1-n==0]:>
-            (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*wilsonPolynomial[(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2]
-    },
-    (*Jacobi Phi function*)
-    "JacobiPhiToHyper"->{
-        jacobiPhi[a_,b_,c_,z_]:>
-            Hypergeometric2F1[(a+b+1-I*c)/2,(a+b+1+I*c)/2,a+1,-Sinh[z]^2]
-    },
-    "JacobiPhiFromHyper"->{
-        Hypergeometric2F1[a_,b_,c_,z_]:>
-            jacobiPhi[c-1,a+b-c,I(a-b),ArcSinh[Sqrt[-z]]]
     }
 |>;
 
