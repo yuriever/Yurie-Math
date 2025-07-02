@@ -78,23 +78,23 @@ gammaFrom::noSuchKey =
     "the transformations are expected as a subset of ``.";
 
 
-gammaTakeResidue::notProduct =
+gammaTakeResidue::NotProduct =
     "the expression is expected to be a product involving Gamma functions.";
 
-gammaTakeResidue::indexConflict =
+gammaTakeResidue::IndexConflict =
     "the index `` conflicts with the expression.";
 
-gammaTakeResidue::gammaNotMatchVar =
+gammaTakeResidue::NotMatchVar =
     "the argument `` should be a linear function of the variable ``.";
 
-gammaTakeResidue::gammaNotInExpr =
+gammaTakeResidue::NotInExpr =
     "the factor `` does not appear in the expression.";
 
 
-multiGammaReduceByBarnesLemma::notMatch =
+multiGammaReduceByBarnesLemma::NotMatch =
     "the multi-Gamma symbol cannot be reduced by the Barnes lemmas."
 
-multiGammaReduceByBarnesLemma::notProduct =
+multiGammaReduceByBarnesLemma::NotProduct =
     "the expression is expected to be a product involving Gamma functions.";
 
 
@@ -249,16 +249,16 @@ gammaTakeResidueGetIndex[index_] :=
 gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
         !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_List],
-            Message[gammaTakeResidue::notProduct];
+            Message[gammaTakeResidue::NotProduct];
             HoldComplete[expr]//Throw,
         !FreeQ[expr,index],
-            Message[gammaTakeResidue::indexConflict,index];
+            Message[gammaTakeResidue::IndexConflict,index];
             HoldComplete[expr]//Throw,
         !Internal`LinearQ[gmarg,{variable}],
-            Message[gammaTakeResidue::gammaNotMatchVar,gmarg,variable];
+            Message[gammaTakeResidue::NotMatchVar,gmarg,variable];
             HoldComplete[expr]//Throw,
         FreeQ[expr,Gamma[gmarg]],
-            Message[gammaTakeResidue::gammaNotInExpr,HoldForm[Gamma][gmarg]];
+            Message[gammaTakeResidue::NotInExpr,HoldForm[Gamma][gmarg]];
             HoldComplete[expr]//Throw
     ];
 
@@ -426,13 +426,13 @@ multiGammaReduceByBarnesLemma[s_][k_*mg_multiGamma]/;FreeQ[k,s] :=
 
 multiGammaReduceByBarnesLemma[s_][expr:k_*_multiGamma]/;!FreeQ[k,s] :=
     (
-        Message[multiGammaReduceByBarnesLemma::notMatch];
+        Message[multiGammaReduceByBarnesLemma::NotMatch];
         expr
     );
 
 multiGammaReduceByBarnesLemma[_][expr:Except[_Times|_multiGamma]] :=
     (
-        Message[multiGammaReduceByBarnesLemma::notProduct];
+        Message[multiGammaReduceByBarnesLemma::NotProduct];
         expr
     );
 
@@ -464,7 +464,7 @@ multiGammaReduceByBarnesLemma[s_][mg_multiGamma] :=
                     Total[{numPlus,numMinus},2];
                 multiGammaReduceBySecondBarnesLemma[numPlus,numMinus,denomPlus,numPlusMinusSum,numRest,denomRest,mg,s],
             True,
-                Message[multiGammaReduceByBarnesLemma::notMatch];
+                Message[multiGammaReduceByBarnesLemma::NotMatch];
                 mg//Throw
         ]//multiGammaFactorSimplify
     ]//Catch;
@@ -481,7 +481,7 @@ multiGammaReduceByFirstBarnesLemma[numPlus_,numMinus_,numRest_,denomRest_,mg_,s_
             Join[denomRest,{Total[{numPlus,numMinus},2]}]
         ],
         (*Else*)
-        Message[multiGammaReduceByBarnesLemma::notMatch];
+        Message[multiGammaReduceByBarnesLemma::NotMatch];
         mg//Throw
     ];
 
@@ -493,7 +493,7 @@ multiGammaReduceBySecondBarnesLemma[numPlus_,numMinus_,denomPlus_,numPlusMinusSu
             Join[denomRest,numPlusMinusSum-numPlus]
         ],
         (*Else*)
-        Message[multiGammaReduceByBarnesLemma::notMatch];
+        Message[multiGammaReduceByBarnesLemma::NotMatch];
         mg//Throw
     ];
 
