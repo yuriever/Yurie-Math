@@ -144,7 +144,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Gamma[x]]]
     ,
-    {Yurie`Math`gammaTakeResidue::gammaNotInExpr}
+    {Yurie`Math`gammaTakeResidue::NotInExpr}
     ,
     TestID->"17-Gamma.nb"
 ]
@@ -154,7 +154,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Gamma[x]]]
     ,
-    {Yurie`Math`gammaTakeResidue::indexConflict}
+    {Yurie`Math`gammaTakeResidue::IndexConflict}
     ,
     TestID->"18-Gamma.nb"
 ]
@@ -164,7 +164,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Gamma[x]]]
     ,
-    {Yurie`Math`gammaTakeResidue::gammaNotMatchVar}
+    {Yurie`Math`gammaTakeResidue::NotMatchVar}
     ,
     TestID->"19-Gamma.nb"
 ]
@@ -174,7 +174,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Gamma[x]]]
     ,
-    {Yurie`Math`gammaTakeResidue::gammaNotMatchVar}
+    {Yurie`Math`gammaTakeResidue::NotMatchVar}
     ,
     TestID->"20-Gamma.nb"
 ]
@@ -208,7 +208,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[Gamma[-x]]]
     ,
-    {Yurie`Math`gammaTakeResidue::gammaNotInExpr}
+    {Yurie`Math`gammaTakeResidue::NotInExpr}
     ,
     TestID->"24-Gamma.nb"
 ]
@@ -346,7 +346,7 @@ VerificationTest[
     ,
     Quiet[multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s}, {d}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"41-Gamma.nb"
 ]
@@ -356,7 +356,7 @@ VerificationTest[
     ,
     Quiet[multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s}, {d, s}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"42-Gamma.nb"
 ]
@@ -374,7 +374,7 @@ VerificationTest[
     ,
     Quiet[multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s, b3 + s}, {d, a1 + a2 + b1 + b2 + b3 + s}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"44-Gamma.nb"
 ]
@@ -384,7 +384,7 @@ VerificationTest[
     ,
     Quiet[multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s, b3 + s}, {d, s, a1 + a2 + b1 + b2 + b3 + s}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"45-Gamma.nb"
 ]
@@ -402,7 +402,7 @@ VerificationTest[
     ,
     Quiet[t^a*multiGamma[{c, a1 - s, a2 - s, s, b1 + s, b2 + s}, {d}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"47-Gamma.nb"
 ]
@@ -412,7 +412,7 @@ VerificationTest[
     ,
     Quiet[s^a*multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s}, {d}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notMatch}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
     TestID->"48-Gamma.nb"
 ]
@@ -422,7 +422,7 @@ VerificationTest[
     ,
     Quiet[1 + multiGamma[{c, a1 - s, a2 - s, b1 + s, b2 + s}, {d}]]
     ,
-    {Yurie`Math`multiGammaReduceByBarnesLemma::notProduct}
+    {Yurie`Math`multiGammaReduceByBarnesLemma::NotProduct}
     ,
     TestID->"49-Gamma.nb"
 ]
