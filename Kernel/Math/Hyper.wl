@@ -51,6 +51,9 @@ hyperRegularize::usage =
     "convert hypergeometric functions to the regularized ones.";
 
 
+hyperTo::usage =
+    "convert Hypergeometric functions according to the prototype rule.";
+
 hyperToTaylor::usage =
     "convert hypergeometric functions to Taylor terms.";
 
@@ -91,17 +94,6 @@ AppellF1ToHyper::usage =
 
 
 Begin["`Private`"];
-
-
-(* ::Subsection:: *)
-(*Message*)
-
-
-hyperTo::usage =
-    "convert Hypergeometric functions according to the prototype rule.";
-
-hyperTo::SymbolNotEnough =
-    "there are `` more Hypergeometric functions than the number of specified symbols."
 
 
 (* ::Subsection:: *)
@@ -160,6 +152,14 @@ hyperRegularize[expr_] :=
 
 
 (* ::Subsubsection:: *)
+(*Message*)
+
+
+hyperTo::SymbolNotEnough =
+    "there are `` more Hypergeometric functions than the number of specified symbols."
+
+
+(* ::Subsubsection:: *)
 (*Main*)
 
 
@@ -206,35 +206,35 @@ hyperTo[which_Symbol,symbolList_List,head_][expr0_] :=
 
 
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
+    hyperMellinBarnes[s][((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
 
 hyperToMellinBarnesRule[s_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
+    hyperMellinBarnes[s][((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
 
 hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
-    hyperMellinBarnes[((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
+    hyperMellinBarnes[s][((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
 
 hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyperMellinBarnes[
+    hyperMellinBarnes[s][
         Times@@Map[Pochhammer[#,s]&,as]/Times@@Map[Pochhammer[#,s]&,bs] (-z)^s Gamma[-s]//gammaFrom
     ];
 
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyperMellinBarnes[((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
+    hyperMellinBarnes[s][((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
 
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyperTaylor[(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
+    hyperTaylor[n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
 
 hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyperTaylor[(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
+    hyperTaylor[n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
 
 hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
-    hyperTaylor[(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
+    hyperTaylor[n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
 
 hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyperTaylor[
+    hyperTaylor[n][
         Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
     ];
 
@@ -267,56 +267,87 @@ handleHyperHead[Automatic][expr_] :=
     expr;
 
 handleHyperHead[head_][expr_] :=
-    expr//ReplaceAll[hyperMellinBarnes|hyperTaylor->head];
+    expr//ReplaceAll[hyperMellinBarnes[_]|hyperTaylor[_]->head];
+
+handleHyperHead[INT][expr_] :=
+    expr//ReplaceAll[hyperMellinBarnes[var_][term_]:>INT[var]*term];
+
+handleHyperHead[SUM][expr_] :=
+    expr//ReplaceAll[hyperTaylor[var_][term_]:>SUM[var]*term];
 
 
 (* ::Subsection:: *)
-(*JacobiPhi*)
+(*JacobiPhiToHyper*)
 
 
-JacobiPhiToHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["JacobiPhiToHyper"]]//ReplaceAll[head_HypergeometricPFQ:>Simplify[head]];
+JacobiPhiToHyper[head_:Inactive][expr_] :=
+    expr//ReplaceAll[ruleJacobiPhiToHyper[head]];
 
 
-JacobiPhiFromHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["JacobiPhiFromHyper"]]//ReplaceAll[head_JacobiPhi:>Simplify[head]];
-
-
-(* ::Subsection:: *)
-(*WilsonPolynomial*)
-
-
-WilsonPolynomialToHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["WilsonToHyper"]]//ReplaceAll[head_HypergeometricPFQ:>Simplify[head]];
-
-
-WilsonPolynomialFromHyper[expr_] :=
-    expr//ReplaceAll[DLMFData["WilsonFromHyper"]]//ReplaceAll[head_WilsonPolynomial:>Simplify[head]];
-
-
-ruleWilsonPolynomialToHyper[head_]:=
-    WilsonPolynomial[a_,b_,c_,d_,n_,x_]:>
-        (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*HypergeometricPFQ[{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1]
-
-
-    "WilsonFromHyper"->{
-        HoldPattern[HypergeometricPFQ[{-n_,a_,b_,c_},{d_,e_,f_},1]]/;Simplify[a+b+c-d-e-f+1-n==0]:>
-            (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*WilsonPolynomial[(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2]
-    }
-    (*Jacobi Phi function*)
-    "JacobiPhiToHyper"->{
-        JacobiPhi[a_,b_,c_,z_]:>
-            Hypergeometric2F1[(a+b+1-I*c)/2,(a+b+1+I*c)/2,a+1,-Sinh[z]^2]
-    }
-    "JacobiPhiFromHyper"->{
-        Hypergeometric2F1[a_,b_,c_,z_]:>
-            JacobiPhi[c-1,a+b-c,I(a-b),ArcSinh[Sqrt[-z]]]
-    }
-
+ruleJacobiPhiToHyper[head_] :=
+    (JacobiPhi|_[JacobiPhi])[a_,b_,c_,z_]:>
+        Map[
+            Simplify,
+            head[Hypergeometric2F1][(a+b+1-I*c)/2,(a+b+1+I*c)/2,a+1,-Sinh[z]^2],
+            {1,2}
+        ];
 
 
 (* ::Subsection:: *)
-(*AppellF1*)
+(*JacobiPhiFromHyper*)
+
+
+JacobiPhiFromHyper[head_:Inactive][expr_] :=
+    expr//ReplaceAll[ruleJacobiPhiFromHyper[head]];
+
+
+ruleJacobiPhiFromHyper[head_] :=
+    (Hypergeometric2F1|_[Hypergeometric2F1])[a_,b_,c_,z_]:>
+        Map[
+            Simplify,
+            head[JacobiPhi][c-1,a+b-c,I(a-b),ArcSinh[Sqrt[-z]]],
+            {1,2}
+        ];
+
+
+(* ::Subsection:: *)
+(*WilsonPolynomialToHyper*)
+
+
+WilsonPolynomialToHyper[head_:Inactive][expr_] :=
+    expr//ReplaceAll[ruleWilsonPolynomialToHyper[head]];
+
+
+ruleWilsonPolynomialToHyper[head_] :=
+    (WilsonPolynomial|_[WilsonPolynomial])[a_,b_,c_,d_,n_,x_]:>
+        Map[
+            Simplify,
+            (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*
+                head[HypergeometricPFQ][{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1],
+            {1,2}
+        ];
+
+
+(* ::Subsection:: *)
+(*WilsonPolynomialFromHyper*)
+
+
+WilsonPolynomialFromHyper[head_:Inactive][expr_] :=
+    expr//ReplaceAll[ruleWilsonPolynomialFromHyper[head]];
+
+
+ruleWilsonPolynomialFromHyper[head_] :=
+    (HypergeometricPFQ|_[HypergeometricPFQ])[{-n_,a_,b_,c_},{d_,e_,f_},1]/;Simplify[a+b+c-d-e-f+1-n==0]:>
+        Map[
+            Simplify,
+            (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*
+                head[WilsonPolynomial][(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2],
+            {1,2}
+        ];
+
+
+(* ::Subsection:: *)
+(*AppellF1FromIntegral*)
 
 
 AppellF1FromIntegral[][expr_] :=
@@ -328,11 +359,15 @@ AppellF1FromIntegral[var_,head_:Inactive][expr_] :=
 
 ruleAppellF1FromIntegral[All,head_,intIndex_] :=
     u_^a_*(1-u_)^b_*(1+u_*x_.)^c_*(1+u_*y_.)^d_:>
-        INT[u]^(-intIndex)*Simplify[(Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y]];
+        INT[u]^(-intIndex)*Simplify[
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y]
+        ];
 
 ruleAppellF1FromIntegral[u_,head_,intIndex_] :=
     u^a_*(1-u)^b_*(1+u*x_.)^c_*(1+u*y_.)^d_:>
-        INT[u]^(-intIndex)*Simplify[(Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y]];
+        INT[u]^(-intIndex)*Simplify[
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y]
+        ];
 
 
 indexOfINT[expr_]/;FreeQ[expr,_INT] :=
@@ -340,6 +375,10 @@ indexOfINT[expr_]/;FreeQ[expr,_INT] :=
 
 indexOfINT[expr_] :=
     1;
+
+
+(* ::Subsection:: *)
+(*AppellF1ToHyper*)
 
 
 AppellF1ToHyper[n_][expr_] :=
