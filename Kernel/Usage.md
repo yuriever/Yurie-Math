@@ -89,6 +89,8 @@
 
 * `#!wl hyperRegularize` - convert hypergeometric functions to the regularized ones.
 
+* `#!wl hyperTo` - convert Hypergeometric functions according to the prototype rule.
+
 * `#!wl hyperToTaylor` - convert hypergeometric functions to Taylor terms.
 
 * `#!wl hyperToMellinBarnes` - convert hypergeometric functions to Mellin-Barnes integrands.

@@ -126,6 +126,9 @@ hyperUnregularize::usage =
 hyperRegularize::usage =
     "convert hypergeometric functions to the regularized ones.";
 
+hyperTo::usage =
+    "convert Hypergeometric functions according to the prototype rule.";
+
 hyperToTaylor::usage =
     "convert hypergeometric functions to Taylor terms.";
 
