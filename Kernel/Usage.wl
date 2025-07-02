@@ -102,41 +102,35 @@ multiGammaReduceByBarnesLemma::usage =
 
 (* Hyper.wl *)
 
-hyperTaylor::usage =
-    "head used by hyperToTaylor.";
-
-hyperMellinBarnes::usage =
-    "head used by hyperToMellinBarnes and hyperToMellinBarnes2.";
+hyper::usage =
+    "head used by hyperConvert.";
 
 JacobiPhi::usage =
-    "Jacobi Phi, JacobiPhi[a,b,c,z], DLMF:15.9.11.";
+    "Jacobi Phi function, JacobiPhi[a,b,c,z].";
 
 WilsonPolynomial::usage =
     "Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].";
-
-hyperAppellF1::usage =
-    "head used by AppellF1ToHyper.";
 
 hyperSeparate::usage =
     "split a product into hypergeometric functions and the rests.";
 
 hyperUnregularize::usage =
-    "convert regularized hypergeometric functions to the normal ones.";
+    "convert regularized hypergeometric function to the normal one.";
 
 hyperRegularize::usage =
-    "convert hypergeometric functions to the regularized ones.";
-
-hyperTo::usage =
-    "convert Hypergeometric functions according to the prototype rule.";
+    "convert hypergeometric function to the regularized one.";
 
 hyperToTaylor::usage =
-    "convert hypergeometric functions to Taylor terms.";
+    "convert hypergeometric function to Taylor series.";
 
 hyperToMellinBarnes::usage =
-    "convert hypergeometric functions to Mellin-Barnes integrands.";
+    "convert hypergeometric function to Mellin-Barnes integral.";
 
 hyperToMellinBarnes2::usage =
-    "convert hypergeometric functions to Mellin-Barnes integrands in terms of (1-z).";
+    "convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).";
+
+hyperFromAppellF1::usage =
+    "convert Appell F1 function to hypergeometric summation.";
 
 JacobiPhiToHyper::usage =
     "convert Jacobi Phi to Hypergeometric2F1.";
@@ -151,10 +145,7 @@ WilsonPolynomialFromHyper::usage =
     "convert Hypergeometric4F3 to Wilson polynomial.";
 
 AppellF1FromIntegral::usage =
-    "convert integral representation of Appell F1.";
-
-AppellF1ToHyper::usage =
-    "convert Appell F1 to summation of Hypergeometric2F1.";
+    "convert integral to Appell F1.";
 
 
 (* Label.wl *)

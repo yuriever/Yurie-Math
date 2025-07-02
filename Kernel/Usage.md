@@ -73,29 +73,25 @@
 
 <!-- Hyper.wl -->
 
-* `#!wl hyperTaylor` - head used by hyperToTaylor.
+* `#!wl hyper` - head used by hyperConvert.
 
-* `#!wl hyperMellinBarnes` - head used by hyperToMellinBarnes and hyperToMellinBarnes2.
-
-* `#!wl JacobiPhi` - Jacobi Phi, JacobiPhi[a,b,c,z], DLMF:15.9.11.
+* `#!wl JacobiPhi` - Jacobi Phi function, JacobiPhi[a,b,c,z].
 
 * `#!wl WilsonPolynomial` - Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].
 
-* `#!wl hyperAppellF1` - head used by AppellF1ToHyper.
-
 * `#!wl hyperSeparate` - split a product into hypergeometric functions and the rests.
 
-* `#!wl hyperUnregularize` - convert regularized hypergeometric functions to the normal ones.
+* `#!wl hyperUnregularize` - convert regularized hypergeometric function to the normal one.
 
-* `#!wl hyperRegularize` - convert hypergeometric functions to the regularized ones.
+* `#!wl hyperRegularize` - convert hypergeometric function to the regularized one.
 
-* `#!wl hyperTo` - convert Hypergeometric functions according to the prototype rule.
+* `#!wl hyperToTaylor` - convert hypergeometric function to Taylor series.
 
-* `#!wl hyperToTaylor` - convert hypergeometric functions to Taylor terms.
+* `#!wl hyperToMellinBarnes` - convert hypergeometric function to Mellin-Barnes integral.
 
-* `#!wl hyperToMellinBarnes` - convert hypergeometric functions to Mellin-Barnes integrands.
+* `#!wl hyperToMellinBarnes2` - convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).
 
-* `#!wl hyperToMellinBarnes2` - convert hypergeometric functions to Mellin-Barnes integrands in terms of (1-z).
+* `#!wl hyperFromAppellF1` - convert Appell F1 function to hypergeometric summation.
 
 * `#!wl JacobiPhiToHyper` - convert Jacobi Phi to Hypergeometric2F1.
 
@@ -105,9 +101,7 @@
 
 * `#!wl WilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
 
-* `#!wl AppellF1FromIntegral` - convert integral representation of Appell F1.
-
-* `#!wl AppellF1ToHyper` - convert Appell F1 to summation of Hypergeometric2F1.
+* `#!wl AppellF1FromIntegral` - convert integral to Appell F1.
 
 
 <!-- Label.wl -->
