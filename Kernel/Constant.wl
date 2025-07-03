@@ -114,21 +114,21 @@ gammaDataValueList =
 
 DLMFData = <|
     (*Gamma*)
-    "5.5.5"->{
-        Gamma[z_]:>
-            1/Sqrt[π]*2^(z-1)*Gamma[z/2]*Gamma[z/2+1/2]
+    "PochhammerSwapA"->{
+        Pochhammer[a_,n_]/;Simplify[IntegerQ[n]]:>
+            (-1)^n*Pochhammer[-a-n+1,n]
+    },
+    "FactorialPowerSwapA"->{
+        FactorialPower[a_,n_]/;Simplify[IntegerQ[n]]:>
+            (-1)^n*FactorialPower[-a+n-1,n]
     },
     "BinomialSwapA"->{
-        Binomial[a_,n_]:>
+        Binomial[a_,n_]/;Simplify[IntegerQ[n]]:>
             (-1)^n*Binomial[n-a-1,n]
     },
     "BinomialSwapN"->{
         Binomial[a_,n_]:>
             Binomial[a,a-n]
-    },
-    "PochhammerSwapA"->{
-        Pochhammer[a_,n_]:>
-            (-1)^n*Pochhammer[-a-n+1,n]
     },
     "5.2.8.1"->{
         Pochhammer[a_,n_]/;Simplify[EvenQ[n]]:>
@@ -137,6 +137,10 @@ DLMFData = <|
     "5.2.8.2"->{
         Pochhammer[a_,n_]/;Simplify[OddQ[n]]:>
             2^n*Pochhammer[a/2,(n+1)/2]*Pochhammer[(a+1)/2,(n-1)/2]
+    },
+    "5.5.5"->{
+        Gamma[z_]:>
+            1/Sqrt[π]*2^(z-1)*Gamma[z/2]*Gamma[z/2+1/2]
     },
     (*Hypergeometric2F1*)
     "15.1.2"->{
