@@ -19,6 +19,13 @@ Needs["Yurie`Math`Constant`"];
 DLMF::usage =
     "simplify expressions by the rules in DLMFData.";
 
+DLMFAs::usage =
+    "simplify expressions by the rules in DLMFData with the specified conditions.";
+
+DLMFAsTrue::usage =
+    "simplify expressions by the rules in DLMFData ignoring the conditions.";
+
+
 DLMFRule::usage =
     "return the rules in DLMFData.";
 
@@ -58,18 +65,29 @@ DLMFRuleShow//Options = {
 (*Main*)
 
 
-DLMF[ruleOrItsList_,OptionsPattern[]][expr_] :=
-    expr//DLMFPreprocess//DLMFKernel[ruleOrItsList,OptionValue["IgnoreCondition"]];
+DLMF[rules_,OptionsPattern[]][expr_] :=
+    expr//DLMFPreprocess//DLMFKernel[getRuleList[rules],OptionValue["IgnoreCondition"]];
+
+DLMF[rules_,as_,OptionsPattern[]][expr_] :=
+    Pass;
 
 
-DLMFRule[ruleOrItsList_,OptionsPattern[]] :=
-    getRuleIgnoringCondition[OptionValue["IgnoreCondition"],ruleOrItsList];
+DLMFAs[rules_,as_][expr_] :=
+    Pass;
 
 
-DLMFRuleShow/:MakeBoxes[DLMFRuleShow[ruleOrItsList_,OptionsPattern[]],form_] :=
+DLMFAsTrue[rules_][expr_] :=
+    expr//DLMFPreprocess//DLMFKernel[getRuleList[rules],True];
+
+
+DLMFRule[rules_,OptionsPattern[]] :=
+    getRuleIgnoringCondition[OptionValue["IgnoreCondition"],getRuleList[rules]];
+
+
+DLMFRuleShow/:MakeBoxes[DLMFRuleShow[rules_,OptionsPattern[]],form_] :=
     Block[ {Internal`$ContextMarks = False},
         (*here the function associated to the OptionValue should be specified.*)
-        With[ {expr = getRuleIgnoringCondition[OptionValue[DLMFRuleShow,"IgnoreCondition"],ruleOrItsList]},
+        With[ {expr = getRuleIgnoringCondition[OptionValue[DLMFRuleShow,"IgnoreCondition"],getRuleList[rules]]},
             MakeBoxes[expr,form]
         ]
     ];
@@ -88,20 +106,24 @@ DLMFPreprocess[expr_] :=
 DLMFKernel[{rule_String},ifIgnoreCondition_][expr_] :=
     expr//ReplaceAll[getRuleIgnoringCondition[ifIgnoreCondition,rule]];
 
-DLMFKernel[{rule_String,ruleRest__String},ifIgnoreCondition_][expr_] :=
-    expr//DLMFKernel[{rule},ifIgnoreCondition]//DLMFKernel[{ruleRest},ifIgnoreCondition];
-
-DLMFKernel[rule_String,ifIgnoreCondition_][expr_] :=
-    expr//DLMFKernel[{rule},ifIgnoreCondition];
+DLMFKernel[{rule_String,rest__String},ifIgnoreCondition_][expr_] :=
+    expr//DLMFKernel[{rule},ifIgnoreCondition]//DLMFKernel[{rest},ifIgnoreCondition];
 
 
-getRuleIgnoringCondition[True,ruleOrItsList_] :=
-    DLMFData//Lookup[ruleOrItsList]//ReplaceAll[
+getRuleIgnoringCondition[True,rules_] :=
+    DLMFData//Lookup[rules]//ReplaceAll[
         Verbatim[RuleDelayed][Verbatim[Condition][left_,condition_],right_]:>(left:>right)
     ];
 
-getRuleIgnoringCondition[False,ruleOrItsList_] :=
-    DLMFData//Lookup[ruleOrItsList];
+getRuleIgnoringCondition[False,rules_] :=
+    DLMFData//Lookup[rules];
+
+
+getRuleList[rule_String] :=
+    {rule};
+
+getRuleList[(List|Alternatives)[rules___String]] :=
+    {rules};
 
 
 (* ::Subsection:: *)
