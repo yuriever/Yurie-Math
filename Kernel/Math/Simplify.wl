@@ -91,14 +91,6 @@ deltaReduce::usage =
 
 
 (* ::Subsection:: *)
-(*Derivative*)
-
-
-collectDerivative::usage =
-    "collect by derivatives.";
-
-
-(* ::Subsection:: *)
 (*Misc*)
 
 
@@ -492,21 +484,6 @@ deltaReduce[expr_] :=
         Power[x_,n_]*Derivative[m_][DiracDelta][x_]/;Simplify[n>=1&&m>=1]:>
             -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]
     }];
-
-
-(* ::Subsection:: *)
-(*Derivative*)
-
-
-(* ::Subsubsection:: *)
-(*collectDerivative*)
-
-
-collectDerivative[var:Except[_List],operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][var][___],operation];
-
-collectDerivative[varList_List,operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][#][___]&/@varList,operation];
 
 
 (* ::Subsection:: *)

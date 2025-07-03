@@ -18,6 +18,10 @@ relationPowerMono::usage =
     "relation for branch cut of Power at zero.";
 
 
+collectDerivative::usage =
+    "collect by derivatives.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -58,6 +62,23 @@ relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
             Exp[sign*I*π*exponent]*powerP*powerM
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]
+
+
+(* ::Subsubsection:: *)
+(*collectDerivative*)
+
+
+collectDerivative[var:Except[_List],operation_:Identity][expr_] :=
+    (
+        Message[General::deprecation,"collectDerivative","PDCollect"];
+        Collect[expr,Derivative[___][var][___],operation]
+    );
+
+collectDerivative[varList_List,operation_:Identity][expr_] :=
+    (
+        Message[General::deprecation,"collectDerivative","PDCollect"];
+        Collect[expr,Derivative[___][#][___]&/@varList,operation]
+    );
 
 
 (* ::Subsection:: *)
