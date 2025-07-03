@@ -70,13 +70,13 @@ relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
 
 collectDerivative[var:Except[_List],operation_:Identity][expr_] :=
     (
-        Message[General::deprecation,"collectDerivative","PDCollect"];
+        Message[General::deprecation,"collectDerivative","diffCollect"];
         Collect[expr,Derivative[___][var][___],operation]
     );
 
 collectDerivative[varList_List,operation_:Identity][expr_] :=
     (
-        Message[General::deprecation,"collectDerivative","PDCollect"];
+        Message[General::deprecation,"collectDerivative","diffCollect"];
         Collect[expr,Derivative[___][#][___]&/@varList,operation]
     );
 
