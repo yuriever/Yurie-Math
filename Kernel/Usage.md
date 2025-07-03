@@ -34,6 +34,10 @@
 
 * `#!wl DLMF` - simplify expressions by the rules in DLMFData.
 
+* `#!wl DLMFAs` - simplify expressions by the rules in DLMFData with the specified conditions.
+
+* `#!wl DLMFAsTrue` - simplify expressions by the rules in DLMFData ignoring the conditions.
+
 * `#!wl DLMFRule` - return the rules in DLMFData.
 
 * `#!wl DLMFRuleShow` - show the rules without context marks in DLMFData.

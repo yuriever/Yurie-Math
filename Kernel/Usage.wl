@@ -48,6 +48,12 @@ PDCoefficient::usage =
 DLMF::usage =
     "simplify expressions by the rules in DLMFData.";
 
+DLMFAs::usage =
+    "simplify expressions by the rules in DLMFData with the specified conditions.";
+
+DLMFAsTrue::usage =
+    "simplify expressions by the rules in DLMFData ignoring the conditions.";
+
 DLMFRule::usage =
     "return the rules in DLMFData.";
 
