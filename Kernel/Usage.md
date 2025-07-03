@@ -2,6 +2,8 @@
 
 * `#!wl relationPowerMono` - relation for branch cut of Power at zero.
 
+* `#!wl collectDerivative` - collect by derivatives.
+
 
 <!-- Diff.wl -->
 
@@ -25,9 +27,13 @@
 
 * `#!wl jacobianDet` - jacobianDet.
 
+* `#!wl PDCoefficient` - collect the coefficients of PD[___].
+
 * `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
 
-* `#!wl PDCoefficient` - collect the coefficients of PD[___].
+* `#!wl diffCollect` - collect the terms with respect to the derivatives of the function.
+
+* `#!wl diffReplace` - replace the derivatives of the function.
 
 
 <!-- DLMF.wl -->
@@ -302,8 +308,6 @@
 * `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
 
 * `#!wl deltaReduce` - reduce the Dirac delta function.
-
-* `#!wl collectDerivative` - collect by derivatives.
 
 * `#!wl swap` - swap two symbols in an expression.
 

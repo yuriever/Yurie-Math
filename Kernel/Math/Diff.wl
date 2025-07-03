@@ -14,6 +14,10 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
+(* ::Subsection:: *)
+(*Atomic head*)
+
+
 PD::usage =
     "head of partial derivative."
 
@@ -24,11 +28,19 @@ SUM::usage =
     "head of sum."
 
 
+(* ::Subsection:: *)
+(*Operator form*)
+
+
 integrate::usage =
     "operator form of Integrate.";
 
 summation::usage =
     "operator form of Sum.";
+
+
+(* ::Subsection:: *)
+(*Variable change*)
 
 
 diffChange::usage =
@@ -40,8 +52,16 @@ integrateChange::usage =
     "integrateChange[] gives the example.";
 
 
+(* ::Subsection:: *)
+(*IBP*)
+
+
 IBP::usage =
     "integration by parts.";
+
+
+(* ::Subsection:: *)
+(*Utility*)
 
 
 jacobianMatrix::usage =
@@ -50,11 +70,19 @@ jacobianMatrix::usage =
 jacobianDet::usage =
     "jacobianDet.";
 
-diffComm::usage =
-    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
 PDCoefficient::usage =
     "collect the coefficients of PD[___].";
+
+
+diffComm::usage =
+    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
+
+diffCollect::usage =
+    "collect the terms with respect to the derivatives of the function.";
+
+diffReplace::usage =
+    "replace the derivatives of the function.";
 
 
 (* ::Section:: *)
@@ -513,6 +541,10 @@ dropOrderByVar[varList_,orderList_,varOrItsList_] :=
 (*Utility*)
 
 
+(* ::Subsubsection:: *)
+(*jacobianMatrix|jacobianDet*)
+
+
 jacobianMatrix[f_List,x_List] :=
     Outer[D,f,x];
 
@@ -521,9 +553,8 @@ jacobianDet[f_List,x_List]/;Length[f]==Length[x] :=
     Det@Outer[D,f,x];
 
 
-diffComm[x_,y_] :=
-    -(x[y[#]]-y[x[#]])&;
-
+(* ::Subsubsection:: *)
+(*PDCoefficient*)
 
 
 PDCoefficient::nonlinear =
@@ -545,6 +576,44 @@ PDCoefficient[expr_] :=
 
 PDLinearQ[expr_] :=
     AllTrue[Cases[expr,_PD,All],Internal`LinearQ[expr,#]&];
+
+
+(* ::Subsubsection:: *)
+(*diffComm*)
+
+
+diffComm[x_,y_] :=
+    -(x[y[#]]-y[x[#]])&;
+
+
+(* ::Subsubsection:: *)
+(*diffCollect*)
+
+
+diffCollect[var:Except[_List],operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][var][___],operation];
+
+diffCollect[varList_List,operation_:Identity][expr_] :=
+    Collect[expr,Derivative[___][#][___]&/@varList,operation];
+
+
+(* ::Subsubsection:: *)
+(*diffReplace*)
+
+
+diffReplace[rules_] :=
+    ReplaceAll[getDiffReplaceRule[rules]];
+
+
+getDiffReplaceRule[Rule[f_,rhs_]] :=
+    {
+        f[___]:>rhs,
+        Derivative[orders__][f][vars__]:>
+            D[rhs,Sequence@@cleanNumPairs@Transpose@{{vars},{orders}}]
+    };
+
+getDiffReplaceRule[ruleList_List] :=
+    ruleList//Map[getDiffReplaceRule]//Flatten;
 
 
 (* ::Subsection:: *)

@@ -3,6 +3,9 @@
 relationPowerMono::usage =
     "relation for branch cut of Power at zero.";
 
+collectDerivative::usage =
+    "collect by derivatives.";
+
 
 (* Diff.wl *)
 
@@ -36,11 +39,17 @@ jacobianMatrix::usage =
 jacobianDet::usage =
     "jacobianDet.";
 
+PDCoefficient::usage =
+    "collect the coefficients of PD[___].";
+
 diffComm::usage =
     "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
-PDCoefficient::usage =
-    "collect the coefficients of PD[___].";
+diffCollect::usage =
+    "collect the terms with respect to the derivatives of the function.";
+
+diffReplace::usage =
+    "replace the derivatives of the function.";
 
 
 (* DLMF.wl *)
@@ -434,9 +443,6 @@ trigPhaseReduce::usage =
 
 deltaReduce::usage =
     "reduce the Dirac delta function.";
-
-collectDerivative::usage =
-    "collect by derivatives.";
 
 swap::usage =
     "swap two symbols in an expression.";
