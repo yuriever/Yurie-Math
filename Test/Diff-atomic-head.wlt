@@ -92,7 +92,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    PDCoefficient[expr]
+    PDCoefficient[][expr]
     ,
     {{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
     ,
@@ -100,7 +100,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    PDCoefficient[expr2]
+    PDCoefficient[][expr2]
     ,
     Quiet[g[g[x]*PD[x]] + f[x]*PD[x, y]]
     ,
@@ -122,7 +122,7 @@ VerificationTest[
     ,
     Quiet[INT[x, y, z]]
     ,
-    {Yurie`Math`INT::duplicate}
+    {Yurie`Math`INT::Duplicate}
     ,
     TestID->"14-Diff-atomic-head.nb"
 ]
@@ -140,7 +140,7 @@ VerificationTest[
     ,
     Quiet[SUM[x, y, z]]
     ,
-    {Yurie`Math`SUM::duplicate}
+    {Yurie`Math`SUM::Duplicate}
     ,
     TestID->"16-Diff-atomic-head.nb"
 ]
