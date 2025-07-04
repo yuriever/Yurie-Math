@@ -25,28 +25,34 @@ summation::usage =
     "operator form of Sum.";
 
 diffChange::usage =
-    StringJoin["diffChange[expr,transformations,oldVars,newVars,functions] \n", "diffChange[] gives the example."];
+    "change variables in differential equations.";
 
 integrateChange::usage =
-    StringJoin["integrateChange[expr,transformations,oldVars,newVars] \n", "integrateChange[] gives the example."];
+    "change variables in integrals.";
 
 IBP::usage =
-    "integration by parts.";
+    "perform integration by parts.";
 
 jacobianMatrix::usage =
-    "jacobianMatrix.";
+    "Jacobian matrix.";
 
 jacobianDet::usage =
-    "jacobianDet.";
+    "Jacobian determinant.";
 
 PDCoefficient::usage =
-    "collect the coefficients of PD[___].";
+    "extract the coefficients of PD[__].";
+
+PDCollect::usage =
+    "collect the terms with respect to PD[__].";
 
 diffComm::usage =
     "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
+diffCoefficient::usage =
+    "extract the coefficients of Derivative[__][_][__].";
+
 diffCollect::usage =
-    "collect the terms with respect to the derivatives of the function.";
+    "collect the terms with respect to Derivative[__][_][__].";
 
 diffReplace::usage =
     "replace the derivatives of the function.";

@@ -17,21 +17,25 @@
 
 * `#!wl summation` - operator form of Sum.
 
-* `#!wl diffChange` - diffChange[expr,transformations,oldVars,newVars,functions]  diffChange[] gives the example.
+* `#!wl diffChange` - change variables in differential equations.
 
-* `#!wl integrateChange` - integrateChange[expr,transformations,oldVars,newVars]  integrateChange[] gives the example.
+* `#!wl integrateChange` - change variables in integrals.
 
-* `#!wl IBP` - integration by parts.
+* `#!wl IBP` - perform integration by parts.
 
-* `#!wl jacobianMatrix` - jacobianMatrix.
+* `#!wl jacobianMatrix` - Jacobian matrix.
 
-* `#!wl jacobianDet` - jacobianDet.
+* `#!wl jacobianDet` - Jacobian determinant.
 
-* `#!wl PDCoefficient` - collect the coefficients of PD[___].
+* `#!wl PDCoefficient` - extract the coefficients of PD[__].
+
+* `#!wl PDCollect` - collect the terms with respect to PD[__].
 
 * `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
 
-* `#!wl diffCollect` - collect the terms with respect to the derivatives of the function.
+* `#!wl diffCoefficient` - extract the coefficients of Derivative[__][_][__].
+
+* `#!wl diffCollect` - collect the terms with respect to Derivative[__][_][__].
 
 * `#!wl diffReplace` - replace the derivatives of the function.
 

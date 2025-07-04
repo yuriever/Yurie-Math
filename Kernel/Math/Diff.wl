@@ -44,12 +44,10 @@ summation::usage =
 
 
 diffChange::usage =
-    "diffChange[expr,transformations,oldVars,newVars,functions] \n"<>
-    "diffChange[] gives the example.";
+    "change variables in differential equations.";
 
 integrateChange::usage =
-    "integrateChange[expr,transformations,oldVars,newVars] \n"<>
-    "integrateChange[] gives the example.";
+    "change variables in integrals.";
 
 
 (* ::Subsection:: *)
@@ -57,7 +55,7 @@ integrateChange::usage =
 
 
 IBP::usage =
-    "integration by parts.";
+    "perform integration by parts.";
 
 
 (* ::Subsection:: *)
@@ -65,21 +63,27 @@ IBP::usage =
 
 
 jacobianMatrix::usage =
-    "jacobianMatrix.";
+    "Jacobian matrix.";
 
 jacobianDet::usage =
-    "jacobianDet.";
+    "Jacobian determinant.";
 
 
 PDCoefficient::usage =
-    "collect the coefficients of PD[___].";
+    "extract the coefficients of PD[__].";
+
+PDCollect::usage =
+    "collect the terms with respect to PD[__].";
 
 
 diffComm::usage =
     "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
+diffCoefficient::usage =
+    "extract the coefficients of Derivative[__][_][__].";
+
 diffCollect::usage =
-    "collect the terms with respect to the derivatives of the function.";
+    "collect the terms with respect to Derivative[__][_][__].";
 
 diffReplace::usage =
     "replace the derivatives of the function.";
@@ -104,10 +108,10 @@ Begin["`Private`"];
 (*Message*)
 
 
-INT::duplicate =
+INT::Duplicate =
     "the original expression contains duplicate integral(s) with respect to ``."
 
-SUM::duplicate =
+SUM::Duplicate =
     "the original expression contains duplicate sum(s) with respect to ``.";
 
 
@@ -149,7 +153,7 @@ head_INT/;System`Private`HoldNotValidQ[head] :=
     (
         Quiet[
             System`Private`HoldSetValid[head],
-            {INT::duplicate}
+            {INT::Duplicate}
         ];
         System`Private`HoldSetNoEntry[head]
     );
@@ -161,7 +165,7 @@ INT/:INT[x__]INT[y__]:=
 HoldPattern[INT][x__]/;!DuplicateFreeQ[{x}] :=
     (
         Message[
-            INT::duplicate,
+            INT::Duplicate,
             Row[Select[Tally[{x}],Last[#]>=2&][[All,1]],","]
         ];
         INT@@DeleteDuplicates[{x}]
@@ -185,7 +189,7 @@ head_SUM/;System`Private`HoldNotValidQ[head] :=
     (
         Quiet[
             System`Private`HoldSetValid[head],
-            {SUM::duplicate}
+            {SUM::Duplicate}
         ];
         System`Private`HoldSetNoEntry[head]
     );
@@ -197,7 +201,7 @@ SUM/:SUM[x__]SUM[y__]:=
 HoldPattern[SUM][x__]/;!DuplicateFreeQ[{x}] :=
     (
         Message[
-            SUM::duplicate,
+            SUM::Duplicate,
             Row[Select[Tally[{x}],Last[#]>=2&][[All,1]],","]
         ];
         SUM@@DeleteDuplicates[{x}]
