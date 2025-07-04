@@ -76,9 +76,6 @@ PDCollect::usage =
     "collect the terms with respect to PD[__].";
 
 
-diffComm::usage =
-    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
-
 diffCoefficient::usage =
     "extract the coefficients of Derivative[__][_][__].";
 
@@ -87,6 +84,9 @@ diffCollect::usage =
 
 diffReplace::usage =
     "replace the derivatives of the function.";
+
+diffComm::usage =
+    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
 
 (* ::Section:: *)
@@ -564,41 +564,80 @@ jacobianDet[f_List,x_List]/;Length[f]==Length[x] :=
 PDCoefficient::nonlinear =
     "the expression is nonlinear with respect to PD[__]."
 
-PDCoefficient[expr_] :=
+PDCoefficient//Options = {
+    "CheckLinearity"->True
+};
+
+PDCoefficient[post_:Identity,opts:OptionsPattern[]][expr_] :=
     Module[ {expr1},
-        If[ !PDLinearQ[expr],
-            Message[PDCoefficient::nonlinear];
-            Throw[expr]
-        ];
+        PDCheckLinearity[OptionValue["CheckLinearity"]][expr];
         expr1 = Expand[expr];
         Join[
             Cases[expr1,PD[x__]*rest_.:>{{x},rest}],
             Cases[expr1,rest_/;FreeQ[rest,_PD]:>{{},rest}]
-        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],Total[#[[All,2]]]]&]
+        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],post@Total[#[[All,2]]]]&]
     ]//Catch;
 
 
-PDLinearQ[expr_] :=
-    AllTrue[Cases[expr,_PD,All],Internal`LinearQ[expr,#]&];
+PDCheckLinearity[True][expr_] :=
+    If[ AnyTrue[Cases[expr,_PD,All],!Internal`LinearQ[expr,#]&],
+        Message[PDCoefficient::nonlinear];
+        Throw[expr]
+    ];
+
+PDCheckLinearity[False][expr_] :=
+    Null;
 
 
 (* ::Subsubsection:: *)
-(*diffComm*)
+(*PDCollect*)
 
 
-diffComm[x_,y_] :=
-    -(x[y[#]]-y[x[#]])&;
+PDCollect[args___][expr_] :=
+    Collect[expr,PD[__],args];
+
+
+(* ::Subsubsection:: *)
+(*diffCoefficient*)
+
+
+diffCoefficient::nonlinear =
+    "the expression is nonlinear with respect to Derivative[__][_][__]."
+
+diffCoefficient//Options = {
+    "CheckLinearity"->True
+};
+
+diffCoefficient[fun:Except[_List],post_:Identity,opts:OptionsPattern[]][expr_] :=
+    Module[ {expr1},
+        diffCheckLinearity[OptionValue["CheckLinearity"]][expr,fun];
+        expr1 = Expand[expr];
+        Join[
+            Cases[expr1,Derivative[orders__][fun][vars__]*rest_.:>{cleanNumPairs@Transpose@{{vars},{orders}},rest}],
+            Cases[expr1,fun[__]*rest_.:>{{},rest}]
+        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],post@Total[#[[All,2]]]]&]
+    ]//Catch;
+
+
+diffCheckLinearity[True][expr_,fun_] :=
+    If[ AnyTrue[Cases[expr,Derivative[__][fun][__],All],!Internal`LinearQ[expr,#]&],
+        Message[diffCoefficient::nonlinear];
+        Throw[expr]
+    ];
+
+diffCheckLinearity[False][expr_,fun_] :=
+    Null;
 
 
 (* ::Subsubsection:: *)
 (*diffCollect*)
 
 
-diffCollect[var:Except[_List],operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][var][___],operation];
+diffCollect[fun:Except[_List],args___][expr_] :=
+    Collect[expr,Derivative[___][fun][___],args];
 
-diffCollect[varList_List,operation_:Identity][expr_] :=
-    Collect[expr,Derivative[___][#][___]&/@varList,operation];
+diffCollect[funList_List,args___][expr_] :=
+    Collect[expr,Map[Derivative[___][#][___]&,funList],args];
 
 
 (* ::Subsubsection:: *)
@@ -618,6 +657,14 @@ getDiffReplaceRule[Rule[f_,rhs_]] :=
 
 getDiffReplaceRule[ruleList_List] :=
     ruleList//Map[getDiffReplaceRule]//Flatten;
+
+
+(* ::Subsubsection:: *)
+(*diffComm*)
+
+
+diffComm[x_,y_] :=
+    -(x[y[#]]-y[x[#]])&;
 
 
 (* ::Subsection:: *)
