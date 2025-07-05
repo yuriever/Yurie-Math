@@ -16,20 +16,26 @@ Needs["Yurie`Math`"];
 
 relationMellinBarnes::usage =
     "relationMellinBarnes[(x+y)^a, x, s]: generate Mellin-Barnes integral representation for the power factor."<>
-    "\nDemo: (x+y)^a -> mg*x^s*y^(a-s)*INT[s].";
+    "\n"<>
+    "Example: (x+y)^a -> mg*x^s*y^(a-s)*INT[s].";
 
 
 relationFeynman::usage =
     "relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors."<>
-    "\nDemo: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].";
+    "\n"<>
+    "Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].";
 
 
 relationPowerPhase::usage =
     "relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor."<>
-    "\nbase: specify the power base."<>
-    "\nexpanded: specify the numerator factors to separate."<>
-    "\nexpanded2: specify the denominator factors to separate and can be omitted."<>
-    "\nsign: specify the phase direction.";
+    "\n"<>
+    "base: specify the power base."<>
+    "\n"<>
+    "expanded: specify the numerator factors to separate."<>
+    "\n"<>
+    "expanded2: specify the denominator factors to separate and can be omitted."<>
+    "\n"<>
+    "sign: specify the phase direction.";
 
 
 (* ::Section:: *)

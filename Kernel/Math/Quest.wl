@@ -63,7 +63,8 @@ presentQ::usage =
 
 linearQ::usage =
     "linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present."<>
-    "\nlinearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.";
+    "\n"<>
+    "linearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.";
 
 syntacticNegativeQ::usage =
     "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";

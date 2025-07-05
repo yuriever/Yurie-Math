@@ -23,11 +23,13 @@ matComm::usage =
 
 matJordan::usage =
     "Jordan matrix."<>
-    "\nmatJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+    "\n"<>
+    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
 
 matAngularMomentum::usage =
     "spin-j representation of angular momentum in the unit of hbar."<>
-    "\nThe column/row indices run from j to -j.";
+    "\n"<>
+    "The column/row indices run from j to -j.";
 
 
 (* ::Section:: *)

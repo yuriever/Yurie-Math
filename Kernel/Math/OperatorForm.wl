@@ -19,78 +19,85 @@ Needs["Yurie`Math`"];
 
 
 SS::usage =
-    "Simplify.";
+    "Shortcut: Simplify.";
 
 FS::usage =
-    "FullSimplify.";
+    "Shortcut: FullSimplify.";
 
 FE::usage =
-    "FunctionExpand.";
+    "Shortcut: FunctionExpand.";
 
 FES::usage =
-    "FunctionExpand + Simplify.";
+    "Shortcut: FunctionExpand + Simplify.";
 
 
 AS::usage =
-    "operator form: Assuming.";
+    "OperatorForm: Assuming.";
 
 SSA::usage =
-    "operator form: Simplify + Assuming.";
+    "OperatorForm: Simplify + Assuming.";
 
 FSA::usage =
-    "operator form: FullSimplify + Assuming.";
+    "OperatorForm: FullSimplify + Assuming.";
 
 FEA::usage =
-    "operator form: FunctionExpand + Assuming.";
+    "OperatorForm: FunctionExpand + Assuming.";
 
 FESA::usage =
-    "operator form: FunctionExpand + Simplify + Assuming.";
+    "OperatorForm: FunctionExpand + Simplify + Assuming.";
+
 
 modularize::usage =
     "modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.";
 
 block::usage =
-    "operator form: Block.";
+    "OperatorForm: Block.";
 
 with::usage =
-    "operator form: With.";
+    "OperatorForm: With.";
 
 module::usage =
-    "operator form: Module.";
+    "OperatorForm: Module.";
 
 
 rep::usage =
-    "operator form: ReplaceAll.";
+    "rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.";
+
+repdeep::usage =
+    "repdeep[rules][level][expr]: operator form of Replace with the rules being flattened."<>
+    "\n"<>
+    "Default[level]: All.";
+
 
 part::usage =
-    "operator form: Part.";
+    "OperatorForm: Part.";
 
 plus::usage =
-    "operator form: Plus.";
+    "OperatorForm: Plus.";
 
 minus::usage =
-    "operator form: Minus.";
+    "OperatorForm: Minus.";
 
 times::usage =
-    "operator form: Times.";
+    "OperatorForm: Times.";
 
 divide::usage =
-    "operator form: Divide.";
+    "OperatorForm: Divide.";
 
 series::usage =
-    "operator form: Series + Normal.";
+    "OperatorForm: Series + Normal.";
 
 limit::usage =
-    "operator form: Limit.";
+    "OperatorForm: Limit.";
 
 solve::usage =
-    "operator form: Solve.";
+    "OperatorForm: Solve.";
 
 solve1::usage =
-    "operator form: Solve + First.";
+    "OperatorForm: Solve + First.";
 
 collect::usage =
-    "operator form: Collect.";
+    "OperatorForm: Collect.";
 
 
 (* ::Section:: *)
@@ -218,6 +225,10 @@ module[localVarList_List] :=
 
 rep[rules___][expr_] :=
     ReplaceAll[expr,Flatten[{rules}]];
+
+
+repdeep[rules___][level_:All][expr_] :=
+    Replace[expr,Flatten[{rules}],level];
 
 
 part :=

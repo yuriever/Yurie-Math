@@ -16,28 +16,34 @@ Needs["Yurie`Math`"];
 
 unsafePowerTogether::usage =
     "unsafePowerTogether[expr]: try to combine power factors."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 unsafePowerApart::usage =
     "unsafePowerApart[expr]: try to separate power factors."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 unsafePowerSimplify::usage =
     "unsafePowerSimplify[expr]: try to simplify power factors."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 
 unsafeExprTogether::usage =
     "unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 unsafeExprApart::usage =
     "unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 unsafeExprSimplify::usage =
     "unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values."<>
-    "\nMay produce mathematically invalid result.";
+    "\n"<>
+    "May produce mathematically invalid result.";
 
 
 (* ::Section:: *)
@@ -57,7 +63,8 @@ Begin["`Private`"];
 
 $exprSimLoop::usage =
     "$exprSimLoop: control the number of iterations in unsafeExprSimplify and unsafePowerSimplify."<>
-    "\nThe default value is 4.";
+    "\n"<>
+    "The default value is 4.";
 
 $exprSimLoop = 4;
 
@@ -104,27 +111,33 @@ powerPreprocess[expr_] :=
 
 ruleMergePower::usage =
     "ruleMergePower: transformation rules for merging nested powers."<>
-    "\nDemo: (x^a)^b -> x^(a*b).";
+    "\n"<>
+    "Example: (x^a)^b -> x^(a*b).";
 
 ruleExtractPhase::usage =
     "ruleExtractPhase: transformation rules for extracting phase factors from powers."<>
-    "\nDemo: (-x)^a -> (-1)^a*x^a, (I*x)^a -> Exp[I*Pi/2*a]*x^a.";
+    "\n"<>
+    "Example: (-x)^a -> (-1)^a*x^a, (I*x)^a -> Exp[I*Pi/2*a]*x^a.";
 
 ruleSeparatePower::usage =
     "ruleSeparatePower: transformation rules for separating powers."<>
-    "\nDemo: (x*y)^a -> x^a*y^a, x^(a+b) -> x^a*x^b.";
+    "\n"<>
+    "Example: (x*y)^a -> x^a*y^a, x^(a+b) -> x^a*x^b.";
 
 ruleCombinePower::usage =
     "ruleCombinePower: transformation rules for combining powers."<>
-    "\nMay cause infinite loops.";
+    "\n"<>
+    "May cause infinite loops.";
 
 ruleSeparateExpr::usage =
     "ruleSeparateExpr: transformation rules for separating logarithms and absolute values."<>
-    "\nDemo: Log[x*y] -> Log[x]+Log[y], Abs[x*y] -> Abs[x]*Abs[y].";
+    "\n"<>
+    "Example: Log[x*y] -> Log[x]+Log[y], Abs[x*y] -> Abs[x]*Abs[y].";
 
 ruleCombineExpr::usage =
     "ruleCombineExpr: transformation rules for combining logarithms and absolute values."<>
-    "\nDemo: Log[x]+Log[y] -> Log[x*y], Abs[x]+Abs[y] -> Abs[x*y].";
+    "\n"<>
+    "Example: Log[x]+Log[y] -> Log[x*y], Abs[x]+Abs[y] -> Abs[x*y].";
 
 
 ruleMergePower = {

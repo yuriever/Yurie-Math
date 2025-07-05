@@ -18,7 +18,8 @@ Needs["Yurie`Math`Constant`"];
 
 gammaSimplify::usage =
     "simplify Gamma factors in the expression."<>
-    "\nDeveloper`GammaSimplify";
+    "\n"<>
+    "Developer`GammaSimplify";
 
 gammaFrom::usage =
     "expand everything to Gamma factors.";
