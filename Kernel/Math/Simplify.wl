@@ -19,11 +19,13 @@ Needs["Yurie`Math`"];
 
 
 freeze::usage =
-    "freeze subexpressions matching the pattern and then perform the operation.";
+    "freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze."<>
+    "\nThe supported transformation rules are: _->Positive, _->Negative, _->{_,_}."<>
+    "\nThe default operation is Simplify.";
+
 
 freezeNegative::usage =
-    "variant of freeze."<>
-    "\nNegative is used as the default transformation."
+    "freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.";
 
 
 (* ::Subsection:: *)
@@ -31,7 +33,8 @@ freezeNegative::usage =
 
 
 focus::usage =
-    "simplify the argument(s) of the specified head(s).";
+    "focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads."<>
+    "\nThe default operation is Simplify.";
 
 
 (* ::Subsection:: *)
@@ -39,10 +42,13 @@ focus::usage =
 
 
 fracFocus::usage =
-    "simplify the numerator and denominator of fractions.";
+    "fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers)."<>
+    "\nThe default operation is Simplify.";
 
 fracReduce::usage =
-    "reduce the fraction by multiplying a common factor onto the numerator and denominator.";
+    "fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them."<>
+    "\nThe default operation is Simplify."<>
+    "\nThe default factor is 1.";
 
 
 (* ::Subsection:: *)
@@ -50,31 +56,36 @@ fracReduce::usage =
 
 
 powerFocus::usage =
-    "apply the operation to the base and exponent of power factors."<>
+    "powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors."<>
     "\nThe default operation is Simplify.";
 
 powerBaseFocus::usage =
-    "apply the operation to the base of power factors."<>
+    "powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only."<>
     "\nThe default operation is Simplify.";
 
 powerExponentFocus::usage =
-    "apply the operation to the exponent of power factors."<>
+    "powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only."<>
     "\nThe default operation is Simplify.";
 
 powerSeparate::usage =
-    "separate the product expression into power factors and the rests."<>
-    "\nThe first argument specifies the pattern of power base."
+    "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
+    "\nbaseP specifies the pattern of power bases to match."
 
 powerBaseTogether::usage =
-    "take together the bases of power factors."<>
-    "\nThe first argument specifies the pattern of power base."<>
-    "\nThe second argument specifies the pattern of preserved power base.";
+    "powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors."<>
+    "\nbaseP specifies which bases to combine."<>
+    "\nbasePreservedP specifies which bases to preserve."<>
+    "\nbaseExpandedP specifies which bases to expand manually.";
 
 powerExpand::usage =
-    "expand power factors after taking together of power bases, and then simplify power exponents.";
+    "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents."<>
+    "\nbaseP specifies which bases to combine."<>
+    "\nbasePreservedP specifies which bases to preserve."<>
+    "\nbaseExpandedP specifies which bases to expand manually.";
 
 powerExponentCollect::usage =
-    "collect and combine power factors with common exponent factors.";
+    "powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents."<>
+    "\nThe default is to try to collect all power factors.";
 
 
 (* ::Subsection:: *)
@@ -82,7 +93,8 @@ powerExponentCollect::usage =
 
 
 trigPhaseReduce::usage =
-    "reduce phase factors in trigonometric functions by the given assumptions.";
+    "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
+    "\nvars specifies the variables to consider for periodicity.";
 
 
 (* ::Subsection:: *)
@@ -98,26 +110,31 @@ deltaReduce::usage =
 
 
 swap::usage =
-    "swap two symbols in an expression.";
+    "swap[a, b][expr]: swap the two symbols in the expression."<>
+    "\nswap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously.";
 
 
 separate::usage =
-    "separate the elements by whether or not satisfying the criteria.";
+    "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
 
 
 stripPattern::usage =
-    "strip off pattern-related functions in expressions.";
+    "stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head."<>
+    "\nThe default head is Defer.";
 
 
 vanishing::usage =
-    "Simplify + Flatten + DeleteDuplicates.";
+    "vanishing[expr]: clean up the expression by removing redundant vanishing terms."<>
+    "\nThis is equivalent to Simplify + Flatten + DeleteDuplicates.";
 
 
 extractSymbol::usage =
-    "extract symbols from the expression.";
+    "extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression."<>
+    "\nexclusionList specifies the contexts to exclude.";
 
 extractVariable::usage =
-    "extract variables from the expression.";
+    "extractVariable[expr, exclusionList]: extract user-defined variables from the expression."<>
+    "\nexclusionList specifies the contexts to exclude.";
 
 
 (* ::Section:: *)
@@ -139,7 +156,7 @@ Begin["`Private`"];
 (*Main*)
 
 
-freeze::badInput =
+freeze::BadInput =
     "The input `1` or `2` is invalid."<>
     "\nHint: to match _Rule|_List, Verbatim should be adopted."<>
     "\nHint: the default transformation should be a pair of functions.";
@@ -223,7 +240,7 @@ patternAndTransformation[(Rule|RuleDelayed)[pattern_,{fun_,funInv_}],{_,_}] :=
 
 patternAndTransformation[pattern_,default_] :=
     (
-        Message[freeze::badInput,pattern,default];
+        Message[freeze::BadInput,pattern,default];
         Throw[Null,"badInput"]
     );
 
@@ -323,50 +340,37 @@ powerSeparate[][expr_] :=
     {1,expr};
 
 
-powerSeparate[var_][expr:Power[base_,_]] :=
-    If[ MatchQ[base,basePattern[var]],
+powerSeparate[base1_][expr:Power[base_,_]] :=
+    If[ MatchQ[base,basePattern[base1]],
         {expr,1},
         (*Else*)
         {1,expr}
     ];
 
-powerSeparate[var_][expr_Times] :=
-    With[ { baseP = basePattern[var]},
+powerSeparate[base1_][expr_Times] :=
+    With[ { baseP = basePattern[base1]},
         {
             Discard[expr,FreeQ[Power[baseP,_]]],
             Select[expr,FreeQ[Power[baseP,_]]]
         }
     ];
 
-powerSeparate[var_][expr_] :=
+powerSeparate[base1_][expr_] :=
     {1,expr};
 
 
 basePattern[All] :=
     _;
 
-basePattern[var_List] :=
-    Alternatives@@var;
+basePattern[base_List] :=
+    Alternatives@@base;
 
-basePattern[var_] :=
-    var;
+basePattern[base_] :=
+    base;
 
 
 (* ::Subsubsection:: *)
 (*powerBaseTogether*)
-
-
-(* ::Text:: *)
-(*BeginDeveloper*)
-
-
-Needs["Yurie`Base`"];
-
-ClearAll["powerBaseTogether"];
-
-
-(* ::Text:: *)
-(*EndDeveloper*)
 
 
 powerBaseTogether[][expr_] :=
