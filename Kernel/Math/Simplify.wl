@@ -50,28 +50,31 @@ fracReduce::usage =
 
 
 powerFocus::usage =
-    "simplify the base and exponent of powers.";
+    "apply the operation to the base and exponent of power factors."<>
+    "\nThe default operation is Simplify.";
 
 powerBaseFocus::usage =
-    "simplify the base of powers.";
+    "apply the operation to the base of power factors."<>
+    "\nThe default operation is Simplify.";
 
 powerExponentFocus::usage =
-    "simplify the exponent of powers.";
+    "apply the operation to the exponent of power factors."<>
+    "\nThe default operation is Simplify.";
 
 powerSeparate::usage =
-    "split a product into powers with specified base(s) and the rests.";
+    "separate the product expression into power factors and the rests."<>
+    "\nThe first argument specifies the pattern of power base."
 
 powerBaseTogether::usage =
-    "make together the specified base(s) of powers.";
+    "take together the bases of power factors."<>
+    "\nThe first argument specifies the pattern of power base."<>
+    "\nThe second argument specifies the pattern of preserved power base.";
 
 powerExpand::usage =
-    "expand the powers with the specified base(s).";
-
-powerExpandFactor::usage =
-    "factor the base of powers and then expand.";
+    "expand power factors after taking together of power bases, and then simplify power exponents.";
 
 powerExponentCollect::usage =
-    "collect powers by the specified exponent(s).";
+    "collect and combine power factors with common exponent factors.";
 
 
 (* ::Subsection:: *)
@@ -353,43 +356,65 @@ basePattern[var_] :=
 (*powerBaseTogether*)
 
 
-powerBaseTogether[][expr_] :=
-    expr//ReplaceAll[{
-        Power[base_,exponent_]:>Power[togetherAndSimplify[base],exponent]
-    }];
+(* ::Text:: *)
+(*BeginDeveloper*)
 
-powerBaseTogether[var_][expr_] :=
-    With[ {baseP = basePattern[var]},
+
+Needs["Yurie`Base`"];
+
+ClearAll["powerBaseTogether"];
+
+
+(* ::Text:: *)
+(*EndDeveloper*)
+
+
+powerBaseTogether[][expr_] :=
+    powerBaseTogether[All][expr];
+
+powerBaseTogether[base1_][expr_] :=
+    With[ {baseP = basePattern[base1]},
         expr//ReplaceAll[{
             Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
         }]
     ];
+
+powerBaseTogether[base1_,None][expr_] :=
+    powerBaseTogether[base1][expr];
+
+powerBaseTogether[base1_,base2_][expr_] :=
+    With[ {
+            baseP = basePattern[base1],
+            baseFrozenP = basePattern[base2]
+        },
+        expr//ReplaceAll[{
+            subexpr:Power[baseFrozenP,_]:>subexpr,
+            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
+        }]
+    ];
+
+powerBaseTogether[base1_,base2_,base3_][expr_] :=
+    expr//togetherSpecifiedBase[base3]//powerBaseTogether[base1,base2];
 
 
 togetherAndSimplify[expr_] :=
     Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
 
 
+togetherSpecifiedBase[rule_Rule|(List|Alternatives)[rules__Rule]][expr_] :=
+    expr//ReplaceAll[Map[togetherRuleForSpecifiedBase,{rule,rules}]];
+
+
+togetherRuleForSpecifiedBase[Rule[base_,(List|Alternatives)[factors__]]] :=
+    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
+
+
 (* ::Subsubsection:: *)
 (*powerExpand*)
 
 
-powerExpand[][expr_] :=
-    expr//powerBaseTogether[]//PowerExpand//powerExponentFocus[Simplify];
-
-powerExpand[var_][expr_] :=
-    expr//powerBaseTogether[var]//PowerExpand//powerExponentFocus[Simplify];
-
-
-(* ::Subsubsection:: *)
-(*powerExpandFactor*)
-
-
-powerExpandFactor[][expr_] :=
-    expr//powerBaseFocus[Factor]//PowerExpand//powerFocus[Simplify];
-
-powerExpandFactor[frozenVar_][expr_] :=
-    expr//powerBaseFocus[Factor]//freeze[frozenVar,PowerExpand]//powerFocus[Simplify];
+powerExpand[args___][expr_] :=
+    expr//powerBaseTogether[args]//PowerExpand//powerExponentFocus[Simplify];
 
 
 (* ::Subsubsection:: *)
@@ -550,6 +575,7 @@ extractVariable[expr_,exclusionList_:{}] :=
         },
         Select[res,variableQ[excludedContext]]
     ];
+
 
 variableQ[excludedContext_][var_Symbol] :=
     !MemberQ[excludedContext,Context[var]];
