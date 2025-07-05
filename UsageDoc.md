@@ -1,65 +1,59 @@
 # Usage Documentation Guidelines
 
-This document outlines the formatting conventions for `Usage` messages in Mathematica paclets.
+This document defines the formatting conventions for `Usage` messages in Mathematica paclets.
+
+
+## Example
+
+``` wl
+fun::usage =
+    "fun[parameter]: try to process the given parameter."<>
+    "\n"<>
+    "Hint: may produce unexpected results in edge cases."<>
+    "\n"<>
+    "Example: fun[x] -> result."<>
+    "\n"<>
+    "Default[parameter]: defaultValue.";
+```
 
 
 ## Formatting Rules
 
-All `Usage` messages must adhere to the following requirements:
+All `Usage` messages must follow these requirements:
 
-* Begin with `functionName::usage =` on the first line
+* Start with `functionName::usage =` on the first line.
 
-* Indent the usage message content with four spaces
+* Indent message content with four spaces beginning on the second line.
 
-* Structure each line as a string `"..."` containing one of the supported field types (see below)
+* Write each content line as a string `"..."` containing one of the supported field types (see below).
 
-* Fields may be arranged in any order as needed
+* For multi-line messages, use this pattern:
+    * End each line except the last with `<>`
+    * Connect lines using `"\n"<>`
+    * Terminate the final line with `;`
 
-* All fields are optional, though `signature` is recommended for clarity
+* End field content after the colon with periods.
+
+* Fields may appear in any order.
+
+* All fields are optional, though function signature is recommended for clarity.
+
+* When rewriting existing usage messages, preserve only the fields that are already present.
 
 
 ## Supported Field Types
 
-The following field formats are available:
+* **`signature: description`** — Function signature with description of typical usage patterns.
 
-* **`signature: description`** — Function signature with description showing typical usage patterns
+* **`Sketch: definition`** — Brief function definition (e.g., `fun1 + fun2` where `fun1` and `fun2` are other functions).
 
-* **`Sketch: definition`** — Brief definition or conceptual overview of the function
+* **`Hint: explanation`** — Additional guidance on usage.
 
-* **`Hint: explanation`** — Additional guidance on proper usage and best practices
+* **`Example: example`** — Code example demonstrating typical usage.
 
-* **`Example: example`** — Code example demonstrating typical applications
+* **`Def[parameter]: description`** — Detailed description of a function parameter.
 
-* **`Def[parameter]: description`** — Detailed description of a specific function parameter
+* **`Value[parameter]: values`** — Enumeration of allowed values for a function parameter.
 
-* **`Value[parameter]: values`** — Enumeration of allowed values for a specific function parameter
-
-* **`Default[parameter]: value`** — Default value for a specific function parameter
-
-
-## Multi-line Usage Format
-
-For usage messages that span multiple lines, follow this pattern:
-
-* Begin with `functionName::usage =` on the first line
-
-* Indent the usage message content with four spaces
-
-* End each line except the last with `<>`
-
-* Separate lines using `"\n"<>`
-
-* Terminate the final line with `;`
-
-
-### Example
-
-``` wl
-fun::usage =
-    "fun[parameter]: ..."<>
-    "\n"<>
-    "Second line of usage message"<>
-    "\n"<>
-    "Final line of usage message";
-```
+* **`Default[parameter]: value`** — Default value for a function parameter.
 
