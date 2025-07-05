@@ -69,19 +69,19 @@ powerExponentFocus::usage =
 
 powerSeparate::usage =
     "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
-    "\nbaseP specifies the pattern of power bases to match."
+    "\nbaseP: specify the pattern of power bases to match."
 
 powerBaseTogether::usage =
     "powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors."<>
-    "\nbaseP specifies which bases to combine."<>
-    "\nbasePreservedP specifies which bases to preserve."<>
-    "\nbaseExpandedP specifies which bases to expand manually.";
+    "\nbaseP: specify the bases to combine."<>
+    "\nbasePreservedP: specify the bases to preserve."<>
+    "\nbaseExpandedP: specify the bases to expand manually.";
 
 powerExpand::usage =
     "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents."<>
-    "\nbaseP specifies which bases to combine."<>
-    "\nbasePreservedP specifies which bases to preserve."<>
-    "\nbaseExpandedP specifies which bases to expand manually.";
+    "\nbaseP: specify the bases to combine."<>
+    "\nbasePreservedP: specify the bases to preserve."<>
+    "\nbaseExpandedP: specify the bases to expand manually.";
 
 powerExponentCollect::usage =
     "powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents."<>
@@ -94,7 +94,7 @@ powerExponentCollect::usage =
 
 trigPhaseReduce::usage =
     "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
-    "\nvars specifies the variables to consider for periodicity.";
+    "\nvars: specify the variables to consider for periodicity.";
 
 
 (* ::Subsection:: *)
@@ -130,11 +130,11 @@ vanishing::usage =
 
 extractSymbol::usage =
     "extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression."<>
-    "\nexclusionList specifies the contexts to exclude.";
+    "\nexclusionList: specify the contexts to exclude.";
 
 extractVariable::usage =
     "extractVariable[expr, exclusionList]: extract user-defined variables from the expression."<>
-    "\nexclusionList specifies the contexts to exclude.";
+    "\nexclusionList: specify the contexts to exclude.";
 
 
 (* ::Section:: *)

@@ -15,13 +15,21 @@ Needs["Yurie`Math`"];
 
 
 relationMellinBarnes::usage =
-    "Mellin-Barnes relation.";
+    "relationMellinBarnes[(x+y)^a, x, s]: generate Mellin-Barnes integral representation for the power factor."<>
+    "\nDemo: (x+y)^a -> mg*x^s*y^(a-s)*INT[s].";
+
 
 relationFeynman::usage =
-    "Feynman-Schwinger relation.";
+    "relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors."<>
+    "\nDemo: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].";
+
 
 relationPowerPhase::usage =
-    "relation for power phase.";
+    "relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor."<>
+    "\nbase: specify the power base."<>
+    "\nexpanded: specify the numerator factors to separate."<>
+    "\nexpanded2: specify the denominator factors to separate and can be omitted."<>
+    "\nsign: specify the phase direction.";
 
 
 (* ::Section:: *)
@@ -39,8 +47,8 @@ Begin["`Private`"];
 (*Main*)
 
 
-(* ::Subsection:: *)
-(*relationMellinBarnes|relationFeynman*)
+(* ::Subsubsection:: *)
+(*Mellin-Barnes*)
 
 
 relationMellinBarnes[expr:Power[y_,a_],x_,s_] :=
@@ -49,14 +57,18 @@ relationMellinBarnes[expr:Power[y_,a_],x_,s_] :=
     ];
 
 
+(* ::Subsubsection:: *)
+(*Feynman*)
+
+
 relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_] :=
     With[ {mg = Simplify@multiGamma[{-a-b},{-a,-b}]},
         expr->mg*s^(-b-1)*(x+s*y)^(a+b)*INT[s]
     ];
 
 
-(* ::Subsection:: *)
-(*relationPowerPhase*)
+(* ::Subsubsection:: *)
+(*PowerPhase*)
 
 
 relationPowerPhase[base_,expanded_List,sign:1|-1:1] :=
