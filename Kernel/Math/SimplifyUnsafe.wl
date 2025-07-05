@@ -17,33 +17,33 @@ Needs["Yurie`Math`"];
 unsafePowerTogether::usage =
     "unsafePowerTogether[expr]: try to combine power factors."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 unsafePowerApart::usage =
     "unsafePowerApart[expr]: try to separate power factors."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 unsafePowerSimplify::usage =
     "unsafePowerSimplify[expr]: try to simplify power factors."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 
 unsafeExprTogether::usage =
     "unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 unsafeExprApart::usage =
     "unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 unsafeExprSimplify::usage =
     "unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values."<>
     "\n"<>
-    "May produce mathematically invalid result.";
+    "Hint: may produce mathematically invalid result.";
 
 
 (* ::Section:: *)
@@ -64,7 +64,7 @@ Begin["`Private`"];
 $exprSimLoop::usage =
     "$exprSimLoop: control the number of iterations in unsafeExprSimplify and unsafePowerSimplify."<>
     "\n"<>
-    "The default value is 4.";
+    "Default[$exprSimLoop]: 4.";
 
 $exprSimLoop = 4;
 
@@ -127,7 +127,7 @@ ruleSeparatePower::usage =
 ruleCombinePower::usage =
     "ruleCombinePower: transformation rules for combining powers."<>
     "\n"<>
-    "May cause infinite loops.";
+    "Hint: may cause infinite loops.";
 
 ruleSeparateExpr::usage =
     "ruleSeparateExpr: transformation rules for separating logarithms and absolute values."<>
@@ -137,7 +137,7 @@ ruleSeparateExpr::usage =
 ruleCombineExpr::usage =
     "ruleCombineExpr: transformation rules for combining logarithms and absolute values."<>
     "\n"<>
-    "Example: Log[x]+Log[y] -> Log[x*y], Abs[x]+Abs[y] -> Abs[x*y].";
+    "Example: Log[x]+Log[y] -> Log[x*y], Abs[x]*Abs[y] -> Abs[x*y].";
 
 
 ruleMergePower = {
