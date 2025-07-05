@@ -268,19 +268,17 @@
 
 <!-- SimplifyUnsafe.wl -->
 
-* `#!wl unsafePowerTogether` - take powers together.
+* `#!wl unsafePowerTogether` - unsafePowerTogether[expr]: try to combine power factors. May produce mathematically invalid result.
 
-* `#!wl unsafePowerApart` - take powers apart, similar to PowerExpand.
+* `#!wl unsafePowerApart` - unsafePowerApart[expr]: try to separate power factors. May produce mathematically invalid result.
 
-* `#!wl unsafePowerSimplify` - simplify powers.
+* `#!wl unsafePowerSimplify` - unsafePowerSimplify[expr]: try to simplify power factors. May produce mathematically invalid result.
 
-* `#!wl unsafeExprTogether` - take powers, logs and abs together.
+* `#!wl unsafeExprTogether` - unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values. May produce mathematically invalid result.
 
-* `#!wl unsafeExprApart` - take powers, logs and abs apart.
+* `#!wl unsafeExprApart` - unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values. May produce mathematically invalid result.
 
-* `#!wl unsafeExprSimplify` - simplify powers, logs and abs.
-
-* `#!wl unsafeDeltaSimplify` - simplify Delta functions.
+* `#!wl unsafeExprSimplify` - unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values. May produce mathematically invalid result.
 
 
 <!-- Simplify.wl -->

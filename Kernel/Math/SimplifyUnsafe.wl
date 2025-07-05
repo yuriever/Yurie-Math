@@ -15,27 +15,29 @@ Needs["Yurie`Math`"];
 
 
 unsafePowerTogether::usage =
-    "take powers together.";
+    "unsafePowerTogether[expr]: try to combine power factors."<>
+    "\nMay produce mathematically invalid result.";
 
 unsafePowerApart::usage =
-    "take powers apart, similar to PowerExpand.";
+    "unsafePowerApart[expr]: try to separate power factors."<>
+    "\nMay produce mathematically invalid result.";
 
 unsafePowerSimplify::usage =
-    "simplify powers.";
+    "unsafePowerSimplify[expr]: try to simplify power factors."<>
+    "\nMay produce mathematically invalid result.";
 
 
 unsafeExprTogether::usage =
-    "take powers, logs and abs together.";
+    "unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values."<>
+    "\nMay produce mathematically invalid result.";
 
 unsafeExprApart::usage =
-    "take powers, logs and abs apart.";
+    "unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values."<>
+    "\nMay produce mathematically invalid result.";
 
 unsafeExprSimplify::usage =
-    "simplify powers, logs and abs.";
-
-
-unsafeDeltaSimplify::usage =
-    "simplify Delta functions.";
+    "unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values."<>
+    "\nMay produce mathematically invalid result.";
 
 
 (* ::Section:: *)
@@ -54,7 +56,8 @@ Begin["`Private`"];
 
 
 $exprSimLoop::usage =
-     "control the Nest in unsafeExprSimplify and unsafePowerSimplify.";
+    "$exprSimLoop: control the number of iterations in unsafeExprSimplify and unsafePowerSimplify."<>
+    "\nThe default value is 4.";
 
 $exprSimLoop = 4;
 
@@ -87,10 +90,6 @@ unsafeExprSimplify[expr_] :=
     Nest[unsafeExprApart/*unsafeExprTogether/*Simplify,expr,$exprSimLoop];
 
 
-unsafeDeltaSimplify[expr_] :=
-    expr//ReplaceRepeated[ruleCancelDiracDelta]//Simplify;
-
-
 (* ::Subsection:: *)
 (*Helper*)
 
@@ -104,25 +103,28 @@ powerPreprocess[expr_] :=
 
 
 ruleMergePower::usage =
-    "rules to merging powers.";
+    "ruleMergePower: transformation rules for merging nested powers."<>
+    "\nDemo: (x^a)^b -> x^(a*b).";
 
 ruleExtractPhase::usage =
-    "rules to extract phases from powers.";
+    "ruleExtractPhase: transformation rules for extracting phase factors from powers."<>
+    "\nDemo: (-x)^a -> (-1)^a*x^a, (I*x)^a -> Exp[I*Pi/2*a]*x^a.";
 
 ruleSeparatePower::usage =
-    "rules to separate powers.";
+    "ruleSeparatePower: transformation rules for separating powers."<>
+    "\nDemo: (x*y)^a -> x^a*y^a, x^(a+b) -> x^a*x^b.";
 
 ruleCombinePower::usage =
-    "rules to combine powers.";
+    "ruleCombinePower: transformation rules for combining powers."<>
+    "\nMay cause infinite loops.";
 
 ruleSeparateExpr::usage =
-    "rules to separate other functions.";
+    "ruleSeparateExpr: transformation rules for separating logarithms and absolute values."<>
+    "\nDemo: Log[x*y] -> Log[x]+Log[y], Abs[x*y] -> Abs[x]*Abs[y].";
 
 ruleCombineExpr::usage =
-    "rules to combine other functions.";
-
-ruleCancelDiracDelta::usage =
-    "rules to cancel the Dirac Delta function and its derivatives.";
+    "ruleCombineExpr: transformation rules for combining logarithms and absolute values."<>
+    "\nDemo: Log[x]+Log[y] -> Log[x*y], Abs[x]+Abs[y] -> Abs[x*y].";
 
 
 ruleMergePower = {
@@ -138,9 +140,9 @@ ruleExtractPhase = {
         Exp[I*Pi/2*a]*x^a,
     IgnoringInactive[(-I*x_.)^a_]:>
         Exp[-I*Pi/2*a]*x^a,
-    IgnoringInactive[(-1)^(k_Integer*a_.+b_.)]/;EvenQ@k:>
+    IgnoringInactive[(-1)^(k_Integer*a_.+b_.)]/;Simplify[EvenQ[k]]:>
         (-1)^b,
-    IgnoringInactive[(-1)^(-a_)]/;!IntegerQ[a]:>
+    IgnoringInactive[(-1)^(-a_)]/;Simplify[IntegerQ[a]]:>
         (-1)^a
 };
 
@@ -198,18 +200,6 @@ ruleCombineExpr =
         f_[g_[x_]]/;Simplify[g[f[_]]===_]:>
             x
     };
-
-
-ruleCancelDiracDelta = {
-    x_*DiracDelta[x_]:>
-        0,
-    x_*Derivative[n_][DiracDelta][x_]:>
-        -n*Derivative[n-1][DiracDelta][x],
-    Power[x_,n_]*DiracDelta[x_]:>
-        0/;n>=1,
-    Power[x_,n_]*Derivative[m_][DiracDelta][x_]:>
-        -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]/;n>=1&&m>=1
-};
 
 
 (* ::Subsection:: *)

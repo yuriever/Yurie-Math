@@ -385,25 +385,22 @@ relationPowerPhase::usage =
 (* SimplifyUnsafe.wl *)
 
 unsafePowerTogether::usage =
-    "take powers together.";
+    StringJoin["unsafePowerTogether[expr]: try to combine power factors.", "\nMay produce mathematically invalid result."];
 
 unsafePowerApart::usage =
-    "take powers apart, similar to PowerExpand.";
+    StringJoin["unsafePowerApart[expr]: try to separate power factors.", "\nMay produce mathematically invalid result."];
 
 unsafePowerSimplify::usage =
-    "simplify powers.";
+    StringJoin["unsafePowerSimplify[expr]: try to simplify power factors.", "\nMay produce mathematically invalid result."];
 
 unsafeExprTogether::usage =
-    "take powers, logs and abs together.";
+    StringJoin["unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
 
 unsafeExprApart::usage =
-    "take powers, logs and abs apart.";
+    StringJoin["unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
 
 unsafeExprSimplify::usage =
-    "simplify powers, logs and abs.";
-
-unsafeDeltaSimplify::usage =
-    "simplify Delta functions.";
+    StringJoin["unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
 
 
 (* Simplify.wl *)
