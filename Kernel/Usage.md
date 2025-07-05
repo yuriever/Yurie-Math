@@ -31,13 +31,13 @@
 
 * `#!wl PDCollect` - collect the terms with respect to PD[__].
 
-* `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
-
 * `#!wl diffCoefficient` - extract the coefficients of Derivative[__][_][__].
 
 * `#!wl diffCollect` - collect the terms with respect to Derivative[__][_][__].
 
 * `#!wl diffReplace` - replace the derivatives of the function.
+
+* `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
 
 
 <!-- DLMF.wl -->

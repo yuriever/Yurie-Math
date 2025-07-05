@@ -45,9 +45,6 @@ PDCoefficient::usage =
 PDCollect::usage =
     "collect the terms with respect to PD[__].";
 
-diffComm::usage =
-    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
-
 diffCoefficient::usage =
     "extract the coefficients of Derivative[__][_][__].";
 
@@ -56,6 +53,9 @@ diffCollect::usage =
 
 diffReplace::usage =
     "replace the derivatives of the function.";
+
+diffComm::usage =
+    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
 
 
 (* DLMF.wl *)
