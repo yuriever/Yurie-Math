@@ -1,59 +1,61 @@
 # Usage Documentation Guidelines
 
-This document defines the formatting conventions for `Usage` messages in Mathematica paclets.
+This document establishes comprehensive guidelines for writing clear and consistent `Usage` messages for functions in Mathematica paclets.
 
 
 ## Example
 
-``` wl
+```wl
 fun::usage =
-    "fun[parameter]: try to process the given parameter."<>
+    "fun[parameter]: compute the function value with the given parameter."<>
     "\n"<>
     "Hint: may produce unexpected results in edge cases."<>
     "\n"<>
-    "Example: fun[x] -> result."<>
+    "Example: fun[{1, 2, 3}] -> {2, 4, 6}."<>
     "\n"<>
-    "Default[parameter]: defaultValue.";
+    "Default[parameter]: {}.";
 ```
 
 
 ## Formatting Rules
 
-All `Usage` messages must follow these requirements:
+All `Usage` messages must adhere to the following rules:
 
-* Start with `functionName::usage =` on the first line.
+* **Declaration**: Begin with `functionName::usage =` on the first line.
 
-* Indent message content with four spaces beginning on the second line.
+* **Indentation**: Indent all message content with four spaces starting from the second line.
 
-* Write each content line as a string `"..."` containing one of the supported field types (see below).
+* **String format**: Write each content line as a quoted string `"..."` containing one of the supported field types (detailed below).
 
-* For multi-line messages, use this pattern:
+* **Multi-line syntax**: For messages spanning multiple lines:
     * End each line except the last with `<>`
     * Connect lines using `"\n"<>`
     * Terminate the final line with `;`
 
-* End field content after the colon with periods.
+* **Punctuation**: End all field content after the colon with periods.
 
-* Fields may appear in any order.
+* **Field order**: Fields may be listed in any order based on logical flow.
 
-* All fields are optional, though function signature is recommended for clarity.
+* **Optional fields**: All fields are optional, though including the function signature is strongly recommended for clarity.
 
-* When rewriting existing usage messages, preserve only the fields that are already present.
+* **Preservation rule**: When updating existing usage messages, preserve only the fields that are already present — do not add new field types that were not previously included.
 
 
 ## Supported Field Types
 
-* **`signature: description`** — Function signature with description of typical usage patterns.
+The following field types are available for documenting function behavior:
+
+* **`signature: description`** — Function signature paired with a description of typical usage patterns and behavior.
 
 * **`Sketch: definition`** — Brief function definition (e.g., `fun1 + fun2` where `fun1` and `fun2` are other functions).
 
-* **`Hint: explanation`** — Additional guidance on usage.
+* **`Hint: explanation`** — Additional guidance, warnings, or best practices for function usage.
 
-* **`Example: example`** — Code example demonstrating typical usage.
+* **`Example: demonstration`** — Brief code example showing typical usage with expected output.
 
-* **`Def[parameter]: description`** — Detailed description of a function parameter.
+* **`Def[parameter]: description`** — Brief description of a specific function parameter.
 
-* **`Value[parameter]: values`** — Enumeration of allowed values for a function parameter.
+* **`Value[parameter]: values`** — Enumeration of allowed values for a specific function parameter.
 
-* **`Default[parameter]: value`** — Default value for a function parameter.
+* **`Default[parameter]: value`** — Default value assigned to a function parameter.
 
