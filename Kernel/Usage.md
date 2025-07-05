@@ -311,7 +311,7 @@
 
 * `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. vars specifies the variables to consider for periodicity.
 
-* `#!wl deltaReduce` - reduce the Dirac delta function.
+* `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
 * `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression. swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously.
 

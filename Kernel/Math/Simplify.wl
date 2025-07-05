@@ -102,7 +102,7 @@ trigPhaseReduce::usage =
 
 
 deltaReduce::usage =
-    "reduce the Dirac delta function."
+    "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 
 
 (* ::Subsection:: *)

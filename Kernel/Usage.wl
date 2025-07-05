@@ -448,7 +448,7 @@ trigPhaseReduce::usage =
     StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\nvars specifies the variables to consider for periodicity."];
 
 deltaReduce::usage =
-    "reduce the Dirac delta function.";
+    "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 
 swap::usage =
     StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\nswap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously."];
