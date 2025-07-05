@@ -253,64 +253,64 @@ FES::usage =
     "FunctionExpand + Simplify.";
 
 AS::usage =
-    "operator form of Assuming.";
+    "operator form: Assuming.";
 
 SSA::usage =
-    "Simplify + Assuming.";
+    "operator form: Simplify + Assuming.";
 
 FSA::usage =
-    "FullSimplify + Assuming.";
+    "operator form: FullSimplify + Assuming.";
 
 FEA::usage =
-    "FunctionExpand + Assuming.";
+    "operator form: FunctionExpand + Assuming.";
 
 FESA::usage =
-    "FunctionExpand + Simplify + Assuming.";
+    "operator form: FunctionExpand + Simplify + Assuming.";
 
 modularize::usage =
-    "modularize scoping constructions.";
+    "modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.";
 
 block::usage =
-    "operator form of Block.";
+    "operator form: Block.";
 
 with::usage =
-    "operator form of With.";
+    "operator form: With.";
 
 module::usage =
-    "operator form of Module.";
+    "operator form: Module.";
 
 rep::usage =
-    "operator form of ReplaceAll.";
+    "operator form: ReplaceAll.";
 
 part::usage =
-    "operator form of Part, GeneralUtilities`Slice.";
+    "operator form: Part.";
 
 plus::usage =
-    "operator form of Plus.";
+    "operator form: Plus.";
 
 minus::usage =
-    "operator form of Minus.";
+    "operator form: Minus.";
 
 times::usage =
-    "operator form of Times.";
+    "operator form: Times.";
 
 divide::usage =
-    "operator form of Divide.";
+    "operator form: Divide.";
 
 series::usage =
-    "operator form of Series + Normal.";
+    "operator form: Series + Normal.";
 
 limit::usage =
-    "opeartor form of Limit.";
+    "operator form: Limit.";
 
 solve::usage =
-    "operator form of Solve.";
+    "operator form: Solve.";
 
 solve1::usage =
-    "operator form of Solve + First.";
+    "operator form: Solve + First.";
 
 collect::usage =
-    "operator form of Collect.";
+    "operator form: Collect.";
 
 
 (* Quest.wl *)

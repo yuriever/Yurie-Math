@@ -177,45 +177,45 @@
 
 * `#!wl FES` - FunctionExpand + Simplify.
 
-* `#!wl AS` - operator form of Assuming.
+* `#!wl AS` - operator form: Assuming.
 
-* `#!wl SSA` - Simplify + Assuming.
+* `#!wl SSA` - operator form: Simplify + Assuming.
 
-* `#!wl FSA` - FullSimplify + Assuming.
+* `#!wl FSA` - operator form: FullSimplify + Assuming.
 
-* `#!wl FEA` - FunctionExpand + Assuming.
+* `#!wl FEA` - operator form: FunctionExpand + Assuming.
 
-* `#!wl FESA` - FunctionExpand + Simplify + Assuming.
+* `#!wl FESA` - operator form: FunctionExpand + Simplify + Assuming.
 
-* `#!wl modularize` - modularize scoping constructions.
+* `#!wl modularize` - modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.
 
-* `#!wl block` - operator form of Block.
+* `#!wl block` - operator form: Block.
 
-* `#!wl with` - operator form of With.
+* `#!wl with` - operator form: With.
 
-* `#!wl module` - operator form of Module.
+* `#!wl module` - operator form: Module.
 
-* `#!wl rep` - operator form of ReplaceAll.
+* `#!wl rep` - operator form: ReplaceAll.
 
-* `#!wl part` - operator form of Part, GeneralUtilities\`Slice.
+* `#!wl part` - operator form: Part.
 
-* `#!wl plus` - operator form of Plus.
+* `#!wl plus` - operator form: Plus.
 
-* `#!wl minus` - operator form of Minus.
+* `#!wl minus` - operator form: Minus.
 
-* `#!wl times` - operator form of Times.
+* `#!wl times` - operator form: Times.
 
-* `#!wl divide` - operator form of Divide.
+* `#!wl divide` - operator form: Divide.
 
-* `#!wl series` - operator form of Series + Normal.
+* `#!wl series` - operator form: Series + Normal.
 
-* `#!wl limit` - opeartor form of Limit.
+* `#!wl limit` - operator form: Limit.
 
-* `#!wl solve` - operator form of Solve.
+* `#!wl solve` - operator form: Solve.
 
-* `#!wl solve1` - operator form of Solve + First.
+* `#!wl solve1` - operator form: Solve + First.
 
-* `#!wl collect` - operator form of Collect.
+* `#!wl collect` - operator form: Collect.
 
 
 <!-- Quest.wl -->
