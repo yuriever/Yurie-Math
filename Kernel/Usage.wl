@@ -6,6 +6,9 @@ relationPowerMono::usage =
 collectDerivative::usage =
     "collect by derivatives.";
 
+powerExpandFactor::usage =
+    "factor the base of powers and then expand.";
+
 
 (* Diff.wl *)
 
@@ -406,64 +409,61 @@ unsafeDeltaSimplify::usage =
 (* Simplify.wl *)
 
 freeze::usage =
-    "freeze subexpressions matching the pattern and then perform the operation.";
+    StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\nThe supported transformation rules are: _->Positive, _->Negative, _->{_,_}.", "\nThe default operation is Simplify."];
 
 freezeNegative::usage =
-    StringJoin["variant of freeze.", "\nNegative is used as the default transformation."];
+    "freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.";
 
 focus::usage =
-    "simplify the argument(s) of the specified head(s).";
+    StringJoin["focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.", "\nThe default operation is Simplify."];
 
 fracFocus::usage =
-    "simplify the numerator and denominator of fractions.";
+    StringJoin["fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).", "\nThe default operation is Simplify."];
 
 fracReduce::usage =
-    "reduce the fraction by multiplying a common factor onto the numerator and denominator.";
+    StringJoin["fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them.", "\nThe default operation is Simplify.", "\nThe default factor is 1."];
 
 powerFocus::usage =
-    "simplify the base and exponent of powers.";
+    StringJoin["powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.", "\nThe default operation is Simplify."];
 
 powerBaseFocus::usage =
-    "simplify the base of powers.";
+    StringJoin["powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.", "\nThe default operation is Simplify."];
 
 powerExponentFocus::usage =
-    "simplify the exponent of powers.";
+    StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\nThe default operation is Simplify."];
 
 powerSeparate::usage =
-    "split a product into powers with specified base(s) and the rests.";
+    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\nbaseP specifies the pattern of power bases to match."];
 
 powerBaseTogether::usage =
-    "make together the specified base(s) of powers.";
+    StringJoin["powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors.", "\nbaseP specifies which bases to combine.", "\nbasePreservedP specifies which bases to preserve.", "\nbaseExpandedP specifies which bases to expand manually."];
 
 powerExpand::usage =
-    "expand the powers with the specified base(s).";
-
-powerExpandFactor::usage =
-    "factor the base of powers and then expand.";
+    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents.", "\nbaseP specifies which bases to combine.", "\nbasePreservedP specifies which bases to preserve.", "\nbaseExpandedP specifies which bases to expand manually."];
 
 powerExponentCollect::usage =
-    "collect powers by the specified exponent(s).";
+    StringJoin["powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents.", "\nThe default is to try to collect all power factors."];
 
 trigPhaseReduce::usage =
-    "reduce phase factors in trigonometric functions by the given assumptions.";
+    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\nvars specifies the variables to consider for periodicity."];
 
 deltaReduce::usage =
     "reduce the Dirac delta function.";
 
 swap::usage =
-    "swap two symbols in an expression.";
+    StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\nswap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously."];
 
 separate::usage =
-    "separate the elements by whether or not satisfying the criteria.";
+    "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
 
 stripPattern::usage =
-    "strip off pattern-related functions in expressions.";
+    StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\nThe default head is Defer."];
 
 vanishing::usage =
-    "Simplify + Flatten + DeleteDuplicates.";
+    StringJoin["vanishing[expr]: clean up the expression by removing redundant vanishing terms.", "\nThis is equivalent to Simplify + Flatten + DeleteDuplicates."];
 
 extractSymbol::usage =
-    "extract symbols from the expression.";
+    StringJoin["extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression.", "\nexclusionList specifies the contexts to exclude."];
 
 extractVariable::usage =
-    "extract variables from the expression.";
+    StringJoin["extractVariable[expr, exclusionList]: extract user-defined variables from the expression.", "\nexclusionList specifies the contexts to exclude."];

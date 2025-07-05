@@ -4,6 +4,8 @@
 
 * `#!wl collectDerivative` - collect by derivatives.
 
+* `#!wl powerExpandFactor` - factor the base of powers and then expand.
+
 
 <!-- Diff.wl -->
 
@@ -283,44 +285,42 @@
 
 <!-- Simplify.wl -->
 
-* `#!wl freeze` - freeze subexpressions matching the pattern and then perform the operation.
+* `#!wl freeze` - freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. The supported transformation rules are: _->Positive, _->Negative, _->{_,_}. The default operation is Simplify.
 
-* `#!wl freezeNegative` - variant of freeze. Negative is used as the default transformation.
+* `#!wl freezeNegative` - freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.
 
-* `#!wl focus` - simplify the argument(s) of the specified head(s).
+* `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads. The default operation is Simplify.
 
-* `#!wl fracFocus` - simplify the numerator and denominator of fractions.
+* `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers). The default operation is Simplify.
 
-* `#!wl fracReduce` - reduce the fraction by multiplying a common factor onto the numerator and denominator.
+* `#!wl fracReduce` - fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them. The default operation is Simplify. The default factor is 1.
 
-* `#!wl powerFocus` - simplify the base and exponent of powers.
+* `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors. The default operation is Simplify.
 
-* `#!wl powerBaseFocus` - simplify the base of powers.
+* `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only. The default operation is Simplify.
 
-* `#!wl powerExponentFocus` - simplify the exponent of powers.
+* `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. The default operation is Simplify.
 
-* `#!wl powerSeparate` - split a product into powers with specified base(s) and the rests.
+* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. baseP specifies the pattern of power bases to match.
 
-* `#!wl powerBaseTogether` - make together the specified base(s) of powers.
+* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. baseP specifies which bases to combine. basePreservedP specifies which bases to preserve. baseExpandedP specifies which bases to expand manually.
 
-* `#!wl powerExpand` - expand the powers with the specified base(s).
+* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. baseP specifies which bases to combine. basePreservedP specifies which bases to preserve. baseExpandedP specifies which bases to expand manually.
 
-* `#!wl powerExpandFactor` - factor the base of powers and then expand.
+* `#!wl powerExponentCollect` - powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents. The default is to try to collect all power factors.
 
-* `#!wl powerExponentCollect` - collect powers by the specified exponent(s).
-
-* `#!wl trigPhaseReduce` - reduce phase factors in trigonometric functions by the given assumptions.
+* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. vars specifies the variables to consider for periodicity.
 
 * `#!wl deltaReduce` - reduce the Dirac delta function.
 
-* `#!wl swap` - swap two symbols in an expression.
+* `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression. swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously.
 
-* `#!wl separate` - separate the elements by whether or not satisfying the criteria.
+* `#!wl separate` - separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.
 
-* `#!wl stripPattern` - strip off pattern-related functions in expressions.
+* `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head. The default head is Defer.
 
-* `#!wl vanishing` - Simplify + Flatten + DeleteDuplicates.
+* `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms. This is equivalent to Simplify + Flatten + DeleteDuplicates.
 
-* `#!wl extractSymbol` - extract symbols from the expression.
+* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. exclusionList specifies the contexts to exclude.
 
-* `#!wl extractVariable` - extract variables from the expression.
+* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. exclusionList specifies the contexts to exclude.
