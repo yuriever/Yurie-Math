@@ -158,112 +158,114 @@
 
 <!-- Matrix.wl -->
 
-* `#!wl matSquareQ` - testing if is a square matrix.
+* `#!wl matSquareQ` - matSquareQ[matrix]: test if the matrix is square.
 
-* `#!wl matComm` - matComm[a,b]=a.b-b.a.
+* `#!wl matComm` - matComm[a, b]: compute the commutator of the two matrices. Sketch: a.b - b.a.
 
-* `#!wl matJordan` - Jordan matrix. matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].
+* `#!wl matJordan` - matJordan[dim, a, b]: construct a Jordan matrix of specified dimension. a: the common diagonal element. b: the common super-diagonal element. Default[b]: 1.
 
-* `#!wl matAngularMomentum` - spin-j representation of angular momentum in the unit of hbar. The column/row indices run from j to -j.
+* `#!wl matAngularMomentum` - matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation. Value[direction]: {"x", "y", "z"|0, 1, -1}. The column/row indices run from j to -j.
 
 
 <!-- OperatorForm.wl -->
 
-* `#!wl SS` - Simplify.
+* `#!wl SS` - OperatorForm: Simplify.
 
-* `#!wl FS` - FullSimplify.
+* `#!wl FS` - OperatorForm: FullSimplify.
 
-* `#!wl FE` - FunctionExpand.
+* `#!wl FE` - OperatorForm: FunctionExpand.
 
-* `#!wl FES` - FunctionExpand + Simplify.
+* `#!wl FES` - OperatorForm: FunctionExpand + Simplify.
 
-* `#!wl AS` - operator form: Assuming.
+* `#!wl AS` - OperatorForm: Assuming.
 
-* `#!wl SSA` - operator form: Simplify + Assuming.
+* `#!wl SSA` - OperatorForm: Simplify + Assuming.
 
-* `#!wl FSA` - operator form: FullSimplify + Assuming.
+* `#!wl FSA` - OperatorForm: FullSimplify + Assuming.
 
-* `#!wl FEA` - operator form: FunctionExpand + Assuming.
+* `#!wl FEA` - OperatorForm: FunctionExpand + Assuming.
 
-* `#!wl FESA` - operator form: FunctionExpand + Simplify + Assuming.
+* `#!wl FESA` - OperatorForm: FunctionExpand + Simplify + Assuming.
 
 * `#!wl modularize` - modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.
 
-* `#!wl block` - operator form: Block.
+* `#!wl block` - OperatorForm: Block.
 
-* `#!wl with` - operator form: With.
+* `#!wl with` - OperatorForm: With.
 
-* `#!wl module` - operator form: Module.
+* `#!wl module` - OperatorForm: Module.
 
-* `#!wl rep` - operator form: ReplaceAll.
+* `#!wl rep` - rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.
 
-* `#!wl part` - operator form: Part.
+* `#!wl repdeep` - repdeep[rules][level][expr]: operator form of Replace with the rules being flattened. Default[level]: All.
 
-* `#!wl plus` - operator form: Plus.
+* `#!wl part` - OperatorForm: Part.
 
-* `#!wl minus` - operator form: Minus.
+* `#!wl plus` - OperatorForm: Plus.
 
-* `#!wl times` - operator form: Times.
+* `#!wl minus` - OperatorForm: Minus.
 
-* `#!wl divide` - operator form: Divide.
+* `#!wl times` - OperatorForm: Times.
 
-* `#!wl series` - operator form: Series + Normal.
+* `#!wl divide` - OperatorForm: Divide.
 
-* `#!wl limit` - operator form: Limit.
+* `#!wl series` - OperatorForm: Series + Normal.
 
-* `#!wl solve` - operator form: Solve.
+* `#!wl limit` - OperatorForm: Limit.
 
-* `#!wl solve1` - operator form: Solve + First.
+* `#!wl solve` - OperatorForm: Solve.
 
-* `#!wl collect` - operator form: Collect.
+* `#!wl solve1` - OperatorForm: Solve + First.
+
+* `#!wl collect` - OperatorForm: Collect.
 
 
 <!-- Quest.wl -->
 
-* `#!wl isN` - zero or positive integers.
+* `#!wl isN` - isN[x..]: test whether the arguments are natural numbers.
 
-* `#!wl isZ` - integers.
+* `#!wl isZ` - isZ[x..]: test whether the arguments are integers.
 
-* `#!wl isZP` - positive integers.
+* `#!wl isZP` - isZP[x..]: test whether the arguments are positive integers.
 
-* `#!wl isZN` - negative integers.
+* `#!wl isZN` - isZN[x..]: test whether the arguments are negative integers.
 
-* `#!wl isZP0` - zero or positive integers.
+* `#!wl isZP0` - isZP0[x..]: test whether the arguments are zero or positive integers.
 
-* `#!wl isZN0` - zero or negative integers.
+* `#!wl isZN0` - isZN0[x..]: test whether the arguments are zero or negative integers.
 
-* `#!wl isQ` - rational numbers.
+* `#!wl isQ` - isQ[x..]: test whether the arguments are rationals.
 
-* `#!wl isR` - real numbers.
+* `#!wl isR` - isR[x..]: test whether the arguments are reals.
 
-* `#!wl isRP` - positive real numbers.
+* `#!wl isRP` - isRP[x..]: test whether the arguments are positive reals.
 
-* `#!wl isRN` - negative real numbers.
+* `#!wl isRN` - isRN[x..]: test whether the arguments are negative reals.
 
-* `#!wl isRP0` - zero or positive real numbers.
+* `#!wl isRP0` - isRP0[x..]: test whether the arguments are zero or positive reals.
 
-* `#!wl isRN0` - zero or negative real numbers.
+* `#!wl isRN0` - isRN0[x..]: test whether the arguments are zero or negative reals.
 
-* `#!wl isC` - complex numbers.
+* `#!wl isC` - isC[x..]: test whether the arguments are complex numbers.
 
-* `#!wl presentQ` - Not + FreeQ.
+* `#!wl presentQ` - presentQ[pattern][expr]: test whether the pattern occurs in the expression.Not + FreeQ.
 
-* `#!wl linearQ` - linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.
+* `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.
 
-* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: whether the expression is syntactically negative.
+* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
 
-* `#!wl patternPresentQ` - patternPresentQ[expr]: whether any pattern occurs in the expression.
+* `#!wl patternPresentQ` - patternPresentQ[expr]: test whether any pattern construction occurs in the expression.
 
-* `#!wl patternFreeQ` - patternFreeQ[expr]: whether no pattern occurs in the expression.
+* `#!wl patternFreeQ` - patternFreeQ[expr]: test whether no pattern construction occurs in the expression.
 
 
 <!-- Relation.wl -->
 
-* `#!wl relationMellinBarnes` - Mellin-Barnes relation.
+* `#!wl relationMellinBarnes` - relationMellinBarnes[(x+y)^a, x, s]: generate Mellin-Barnes integral representation for the power factor. Example: (x+y)^a -> mg*x^s*y^(a-s)*INT[s].
 
-* `#!wl relationFeynman` - Feynman-Schwinger relation.
+* `#!wl relationFeynman` - relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors. Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].
 
-* `#!wl relationPowerPhase` - relation for power phase.
+* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. base: specify the power base. expanded: specify the numerator factors to separate. expanded2: specify the denominator factors to separate and can be omitted. sign: specify the phase direction.
 
 
 <!-- SimplifyUnsafe.wl -->
@@ -283,31 +285,31 @@
 
 <!-- Simplify.wl -->
 
-* `#!wl freeze` - freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. The supported transformation rules are: _->Positive, _->Negative, _->{_,_}. The default operation is Simplify.
+* `#!wl freeze` - freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. freeze[pattern->transform, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}. Default[operation]: Simplify. Default[level]: Infinity.
 
 * `#!wl freezeNegative` - freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.
 
-* `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads. The default operation is Simplify.
+* `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers). The default operation is Simplify.
+* `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers). If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl fracReduce` - fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them. The default operation is Simplify. The default factor is 1.
+* `#!wl fracReduce` - fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them. Default[operation]: Simplify. Default[factor]: 1.
 
-* `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors. The default operation is Simplify.
+* `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only. The default operation is Simplify.
+* `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. The default operation is Simplify.
+* `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. baseP specifies the pattern of power bases to match.
+* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. baseP: specify the pattern of power bases to match.
 
-* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. baseP specifies which bases to combine. basePreservedP specifies which bases to preserve. baseExpandedP specifies which bases to expand manually.
+* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. baseP: specify the bases to combine. basePreservedP: specify the bases to preserve. baseExpandedP: specify the bases to expand manually. To skip baseP/basePreservedP, use All/None.
 
-* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. baseP specifies which bases to combine. basePreservedP specifies which bases to preserve. baseExpandedP specifies which bases to expand manually.
+* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. baseP: specify the bases to combine. basePreservedP: specify the bases to preserve. baseExpandedP: specify the bases to expand manually. To skip baseP/basePreservedP, use All/None.
 
-* `#!wl powerExponentCollect` - powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents. The default is to try to collect all power factors.
+* `#!wl powerExponentCollect` - powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents. Default[]: try to collect all power factors.
 
-* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. vars specifies the variables to consider for periodicity.
+* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. vars: specify the variables to consider for periodicity.
 
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
@@ -315,10 +317,10 @@
 
 * `#!wl separate` - separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.
 
-* `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head. The default head is Defer.
+* `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head. Default[head]: Defer.
 
-* `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms. This is equivalent to Simplify + Flatten + DeleteDuplicates.
+* `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms. Sketch: Simplify + Flatten + DeleteDuplicates.
 
-* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. exclusionList specifies the contexts to exclude.
+* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. exclusionList: specify the contexts to exclude.
 
-* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. exclusionList specifies the contexts to exclude.
+* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. exclusionList: specify the contexts to exclude.

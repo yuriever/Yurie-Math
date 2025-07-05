@@ -15,19 +15,27 @@ Needs["Yurie`Math`"];
 
 
 matSquareQ::usage =
-    "testing if is a square matrix.";
+    "matSquareQ[matrix]: test if the matrix is square.";
 
 matComm::usage =
-    "matComm[a,b]=a.b-b.a.";
+    "matComm[a, b]: compute the commutator of the two matrices."<>
+    "\n"<>
+    "Sketch: a.b - b.a.";
 
 
 matJordan::usage =
-    "Jordan matrix."<>
+    "matJordan[dim, a, b]: construct a Jordan matrix of specified dimension."<>
     "\n"<>
-    "matJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1].";
+    "a: the common diagonal element."<>
+    "\n"<>
+    "b: the common super-diagonal element."<>
+    "\n"<>
+    "Default[b]: 1.";
 
 matAngularMomentum::usage =
-    "spin-j representation of angular momentum in the unit of hbar."<>
+    "matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation."<>
+    "\n"<>
+    "Value[direction]: {\"x\", \"y\", \"z\"|0, 1, -1}."<>
     "\n"<>
     "The column/row indices run from j to -j.";
 
@@ -58,7 +66,7 @@ matComm[x_,y_] :=
     x . y-y . x;
 
 
-matJordan[dim_Integer,a_,b_:1] :=
+matJordan[dim_Integer,a_,b_,Up] :=
     Normal@SparseArray[
         {
             {i_,i_}:>a,
@@ -67,11 +75,23 @@ matJordan[dim_Integer,a_,b_:1] :=
         {dim,dim}
     ];
 
+matJordan[dim_Integer,a_,b_,Down] :=
+    Normal@SparseArray[
+        {
+            {i_,i_}:>a,
+            {i_,j_}/;j==i-1:>b
+        },
+        {dim,dim}
+    ];
+
 matJordan[dim_Integer,a_] :=
-    matJordan[dim,a,1];
+    matJordan[dim,a,1,Up];
+
+matJordan[dim_Integer,a_,b_] :=
+    matJordan[dim,a,b,Up];
 
 
-matAngularMomentum[j_]["z"] :=
+matAngularMomentum[j_]["z"|0] :=
     matAngularMomentum[j]["z"] =
         Normal@SparseArray[{{i_,i_}:>id[j][i]},{dim[j],dim[j]}];
 

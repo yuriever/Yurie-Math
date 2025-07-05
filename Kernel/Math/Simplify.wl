@@ -21,9 +21,13 @@ Needs["Yurie`Math`"];
 freeze::usage =
     "freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze."<>
     "\n"<>
-    "The supported transformation rules are: _->Positive, _->Negative, _->{_,_}."<>
+    "freeze[pattern->transform, operation, level][expr]: additionally perform the transform to the frozen subexpressions."<>
     "\n"<>
-    "Default[operation]: Simplify.";
+    "Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}."<>
+    "\n"<>
+    "Default[operation]: Simplify."<>
+    "\n"<>
+    "Default[level]: Infinity.";
 
 
 freezeNegative::usage =
@@ -37,6 +41,8 @@ freezeNegative::usage =
 focus::usage =
     "focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads."<>
     "\n"<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "\n"<>
     "Default[operation]: Simplify.";
 
 
@@ -46,6 +52,8 @@ focus::usage =
 
 fracFocus::usage =
     "fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers)."<>
+    "\n"<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
@@ -64,45 +72,55 @@ fracReduce::usage =
 powerFocus::usage =
     "powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors."<>
     "\n"<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "\n"<>
     "Default[operation]: Simplify.";
 
 powerBaseFocus::usage =
     "powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only."<>
+    "\n"<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerExponentFocus::usage =
     "powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only."<>
     "\n"<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "\n"<>
     "Default[operation]: Simplify.";
 
 powerSeparate::usage =
     "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
     "\n"<>
-    "baseP: specify the pattern of power bases to match."
+    "Def[baseP]: the pattern of power bases to match."
 
 powerBaseTogether::usage =
     "powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors."<>
     "\n"<>
-    "baseP: specify the bases to combine."<>
+    "Def[baseP]: the pattern of power bases to combine."<>
     "\n"<>
-    "basePreservedP: specify the bases to preserve."<>
+    "Def[basePreservedP]: the pattern of power bases to preserve."<>
     "\n"<>
-    "baseExpandedP: specify the bases to expand manually.";
+    "Def[baseExpandedP]: the pattern of power bases to expand manually."<>
+    "\n"<>
+    "Hint: to skip baseP/basePreservedP, use All/None.";
 
 powerExpand::usage =
     "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents."<>
     "\n"<>
-    "baseP: specify the bases to combine."<>
+    "Def[baseP]: the pattern of power bases to combine."<>
     "\n"<>
-    "basePreservedP: specify the bases to preserve."<>
+    "Def[basePreservedP]: the pattern of power bases to preserve."<>
     "\n"<>
-    "baseExpandedP: specify the bases to expand manually.";
+    "Def[baseExpandedP]: the pattern of power bases to expand manually."<>
+    "\n"<>
+    "Hint: to skip baseP/basePreservedP, use All/None.";
 
 powerExponentCollect::usage =
-    "powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents."<>
+    "powerExponentCollect[exponent...][expr]: collect and combine power factors with common exponents."<>
     "\n"<>
-    "Default[]: try to collect all power factors.";
+    "Hint: if no exponent is specified, try to collect all power factors.";
 
 
 (* ::Subsection:: *)
@@ -110,9 +128,9 @@ powerExponentCollect::usage =
 
 
 trigPhaseReduce::usage =
-    "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
+    "trigPhaseReduce[var..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
     "\n"<>
-    "vars: specify the variables to consider for periodicity.";
+    "Def[var]: the variables to consider for periodicity.";
 
 
 (* ::Subsection:: *)
@@ -146,18 +164,18 @@ stripPattern::usage =
 vanishing::usage =
     "vanishing[expr]: clean up the expression by removing redundant vanishing terms."<>
     "\n"<>
-    "Shortcut: Simplify + Flatten + DeleteDuplicates.";
+    "Sketch: Simplify + Flatten + DeleteDuplicates.";
 
 
 extractSymbol::usage =
     "extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression."<>
     "\n"<>
-    "exclusionList: specify the contexts to exclude.";
+    "Def[exclusionList]: the contexts to exclude.";
 
 extractVariable::usage =
     "extractVariable[expr, exclusionList]: extract user-defined variables from the expression."<>
     "\n"<>
-    "exclusionList: specify the contexts to exclude.";
+    "Def[exclusionList]: the contexts to exclude.";
 
 
 (* ::Section:: *)

@@ -100,7 +100,7 @@ dyeOff::usage =
 (* Gamma.wl *)
 
 gammaSimplify::usage =
-    StringJoin["simplify Gamma factors in the expression.", "\nDeveloper`GammaSimplify"];
+    StringJoin["simplify Gamma factors in the expression.", "\n", "Developer`GammaSimplify"];
 
 gammaFrom::usage =
     "expand everything to Gamma factors.";
@@ -226,241 +226,244 @@ lieDynkinDiagram::usage =
 (* Matrix.wl *)
 
 matSquareQ::usage =
-    "testing if is a square matrix.";
+    "matSquareQ[matrix]: test if the matrix is square.";
 
 matComm::usage =
-    "matComm[a,b]=a.b-b.a.";
+    StringJoin["matComm[a, b]: compute the commutator of the two matrices.", "\n", "Sketch: a.b - b.a."];
 
 matJordan::usage =
-    StringJoin["Jordan matrix.", "\nmatJordan[dim_Integer,a_Diagonal,b_OffDiagonal:1]."];
+    StringJoin["matJordan[dim, a, b]: construct a Jordan matrix of specified dimension.", "\n", "a: the common diagonal element.", "\n", "b: the common super-diagonal element.", "\n", "Default[b]: 1."];
 
 matAngularMomentum::usage =
-    StringJoin["spin-j representation of angular momentum in the unit of hbar.", "\nThe column/row indices run from j to -j."];
+    StringJoin["matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation.", "\n", "Value[direction]: {\"x\", \"y\", \"z\"|0, 1, -1}.", "\n", "The column/row indices run from j to -j."];
 
 
 (* OperatorForm.wl *)
 
 SS::usage =
-    "Simplify.";
+    "OperatorForm: Simplify.";
 
 FS::usage =
-    "FullSimplify.";
+    "OperatorForm: FullSimplify.";
 
 FE::usage =
-    "FunctionExpand.";
+    "OperatorForm: FunctionExpand.";
 
 FES::usage =
-    "FunctionExpand + Simplify.";
+    "OperatorForm: FunctionExpand + Simplify.";
 
 AS::usage =
-    "operator form: Assuming.";
+    "OperatorForm: Assuming.";
 
 SSA::usage =
-    "operator form: Simplify + Assuming.";
+    "OperatorForm: Simplify + Assuming.";
 
 FSA::usage =
-    "operator form: FullSimplify + Assuming.";
+    "OperatorForm: FullSimplify + Assuming.";
 
 FEA::usage =
-    "operator form: FunctionExpand + Assuming.";
+    "OperatorForm: FunctionExpand + Assuming.";
 
 FESA::usage =
-    "operator form: FunctionExpand + Simplify + Assuming.";
+    "OperatorForm: FunctionExpand + Simplify + Assuming.";
 
 modularize::usage =
     "modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.";
 
 block::usage =
-    "operator form: Block.";
+    "OperatorForm: Block.";
 
 with::usage =
-    "operator form: With.";
+    "OperatorForm: With.";
 
 module::usage =
-    "operator form: Module.";
+    "OperatorForm: Module.";
 
 rep::usage =
-    "operator form: ReplaceAll.";
+    "rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.";
+
+repdeep::usage =
+    StringJoin["repdeep[rules][level][expr]: operator form of Replace with the rules being flattened.", "\n", "Default[level]: All."];
 
 part::usage =
-    "operator form: Part.";
+    "OperatorForm: Part.";
 
 plus::usage =
-    "operator form: Plus.";
+    "OperatorForm: Plus.";
 
 minus::usage =
-    "operator form: Minus.";
+    "OperatorForm: Minus.";
 
 times::usage =
-    "operator form: Times.";
+    "OperatorForm: Times.";
 
 divide::usage =
-    "operator form: Divide.";
+    "OperatorForm: Divide.";
 
 series::usage =
-    "operator form: Series + Normal.";
+    "OperatorForm: Series + Normal.";
 
 limit::usage =
-    "operator form: Limit.";
+    "OperatorForm: Limit.";
 
 solve::usage =
-    "operator form: Solve.";
+    "OperatorForm: Solve.";
 
 solve1::usage =
-    "operator form: Solve + First.";
+    "OperatorForm: Solve + First.";
 
 collect::usage =
-    "operator form: Collect.";
+    "OperatorForm: Collect.";
 
 
 (* Quest.wl *)
 
 isN::usage =
-    "zero or positive integers.";
+    "isN[x..]: test whether the arguments are natural numbers.";
 
 isZ::usage =
-    "integers.";
+    "isZ[x..]: test whether the arguments are integers.";
 
 isZP::usage =
-    "positive integers.";
+    "isZP[x..]: test whether the arguments are positive integers.";
 
 isZN::usage =
-    "negative integers.";
+    "isZN[x..]: test whether the arguments are negative integers.";
 
 isZP0::usage =
-    "zero or positive integers.";
+    "isZP0[x..]: test whether the arguments are zero or positive integers.";
 
 isZN0::usage =
-    "zero or negative integers.";
+    "isZN0[x..]: test whether the arguments are zero or negative integers.";
 
 isQ::usage =
-    "rational numbers.";
+    "isQ[x..]: test whether the arguments are rationals.";
 
 isR::usage =
-    "real numbers.";
+    "isR[x..]: test whether the arguments are reals.";
 
 isRP::usage =
-    "positive real numbers.";
+    "isRP[x..]: test whether the arguments are positive reals.";
 
 isRN::usage =
-    "negative real numbers.";
+    "isRN[x..]: test whether the arguments are negative reals.";
 
 isRP0::usage =
-    "zero or positive real numbers.";
+    "isRP0[x..]: test whether the arguments are zero or positive reals.";
 
 isRN0::usage =
-    "zero or negative real numbers.";
+    "isRN0[x..]: test whether the arguments are zero or negative reals.";
 
 isC::usage =
-    "complex numbers.";
+    "isC[x..]: test whether the arguments are complex numbers.";
 
 presentQ::usage =
-    "Not + FreeQ.";
+    StringJoin["presentQ[pattern][expr]: test whether the pattern occurs in the expression.", "Not + FreeQ."];
 
 linearQ::usage =
-    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
+    StringJoin["linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present.", "\n", "linearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present."];
 
 syntacticNegativeQ::usage =
-    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
+    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
 
 patternPresentQ::usage =
-    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
+    "patternPresentQ[expr]: test whether any pattern construction occurs in the expression.";
 
 patternFreeQ::usage =
-    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
+    "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
 
 (* Relation.wl *)
 
 relationMellinBarnes::usage =
-    "Mellin-Barnes relation.";
+    StringJoin["relationMellinBarnes[(x+y)^a, x, s]: generate Mellin-Barnes integral representation for the power factor.", "\n", "Example: (x+y)^a -> mg*x^s*y^(a-s)*INT[s]."];
 
 relationFeynman::usage =
-    "Feynman-Schwinger relation.";
+    StringJoin["relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors.", "\n", "Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s]."];
 
 relationPowerPhase::usage =
-    "relation for power phase.";
+    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "base: specify the power base.", "\n", "expanded: specify the numerator factors to separate.", "\n", "expanded2: specify the denominator factors to separate and can be omitted.", "\n", "sign: specify the phase direction."];
 
 
 (* SimplifyUnsafe.wl *)
 
 unsafePowerTogether::usage =
-    StringJoin["unsafePowerTogether[expr]: try to combine power factors.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafePowerTogether[expr]: try to combine power factors.", "\n", "May produce mathematically invalid result."];
 
 unsafePowerApart::usage =
-    StringJoin["unsafePowerApart[expr]: try to separate power factors.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafePowerApart[expr]: try to separate power factors.", "\n", "May produce mathematically invalid result."];
 
 unsafePowerSimplify::usage =
-    StringJoin["unsafePowerSimplify[expr]: try to simplify power factors.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafePowerSimplify[expr]: try to simplify power factors.", "\n", "May produce mathematically invalid result."];
 
 unsafeExprTogether::usage =
-    StringJoin["unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values.", "\n", "May produce mathematically invalid result."];
 
 unsafeExprApart::usage =
-    StringJoin["unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values.", "\n", "May produce mathematically invalid result."];
 
 unsafeExprSimplify::usage =
-    StringJoin["unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values.", "\nMay produce mathematically invalid result."];
+    StringJoin["unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values.", "\n", "May produce mathematically invalid result."];
 
 
 (* Simplify.wl *)
 
 freeze::usage =
-    StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\nThe supported transformation rules are: _->Positive, _->Negative, _->{_,_}.", "\nThe default operation is Simplify."];
+    StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\n", "freeze[pattern->transform, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\n", "Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}.", "\n", "Default[operation]: Simplify.", "\n", "Default[level]: Infinity."];
 
 freezeNegative::usage =
     "freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.";
 
 focus::usage =
-    StringJoin["focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.", "\nThe default operation is Simplify."];
+    StringJoin["focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.", "\n", "If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 fracFocus::usage =
-    StringJoin["fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).", "\nThe default operation is Simplify."];
+    StringJoin["fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).", "\n", "If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 fracReduce::usage =
-    StringJoin["fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them.", "\nThe default operation is Simplify.", "\nThe default factor is 1."];
+    StringJoin["fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them.", "\n", "Default[operation]: Simplify.", "\n", "Default[factor]: 1."];
 
 powerFocus::usage =
-    StringJoin["powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.", "\nThe default operation is Simplify."];
+    StringJoin["powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.", "\n", "If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerBaseFocus::usage =
-    StringJoin["powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.", "\nThe default operation is Simplify."];
+    StringJoin["powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.", "\n", "If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerExponentFocus::usage =
-    StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\nThe default operation is Simplify."];
+    StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\n", "If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerSeparate::usage =
-    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\nbaseP specifies the pattern of power bases to match."];
+    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "baseP: specify the pattern of power bases to match."];
 
 powerBaseTogether::usage =
-    StringJoin["powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors.", "\nbaseP specifies which bases to combine.", "\nbasePreservedP specifies which bases to preserve.", "\nbaseExpandedP specifies which bases to expand manually."];
+    StringJoin["powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors.", "\n", "baseP: specify the bases to combine.", "\n", "basePreservedP: specify the bases to preserve.", "\n", "baseExpandedP: specify the bases to expand manually.", "\n", "To skip baseP/basePreservedP, use All/None."];
 
 powerExpand::usage =
-    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents.", "\nbaseP specifies which bases to combine.", "\nbasePreservedP specifies which bases to preserve.", "\nbaseExpandedP specifies which bases to expand manually."];
+    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents.", "\n", "baseP: specify the bases to combine.", "\n", "basePreservedP: specify the bases to preserve.", "\n", "baseExpandedP: specify the bases to expand manually.", "\n", "To skip baseP/basePreservedP, use All/None."];
 
 powerExponentCollect::usage =
-    StringJoin["powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents.", "\nThe default is to try to collect all power factors."];
+    StringJoin["powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents.", "\n", "Default[]: try to collect all power factors."];
 
 trigPhaseReduce::usage =
-    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\nvars specifies the variables to consider for periodicity."];
+    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "vars: specify the variables to consider for periodicity."];
 
 deltaReduce::usage =
     "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 
 swap::usage =
-    StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\nswap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously."];
+    StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\n", "swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously."];
 
 separate::usage =
     "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
 
 stripPattern::usage =
-    StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\nThe default head is Defer."];
+    StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\n", "Default[head]: Defer."];
 
 vanishing::usage =
-    StringJoin["vanishing[expr]: clean up the expression by removing redundant vanishing terms.", "\nThis is equivalent to Simplify + Flatten + DeleteDuplicates."];
+    StringJoin["vanishing[expr]: clean up the expression by removing redundant vanishing terms.", "\n", "Sketch: Simplify + Flatten + DeleteDuplicates."];
 
 extractSymbol::usage =
-    StringJoin["extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression.", "\nexclusionList specifies the contexts to exclude."];
+    StringJoin["extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression.", "\n", "exclusionList: specify the contexts to exclude."];
 
 extractVariable::usage =
-    StringJoin["extractVariable[expr, exclusionList]: extract user-defined variables from the expression.", "\nexclusionList specifies the contexts to exclude."];
+    StringJoin["extractVariable[expr, exclusionList]: extract user-defined variables from the expression.", "\n", "exclusionList: specify the contexts to exclude."];

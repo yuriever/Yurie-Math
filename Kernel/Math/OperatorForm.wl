@@ -19,16 +19,16 @@ Needs["Yurie`Math`"];
 
 
 SS::usage =
-    "Shortcut: Simplify.";
+    "OperatorForm: Simplify.";
 
 FS::usage =
-    "Shortcut: FullSimplify.";
+    "OperatorForm: FullSimplify.";
 
 FE::usage =
-    "Shortcut: FunctionExpand.";
+    "OperatorForm: FunctionExpand.";
 
 FES::usage =
-    "Shortcut: FunctionExpand + Simplify.";
+    "OperatorForm: FunctionExpand + Simplify.";
 
 
 AS::usage =
