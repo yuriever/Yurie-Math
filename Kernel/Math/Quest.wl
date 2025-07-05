@@ -15,62 +15,64 @@ Needs["Yurie`Math`"];
 
 
 isN::usage =
-    "zero or positive integers.";
+    "isN[x..]: test whether the arguments are natural numbers.";
 
 isZ::usage =
-    "integers.";
+    "isZ[x..]: test whether the arguments are integers.";
 
 isZP::usage =
-    "positive integers.";
+    "isZP[x..]: test whether the arguments are positive integers.";
 
 isZN::usage =
-    "negative integers.";
+    "isZN[x..]: test whether the arguments are negative integers.";
 
 isZP0::usage =
-    "zero or positive integers.";
+    "isZP0[x..]: test whether the arguments are zero or positive integers.";
 
 isZN0::usage =
-    "zero or negative integers.";
+    "isZN0[x..]: test whether the arguments are zero or negative integers.";
 
 
 isQ::usage =
-    "rational numbers.";
+    "isQ[x..]: test whether the arguments are rationals.";
 
 
 isR::usage =
-    "real numbers.";
+    "isR[x..]: test whether the arguments are reals.";
 
 isRP::usage =
-    "positive real numbers.";
+    "isRP[x..]: test whether the arguments are positive reals.";
 
 isRN::usage =
-    "negative real numbers.";
+    "isRN[x..]: test whether the arguments are negative reals.";
 
 isRP0::usage =
-    "zero or positive real numbers.";
+    "isRP0[x..]: test whether the arguments are zero or positive reals.";
 
 isRN0::usage =
-    "zero or negative real numbers.";
+    "isRN0[x..]: test whether the arguments are zero or negative reals.";
 
 
 isC::usage =
-    "complex numbers.";
+    "isC[x..]: test whether the arguments are complex numbers.";
 
 
 presentQ::usage =
+    "presentQ[pattern][expr]: test whether the pattern occurs in the expression."<>
     "Not + FreeQ.";
 
 linearQ::usage =
-    "linearQ[expr,var|varList]: whether the expression is linear and at least one variable is present.";
+    "linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present."<>
+    "\nlinearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.";
 
 syntacticNegativeQ::usage =
-    "syntacticNegativeQ[expr]: whether the expression is syntactically negative.";
+    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
 
 patternPresentQ::usage =
-    "patternPresentQ[expr]: whether any pattern occurs in the expression.";
+    "patternPresentQ[expr]: test whether any pattern construction occurs in the expression.";
 
 patternFreeQ::usage =
-    "patternFreeQ[expr]: whether no pattern occurs in the expression.";
+    "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
 
 (* ::Section:: *)
