@@ -188,7 +188,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    expr = (ε - ε*χ)^a*(εb - εb*χb)^b*(1 + a/b)^C[1]*(1 - a/b)^C[3]*(1 + x/y)^C[2]; 
+    expr = (ε - ε*χ)^a*(εb - εb*χb)^b; 
     ,
     Null
     ,
@@ -198,49 +198,57 @@ VerificationTest[
 VerificationTest[
     powerExpand[][expr]
     ,
-    (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2]*(ε - ε*χ)^a*(εb - εb*χb)^b)/y^C[2]
+    (ε - ε*χ)^a*(εb - εb*χb)^b
     ,
     TestID->"24-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerExpand[All, None, ε - ε*χ -> {ε, 1 - χ}][expr]
+    powerExpandBy[ε - ε*χ -> {ε, 1 - χ}][expr]
     ,
-    (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2]*ε^a*(1 - χ)^a*(εb - εb*χb)^b)/y^C[2]
+    ε^a*(1 - χ)^a*(εb - εb*χb)^b
     ,
     TestID->"25-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerExpand[All, None, {ε - ε*χ -> {ε, 1 - χ}, εb - εb*χb -> {εb, 1 - χb}}][expr]
+    powerExpandBy[ε - ε*χ -> {ε, 1 - χ}, εb - εb*χb -> {εb, 1 - χb}][expr]
     ,
-    (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2]*ε^a*εb^b*(1 - χ)^a*(1 - χb)^b)/y^C[2]
+    ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
     ,
     TestID->"26-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerExpand[All, None, {ε - ε*χ -> ε | 1 - χ, εb - εb*χb -> εb | 1 - χb}][expr]
+    powerExpandBy[ε - ε*χ -> ε | 1 - χ, εb - εb*χb -> εb | 1 - χb][expr]
     ,
-    (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2]*ε^a*εb^b*(1 - χ)^a*(1 - χb)^b)/y^C[2]
+    ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
     ,
     TestID->"27-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerExpand[All, 1 + x/y, {ε - ε*χ -> {ε, 1 - χ}, εb - εb*χb -> {εb, 1 - χb}}][expr]
+    expr = (ε*(1 - χ))^a*(εb*(1 - χb))^b; 
     ,
-    b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(1 + x/y)^C[2]*ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
+    Null
     ,
     TestID->"28-Simplify-power.nb"
 ]
 
 VerificationTest[
-    powerExpand[1 + x/y, None, {ε - ε*χ -> {ε, 1 - χ}, εb - εb*χb -> {εb, 1 - χb}}][expr]
+    powerExpand[][expr]
     ,
-    ((1 - a/b)^C[3]*(1 + a/b)^C[1]*(x + y)^C[2]*ε^a*εb^b*(1 - χ)^a*(1 - χb)^b)/y^C[2]
+    (ε - ε*χ)^a*(εb - εb*χb)^b
     ,
     TestID->"29-Simplify-power.nb"
+]
+
+VerificationTest[
+    powerExpandBy[ε*(rest_.) :> {ε, rest}, εb*(rest_.) :> {εb, rest}][expr]
+    ,
+    ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
+    ,
+    TestID->"30-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -248,7 +256,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"30-Simplify-power.nb"
+    TestID->"31-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -256,7 +264,7 @@ VerificationTest[
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"31-Simplify-power.nb"
+    TestID->"32-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -264,7 +272,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"32-Simplify-power.nb"
+    TestID->"33-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -272,7 +280,7 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"33-Simplify-power.nb"
+    TestID->"34-Simplify-power.nb"
 ]
 
 VerificationTest[
