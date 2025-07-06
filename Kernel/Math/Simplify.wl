@@ -448,11 +448,14 @@ togetherAndSimplify[expr_] :=
     Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
 
 
-togetherSpecifiedBase[rule_Rule|(List|Alternatives)[rules__Rule]][expr_] :=
-    expr//ReplaceAll[Map[togetherRuleForSpecifiedBase,{rule,rules}]];
+togetherSpecifiedBase[rule:_Rule|_RuleDelayed][expr_] :=
+    expr//ReplaceAll[togetherRuleForSpecifiedBase[rule]];
+
+togetherSpecifiedBase[(List|Alternatives)[rules:(_Rule|_RuleDelayed)...]][expr_] :=
+    expr//ReplaceAll[Map[togetherRuleForSpecifiedBase,{rules}]];
 
 
-togetherRuleForSpecifiedBase[Rule[base_,(List|Alternatives)[factors__]]] :=
+togetherRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
     Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
