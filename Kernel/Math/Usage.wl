@@ -418,22 +418,25 @@ powerSeparate::usage =
     StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Def[baseP]: the pattern of power bases to match."];
 
 powerBaseTogether::usage =
-    StringJoin["powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve.", "\n", "Def[baseExpandedP]: the pattern of power bases to expand manually.", "\n", "Hint: to skip baseP/basePreservedP, use All/None."];
+    StringJoin["powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve."];
 
 powerExpand::usage =
-    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve.", "\n", "Def[baseExpandedP]: the pattern of power bases to expand manually.", "\n", "Hint: to skip baseP/basePreservedP, use All/None."];
+    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve."];
+
+powerExpandBy::usage =
+    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Def[rules]: rules of the form base->{factor1, factor2, ...}."];
 
 powerExponentCollect::usage =
-    StringJoin["powerExponentCollect[exponent...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
+    StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 trigPhaseReduce::usage =
-    StringJoin["trigPhaseReduce[var..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Def[var]: the variables to consider for periodicity."];
+    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Def[vars]: the variables to consider for periodicity."];
 
 deltaReduce::usage =
     "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 
 swap::usage =
-    StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\n", "swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously."];
+    StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\n", "swap[{a, b}..][expr]: swap the pairs simultaneously."];
 
 separate::usage =
     "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";

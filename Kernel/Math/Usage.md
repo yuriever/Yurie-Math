@@ -290,17 +290,19 @@
 
 * `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. Def[baseP]: the pattern of power bases to match.
 
-* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve. Def[baseExpandedP]: the pattern of power bases to expand manually. Hint: to skip baseP/basePreservedP, use All/None.
+* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve.
 
-* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve. Def[baseExpandedP]: the pattern of power bases to expand manually. Hint: to skip baseP/basePreservedP, use All/None.
+* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve.
 
-* `#!wl powerExponentCollect` - powerExponentCollect[exponent...][expr]: collect and combine power factors with common exponents. Hint: if no exponent is specified, try to collect all power factors.
+* `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules. Def[rules]: rules of the form base->{factor1, factor2, ...}.
 
-* `#!wl trigPhaseReduce` - trigPhaseReduce[var..][expr]: reduce phase factors in trigonometric functions using periodicity. Def[var]: the variables to consider for periodicity.
+* `#!wl powerExponentCollect` - powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents. Hint: if no exponent is specified, try to collect all power factors.
+
+* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. Def[vars]: the variables to consider for periodicity.
 
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
-* `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression. swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously.
+* `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression. swap[{a, b}..][expr]: swap the pairs simultaneously.
 
 * `#!wl separate` - separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.
 

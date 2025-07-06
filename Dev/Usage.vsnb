@@ -2,16 +2,16 @@
  "cells": [
   {
    "kind": 2,
-   "value": "<<Yurie`Math`\n<<Yurie`Math`Info`\n<<Yurie`Autocode`\n\n\nexportPublicSymbolUsage[\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    \"ExcludedFile\"->{\"Constant.wl\"}\n];\n\n\nexportArgumentCompletion[\n    $thisCompletionDir,\n    {\n        \"gammaFrom\",\n        \"gammaTakeResidue\",\n        \"diffChange\",\n        \"integrateChange\"->{0,0,0,{\"Solution\",\"ShowSolution\"}},\n        \"labelConvert\",\n        \"labelJoin\",\n        \"labelSplit\",\n        \"freeze\"->{0,0,{\"DefaultTransformation\"}}\n    },\n    {\n        \"DLMF\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMF]},\n        \"DLMFAs\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFAsTrue\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFRule\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRule]},\n        \"DLMFRuleShow\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRuleShow]}\n    }\n];",
+   "value": "<<Yurie`Math`\n<<Yurie`Math`Info`\n<<Yurie`Autocode`\n\n\nexportPublicSymbolUsage[\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    \"ExcludedFile\"->{\"Constant.wl\",\"Usage.wl\"}\n];\n\n\nexportArgumentCompletion[\n    $thisCompletionDir,\n    {\n        \"gammaFrom\",\n        \"gammaTakeResidue\",\n        \"diffChange\",\n        \"integrateChange\"->{0,0,0,{\"Solution\",\"ShowSolution\"}},\n        \"labelConvert\",\n        \"labelJoin\",\n        \"labelSplit\",\n        \"freeze\"->{0,0,{\"DefaultTransformation\"}}\n    },\n    {\n        \"DLMF\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMF]},\n        \"DLMFAs\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFAsTrue\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFRule\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRule]},\n        \"DLMFRuleShow\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRuleShow]}\n    }\n];",
    "languageId": "wolfram",
    "outputs": [],
    "metadata": {},
    "executionSummary": {
     "timing": {
-     "startTime": 1751766892549,
-     "endTime": 1751766895182
+     "startTime": 1751829126780,
+     "endTime": 1751829129834
     },
-    "executionOrder": 15,
+    "executionOrder": 5,
     "success": true
    }
   }
