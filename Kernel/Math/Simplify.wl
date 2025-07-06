@@ -456,7 +456,7 @@ powerExpand[args___][expr_] :=
 powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
     expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
 
-powerExpandBy[[rules:(_Rule|_RuleDelayed)..]][expr_] :=
+powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
     expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
 
 
