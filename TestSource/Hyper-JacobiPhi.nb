@@ -1,0 +1,183 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      5622,        175]
+NotebookOptionsPosition[      4062,        138]
+NotebookOutlinePosition[      4670,        158]
+CellTagsIndexPosition[      4627,        155]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "Yurie`Math`"}]], "Code",
+ CellLabel->"In[7]:=",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
+
+Cell[CellGroupData[{
+
+Cell["JacobiPhi", "Subsection",ExpressionUUID->"c8d0e22c-6213-4e87-82ff-0bf45725456f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"JacobiPhi", "[", 
+   RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}], "//", 
+  RowBox[{"JacobiPhiToHyper", "[", "]"}]}]], "Code",
+ CellLabel->"In[8]:=",ExpressionUUID->"69c60cac-bac8-4033-9641-2b60996cd5b0"],
+
+Cell[BoxData[
+ RowBox[{
+  TemplateBox[{"Hypergeometric2F1"},
+   "InactiveHead",
+   BaseStyle->"Inactive",
+   SyntaxForm->"Symbol",
+   Tooltip->"Inactive[Hypergeometric2F1]"], "[", 
+  RowBox[{
+   RowBox[{
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "a", "+", "b", "-", 
+      RowBox[{"\[ImaginaryI]", " ", "c"}]}], ")"}]}], ",", 
+   RowBox[{
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "a", "+", "b", "+", 
+      RowBox[{"\[ImaginaryI]", " ", "c"}]}], ")"}]}], ",", 
+   RowBox[{"1", "+", "a"}], ",", 
+   RowBox[{"-", 
+    SuperscriptBox[
+     RowBox[{"Sinh", "[", "z", "]"}], "2"]}]}], "]"}]], "Output",
+ CellLabel->"Out[8]=",ExpressionUUID->"41211371-a3f3-47bc-a9d6-f9aeb4986fb8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"JacobiPhi", "[", 
+     RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}], "//", 
+    RowBox[{"JacobiPhiToHyper", "[", "]"}]}], "//", 
+   RowBox[{"JacobiPhiFromHyper", "[", "]"}]}], "//", "PowerExpand"}]], "Code",\
+
+ CellLabel->"In[9]:=",ExpressionUUID->"639b5772-ce3e-4e89-8b75-e464f12fb7fe"],
+
+Cell[BoxData[
+ RowBox[{
+  TemplateBox[{"JacobiPhi"},
+   "InactiveHead",
+   BaseStyle->"Inactive",
+   SyntaxForm->"Symbol",
+   Tooltip->"Inactive[JacobiPhi]"], "[", 
+  RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}]], "Output",
+ CellLabel->"Out[9]=",ExpressionUUID->"90804b53-9a9f-453c-81ef-1882477672d0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Hypergeometric2F1", "[", 
+   RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}], "//", 
+  RowBox[{"JacobiPhiFromHyper", "[", "]"}]}]], "Code",
+ CellLabel->"In[10]:=",ExpressionUUID->"710a3d78-bf58-48db-916a-f194f2581e38"],
+
+Cell[BoxData[
+ RowBox[{
+  TemplateBox[{"JacobiPhi"},
+   "InactiveHead",
+   BaseStyle->"Inactive",
+   SyntaxForm->"Symbol",
+   Tooltip->"Inactive[JacobiPhi]"], "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"-", "1"}], "+", "c"}], ",", 
+   RowBox[{"a", "+", "b", "-", "c"}], ",", 
+   RowBox[{"\[ImaginaryI]", " ", 
+    RowBox[{"(", 
+     RowBox[{"a", "-", "b"}], ")"}]}], ",", 
+   RowBox[{"ArcSinh", "[", 
+    SqrtBox[
+     RowBox[{"-", "z"}]], "]"}]}], "]"}]], "Output",
+ CellLabel->"Out[10]=",ExpressionUUID->"7d502023-e316-4e52-95e5-0e371051fb6a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Hypergeometric2F1", "[", 
+    RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}], "//", 
+   RowBox[{"JacobiPhiFromHyper", "[", "]"}]}], "//", 
+  RowBox[{"JacobiPhiToHyper", "[", "]"}]}]], "Code",
+ CellLabel->"In[11]:=",ExpressionUUID->"7c2801f4-0130-4881-a7cf-e769ee1f98f1"],
+
+Cell[BoxData[
+ RowBox[{
+  TemplateBox[{"Hypergeometric2F1"},
+   "InactiveHead",
+   BaseStyle->"Inactive",
+   SyntaxForm->"Symbol",
+   Tooltip->"Inactive[Hypergeometric2F1]"], "[", 
+  RowBox[{"a", ",", "b", ",", "c", ",", "z"}], "]"}]], "Output",
+ CellLabel->"Out[11]=",ExpressionUUID->"6607e4e4-5f48-4652-bc33-3b26bcd69b6a"]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+WindowSize->{1280, 680},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+  "Yurie.nb", CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"e36f55d6-177b-485d-8195-1082f73dae15"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 132, 2, 65, "Code",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
+Cell[CellGroupData[{
+Cell[711, 26, 86, 0, 66, "Subsection",ExpressionUUID->"c8d0e22c-6213-4e87-82ff-0bf45725456f"],
+Cell[CellGroupData[{
+Cell[822, 30, 245, 5, 65, "Code",ExpressionUUID->"69c60cac-bac8-4033-9641-2b60996cd5b0"],
+Cell[1070, 37, 740, 22, 55, "Output",ExpressionUUID->"41211371-a3f3-47bc-a9d6-f9aeb4986fb8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1847, 64, 353, 9, 65, "Code",ExpressionUUID->"639b5772-ce3e-4e89-8b75-e464f12fb7fe"],
+Cell[2203, 75, 307, 8, 41, "Output",ExpressionUUID->"90804b53-9a9f-453c-81ef-1882477672d0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2547, 88, 256, 5, 65, "Code",ExpressionUUID->"710a3d78-bf58-48db-916a-f194f2581e38"],
+Cell[2806, 95, 543, 17, 43, "Output",ExpressionUUID->"7d502023-e316-4e52-95e5-0e371051fb6a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3386, 117, 321, 7, 65, "Code",ExpressionUUID->"7c2801f4-0130-4881-a7cf-e769ee1f98f1"],
+Cell[3710, 126, 324, 8, 41, "Output",ExpressionUUID->"6607e4e4-5f48-4652-bc33-3b26bcd69b6a"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,247 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      7589,        239]
+NotebookOptionsPosition[      5494,        193]
+NotebookOutlinePosition[      6103,        213]
+CellTagsIndexPosition[      6060,        210]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "Yurie`Math`"}]], "Code",
+ CellLabel->"In[25]:=",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Binomial", "[", 
+   RowBox[{"a", ",", "n"}], "]"}], "//", 
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"DLMFAsTrue", "[", "\"\<BinomialSwapA\>\"", "]"}], "[", "#", 
+     "]"}], "#"], "&"}]}]], "Code",
+ CellLabel->"In[26]:=",ExpressionUUID->"777dd798-e990-46f1-884b-9fa56ed360cc"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], "n"], " ", 
+   RowBox[{"Binomial", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "1"}], "-", "a", "+", "n"}], ",", "n"}], "]"}]}], 
+  RowBox[{"Binomial", "[", 
+   RowBox[{"a", ",", "n"}], "]"}]]], "Output",
+ CellLabel->"Out[26]=",ExpressionUUID->"1d01ae4e-84df-47fc-8d1f-e0c75fb7f833"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Binomial", "[", 
+     RowBox[{"a", ",", "n"}], "]"}], "//", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"DLMFAsTrue", "[", "\"\<BinomialSwapA\>\"", "]"}], "[", "#", 
+       "]"}], "#"], "&"}]}], "//", "FES"}], "//", 
+  RowBox[{"trigPhaseReduce", "[", "n", "]"}]}]], "Code",
+ CellLabel->"In[27]:=",ExpressionUUID->"ad124d72-c1dd-45f4-ba3a-6079bff18119"],
+
+Cell[BoxData["1"], "Output",
+ CellLabel->"Out[27]=",ExpressionUUID->"5f0e2939-c060-4318-8bb0-3145ce2d1bb0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Pochhammer", "[", 
+   RowBox[{"a", ",", "n"}], "]"}], "//", 
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"DLMFAsTrue", "[", "\"\<PochhammerSwapA\>\"", "]"}], "[", "#", 
+     "]"}], "#"], "&"}]}]], "Code",
+ CellLabel->"In[28]:=",ExpressionUUID->"be0f40ad-7349-4a20-9a59-6c5b71451720"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], "n"], " ", 
+   RowBox[{"Pochhammer", "[", 
+    RowBox[{
+     RowBox[{"1", "-", "a", "-", "n"}], ",", "n"}], "]"}]}], 
+  RowBox[{"Pochhammer", "[", 
+   RowBox[{"a", ",", "n"}], "]"}]]], "Output",
+ CellLabel->"Out[28]=",ExpressionUUID->"01d6dc64-6253-4294-b557-cbce9002c0b9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Pochhammer", "[", 
+     RowBox[{"a", ",", "n"}], "]"}], "//", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"DLMFAsTrue", "[", "\"\<PochhammerSwapA\>\"", "]"}], "[", "#", 
+       "]"}], "#"], "&"}]}], "//", "FES"}], "//", 
+  RowBox[{"trigPhaseReduce", "[", "n", "]"}]}]], "Code",
+ CellLabel->"In[29]:=",ExpressionUUID->"b13a4646-324c-4208-91f6-2b5ea7e739ae"],
+
+Cell[BoxData["1"], "Output",
+ CellLabel->"Out[29]=",ExpressionUUID->"f05110c2-1940-4b44-8e46-b69c7c7b5be7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FactorialPower", "[", 
+   RowBox[{"a", ",", "n"}], "]"}], "//", 
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"DLMFAsTrue", "[", "\"\<FactorialPowerSwapA\>\"", "]"}], "[", 
+     "#", "]"}], "#"], "&"}]}]], "Code",
+ CellLabel->"In[30]:=",ExpressionUUID->"9df0059c-27bc-447a-af95-8a5a363eebf6"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], "n"], " ", 
+   RowBox[{"FactorialPower", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "1"}], "-", "a", "+", "n"}], ",", "n"}], "]"}]}], 
+  RowBox[{"FactorialPower", "[", 
+   RowBox[{"a", ",", "n"}], "]"}]]], "Output",
+ CellLabel->"Out[30]=",ExpressionUUID->"dfefe2d2-f0e1-483d-b69c-2a741f7f414c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FactorialPower", "[", 
+     RowBox[{"a", ",", "n"}], "]"}], "//", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"DLMFAsTrue", "[", "\"\<FactorialPowerSwapA\>\"", "]"}], "[", 
+       "#", "]"}], "#"], "&"}]}], "//", "FES"}], "//", 
+  RowBox[{"trigPhaseReduce", "[", "n", "]"}]}]], "Code",
+ CellLabel->"In[31]:=",ExpressionUUID->"b9eaab36-004b-4bbe-bb5b-00bb1ac7e31a"],
+
+Cell[BoxData["1"], "Output",
+ CellLabel->"Out[31]=",ExpressionUUID->"55d7e742-8642-485d-af38-0cdf6d72e7f9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Hypergeometric2F1", "[", 
+   RowBox[{"a", ",", "b", ",", "c", ",", "1"}], "]"}], "//", 
+  RowBox[{"DLMFAsTrue", "[", "\"\<15.4.20\>\"", "]"}]}]], "Code",
+ CellLabel->"In[32]:=",ExpressionUUID->"71a42f57-9f06-434c-8328-d67a0b4b93a6"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{"Gamma", "[", "c", "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{
+     RowBox[{"-", "a"}], "-", "b", "+", "c"}], "]"}]}], 
+  RowBox[{
+   RowBox[{"Gamma", "[", 
+    RowBox[{
+     RowBox[{"-", "a"}], "+", "c"}], "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{
+     RowBox[{"-", "b"}], "+", "c"}], "]"}]}]]], "Output",
+ CellLabel->"Out[32]=",ExpressionUUID->"e3072974-be02-4f59-94a7-503f489c1388"]
+}, Open  ]]
+},
+Editable->True,
+WindowSize->{1280, 1387},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+  "Yurie.nb", CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"e36f55d6-177b-485d-8195-1082f73dae15"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 133, 2, 65, "Code",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
+Cell[CellGroupData[{
+Cell[712, 26, 323, 9, 83, "Code",ExpressionUUID->"777dd798-e990-46f1-884b-9fa56ed360cc"],
+Cell[1038, 37, 399, 12, 60, "Output",ExpressionUUID->"1d01ae4e-84df-47fc-8d1f-e0c75fb7f833"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1474, 54, 430, 12, 83, "Code",ExpressionUUID->"ad124d72-c1dd-45f4-ba3a-6079bff18119"],
+Cell[1907, 68, 107, 1, 41, "Output",ExpressionUUID->"5f0e2939-c060-4318-8bb0-3145ce2d1bb0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2051, 74, 327, 9, 82, "Code",ExpressionUUID->"be0f40ad-7349-4a20-9a59-6c5b71451720"],
+Cell[2381, 85, 381, 11, 60, "Output",ExpressionUUID->"01d6dc64-6253-4294-b557-cbce9002c0b9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2799, 101, 434, 12, 82, "Code",ExpressionUUID->"b13a4646-324c-4208-91f6-2b5ea7e739ae"],
+Cell[3236, 115, 107, 1, 41, "Output",ExpressionUUID->"f05110c2-1940-4b44-8e46-b69c7c7b5be7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3380, 121, 335, 9, 83, "Code",ExpressionUUID->"9df0059c-27bc-447a-af95-8a5a363eebf6"],
+Cell[3718, 132, 411, 12, 60, "Output",ExpressionUUID->"dfefe2d2-f0e1-483d-b69c-2a741f7f414c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4166, 149, 442, 12, 83, "Code",ExpressionUUID->"b9eaab36-004b-4bbe-bb5b-00bb1ac7e31a"],
+Cell[4611, 163, 107, 1, 41, "Output",ExpressionUUID->"55d7e742-8642-485d-af38-0cdf6d72e7f9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4755, 169, 267, 5, 65, "Code",ExpressionUUID->"71a42f57-9f06-434c-8328-d67a0b4b93a6"],
+Cell[5025, 176, 453, 14, 59, "Output",ExpressionUUID->"e3072974-be02-4f59-94a7-503f489c1388"]
+}, Open  ]]
+}
+]
+*)
+

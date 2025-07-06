@@ -1,0 +1,185 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      5368,        177]
+NotebookOptionsPosition[      3750,        140]
+NotebookOutlinePosition[      4321,        159]
+CellTagsIndexPosition[      4278,        156]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "Yurie`Math`"}]], "Code",
+ CellLabel->
+  "In[118]:=",ExpressionUUID->"d7c00724-cead-4971-8f50-dbdba49db707"],
+
+Cell[CellGroupData[{
+
+Cell["matAngularMomentum", "Subsection",ExpressionUUID->"50a05163-c4a0-4741-acaf-1558fe09c104"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"Jx", ",", "Jy", ",", "Jz"}], "}"}], "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"matAngularMomentum", "[", "1", "]"}], "[", "i", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+      "}"}]}], "]"}]}], ";"}]], "Code",
+ CellLabel->
+  "In[119]:=",ExpressionUUID->"ba0a4dcc-f327-45f7-8b8f-7e7b6053c1b5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"matComm", "[", 
+   RowBox[{"Jx", ",", "Jy"}], "]"}], "-", 
+  RowBox[{"I", " ", "Jz"}]}]], "Code",
+ CellLabel->
+  "In[120]:=",ExpressionUUID->"92dbc5ed-9e42-43fb-be62-92243925bceb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[120]=",ExpressionUUID->"6d7c1e9e-722a-45d9-a063-66a16389dc88"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"matComm", "[", 
+   RowBox[{"Jy", ",", "Jz"}], "]"}], "-", 
+  RowBox[{"I", " ", "Jx"}]}]], "Code",
+ CellLabel->
+  "In[121]:=",ExpressionUUID->"97ae4db1-29cd-4b02-b9e8-c858e5c4eb66"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[121]=",ExpressionUUID->"9641a048-0e7d-421d-831c-5d728080c97e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"matComm", "[", 
+   RowBox[{"Jz", ",", "Jx"}], "]"}], "-", 
+  RowBox[{"I", " ", "Jy"}]}]], "Code",
+ CellLabel->
+  "In[122]:=",ExpressionUUID->"2f76c73f-e398-4b80-9780-eb3f372cd455"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[122]=",ExpressionUUID->"c6536faf-06a4-4d03-bac0-2c6cff733336"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"J2", "=", 
+  RowBox[{
+   RowBox[{"Jx", ".", "Jx"}], "+", 
+   RowBox[{"Jy", ".", "Jy"}], "+", 
+   RowBox[{"Jz", ".", "Jz"}]}]}]], "Code",
+ CellLabel->
+  "In[123]:=",ExpressionUUID->"459ea826-c348-4834-abaf-a0ba55570e82"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"2", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "2"}], "}"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[123]=",ExpressionUUID->"aaa6bb9e-43ce-47f4-bdb2-06b4e0faba89"]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+WindowSize->{1280, 1387},
+WindowMargins->{{Automatic, 273}, {Automatic, 115}},
+FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+  "Yurie.nb", CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"61fa34a5-7d45-4325-a0a0-ed5462759a0b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 137, 3, 65, "Code",ExpressionUUID->"d7c00724-cead-4971-8f50-dbdba49db707"],
+Cell[CellGroupData[{
+Cell[716, 27, 95, 0, 66, "Subsection",ExpressionUUID->"50a05163-c4a0-4741-acaf-1558fe09c104"],
+Cell[814, 29, 500, 15, 65, "Code",ExpressionUUID->"ba0a4dcc-f327-45f7-8b8f-7e7b6053c1b5"],
+Cell[CellGroupData[{
+Cell[1339, 48, 215, 6, 65, "Code",ExpressionUUID->"92dbc5ed-9e42-43fb-be62-92243925bceb"],
+Cell[1557, 56, 343, 10, 41, "Output",ExpressionUUID->"6d7c1e9e-722a-45d9-a063-66a16389dc88"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1937, 71, 215, 6, 65, "Code",ExpressionUUID->"97ae4db1-29cd-4b02-b9e8-c858e5c4eb66"],
+Cell[2155, 79, 343, 10, 41, "Output",ExpressionUUID->"9641a048-0e7d-421d-831c-5d728080c97e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2535, 94, 215, 6, 65, "Code",ExpressionUUID->"2f76c73f-e398-4b80-9780-eb3f372cd455"],
+Cell[2753, 102, 343, 10, 41, "Output",ExpressionUUID->"c6536faf-06a4-4d03-bac0-2c6cff733336"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3133, 117, 243, 7, 65, "Code",ExpressionUUID->"459ea826-c348-4834-abaf-a0ba55570e82"],
+Cell[3379, 126, 343, 10, 41, "Output",ExpressionUUID->"aaa6bb9e-43ce-47f4-bdb2-06b4e0faba89"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
