@@ -9,151 +9,151 @@
 
 <!-- Diff.wl -->
 
-* `#!wl PD` - head of partial derivative.
+* `#!wl PD` - PD[vars]: head of partial derivative.
 
-* `#!wl INT` - head of integral.
+* `#!wl INT` - INT[vars]: head of integration.
 
-* `#!wl SUM` - head of sum.
+* `#!wl SUM` - SUM[vars]: head of summation.
 
-* `#!wl integrate` - operator form of Integrate.
+* `#!wl integrate` - integrate[args][expr]: operator form of Integrate. Default[GenerateConditions]: False.
 
-* `#!wl summation` - operator form of Sum.
+* `#!wl summation` - summation[args][expr]: operator form of Sum. Default[GenerateConditions]: False.
 
-* `#!wl diffChange` - change variables in differential equations.
+* `#!wl diffChange` - diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations. Def[funList]: list of functions to transform. Default["Solution"]: 1. Default["ShowSolution"]: False.
 
-* `#!wl integrateChange` - change variables in integrals.
+* `#!wl integrateChange` - integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals. Def[sign]: Jacobian sign. Value[sign]: {-1, 1}. Default["Solution"]: 1. Default["ShowSolution"]: False.
 
-* `#!wl IBP` - perform integration by parts.
+* `#!wl IBP` - IBP[fun][expr]: perform integration by parts. IBP[fun, vars][expr]: perform integration by parts with respect to specific variables.
 
-* `#!wl jacobianMatrix` - Jacobian matrix.
+* `#!wl jacobianMatrix` - jacobianMatrix[funList, varList]: Jacobian matrix.
 
-* `#!wl jacobianDet` - Jacobian determinant.
+* `#!wl jacobianDet` - jacobianDet[funList, varList]: Jacobian determinant.
 
-* `#!wl PDCoefficient` - extract the coefficients of PD[__].
+* `#!wl PDCoefficient` - PDCoefficient[post, opts][expr]: extract the coefficients of PD[__]. Def[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
 
-* `#!wl PDCollect` - collect the terms with respect to PD[__].
+* `#!wl PDCollect` - PDCollect[args][expr]: collect the terms with respect to PD[__]. Def[args]: inherited from Collect.
 
-* `#!wl diffCoefficient` - extract the coefficients of Derivative[__][_][__].
+* `#!wl diffCoefficient` - diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]. Def[fun]: the head of the function. Def[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
 
-* `#!wl diffCollect` - collect the terms with respect to Derivative[__][_][__].
+* `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Def[fun]: the head of the function. Def[args]: inherited from Collect.
 
-* `#!wl diffReplace` - replace the derivatives of the function.
+* `#!wl diffReplace` - diffReplace[fun->res, ...]: replace the derivatives of the function.
 
-* `#!wl diffComm` - diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.
+* `#!wl diffComm` - diffComm[X, Y]: compute the commutator of differential operators. Sketch: -(X[Y[#]]-Y[X[#]])&.
 
 
 <!-- DLMF.wl -->
 
-* `#!wl DLMF` - simplify expressions by the rules in DLMFData.
+* `#!wl DLMF` - DLMF[rules, opts][expr]: simplify the expression by the DLMF rules. Default["IgnoreCondition"]: False.
 
-* `#!wl DLMFAs` - simplify expressions by the rules in DLMFData with the specified conditions.
+* `#!wl DLMFAs` - DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption. Def[as]: the assumption.
 
-* `#!wl DLMFAsTrue` - simplify expressions by the rules in DLMFData ignoring the conditions.
+* `#!wl DLMFAsTrue` - DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions. Hint: this is equivalent to DLMF with "IgnoreCondition"->True.
 
-* `#!wl DLMFRule` - return the rules in DLMFData.
+* `#!wl DLMFRule` - DLMFRule[rules, opts]: return the DLMF rules. Default["IgnoreCondition"]: False.
 
-* `#!wl DLMFRuleShow` - show the rules without context marks in DLMFData.
+* `#!wl DLMFRuleShow` - DLMFRuleShow[rules, opts]: show the DLMF rules without context marker. Default["IgnoreCondition"]: False.
 
 
 <!-- Dye.wl -->
 
-* `#!wl dye` - dye[expr_]: color the elements at the first level of expression.
+* `#!wl dye` - dye[expr]: color the subexpressions at the first level.
 
-* `#!wl dyeIn` - dyeIn[levelspec_:1][expr_]: color the elements at the specific levels of expression.
+* `#!wl dyeIn` - dyeIn[level][expr]: color the subexpressions at the specified level. dyeIn[color, level][expr]: specify the color.
 
-* `#!wl dyeBy` - dyeBy[pattern_,levelspec_,n_][expr_]: color the occurrences of pattern in expression.
+* `#!wl dyeBy` - dyeBy[pattern, level, opts][expr]: color the subexpressions matching the pattern. dyeBy[color, pattern, level, opts][expr]: specify the color. Default[level]: {0, Infinity}, inherited from Position.
 
-* `#!wl dyeAt` - dyeAt[positions_][expr_]: color the expression at the specified positions in expression.
+* `#!wl dyeAt` - dyeAt[positions][expr]: color the subexpressions at the specified positions. dyeAt[color, positions][expr]: specify the color.
 
-* `#!wl dyeOff` - dyeOff[expr_]: eliminate the colors from dye.
+* `#!wl dyeOff` - dyeOff[expr]: remove the coloring applied by dye functions.
 
 
 <!-- Gamma.wl -->
 
-* `#!wl gammaSimplify` - simplify Gamma factors in the expression. Developer\`GammaSimplify
+* `#!wl gammaSimplify` - gammaSimplify[expr]: simplify Gamma functions in the expression. Sketch: Developer\`GammaSimplify.
 
-* `#!wl gammaFrom` - expand everything to Gamma factors.
+* `#!wl gammaFrom` - gammaFrom[expr, opts]: expand everything to Gamma functions. Default["Transformation"]: Automatic. Default["ActivateGamma"]: True.
 
-* `#!wl gammaSeparate` - split a product into Gamma factors and the rests.
+* `#!wl gammaSeparate` - gammaSeparate[expr]: separate a product into Gamma functions and the rest.
 
-* `#!wl gammaTakeResidue` - take residue of Gamma factors.
+* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor. gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series. Def[index]: the index of the poles. Def[gamma]: the argument of the Gamma function. Def[sign]: the direction of contour. Value[sign]: {1, -1, Left, Right}. Default[sign]: 1. Default["SimplePole"]: True. Default["ShowPole"]: True.
 
-* `#!wl multiGamma` - head of multi-Gamma symbol.
+* `#!wl multiGamma` - multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator. Def[num]: list of arguments for Gamma functions in the numerator. Def[denom]: list of arguments for Gamma functions in the denominator.
 
-* `#!wl multiGammaFrom` - collect Gamma factors into multi-Gamma symbols.
+* `#!wl multiGammaFrom` - multiGammaFrom[expr]: convert Gamma functions into multi-Gamma symbols.
 
-* `#!wl multiGammaSimplify` - simplify the multi-Gamma symbol.
+* `#!wl multiGammaSimplify` - multiGammaSimplify[expr]: simplify the multi-Gamma symbol with the assumption. Default[assume]: True.
 
-* `#!wl multiGammaReduceByBarnesLemma` - reduce the multi-Gamma symbol by the Barnes lemmas.
+* `#!wl multiGammaReduceByBarnesLemma` - multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas. Def[s]: the variable parameter in the Barnes lemma reduction.
 
 
 <!-- Hyper.wl -->
 
-* `#!wl hyper` - head used by hyperConvert.
+* `#!wl hyper` - hyper[type, var][expr]: head used by hypergeometric conversion functions.
 
-* `#!wl JacobiPhi` - Jacobi Phi function, JacobiPhi[a,b,c,z].
+* `#!wl JacobiPhi` - JacobiPhi[a, b, c, z]: Jacobi Phi function.
 
-* `#!wl WilsonPolynomial` - Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].
+* `#!wl WilsonPolynomial` - WilsonPolynomial[a, b, c, d, n, x]: Wilson polynomial.
 
-* `#!wl hyperSeparate` - split a product into hypergeometric functions and the rests.
+* `#!wl hyperSeparate` - hyperSeparate[expr]: separate a product into hypergeometric functions and the rest.
 
-* `#!wl hyperUnregularize` - convert regularized hypergeometric function to the normal one.
+* `#!wl hyperUnregularize` - hyperUnregularize[expr]: convert regularized hypergeometric function to the normal one.
 
-* `#!wl hyperRegularize` - convert hypergeometric function to the regularized one.
+* `#!wl hyperRegularize` - hyperRegularize[expr]: convert hypergeometric function to the regularized one.
 
-* `#!wl hyperToTaylor` - convert hypergeometric function to Taylor series.
+* `#!wl hyperToTaylor` - hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series. hyperToTaylor[symbols, indicator][expr]: indicate the summation. Default[indicator]: SUM.
 
-* `#!wl hyperToMellinBarnes` - convert hypergeometric function to Mellin-Barnes integral.
+* `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral. hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration. Default[indicator]: INT.
 
-* `#!wl hyperToMellinBarnes2` - convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).
+* `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z). hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration. Default[indicator]: INT.
 
-* `#!wl hyperFromAppellF1` - convert Appell F1 function to hypergeometric summation.
+* `#!wl hyperFromAppellF1` - hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation. hyperFromAppellF1[symbols, indicator][expr]: indicate the summation. Default[indicator]: SUM.
 
-* `#!wl JacobiPhiToHyper` - convert Jacobi Phi to Hypergeometric2F1.
+* `#!wl JacobiPhiToHyper` - JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1. Default[head]: Inactive.
 
-* `#!wl JacobiPhiFromHyper` - convert Hypergeometric2F1 to Jacobi Phi.
+* `#!wl JacobiPhiFromHyper` - JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function. Default[head]: Inactive.
 
-* `#!wl WilsonPolynomialToHyper` - convert Wilson polynomial to Hypergeometric4F3.
+* `#!wl WilsonPolynomialToHyper` - WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3. Default[head]: Inactive.
 
-* `#!wl WilsonPolynomialFromHyper` - convert Hypergeometric4F3 to Wilson polynomial.
+* `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial. Default[head]: Inactive.
 
-* `#!wl AppellF1FromIntegral` - convert integral to Appell F1.
+* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Def[var]: integration variable to match. Default[var]: All. Default[head]: Inactive.
 
 
 <!-- Label.wl -->
 
-* `#!wl label` - join the variable(s) and label(s) into a (sequence of) labeled object(s).
+* `#!wl label` - label[vars, labs, head]: join the variables and labels into labeled objects using specified head. Default[head]: Function.
 
-* `#!wl labelAt` - take the specific value(s) of the labeled object(s).
+* `#!wl labelAt` - labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules. Default[head]: Function.
 
-* `#!wl labelConvert` - convert the labeled object(s) according to the two specified label heads.
+* `#!wl labelConvert` - labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.
 
-* `#!wl labelJoin` - labelConvert: _->Symbol.
+* `#!wl labelJoin` - labelJoin[vars, head]: convert labeled objects from any head to Symbol. Default[head]: Function. Sketch: labelConvert with _->Symbol.
 
-* `#!wl labelSplit` - labelConvert: Symbol->_.
+* `#!wl labelSplit` - labelSplit[vars, head]: convert labeled objects from Symbol to any head. Default[head]: Function. Sketch: labelConvert with Symbol->_.
 
-* `#!wl labelToZero` - x1->0.
+* `#!wl labelToZero` - labelToZero[vars, labs, head]: shift to zero. Default[head]: Function. Example: x1->0.
 
-* `#!wl labelToEqual` - x1->x2.
+* `#!wl labelToEqual` - labelToEqual[vars, rules, head]: shift the first to the second. Default[head]: Function. Example: x1->x2.
 
-* `#!wl labelToDiff` - x1->x12+x2.
+* `#!wl labelToDiff` - labelToDiff[vars, rules, head]: shift the first to the difference plus the second. Default[head]: Function. Example: x1->x12+x2.
 
-* `#!wl labelToDiffZero` - x1->x12, x2->0.
+* `#!wl labelToDiffZero` - labelToDiffZero[vars, rules, head]: shift the first to the difference and the second to zero. Default[head]: Function. Example: x1->x12, x2->0.
 
-* `#!wl labelToDiffBack` - x12->x1-x2.
+* `#!wl labelToDiffBack` - labelToDiffBack[vars, rules, head]: shift the difference back to the original two. Default[head]: Function. Example: x12->x1-x2.
 
 
 <!-- Lie.wl -->
 
-* `#!wl lie` - simple Lie algebras.
+* `#!wl lie` - lie[type, rank]: represent simple Lie algebras. Value[type]: {"A", "B", "C", "D", "E", "F", "G", "SL", "SP", "SO"}.
 
-* `#!wl lieSimpleRoot` - orthogonal simple roots of simple Lie algebras.
+* `#!wl lieSimpleRoot` - lieSimpleRoot[lie]: compute orthogonal simple roots of the simple Lie algebra.
 
-* `#!wl lieCartan` - Cartan matrix of simple Lie algebras.
+* `#!wl lieCartan` - lieCartan[lie]: compute Cartan matrix of the simple Lie algebra.
 
-* `#!wl lieCartanInverse` - inverse Cartan matrix of simple Lie algebras.
+* `#!wl lieCartanInverse` - lieCartanInverse[lie]: compute inverse Cartan matrix of the simple Lie algebra.
 
-* `#!wl lieDynkinDiagram` - Dynkin diagram of simple Lie algebras.
+* `#!wl lieDynkinDiagram` - lieDynkinDiagram[lie]: generate Dynkin diagram of the simple Lie algebra.
 
 
 <!-- Matrix.wl -->
@@ -162,62 +162,62 @@
 
 * `#!wl matComm` - matComm[a, b]: compute the commutator of the two matrices. Sketch: a.b - b.a.
 
-* `#!wl matJordan` - matJordan[dim, a, b]: construct a Jordan matrix of specified dimension. a: the common diagonal element. b: the common super-diagonal element. Default[b]: 1.
+* `#!wl matJordan` - matJordan[dim, a, b]: construct a Jordan matrix of specified dimension. Def[a]: the common diagonal element. Def[b]: the common super-diagonal element. Default[b]: 1.
 
-* `#!wl matAngularMomentum` - matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation. Value[direction]: {"x", "y", "z"|0, 1, -1}. The column/row indices run from j to -j.
+* `#!wl matAngularMomentum` - matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation. Value[direction]: {"x", "y", "z"|0, 1, -1}. Hint: the column/row indices run from j to -j.
 
 
 <!-- OperatorForm.wl -->
 
-* `#!wl SS` - OperatorForm: Simplify.
+* `#!wl SS` - Sketch: Simplify.
 
-* `#!wl FS` - OperatorForm: FullSimplify.
+* `#!wl FS` - Sketch: FullSimplify.
 
-* `#!wl FE` - OperatorForm: FunctionExpand.
+* `#!wl FE` - Sketch: FunctionExpand.
 
-* `#!wl FES` - OperatorForm: FunctionExpand + Simplify.
+* `#!wl FES` - Sketch: FunctionExpand + Simplify.
 
-* `#!wl AS` - OperatorForm: Assuming.
+* `#!wl AS` - Sketch: Assuming.
 
-* `#!wl SSA` - OperatorForm: Simplify + Assuming.
+* `#!wl SSA` - Sketch: Simplify + Assuming.
 
-* `#!wl FSA` - OperatorForm: FullSimplify + Assuming.
+* `#!wl FSA` - Sketch: FullSimplify + Assuming.
 
-* `#!wl FEA` - OperatorForm: FunctionExpand + Assuming.
+* `#!wl FEA` - Sketch: FunctionExpand + Assuming.
 
-* `#!wl FESA` - OperatorForm: FunctionExpand + Simplify + Assuming.
+* `#!wl FESA` - Sketch: FunctionExpand + Simplify + Assuming.
 
 * `#!wl modularize` - modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.
 
-* `#!wl block` - OperatorForm: Block.
+* `#!wl block` - Sketch: Block.
 
-* `#!wl with` - OperatorForm: With.
+* `#!wl with` - Sketch: With.
 
-* `#!wl module` - OperatorForm: Module.
+* `#!wl module` - Sketch: Module.
 
 * `#!wl rep` - rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.
 
 * `#!wl repdeep` - repdeep[rules][level][expr]: operator form of Replace with the rules being flattened. Default[level]: All.
 
-* `#!wl part` - OperatorForm: Part.
+* `#!wl part` - Sketch: Part.
 
-* `#!wl plus` - OperatorForm: Plus.
+* `#!wl plus` - Sketch: Plus.
 
-* `#!wl minus` - OperatorForm: Minus.
+* `#!wl minus` - Sketch: Minus.
 
-* `#!wl times` - OperatorForm: Times.
+* `#!wl times` - Sketch: Times.
 
-* `#!wl divide` - OperatorForm: Divide.
+* `#!wl divide` - Sketch: Divide.
 
-* `#!wl series` - OperatorForm: Series + Normal.
+* `#!wl series` - Sketch: Series + Normal.
 
-* `#!wl limit` - OperatorForm: Limit.
+* `#!wl limit` - Sketch: Limit.
 
-* `#!wl solve` - OperatorForm: Solve.
+* `#!wl solve` - Sketch: Solve.
 
-* `#!wl solve1` - OperatorForm: Solve + First.
+* `#!wl solve1` - Sketch: Solve + First.
 
-* `#!wl collect` - OperatorForm: Collect.
+* `#!wl collect` - Sketch: Collect.
 
 
 <!-- Quest.wl -->
@@ -248,9 +248,9 @@
 
 * `#!wl isC` - isC[x..]: test whether the arguments are complex numbers.
 
-* `#!wl presentQ` - presentQ[pattern][expr]: test whether the pattern occurs in the expression.Not + FreeQ.
+* `#!wl presentQ` - presentQ[pattern][expr]: test whether the pattern occurs in the expression. Sketch: Not + FreeQ.
 
-* `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.
+* `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test linearity for all the variables.
 
 * `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
 
@@ -265,51 +265,51 @@
 
 * `#!wl relationFeynman` - relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors. Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].
 
-* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. base: specify the power base. expanded: specify the numerator factors to separate. expanded2: specify the denominator factors to separate and can be omitted. sign: specify the phase direction.
+* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Def[base]: the power base. Def[expanded]: the numerator factors to separate. Def[expanded2]: the denominator factors to separate. This argument is optional. Def[sign]: the phase direction. Default[sign]: 1.
 
 
 <!-- SimplifyUnsafe.wl -->
 
-* `#!wl unsafePowerTogether` - unsafePowerTogether[expr]: try to combine power factors. May produce mathematically invalid result.
+* `#!wl unsafePowerTogether` - unsafePowerTogether[expr]: try to combine power factors. Hint: may produce mathematically invalid result.
 
-* `#!wl unsafePowerApart` - unsafePowerApart[expr]: try to separate power factors. May produce mathematically invalid result.
+* `#!wl unsafePowerApart` - unsafePowerApart[expr]: try to separate power factors. Hint: may produce mathematically invalid result.
 
-* `#!wl unsafePowerSimplify` - unsafePowerSimplify[expr]: try to simplify power factors. May produce mathematically invalid result.
+* `#!wl unsafePowerSimplify` - unsafePowerSimplify[expr]: try to simplify power factors. Hint: may produce mathematically invalid result.
 
-* `#!wl unsafeExprTogether` - unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values. May produce mathematically invalid result.
+* `#!wl unsafeExprTogether` - unsafeExprTogether[expr]: try to combine power factors, logarithms, and absolute values. Hint: may produce mathematically invalid result.
 
-* `#!wl unsafeExprApart` - unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values. May produce mathematically invalid result.
+* `#!wl unsafeExprApart` - unsafeExprApart[expr]: try to separate power factors, logarithms, and absolute values. Hint: may produce mathematically invalid result.
 
-* `#!wl unsafeExprSimplify` - unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values. May produce mathematically invalid result.
+* `#!wl unsafeExprSimplify` - unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values. Hint: may produce mathematically invalid result.
 
 
 <!-- Simplify.wl -->
 
-* `#!wl freeze` - freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. freeze[pattern->transform, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}. Default[operation]: Simplify. Default[level]: Infinity.
+* `#!wl freeze` - freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze. freeze[pattern->transform, operation, level][expr]: additionally perform the transform to the frozen subexpressions. Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}. Default[operation]: Simplify. Default[level]: Infinity.
 
 * `#!wl freezeNegative` - freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.
 
-* `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
+* `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers). If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
+* `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers). Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
 * `#!wl fracReduce` - fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them. Default[operation]: Simplify. Default[factor]: 1.
 
-* `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
+* `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
+* `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. If level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
+* `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. baseP: specify the pattern of power bases to match.
+* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. Def[baseP]: the pattern of power bases to match.
 
-* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. baseP: specify the bases to combine. basePreservedP: specify the bases to preserve. baseExpandedP: specify the bases to expand manually. To skip baseP/basePreservedP, use All/None.
+* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve. Def[baseExpandedP]: the pattern of power bases to expand manually. Hint: to skip baseP/basePreservedP, use All/None.
 
-* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. baseP: specify the bases to combine. basePreservedP: specify the bases to preserve. baseExpandedP: specify the bases to expand manually. To skip baseP/basePreservedP, use All/None.
+* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve. Def[baseExpandedP]: the pattern of power bases to expand manually. Hint: to skip baseP/basePreservedP, use All/None.
 
-* `#!wl powerExponentCollect` - powerExponentCollect[powers...][expr]: collect and combine power factors with common exponents. Default[]: try to collect all power factors.
+* `#!wl powerExponentCollect` - powerExponentCollect[exponent...][expr]: collect and combine power factors with common exponents. Hint: if no exponent is specified, try to collect all power factors.
 
-* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. vars: specify the variables to consider for periodicity.
+* `#!wl trigPhaseReduce` - trigPhaseReduce[var..][expr]: reduce phase factors in trigonometric functions using periodicity. Def[var]: the variables to consider for periodicity.
 
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
@@ -321,6 +321,6 @@
 
 * `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms. Sketch: Simplify + Flatten + DeleteDuplicates.
 
-* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. exclusionList: specify the contexts to exclude.
+* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. Def[exclusionList]: the contexts to exclude.
 
-* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. exclusionList: specify the contexts to exclude.
+* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. Def[exclusionList]: the contexts to exclude.
