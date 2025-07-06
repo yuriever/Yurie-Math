@@ -8,7 +8,7 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-Math",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "3.2.0",
+    "Version" -> "3.3.0",
     "WolframVersion" -> "14.2+",
     "PrimaryContext" -> "Yurie`Math`",
     "Extensions" -> {
@@ -16,7 +16,8 @@ PacletObject[
         "Kernel",
         "Root" -> "Kernel",
         "Context" -> {
-          "Yurie`Math`"
+          "Yurie`Math`",
+          "Yurie`Math`Lie`"
         }
       },
       {
