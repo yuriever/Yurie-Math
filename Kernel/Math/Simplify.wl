@@ -96,29 +96,26 @@ powerSeparate::usage =
     "Def[baseP]: the pattern of power bases to match.";
 
 powerBaseTogether::usage =
-    "powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors."<>
+    "powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors."<>
     "\n"<>
     "Def[baseP]: the pattern of power bases to combine."<>
     "\n"<>
-    "Def[basePreservedP]: the pattern of power bases to preserve."<>
-    "\n"<>
-    "Def[baseExpandedP]: the pattern of power bases to expand manually."<>
-    "\n"<>
-    "Hint: to skip baseP/basePreservedP, use All/None.";
+    "Def[basePreservedP]: the pattern of power bases to preserve.";
 
 powerExpand::usage =
-    "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: combine power bases using powerBaseTogether, then expand power factors, and finally simplify power exponents."<>
+    "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases."<>
     "\n"<>
     "Def[baseP]: the pattern of power bases to combine."<>
     "\n"<>
-    "Def[basePreservedP]: the pattern of power bases to preserve."<>
+    "Def[basePreservedP]: the pattern of power bases to preserve.";
+
+powerExpandBy::usage =
+    "powerExpandBy[rules..][expr]: expand the power factors according to the rules."<>
     "\n"<>
-    "Def[baseExpandedP]: the pattern of power bases to expand manually."<>
-    "\n"<>
-    "Hint: to skip baseP/basePreservedP, use All/None.";
+    "Def[rules]: rules of the form base->{factor1, factor2, ...}.";
 
 powerExponentCollect::usage =
-    "powerExponentCollect[exponent...][expr]: collect and combine power factors with common exponents."<>
+    "powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents."<>
     "\n"<>
     "Hint: if no exponent is specified, try to collect all power factors.";
 
@@ -128,9 +125,9 @@ powerExponentCollect::usage =
 
 
 trigPhaseReduce::usage =
-    "trigPhaseReduce[var..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
+    "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
     "\n"<>
-    "Def[var]: the variables to consider for periodicity.";
+    "Def[vars]: the variables to consider for periodicity.";
 
 
 (* ::Subsection:: *)
@@ -148,7 +145,7 @@ deltaReduce::usage =
 swap::usage =
     "swap[a, b][expr]: swap the two symbols in the expression."<>
     "\n"<>
-    "swap[{a1, b1}, {a2, b2}, ...][expr]: swap the pairs simultaneously.";
+    "swap[{a, b}..][expr]: swap the pairs simultaneously.";
 
 
 separate::usage =
@@ -417,7 +414,9 @@ basePattern[base_] :=
 
 
 powerBaseTogether[][expr_] :=
-    powerBaseTogether[All][expr];
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>Power[togetherAndSimplify[base],exponent]
+    }];
 
 powerBaseTogether[base1_][expr_] :=
     With[ {baseP = basePattern[base1]},
@@ -425,9 +424,6 @@ powerBaseTogether[base1_][expr_] :=
             Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
         }]
     ];
-
-powerBaseTogether[base1_,None][expr_] :=
-    powerBaseTogether[base1][expr];
 
 powerBaseTogether[base1_,base2_][expr_] :=
     With[ {
@@ -440,23 +436,9 @@ powerBaseTogether[base1_,base2_][expr_] :=
         }]
     ];
 
-powerBaseTogether[base1_,base2_,base3_][expr_] :=
-    expr//togetherSpecifiedBase[base3]//powerBaseTogether[base1,base2];
-
 
 togetherAndSimplify[expr_] :=
     Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
-
-
-togetherSpecifiedBase[rule:_Rule|_RuleDelayed][expr_] :=
-    expr//ReplaceAll[togetherRuleForSpecifiedBase[rule]];
-
-togetherSpecifiedBase[(List|Alternatives)[rules:(_Rule|_RuleDelayed)...]][expr_] :=
-    expr//ReplaceAll[Map[togetherRuleForSpecifiedBase,{rules}]];
-
-
-togetherRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
-    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
 (* ::Subsubsection:: *)
@@ -465,6 +447,21 @@ togetherRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
 
 powerExpand[args___][expr_] :=
     expr//powerBaseTogether[args]//PowerExpand//powerExponentFocus[Simplify];
+
+
+(* ::Subsubsection:: *)
+(*powerExpandBy*)
+
+
+powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
+    expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
+
+powerExpandBy[[rules:(_Rule|_RuleDelayed)..]][expr_] :=
+    expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
+
+
+expandRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
+    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
 (* ::Subsubsection:: *)
@@ -572,7 +569,7 @@ deltaReduce[expr_] :=
 swap[a:Except[{_,_}],b:Except[{_,_}]][expr_] :=
     expr//ReplaceAll[{a->b,b->a}];
 
-swap[pairs:{_,_}...][expr_] :=
+swap[pairs:{_,_}..][expr_] :=
     expr//ReplaceAll[Flatten@Map[{#[[1]]->#[[2]],#[[2]]->#[[1]]}&,{pairs}]];
 
 
