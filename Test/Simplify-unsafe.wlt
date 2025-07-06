@@ -38,7 +38,7 @@ VerificationTest[
 VerificationTest[
     unsafePowerTogether[expr]
     ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    (w^(a + b + a*b)*((x - y)*z)^a)/(-1)^b
     ,
     TestID->"4-Simplify-unsafe.nb"
 ]
@@ -46,7 +46,7 @@ VerificationTest[
 VerificationTest[
     unsafePowerSimplify[expr]
     ,
-    (-1)^b*w^(a + b + a*b)*((x - y)*z)^a
+    (w^(a + b + a*b)*((x - y)*z)^a)/(-1)^b
     ,
     TestID->"5-Simplify-unsafe.nb"
 ]

@@ -89,7 +89,7 @@ VerificationTest[
     ,
     Quiet[HoldComplete[{a -> b, c -> d, {a, b}}]]
     ,
-    {Yurie`Math`freeze::badInput}
+    {Yurie`Math`freeze::BadInput}
     ,
     TestID->"10-Simplify-freeze.nb"
 ]
