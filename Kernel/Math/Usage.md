@@ -143,19 +143,6 @@
 * `#!wl labelToDiffBack` - labelToDiffBack[vars, rules, head]: shift the difference back to the original two. Default[head]: Function. Example: x12->x1-x2.
 
 
-<!-- Lie.wl -->
-
-* `#!wl lie` - lie[type, rank]: represent simple Lie algebras. Value[type]: {"A", "B", "C", "D", "E", "F", "G", "SL", "SP", "SO"}.
-
-* `#!wl lieSimpleRoot` - lieSimpleRoot[lie]: compute orthogonal simple roots of the simple Lie algebra.
-
-* `#!wl lieCartan` - lieCartan[lie]: compute Cartan matrix of the simple Lie algebra.
-
-* `#!wl lieCartanInverse` - lieCartanInverse[lie]: compute inverse Cartan matrix of the simple Lie algebra.
-
-* `#!wl lieDynkinDiagram` - lieDynkinDiagram[lie]: generate Dynkin diagram of the simple Lie algebra.
-
-
 <!-- Matrix.wl -->
 
 * `#!wl matSquareQ` - matSquareQ[matrix]: test if the matrix is square.

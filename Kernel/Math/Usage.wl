@@ -205,24 +205,6 @@ labelToDiffBack::usage =
     StringJoin["labelToDiffBack[vars, rules, head]: shift the difference back to the original two.", "\n", "Default[head]: Function.", "\n", "Example: x12->x1-x2."];
 
 
-(* Lie.wl *)
-
-lie::usage =
-    StringJoin["lie[type, rank]: represent simple Lie algebras.", "\n", "Value[type]: {\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"SL\", \"SP\", \"SO\"}."];
-
-lieSimpleRoot::usage =
-    "lieSimpleRoot[lie]: compute orthogonal simple roots of the simple Lie algebra.";
-
-lieCartan::usage =
-    "lieCartan[lie]: compute Cartan matrix of the simple Lie algebra.";
-
-lieCartanInverse::usage =
-    "lieCartanInverse[lie]: compute inverse Cartan matrix of the simple Lie algebra.";
-
-lieDynkinDiagram::usage =
-    "lieDynkinDiagram[lie]: generate Dynkin diagram of the simple Lie algebra.";
-
-
 (* Matrix.wl *)
 
 matSquareQ::usage =

@@ -23,17 +23,13 @@ Get["Yurie`Math`Hyper`"];
 
 Get["Yurie`Math`Diff`"];
 
-
 Get["Yurie`Math`Simplify`"];
 
 Get["Yurie`Math`SimplifyUnsafe`"];
 
 Get["Yurie`Math`Relation`"];
 
-
 Get["Yurie`Math`Matrix`"];
-
-(* Get["Yurie`Math`Lie`"]; *)
 
 
 Get["Yurie`Math`Label`"];
