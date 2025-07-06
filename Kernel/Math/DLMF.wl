@@ -24,7 +24,7 @@ DLMF::usage =
 DLMFAs::usage =
     "DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption."<>
     "\n"<>
-    "Def[as]: the assumption.";
+    "Info[as]: the assumption.";
 
 DLMFAsTrue::usage =
     "DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions."<>

@@ -49,7 +49,7 @@ The following field types are available for documenting function behavior:
 
 * **`signature: description`** — Function signature paired with a description of typical usage patterns and behavior.
 
-* **`Def[argument]: description`** — Brief description of a specific function argument.
+* **`Info[argument]: description`** — Brief description of a specific function argument.
 
 * **`Value[argument]: values`** — Enumeration of allowed values for a specific function argument.
 

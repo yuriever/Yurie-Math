@@ -50,7 +50,7 @@ summation::usage =
 diffChange::usage =
     "diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations."<>
     "\n"<>
-    "Def[funList]: list of functions to transform."<>
+    "Info[funList]: list of functions to transform."<>
     "\n"<>
     "Default[\"Solution\"]: 1."<>
     "\n"<>
@@ -59,7 +59,7 @@ diffChange::usage =
 integrateChange::usage =
     "integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals."<>
     "\n"<>
-    "Def[sign]: Jacobian sign."<>
+    "Info[sign]: Jacobian sign."<>
     "\n"<>
     "Value[sign]: {-1, 1}."<>
     "\n"<>
@@ -92,7 +92,7 @@ jacobianDet::usage =
 PDCoefficient::usage =
     "PDCoefficient[post, opts][expr]: extract the coefficients of PD[__]."<>
     "\n"<>
-    "Def[post]: post-operation applied to the coefficients."<>
+    "Info[post]: post-operation applied to the coefficients."<>
     "\n"<>
     "Default[post]: Identity."<>
     "\n"<>
@@ -101,15 +101,15 @@ PDCoefficient::usage =
 PDCollect::usage =
     "PDCollect[args][expr]: collect the terms with respect to PD[__]."<>
     "\n"<>
-    "Def[args]: inherited from Collect.";
+    "Info[args]: inherited from Collect.";
 
 
 diffCoefficient::usage =
     "diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]."<>
     "\n"<>
-    "Def[fun]: the head of the function."<>
+    "Info[fun]: the head of the function."<>
     "\n"<>
-    "Def[post]: post-operation applied to the coefficients."<>
+    "Info[post]: post-operation applied to the coefficients."<>
     "\n"<>
     "Default[post]: Identity."<>
     "\n"<>
@@ -120,9 +120,9 @@ diffCollect::usage =
     "\n"<>
     "diffCollect[funList, args][expr]: collect terms for multiple functions."<>
     "\n"<>
-    "Def[fun]: the head of the function."<>
+    "Info[fun]: the head of the function."<>
     "\n"<>
-    "Def[args]: inherited from Collect.";
+    "Info[args]: inherited from Collect.";
 
 diffReplace::usage =
     "diffReplace[fun->res, ...]: replace the derivatives of the function.";

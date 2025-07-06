@@ -26,9 +26,9 @@ matComm::usage =
 matJordan::usage =
     "matJordan[dim, a, b]: construct a Jordan matrix of specified dimension."<>
     "\n"<>
-    "Def[a]: the common diagonal element."<>
+    "Info[a]: the common diagonal element."<>
     "\n"<>
-    "Def[b]: the common super-diagonal element."<>
+    "Info[b]: the common super-diagonal element."<>
     "\n"<>
     "Default[b]: 1.";
 

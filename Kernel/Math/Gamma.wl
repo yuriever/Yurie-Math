@@ -36,11 +36,11 @@ gammaTakeResidue::usage =
     "\n"<>
     "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series."<>
     "\n"<>
-    "Def[index]: the index of the poles."<>
+    "Info[index]: the index of the poles."<>
     "\n"<>
-    "Def[gamma]: the argument of the Gamma function."<>
+    "Info[gamma]: the argument of the Gamma function."<>
     "\n"<>
-    "Def[sign]: the direction of contour."<>
+    "Info[sign]: the direction of contour."<>
     "\n"<>
     "Value[sign]: {1, -1, Left, Right}."<>
     "\n"<>
@@ -54,9 +54,9 @@ gammaTakeResidue::usage =
 multiGamma::usage =
     "multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator."<>
     "\n"<>
-    "Def[num]: list of arguments for Gamma functions in the numerator."<>
+    "Info[num]: list of arguments for Gamma functions in the numerator."<>
     "\n"<>
-    "Def[denom]: list of arguments for Gamma functions in the denominator.";
+    "Info[denom]: list of arguments for Gamma functions in the denominator.";
 
 multiGammaFrom::usage =
     "multiGammaFrom[expr]: convert Gamma functions into multi-Gamma symbols.";
@@ -69,7 +69,7 @@ multiGammaSimplify::usage =
 multiGammaReduceByBarnesLemma::usage =
     "multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas."<>
     "\n"<>
-    "Def[s]: the variable parameter in the Barnes lemma reduction.";
+    "Info[s]: the variable parameter in the Barnes lemma reduction.";
 
 
 (* ::Section:: *)

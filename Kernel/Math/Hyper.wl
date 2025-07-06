@@ -98,7 +98,7 @@ WilsonPolynomialFromHyper::usage =
 AppellF1FromIntegral::usage =
     "AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1."<>
     "\n"<>
-    "Def[var]: integration variable to match."<>
+    "Info[var]: integration variable to match."<>
     "\n"<>
     "Default[var]: All."<>
     "\n"<>
