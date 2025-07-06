@@ -19,45 +19,45 @@ Needs["Yurie`Math`"];
 
 
 SS::usage =
-    "OperatorForm: Simplify.";
+    "Sketch: Simplify.";
 
 FS::usage =
-    "OperatorForm: FullSimplify.";
+    "Sketch: FullSimplify.";
 
 FE::usage =
-    "OperatorForm: FunctionExpand.";
+    "Sketch: FunctionExpand.";
 
 FES::usage =
-    "OperatorForm: FunctionExpand + Simplify.";
+    "Sketch: FunctionExpand + Simplify.";
 
 
 AS::usage =
-    "OperatorForm: Assuming.";
+    "Sketch: Assuming.";
 
 SSA::usage =
-    "OperatorForm: Simplify + Assuming.";
+    "Sketch: Simplify + Assuming.";
 
 FSA::usage =
-    "OperatorForm: FullSimplify + Assuming.";
+    "Sketch: FullSimplify + Assuming.";
 
 FEA::usage =
-    "OperatorForm: FunctionExpand + Assuming.";
+    "Sketch: FunctionExpand + Assuming.";
 
 FESA::usage =
-    "OperatorForm: FunctionExpand + Simplify + Assuming.";
+    "Sketch: FunctionExpand + Simplify + Assuming.";
 
 
 modularize::usage =
     "modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.";
 
 block::usage =
-    "OperatorForm: Block.";
+    "Sketch: Block.";
 
 with::usage =
-    "OperatorForm: With.";
+    "Sketch: With.";
 
 module::usage =
-    "OperatorForm: Module.";
+    "Sketch: Module.";
 
 
 rep::usage =
@@ -70,34 +70,34 @@ repdeep::usage =
 
 
 part::usage =
-    "OperatorForm: Part.";
+    "Sketch: Part.";
 
 plus::usage =
-    "OperatorForm: Plus.";
+    "Sketch: Plus.";
 
 minus::usage =
-    "OperatorForm: Minus.";
+    "Sketch: Minus.";
 
 times::usage =
-    "OperatorForm: Times.";
+    "Sketch: Times.";
 
 divide::usage =
-    "OperatorForm: Divide.";
+    "Sketch: Divide.";
 
 series::usage =
-    "OperatorForm: Series + Normal.";
+    "Sketch: Series + Normal.";
 
 limit::usage =
-    "OperatorForm: Limit.";
+    "Sketch: Limit.";
 
 solve::usage =
-    "OperatorForm: Solve.";
+    "Sketch: Solve.";
 
 solve1::usage =
-    "OperatorForm: Solve + First.";
+    "Sketch: Solve + First.";
 
 collect::usage =
-    "OperatorForm: Collect.";
+    "Sketch: Collect.";
 
 
 (* ::Section:: *)
