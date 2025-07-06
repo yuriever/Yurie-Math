@@ -26,9 +26,9 @@ matComm::usage =
 matJordan::usage =
     "matJordan[dim, a, b]: construct a Jordan matrix of specified dimension."<>
     "\n"<>
-    "a: the common diagonal element."<>
+    "Def[a]: the common diagonal element."<>
     "\n"<>
-    "b: the common super-diagonal element."<>
+    "Def[b]: the common super-diagonal element."<>
     "\n"<>
     "Default[b]: 1.";
 
@@ -37,7 +37,7 @@ matAngularMomentum::usage =
     "\n"<>
     "Value[direction]: {\"x\", \"y\", \"z\"|0, 1, -1}."<>
     "\n"<>
-    "The column/row indices run from j to -j.";
+    "Hint: the column/row indices run from j to -j.";
 
 
 (* ::Section:: *)

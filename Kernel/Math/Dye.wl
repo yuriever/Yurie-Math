@@ -15,19 +15,27 @@ Needs["Yurie`Math`"];
 
 
 dye::usage =
-    "dye[expr_]: color the elements at the first level of expression.";
+    "dye[expr]: color the subexpressions at the first level.";
 
 dyeIn::usage =
-    "dyeIn[levelspec_:1][expr_]: color the elements at the specific levels of expression.";
+    "dyeIn[level][expr]: color the subexpressions at the specified level."<>
+    "\n"<>
+    "dyeIn[color, level][expr]: specify the color.";
 
 dyeBy::usage =
-    "dyeBy[pattern_,levelspec_,n_][expr_]: color the occurrences of pattern in expression.";
+    "dyeBy[pattern, level, opts][expr]: color the subexpressions matching the pattern."<>
+    "\n"<>
+    "dyeBy[color, pattern, level, opts][expr]: specify the color."<>
+    "\n"<>
+    "Default[level]: {0, Infinity}, inherited from Position.";
 
 dyeAt::usage =
-    "dyeAt[positions_][expr_]: color the expression at the specified positions in expression.";
+    "dyeAt[positions][expr]: color the subexpressions at the specified positions."<>
+    "\n"<>
+    "dyeAt[color, positions][expr]: specify the color.";
 
 dyeOff::usage =
-    "dyeOff[expr_]: eliminate the colors from dye.";
+    "dyeOff[expr]: remove the coloring applied by dye functions.";
 
 
 (* ::Section:: *)
@@ -57,10 +65,10 @@ dye[expr_] :=
     dyeAtPosition[expr,Position[expr,_,{1},Heads->False]];
 
 
-dyeIn[levelspec:_:1][expr_]/;!ColorQ[levelspec] :=
+dyeIn[levelspec_][expr_]/;!ColorQ[levelspec] :=
     dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False]];
 
-dyeIn[color_,levelspec_:1][expr_]/;ColorQ[color]&&!ColorQ[levelspec] :=
+dyeIn[color_,levelspec_][expr_]/;ColorQ[color]&&!ColorQ[levelspec] :=
     dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False],color];
 
 

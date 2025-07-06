@@ -29,13 +29,15 @@ relationFeynman::usage =
 relationPowerPhase::usage =
     "relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor."<>
     "\n"<>
-    "base: specify the power base."<>
+    "Def[base]: the power base."<>
     "\n"<>
-    "expanded: specify the numerator factors to separate."<>
+    "Def[expanded]: the numerator factors to separate."<>
     "\n"<>
-    "expanded2: specify the denominator factors to separate and can be omitted."<>
+    "Def[expanded2]: the denominator factors to separate. This argument is optional."<>
     "\n"<>
-    "sign: specify the phase direction.";
+    "Def[sign]: the phase direction."<>
+    "\n"<>
+    "Default[sign]: 1.";
 
 
 (* ::Section:: *)

@@ -15,36 +15,68 @@ Needs["Yurie`Math`"];
 
 
 label::usage =
-    "join the variable(s) and label(s) into a (sequence of) labeled object(s).";
+    "label[vars, labs, head]: join the variables and labels into labeled objects using specified head."<>
+    "\n"<>
+    "Default[head]: Function.";
 
 labelAt::usage =
-    "take the specific value(s) of the labeled object(s)."
+    "labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules."<>
+    "\n"<>
+    "Default[head]: Function.";
 
 
 labelConvert::usage =
-    "convert the labeled object(s) according to the two specified label heads.";
+    "labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.";
 
 labelJoin::usage =
-    "labelConvert: _->Symbol.";
+    "labelJoin[vars, head]: convert labeled objects from any head to Symbol."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Sketch: labelConvert with _->Symbol.";
 
 labelSplit::usage =
-    "labelConvert: Symbol->_.";
+    "labelSplit[vars, head]: convert labeled objects from Symbol to any head."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Sketch: labelConvert with Symbol->_.";
 
 
 labelToZero::usage =
-    "x1->0.";
+    "labelToZero[vars, labs, head]: shift to zero."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: x1->0.";
 
 labelToEqual::usage =
-    "x1->x2.";
+    "labelToEqual[vars, rules, head]: shift the first to the second."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: x1->x2.";
 
 labelToDiff::usage =
-    "x1->x12+x2.";
+    "labelToDiff[vars, rules, head]: shift the first to the difference plus the second."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: x1->x12+x2.";
 
 labelToDiffZero::usage =
-    "x1->x12, x2->0.";
+    "labelToDiffZero[vars, rules, head]: shift the first to the difference and the second to zero."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: x1->x12, x2->0.";
 
 labelToDiffBack::usage =
-    "x12->x1-x2.";
+    "labelToDiffBack[vars, rules, head]: shift the difference back to the original two."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: x12->x1-x2.";
 
 
 (* ::Section:: *)

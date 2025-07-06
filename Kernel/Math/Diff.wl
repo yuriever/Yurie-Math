@@ -19,13 +19,13 @@ Needs["Yurie`Math`"];
 
 
 PD::usage =
-    "head of partial derivative."
+    "PD[vars]: head of partial derivative.";
 
 INT::usage =
-    "head of integral."
+    "INT[vars]: head of integration.";
 
 SUM::usage =
-    "head of sum."
+    "SUM[vars]: head of summation.";
 
 
 (* ::Subsection:: *)
@@ -33,10 +33,14 @@ SUM::usage =
 
 
 integrate::usage =
-    "operator form of Integrate.";
+    "integrate[args][expr]: operator form of Integrate."<>
+    "\n"<>
+    "Default[GenerateConditions]: False.";
 
 summation::usage =
-    "operator form of Sum.";
+    "summation[args][expr]: operator form of Sum."<>
+    "\n"<>
+    "Default[GenerateConditions]: False.";
 
 
 (* ::Subsection:: *)
@@ -44,10 +48,24 @@ summation::usage =
 
 
 diffChange::usage =
-    "change variables in differential equations.";
+    "diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations."<>
+    "\n"<>
+    "Def[funList]: list of functions to transform."<>
+    "\n"<>
+    "Default[\"Solution\"]: 1."<>
+    "\n"<>
+    "Default[\"ShowSolution\"]: False.";
 
 integrateChange::usage =
-    "change variables in integrals.";
+    "integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals."<>
+    "\n"<>
+    "Def[sign]: Jacobian sign."<>
+    "\n"<>
+    "Value[sign]: {-1, 1}."<>
+    "\n"<>
+    "Default[\"Solution\"]: 1."<>
+    "\n"<>
+    "Default[\"ShowSolution\"]: False.";
 
 
 (* ::Subsection:: *)
@@ -55,7 +73,9 @@ integrateChange::usage =
 
 
 IBP::usage =
-    "perform integration by parts.";
+    "IBP[fun][expr]: perform integration by parts."<>
+    "\n"<>
+    "IBP[fun, vars][expr]: perform integration by parts with respect to specific variables.";
 
 
 (* ::Subsection:: *)
@@ -63,30 +83,54 @@ IBP::usage =
 
 
 jacobianMatrix::usage =
-    "Jacobian matrix.";
+    "jacobianMatrix[funList, varList]: Jacobian matrix.";
 
 jacobianDet::usage =
-    "Jacobian determinant.";
+    "jacobianDet[funList, varList]: Jacobian determinant.";
 
 
 PDCoefficient::usage =
-    "extract the coefficients of PD[__].";
+    "PDCoefficient[post, opts][expr]: extract the coefficients of PD[__]."<>
+    "\n"<>
+    "Def[post]: post-operation applied to the coefficients."<>
+    "\n"<>
+    "Default[post]: Identity."<>
+    "\n"<>
+    "Default[\"CheckLinearity\"]: True.";
 
 PDCollect::usage =
-    "collect the terms with respect to PD[__].";
+    "PDCollect[args][expr]: collect the terms with respect to PD[__]."<>
+    "\n"<>
+    "Def[args]: inherited from Collect.";
 
 
 diffCoefficient::usage =
-    "extract the coefficients of Derivative[__][_][__].";
+    "diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]."<>
+    "\n"<>
+    "Def[fun]: the head of the function."<>
+    "\n"<>
+    "Def[post]: post-operation applied to the coefficients."<>
+    "\n"<>
+    "Default[post]: Identity."<>
+    "\n"<>
+    "Default[\"CheckLinearity\"]: True.";
 
 diffCollect::usage =
-    "collect the terms with respect to Derivative[__][_][__].";
+    "diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]."<>
+    "\n"<>
+    "diffCollect[funList, args][expr]: collect terms for multiple functions."<>
+    "\n"<>
+    "Def[fun]: the head of the function."<>
+    "\n"<>
+    "Def[args]: inherited from Collect.";
 
 diffReplace::usage =
-    "replace the derivatives of the function.";
+    "diffReplace[fun->res, ...]: replace the derivatives of the function.";
 
 diffComm::usage =
-    "diffComm[X,Y]=-(X[Y[#]]-Y[X[#]])&.";
+    "diffComm[X, Y]: compute the commutator of differential operators."<>
+    "\n"<>
+    "Sketch: -(X[Y[#]]-Y[X[#]])&.";
 
 
 (* ::Section:: *)

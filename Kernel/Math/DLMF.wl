@@ -17,20 +17,30 @@ Needs["Yurie`Math`Constant`"];
 
 
 DLMF::usage =
-    "simplify expressions by the rules in DLMFData.";
+    "DLMF[rules, opts][expr]: simplify the expression by the DLMF rules."<>
+    "\n"<>
+    "Default[\"IgnoreCondition\"]: False.";
 
 DLMFAs::usage =
-    "simplify expressions by the rules in DLMFData with the specified conditions.";
+    "DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption."<>
+    "\n"<>
+    "Def[as]: the assumption.";
 
 DLMFAsTrue::usage =
-    "simplify expressions by the rules in DLMFData ignoring the conditions.";
+    "DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions."<>
+    "\n"<>
+    "Hint: this is equivalent to DLMF with \"IgnoreCondition\"->True.";
 
 
 DLMFRule::usage =
-    "return the rules in DLMFData.";
+    "DLMFRule[rules, opts]: return the DLMF rules."<>
+    "\n"<>
+    "Default[\"IgnoreCondition\"]: False.";
 
 DLMFRuleShow::usage =
-    "show the rules without context marks in DLMFData.";
+    "DLMFRuleShow[rules, opts]: show the DLMF rules without context marker."<>
+    "\n"<>
+    "Default[\"IgnoreCondition\"]: False.";
 
 
 (* ::Section:: *)

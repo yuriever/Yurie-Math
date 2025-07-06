@@ -21,13 +21,13 @@ Needs["Yurie`Math`Constant`"];
 
 
 hyper::usage =
-    "head used by hyperConvert.";
+    "hyper[type, var][expr]: head used by hypergeometric conversion functions.";
 
 JacobiPhi::usage =
-    "Jacobi Phi function, JacobiPhi[a,b,c,z].";
+    "JacobiPhi[a, b, c, z]: Jacobi Phi function.";
 
 WilsonPolynomial::usage =
-    "Wilson polynomial, WilsonPolynomial[a,b,c,d,n,x].";
+    "WilsonPolynomial[a, b, c, d, n, x]: Wilson polynomial.";
 
 
 (* ::Subsection:: *)
@@ -35,44 +35,74 @@ WilsonPolynomial::usage =
 
 
 hyperSeparate::usage =
-    "split a product into hypergeometric functions and the rests.";
+    "hyperSeparate[expr]: separate a product into hypergeometric functions and the rest.";
 
 hyperUnregularize::usage =
-    "convert regularized hypergeometric function to the normal one.";
+    "hyperUnregularize[expr]: convert regularized hypergeometric function to the normal one.";
 
 hyperRegularize::usage =
-    "convert hypergeometric function to the regularized one.";
+    "hyperRegularize[expr]: convert hypergeometric function to the regularized one.";
 
 
 hyperToTaylor::usage =
-    "convert hypergeometric function to Taylor series.";
+    "hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series."<>
+    "\n"<>
+    "hyperToTaylor[symbols, indicator][expr]: indicate the summation."<>
+    "\n"<>
+    "Default[indicator]: SUM.";
 
 hyperToMellinBarnes::usage =
-    "convert hypergeometric function to Mellin-Barnes integral.";
+    "hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral."<>
+    "\n"<>
+    "hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration."<>
+    "\n"<>
+    "Default[indicator]: INT.";
 
 hyperToMellinBarnes2::usage =
-    "convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).";
+    "hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z)."<>
+    "\n"<>
+    "hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration."<>
+    "\n"<>
+    "Default[indicator]: INT.";
 
 hyperFromAppellF1::usage =
-    "convert Appell F1 function to hypergeometric summation.";
+    "hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation."<>
+    "\n"<>
+    "hyperFromAppellF1[symbols, indicator][expr]: indicate the summation."<>
+    "\n"<>
+    "Default[indicator]: SUM.";
 
 
 JacobiPhiToHyper::usage =
-    "convert Jacobi Phi to Hypergeometric2F1.";
+    "JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1."<>
+    "\n"<>
+    "Default[head]: Inactive.";
 
 JacobiPhiFromHyper::usage =
-    "convert Hypergeometric2F1 to Jacobi Phi.";
+    "JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function."<>
+    "\n"<>
+    "Default[head]: Inactive.";
 
 
 WilsonPolynomialToHyper::usage =
-    "convert Wilson polynomial to Hypergeometric4F3.";
+    "WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3."<>
+    "\n"<>
+    "Default[head]: Inactive.";
 
 WilsonPolynomialFromHyper::usage =
-    "convert Hypergeometric4F3 to Wilson polynomial.";
+    "WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial."<>
+    "\n"<>
+    "Default[head]: Inactive.";
 
 
 AppellF1FromIntegral::usage =
-    "convert integral to Appell F1.";
+    "AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1."<>
+    "\n"<>
+    "Def[var]: integration variable to match."<>
+    "\n"<>
+    "Default[var]: All."<>
+    "\n"<>
+    "Default[head]: Inactive.";
 
 
 (* ::Section:: *)

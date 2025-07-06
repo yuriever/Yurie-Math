@@ -93,7 +93,7 @@ powerExponentFocus::usage =
 powerSeparate::usage =
     "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
     "\n"<>
-    "Def[baseP]: the pattern of power bases to match."
+    "Def[baseP]: the pattern of power bases to match.";
 
 powerBaseTogether::usage =
     "powerBaseTogether[baseP, basePreservedP, baseExpandedP][expr]: take together the bases of power factors."<>

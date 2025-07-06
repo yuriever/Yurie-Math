@@ -15,19 +15,21 @@ Needs["Yurie`Math`"];
 
 
 lie::usage =
-    "simple Lie algebras.";
+    "lie[type, rank]: represent simple Lie algebras."<>
+    "\n"<>
+    "Value[type]: {\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"SL\", \"SP\", \"SO\"}.";
 
 lieSimpleRoot::usage =
-    "orthogonal simple roots of simple Lie algebras.";
+    "lieSimpleRoot[lie]: compute orthogonal simple roots of the simple Lie algebra.";
 
 lieCartan::usage =
-    "Cartan matrix of simple Lie algebras.";
+    "lieCartan[lie]: compute Cartan matrix of the simple Lie algebra.";
 
 lieCartanInverse::usage =
-    "inverse Cartan matrix of simple Lie algebras.";
+    "lieCartanInverse[lie]: compute inverse Cartan matrix of the simple Lie algebra.";
 
 lieDynkinDiagram::usage =
-    "Dynkin diagram of simple Lie algebras.";
+    "lieDynkinDiagram[lie]: generate Dynkin diagram of the simple Lie algebra.";
 
 
 (* ::Section:: *)

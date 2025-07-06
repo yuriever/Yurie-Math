@@ -17,31 +17,59 @@ Needs["Yurie`Math`Constant`"];
 
 
 gammaSimplify::usage =
-    "simplify Gamma factors in the expression."<>
+    "gammaSimplify[expr]: simplify Gamma functions in the expression."<>
     "\n"<>
-    "Developer`GammaSimplify";
+    "Sketch: Developer`GammaSimplify.";
 
 gammaFrom::usage =
-    "expand everything to Gamma factors.";
+    "gammaFrom[expr, opts]: expand everything to Gamma functions."<>
+    "\n"<>
+    "Default[\"Transformation\"]: Automatic."<>
+    "\n"<>
+    "Default[\"ActivateGamma\"]: True.";
 
 gammaSeparate::usage =
-    "split a product into Gamma factors and the rests.";
+    "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
 
 gammaTakeResidue::usage =
-    "take residue of Gamma factors.";
+    "gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor."<>
+    "\n"<>
+    "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series."<>
+    "\n"<>
+    "Def[index]: the index of the poles."<>
+    "\n"<>
+    "Def[gamma]: the argument of the Gamma function."<>
+    "\n"<>
+    "Def[sign]: the direction of contour."<>
+    "\n"<>
+    "Value[sign]: {1, -1, Left, Right}."<>
+    "\n"<>
+    "Default[sign]: 1."<>
+    "\n"<>
+    "Default[\"SimplePole\"]: True."<>
+    "\n"<>
+    "Default[\"ShowPole\"]: True.";
 
 
 multiGamma::usage =
-    "head of multi-Gamma symbol.";
+    "multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator."<>
+    "\n"<>
+    "Def[num]: list of arguments for Gamma functions in the numerator."<>
+    "\n"<>
+    "Def[denom]: list of arguments for Gamma functions in the denominator.";
 
 multiGammaFrom::usage =
-    "collect Gamma factors into multi-Gamma symbols.";
+    "multiGammaFrom[expr]: convert Gamma functions into multi-Gamma symbols.";
 
 multiGammaSimplify::usage =
-    "simplify the multi-Gamma symbol.";
+    "multiGammaSimplify[expr]: simplify the multi-Gamma symbol with the assumption."<>
+    "\n"<>
+    "Default[assume]: True.";
 
 multiGammaReduceByBarnesLemma::usage =
-    "reduce the multi-Gamma symbol by the Barnes lemmas.";
+    "multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas."<>
+    "\n"<>
+    "Def[s]: the variable parameter in the Barnes lemma reduction.";
 
 
 (* ::Section:: *)

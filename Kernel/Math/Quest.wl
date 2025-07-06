@@ -59,12 +59,13 @@ isC::usage =
 
 presentQ::usage =
     "presentQ[pattern][expr]: test whether the pattern occurs in the expression."<>
-    "Not + FreeQ.";
+    "\n"<>
+    "Sketch: Not + FreeQ.";
 
 linearQ::usage =
     "linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present."<>
     "\n"<>
-    "linearQ[expr, varList]: test whether the expression is linear in all the variables and at least one is present.";
+    "linearQ[expr, varList]: test linearity for all the variables.";
 
 syntacticNegativeQ::usage =
     "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
