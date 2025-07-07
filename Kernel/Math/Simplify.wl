@@ -390,13 +390,13 @@ powerExpand//Options = {
     "Assumptions"->Automatic
 };
 
-powerExpand[operation_:Simplify,opts:OptionsPattern[]][expr_] :=
+powerExpand[Shortest[operation_:Simplify],OptionsPattern[]][expr_] :=
     expr//
         powerBaseTogether[operation]//
         PowerExpand[#,Assumptions->OptionValue["Assumptions"]]&//
         powerExponentFocus[Simplify];
 
-powerExpand[operation_,level_?levelQ,opts:OptionsPattern[]][expr_] :=
+powerExpand[operation_,level_?levelQ,OptionsPattern[]][expr_] :=
     expr//
         powerBaseTogether[operation,level]//
         PowerExpand[#,Assumptions->OptionValue["Assumptions"]]&//
