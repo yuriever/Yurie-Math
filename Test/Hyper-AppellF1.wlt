@@ -54,7 +54,7 @@ VerificationTest[
 VerificationTest[
     hyperFromAppellF1[n, Full][AppellF1[a, b1, b2, c, x, y]]
     ,
-    hyper[hyperFromAppellF1, n][(x^n*y^n*Hypergeometric2F1[a + n, b1 + n, c + 2*n, x]*Hypergeometric2F1[a + n, b2 + n, c + 2*n, y]*Pochhammer[a, n]*Pochhammer[b1, n]*Pochhammer[b2, n]*Pochhammer[-a + c, n])/(n!*Pochhammer[c, 2*n]*Pochhammer[-1 + c + n, n])]
+    hyper["AppellF1", n][(x^n*y^n*Hypergeometric2F1[a + n, b1 + n, c + 2*n, x]*Hypergeometric2F1[a + n, b2 + n, c + 2*n, y]*Pochhammer[a, n]*Pochhammer[b1, n]*Pochhammer[b2, n]*Pochhammer[-a + c, n])/(n!*Pochhammer[c, 2*n]*Pochhammer[-1 + c + n, n])]
     ,
     TestID->"6-Hyper-AppellF1.nb"
 ]
@@ -72,7 +72,7 @@ VerificationTest[
 VerificationTest[
     hyperFromAppellF1[n | m, Full][AppellF1[a, b1, b2, c, x, y]^2]
     ,
-    hyper[hyperFromAppellF1, m][(x^m*y^m*Hypergeometric2F1[a + m, b1 + m, c + 2*m, x]*Hypergeometric2F1[a + m, b2 + m, c + 2*m, y]*Pochhammer[a, m]*Pochhammer[b1, m]*Pochhammer[b2, m]*Pochhammer[-a + c, m])/(m!*Pochhammer[c, 2*m]*Pochhammer[-1 + c + m, m])]*hyper[hyperFromAppellF1, n][(x^n*y^n*Hypergeometric2F1[a + n, b1 + n, c + 2*n, x]*Hypergeometric2F1[a + n, b2 + n, c + 2*n, y]*Pochhammer[a, n]*Pochhammer[b1, n]*Pochhammer[b2, n]*Pochhammer[-a + c, n])/(n!*Pochhammer[c, 2*n]*Pochhammer[-1 + c + n, n])]
+    hyper["AppellF1", m][(x^m*y^m*Hypergeometric2F1[a + m, b1 + m, c + 2*m, x]*Hypergeometric2F1[a + m, b2 + m, c + 2*m, y]*Pochhammer[a, m]*Pochhammer[b1, m]*Pochhammer[b2, m]*Pochhammer[-a + c, m])/(m!*Pochhammer[c, 2*m]*Pochhammer[-1 + c + m, m])]*hyper["AppellF1", n][(x^n*y^n*Hypergeometric2F1[a + n, b1 + n, c + 2*n, x]*Hypergeometric2F1[a + n, b2 + n, c + 2*n, y]*Pochhammer[a, n]*Pochhammer[b1, n]*Pochhammer[b2, n]*Pochhammer[-a + c, n])/(n!*Pochhammer[c, 2*n]*Pochhammer[-1 + c + n, n])]
     ,
     TestID->"8-Hyper-AppellF1.nb"
 ]

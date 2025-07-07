@@ -94,7 +94,7 @@ VerificationTest[
 VerificationTest[
     hyperToMellinBarnes[s | t | u, Full][expr]
     ,
-    f[hyper[hyperToMellinBarnes, s][((-z1)^s*Gamma[c1]*Gamma[-s]*Gamma[a1 + s]*Gamma[b1 + s])/(Gamma[a1]*Gamma[b1]*Gamma[c1 + s])]] + hyper[hyperToMellinBarnes, t][((-z2)^t*Gamma[c2]*Gamma[-t]*Gamma[a2 + t]*Gamma[b2 + t])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + t])]*hyper[hyperToMellinBarnes, u][((-z2)^u*Gamma[c2]*Gamma[-u]*Gamma[a2 + u]*Gamma[b2 + u])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + u])]
+    f[hyper["MellinBarnes", s][((-z1)^s*Gamma[c1]*Gamma[-s]*Gamma[a1 + s]*Gamma[b1 + s])/(Gamma[a1]*Gamma[b1]*Gamma[c1 + s])]] + hyper["MellinBarnes", t][((-z2)^t*Gamma[c2]*Gamma[-t]*Gamma[a2 + t]*Gamma[b2 + t])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + t])]*hyper["MellinBarnes", u][((-z2)^u*Gamma[c2]*Gamma[-u]*Gamma[a2 + u]*Gamma[b2 + u])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + u])]
     ,
     TestID->"11-Hyper.nb"
 ]
@@ -112,7 +112,7 @@ VerificationTest[
 VerificationTest[
     hyperToTaylor[n | m | k, Full][expr]
     ,
-    f[hyper[hyperToTaylor, n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(Gamma[a1]*Gamma[b1]*Gamma[1 + n]*Gamma[c1 + n])]] + hyper[hyperToTaylor, k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(Gamma[a2]*Gamma[b2]*Gamma[1 + k]*Gamma[c2 + k])]*hyper[hyperToTaylor, m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(Gamma[a2]*Gamma[b2]*Gamma[1 + m]*Gamma[c2 + m])]
+    f[hyper["Taylor", n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(Gamma[a1]*Gamma[b1]*Gamma[1 + n]*Gamma[c1 + n])]] + hyper["Taylor", k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(Gamma[a2]*Gamma[b2]*Gamma[1 + k]*Gamma[c2 + k])]*hyper["Taylor", m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(Gamma[a2]*Gamma[b2]*Gamma[1 + m]*Gamma[c2 + m])]
     ,
     TestID->"13-Hyper.nb"
 ]
@@ -154,7 +154,7 @@ VerificationTest[
 VerificationTest[
     hyperToTaylor[n | m | k | l, Full][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
     ,
-    {hyper[hyperToTaylor, n][(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])], hyper[hyperToTaylor, m][(x^m*Gamma[b]*Gamma[a + m])/(Gamma[a]*Gamma[1 + m]*Gamma[b + m])], hyper[hyperToTaylor, k][(x^k*Gamma[a])/(Gamma[1 + k]*Gamma[a + k])], hyper[hyperToTaylor, l][(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
+    {hyper["Taylor", n][(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])], hyper["Taylor", m][(x^m*Gamma[b]*Gamma[a + m])/(Gamma[a]*Gamma[1 + m]*Gamma[b + m])], hyper["Taylor", k][(x^k*Gamma[a])/(Gamma[1 + k]*Gamma[a + k])], hyper["Taylor", l][(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
     ,
     TestID->"18-Hyper.nb"
 ]
@@ -162,7 +162,7 @@ VerificationTest[
 VerificationTest[
     hyperToMellinBarnes[s | t | u | v, Full][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
     ,
-    {hyper[hyperToMellinBarnes, s][((-x)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])], hyper[hyperToMellinBarnes, t][((-x)^t*Gamma[b]*Gamma[-t]*Gamma[a + t])/(Gamma[a]*Gamma[b + t])], hyper[hyperToMellinBarnes, u][((-x)^u*Gamma[a]*Gamma[-u])/Gamma[a + u]], hyper[hyperToMellinBarnes, v][((-x)^v*Gamma[c]*Gamma[-v]*Gamma[a + v]*Gamma[b + v])/(Gamma[a]*Gamma[b]*Gamma[c + v])]}
+    {hyper["MellinBarnes", s][((-x)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])], hyper["MellinBarnes", t][((-x)^t*Gamma[b]*Gamma[-t]*Gamma[a + t])/(Gamma[a]*Gamma[b + t])], hyper["MellinBarnes", u][((-x)^u*Gamma[a]*Gamma[-u])/Gamma[a + u]], hyper["MellinBarnes", v][((-x)^v*Gamma[c]*Gamma[-v]*Gamma[a + v]*Gamma[b + v])/(Gamma[a]*Gamma[b]*Gamma[c + v])]}
     ,
     TestID->"19-Hyper.nb"
 ]
