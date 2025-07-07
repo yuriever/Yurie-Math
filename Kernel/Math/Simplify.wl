@@ -90,29 +90,29 @@ powerExponentFocus::usage =
     "\n"<>
     "Default[operation]: Simplify.";
 
-powerSeparate::usage =
-    "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
-    "\n"<>
-    "Info[baseP]: the pattern of power bases to match.";
-
 powerBaseTogether::usage =
-    "powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors."<>
+    "powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base."<>
     "\n"<>
-    "Info[baseP]: the pattern of power bases to combine."<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
     "\n"<>
-    "Info[basePreservedP]: the pattern of power bases to preserve.";
+    "Default[operation]: Simplify.";
 
 powerExpand::usage =
-    "powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases."<>
+    "powerExpand[operation, level][expr]: expand the power factors after combining power bases."<>
     "\n"<>
-    "Info[baseP]: the pattern of power bases to combine."<>
+    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
     "\n"<>
-    "Info[basePreservedP]: the pattern of power bases to preserve.";
+    "Default[operation]: Simplify.";
 
 powerExpandBy::usage =
     "powerExpandBy[rules..][expr]: expand the power factors according to the rules."<>
     "\n"<>
     "Info[rules]: rules of the form base->{factor1, factor2, ...}.";
+
+powerSeparate::usage =
+    "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
+    "\n"<>
+    "Info[baseP]: the pattern of power bases to match.";
 
 powerExponentCollect::usage =
     "powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents."<>
@@ -210,7 +210,7 @@ freeze//Options = {
 freeze[
     patternOrItsList_,
     operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
-    level:_Integer|_List|Infinity|All:Infinity,
+    level:_?levelQ:Infinity,
     opts:OptionsPattern[]
 ][expr_] :=
     Catch[
@@ -223,7 +223,7 @@ freeze[
 freezeNegative[
     patternOrItsList_,
     operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
-    level:_Integer|_List|Infinity|All:Infinity
+    level:_?levelQ:Infinity
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,{-#&,-#&},level,expr],
@@ -296,7 +296,7 @@ focus[pattern_,operation_:Simplify][expr_] :=
         (head:pattern)[args__]:>head@@Map[operation,{args}]
     }];
 
-focus[pattern_,operation_,level_][expr_] :=
+focus[pattern_,operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         (head:pattern):>operation@head,
         (head:pattern)[arg_]:>head@operation@arg,
@@ -320,7 +320,7 @@ fracFocus[operation_:Simplify][expr_] :=
         subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
     }];
 
-fracFocus[operation_,level_][expr_] :=
+fracFocus[operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
     },level]&;
@@ -335,7 +335,7 @@ powerFocus[operation_:Simplify][expr_] :=
         Power[base_,exponent_]:>Power[operation@base,operation@exponent]
     }];
 
-powerFocus[operation_,level_][expr_] :=
+powerFocus[operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[operation@base,operation@exponent]
     },level]&;
@@ -346,7 +346,7 @@ powerBaseFocus[operation_:Simplify][expr_] :=
         Power[base_,exponent_]:>Power[operation@base,exponent]
     }];
 
-powerBaseFocus[operation_,level_][expr_] :=
+powerBaseFocus[operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[operation@base,exponent]
     },level]&;
@@ -357,10 +357,65 @@ powerExponentFocus[operation_:Simplify][expr_] :=
         Power[base_,exponent_]:>Power[base,operation@exponent]
     }];
 
-powerExponentFocus[operation_,level_][expr_] :=
+powerExponentFocus[operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         Power[base_,exponent_]:>Power[base,operation@exponent]
     },level]&;
+
+
+(* ::Subsubsection:: *)
+(*powerBaseTogether*)
+
+
+powerBaseTogether[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]:>Power[togetherAnd[operation][base],exponent]
+    }];
+
+powerBaseTogether[operation_,level_?levelQ][expr_] :=
+    expr//Replace[#,{
+        Power[base_,exponent_]:>Power[togetherAnd[operation][base],exponent]
+    },level]&;
+
+
+togetherAnd[operation_][expr_] :=
+    Together[expr]//operation[Numerator[#]]/operation[Denominator[#]]&;
+
+
+(* ::Subsubsection:: *)
+(*powerExpand*)
+
+
+powerExpand//Options = {
+    "Assumptions"->Automatic
+};
+
+powerExpand[operation_:Simplify,opts:OptionsPattern[]][expr_] :=
+    expr//
+        powerBaseTogether[operation]//
+        PowerExpand[#,Assumptions->OptionValue["Assumptions"]]&//
+        powerExponentFocus[Simplify];
+
+powerExpand[operation_,level_?levelQ,opts:OptionsPattern[]][expr_] :=
+    expr//
+        powerBaseTogether[operation,level]//
+        PowerExpand[#,Assumptions->OptionValue["Assumptions"]]&//
+        powerExponentFocus[Simplify];
+
+
+(* ::Subsubsection:: *)
+(*powerExpandBy*)
+
+
+powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
+    expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
+
+powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
+    expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
+
+
+expandRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
+    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
 (* ::Subsubsection:: *)
@@ -407,61 +462,6 @@ basePattern[base_List] :=
 
 basePattern[base_] :=
     base;
-
-
-(* ::Subsubsection:: *)
-(*powerBaseTogether*)
-
-
-powerBaseTogether[][expr_] :=
-    expr//ReplaceAll[{
-        Power[base_,exponent_]:>Power[togetherAndSimplify[base],exponent]
-    }];
-
-powerBaseTogether[base1_][expr_] :=
-    With[ {baseP = basePattern[base1]},
-        expr//ReplaceAll[{
-            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
-        }]
-    ];
-
-powerBaseTogether[base1_,base2_][expr_] :=
-    With[ {
-            baseP = basePattern[base1],
-            baseFrozenP = basePattern[base2]
-        },
-        expr//ReplaceAll[{
-            subexpr:Power[baseFrozenP,_]:>subexpr,
-            Power[base:baseP,exponent_]:>Power[togetherAndSimplify[base],exponent]
-        }]
-    ];
-
-
-togetherAndSimplify[expr_] :=
-    Together[expr]//Simplify[Numerator[#]]/Simplify[Denominator[#]]&;
-
-
-(* ::Subsubsection:: *)
-(*powerExpand*)
-
-
-powerExpand[args___][expr_] :=
-    expr//powerBaseTogether[args]//PowerExpand//powerExponentFocus[Simplify];
-
-
-(* ::Subsubsection:: *)
-(*powerExpandBy*)
-
-
-powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
-    expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
-
-powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
-    expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
-
-
-expandRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
-    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
 (* ::Subsubsection:: *)
