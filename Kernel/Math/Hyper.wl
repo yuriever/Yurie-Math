@@ -212,7 +212,7 @@ hyperFromAppellF1[symbols_,head_:SUM][expr_] :=
     ];
 
 
-hyperConvert[which_Symbol][expr0_,head_,pattern_,symbolList_List] :=
+hyperConvert[which_][expr0_,head_,pattern_,symbolList_List] :=
     Module[ {expr,positionList,numberOfHyper,numberOfSymbol,hyperList,convertedHyperList,result},
         expr =
             expr0//expandPower[pattern];
@@ -245,41 +245,41 @@ hyperConvert[which_Symbol][expr0_,head_,pattern_,symbolList_List] :=
 
 
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper[hyperToMellinBarnes,s][((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
+    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
 
 hyperToMellinBarnesRule[s_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyper[hyperToMellinBarnes,s][((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
+    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
 
 hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
-    hyper[hyperToMellinBarnes,s][((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
+    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
 
 hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyper[hyperToMellinBarnes,s][
+    hyper["MellinBarnes",s][
         Times@@Map[Pochhammer[#,s]&,as]/Times@@Map[Pochhammer[#,s]&,bs] (-z)^s Gamma[-s]//gammaFrom
     ];
 
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper[hyperToMellinBarnes2,s][((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
+    hyper["MellinBarnes",s][((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
 
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper[hyperToTaylor,n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
+    hyper["Taylor",n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
 
 hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyper[hyperToTaylor,n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
+    hyper["Taylor",n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
 
 hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
-    hyper[hyperToTaylor,n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
+    hyper["Taylor",n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
 
 hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyper[hyperToTaylor,n][
+    hyper["Taylor",n][
         Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
     ];
 
 
 hyperFromAppellF1Rule[n_,AppellF1[a_,b1_,b2_,c_,x_,y_]] :=
-    hyper[hyperFromAppellF1,n][
+    hyper["AppellF1",n][
         (
             (Pochhammer[a,n] Pochhammer[b1,n] Pochhammer[b2,n] Pochhammer[c-a,n])/
             (n! Pochhammer[c+n-1,n] Pochhammer[c,2 n])
@@ -318,10 +318,10 @@ handleHyperHead[head_][expr_] :=
     expr//ReplaceAll[hyper[__]->head];
 
 handleHyperHead[INT][expr_] :=
-    expr//ReplaceAll[hyper[hyperToMellinBarnes|hyperToMellinBarnes2,var_][term_]:>INT[var]*term];
+    expr//ReplaceAll[hyper["MellinBarnes",var_][term_]:>INT[var]*term];
 
 handleHyperHead[SUM][expr_] :=
-    expr//ReplaceAll[hyper[hyperToTaylor|hyperFromAppellF1,var_][term_]:>SUM[var]*term];
+    expr//ReplaceAll[hyper["Taylor"|"AppellF1",var_][term_]:>SUM[var]*term];
 
 
 (* ::Subsection:: *)
