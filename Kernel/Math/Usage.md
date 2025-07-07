@@ -19,9 +19,9 @@
 
 * `#!wl summation` - summation[args][expr]: operator form of Sum. Default[GenerateConditions]: False.
 
-* `#!wl diffChange` - diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations. Def[funList]: list of functions to transform. Default["Solution"]: 1. Default["ShowSolution"]: False.
+* `#!wl diffChange` - diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations. Info[funList]: list of functions to transform. Default["Solution"]: 1. Default["ShowSolution"]: False.
 
-* `#!wl integrateChange` - integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals. Def[sign]: Jacobian sign. Value[sign]: {-1, 1}. Default["Solution"]: 1. Default["ShowSolution"]: False.
+* `#!wl integrateChange` - integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals. Info[sign]: Jacobian sign. Value[sign]: {-1, 1}. Default["Solution"]: 1. Default["ShowSolution"]: False.
 
 * `#!wl IBP` - IBP[fun][expr]: perform integration by parts. IBP[fun, vars][expr]: perform integration by parts with respect to specific variables.
 
@@ -29,13 +29,13 @@
 
 * `#!wl jacobianDet` - jacobianDet[funList, varList]: Jacobian determinant.
 
-* `#!wl PDCoefficient` - PDCoefficient[post, opts][expr]: extract the coefficients of PD[__]. Def[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
+* `#!wl PDCoefficient` - PDCoefficient[post, opts][expr]: extract the coefficients of PD[__]. Info[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
 
-* `#!wl PDCollect` - PDCollect[args][expr]: collect the terms with respect to PD[__]. Def[args]: inherited from Collect.
+* `#!wl PDCollect` - PDCollect[args][expr]: collect the terms with respect to PD[__]. Info[args]: inherited from Collect.
 
-* `#!wl diffCoefficient` - diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]. Def[fun]: the head of the function. Def[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
+* `#!wl diffCoefficient` - diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]. Info[fun]: the head of the function. Info[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
 
-* `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Def[fun]: the head of the function. Def[args]: inherited from Collect.
+* `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Info[fun]: the head of the function. Info[args]: inherited from Collect.
 
 * `#!wl diffReplace` - diffReplace[fun->res, ...]: replace the derivatives of the function.
 
@@ -46,7 +46,7 @@
 
 * `#!wl DLMF` - DLMF[rules, opts][expr]: simplify the expression by the DLMF rules. Default["IgnoreCondition"]: False.
 
-* `#!wl DLMFAs` - DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption. Def[as]: the assumption.
+* `#!wl DLMFAs` - DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption. Info[as]: the assumption.
 
 * `#!wl DLMFAsTrue` - DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions. Hint: this is equivalent to DLMF with "IgnoreCondition"->True.
 
@@ -76,15 +76,15 @@
 
 * `#!wl gammaSeparate` - gammaSeparate[expr]: separate a product into Gamma functions and the rest.
 
-* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor. gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series. Def[index]: the index of the poles. Def[gamma]: the argument of the Gamma function. Def[sign]: the direction of contour. Value[sign]: {1, -1, Left, Right}. Default[sign]: 1. Default["SimplePole"]: True. Default["ShowPole"]: True.
+* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor. gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series. Info[index]: the index of the poles. Info[gamma]: the argument of the Gamma function. Info[sign]: the direction of contour. Value[sign]: {1, -1, Left, Right}. Default[sign]: 1. Default["SimplePole"]: True. Default["ShowPole"]: True.
 
-* `#!wl multiGamma` - multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator. Def[num]: list of arguments for Gamma functions in the numerator. Def[denom]: list of arguments for Gamma functions in the denominator.
+* `#!wl multiGamma` - multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator. Info[num]: list of arguments for Gamma functions in the numerator. Info[denom]: list of arguments for Gamma functions in the denominator.
 
 * `#!wl multiGammaFrom` - multiGammaFrom[expr]: convert Gamma functions into multi-Gamma symbols.
 
 * `#!wl multiGammaSimplify` - multiGammaSimplify[expr]: simplify the multi-Gamma symbol with the assumption. Default[assume]: True.
 
-* `#!wl multiGammaReduceByBarnesLemma` - multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas. Def[s]: the variable parameter in the Barnes lemma reduction.
+* `#!wl multiGammaReduceByBarnesLemma` - multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas. Info[s]: the variable parameter in the Barnes lemma reduction.
 
 
 <!-- Hyper.wl -->
@@ -117,7 +117,7 @@
 
 * `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial. Default[head]: Inactive.
 
-* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Def[var]: integration variable to match. Default[var]: All. Default[head]: Inactive.
+* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Info[var]: integration variable to match. Default[var]: All. Default[head]: Inactive.
 
 
 <!-- Label.wl -->
@@ -149,7 +149,7 @@
 
 * `#!wl matComm` - matComm[a, b]: compute the commutator of the two matrices. Sketch: a.b - b.a.
 
-* `#!wl matJordan` - matJordan[dim, a, b]: construct a Jordan matrix of specified dimension. Def[a]: the common diagonal element. Def[b]: the common super-diagonal element. Default[b]: 1.
+* `#!wl matJordan` - matJordan[dim, a, b]: construct a Jordan matrix of specified dimension. Info[a]: the common diagonal element. Info[b]: the common super-diagonal element. Default[b]: 1.
 
 * `#!wl matAngularMomentum` - matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation. Value[direction]: {"x", "y", "z"|0, 1, -1}. Hint: the column/row indices run from j to -j.
 
@@ -235,6 +235,8 @@
 
 * `#!wl isC` - isC[x..]: test whether the arguments are complex numbers.
 
+* `#!wl levelQ` - levelQ[level]: test whether the argument is a valid level specification. Hint: All==={0,Infinity}, Infinity==={1,Infinity}, n_Integer==={1,n}, {_Integer}, {_Integer,_Integer}.
+
 * `#!wl presentQ` - presentQ[pattern][expr]: test whether the pattern occurs in the expression. Sketch: Not + FreeQ.
 
 * `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test linearity for all the variables.
@@ -252,7 +254,7 @@
 
 * `#!wl relationFeynman` - relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors. Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].
 
-* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Def[base]: the power base. Def[expanded]: the numerator factors to separate. Def[expanded2]: the denominator factors to separate. This argument is optional. Def[sign]: the phase direction. Default[sign]: 1.
+* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Info[base]: the power base. Info[expanded]: the numerator factors to separate. Info[expanded2]: the denominator factors to separate. This argument is optional. Info[sign]: the phase direction. Default[sign]: 1.
 
 
 <!-- SimplifyUnsafe.wl -->
@@ -288,17 +290,17 @@
 
 * `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. Def[baseP]: the pattern of power bases to match.
+* `#!wl powerBaseTogether` - powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerBaseTogether` - powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve.
+* `#!wl powerExpand` - powerExpand[operation, level][expr]: expand the power factors after combining power bases. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerExpand` - powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases. Def[baseP]: the pattern of power bases to combine. Def[basePreservedP]: the pattern of power bases to preserve.
+* `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules. Info[rules]: rules of the form base->{factor1, factor2, ...}.
 
-* `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules. Def[rules]: rules of the form base->{factor1, factor2, ...}.
+* `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. Info[baseP]: the pattern of power bases to match.
 
 * `#!wl powerExponentCollect` - powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents. Hint: if no exponent is specified, try to collect all power factors.
 
-* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. Def[vars]: the variables to consider for periodicity.
+* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. Info[vars]: the variables to consider for periodicity.
 
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
@@ -310,6 +312,6 @@
 
 * `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms. Sketch: Simplify + Flatten + DeleteDuplicates.
 
-* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. Def[exclusionList]: the contexts to exclude.
+* `#!wl extractSymbol` - extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression. Info[exclusionList]: the contexts to exclude.
 
-* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. Def[exclusionList]: the contexts to exclude.
+* `#!wl extractVariable` - extractVariable[expr, exclusionList]: extract user-defined variables from the expression. Info[exclusionList]: the contexts to exclude.

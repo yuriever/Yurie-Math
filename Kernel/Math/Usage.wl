@@ -28,10 +28,10 @@ summation::usage =
     StringJoin["summation[args][expr]: operator form of Sum.", "\n", "Default[GenerateConditions]: False."];
 
 diffChange::usage =
-    StringJoin["diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations.", "\n", "Def[funList]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
+    StringJoin["diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations.", "\n", "Info[funList]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
 
 integrateChange::usage =
-    StringJoin["integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals.", "\n", "Def[sign]: Jacobian sign.", "\n", "Value[sign]: {-1, 1}.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
+    StringJoin["integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals.", "\n", "Info[sign]: Jacobian sign.", "\n", "Value[sign]: {-1, 1}.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
 
 IBP::usage =
     StringJoin["IBP[fun][expr]: perform integration by parts.", "\n", "IBP[fun, vars][expr]: perform integration by parts with respect to specific variables."];
@@ -43,16 +43,16 @@ jacobianDet::usage =
     "jacobianDet[funList, varList]: Jacobian determinant.";
 
 PDCoefficient::usage =
-    StringJoin["PDCoefficient[post, opts][expr]: extract the coefficients of PD[__].", "\n", "Def[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
+    StringJoin["PDCoefficient[post, opts][expr]: extract the coefficients of PD[__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
 
 PDCollect::usage =
-    StringJoin["PDCollect[args][expr]: collect the terms with respect to PD[__].", "\n", "Def[args]: inherited from Collect."];
+    StringJoin["PDCollect[args][expr]: collect the terms with respect to PD[__].", "\n", "Info[args]: inherited from Collect."];
 
 diffCoefficient::usage =
-    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Def[fun]: the head of the function.", "\n", "Def[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
+    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Info[fun]: the head of the function.", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
 
 diffCollect::usage =
-    StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Def[fun]: the head of the function.", "\n", "Def[args]: inherited from Collect."];
+    StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Info[fun]: the head of the function.", "\n", "Info[args]: inherited from Collect."];
 
 diffReplace::usage =
     "diffReplace[fun->res, ...]: replace the derivatives of the function.";
@@ -67,7 +67,7 @@ DLMF::usage =
     StringJoin["DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.", "\n", "Default[\"IgnoreCondition\"]: False."];
 
 DLMFAs::usage =
-    StringJoin["DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption.", "\n", "Def[as]: the assumption."];
+    StringJoin["DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption.", "\n", "Info[as]: the assumption."];
 
 DLMFAsTrue::usage =
     StringJoin["DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions.", "\n", "Hint: this is equivalent to DLMF with \"IgnoreCondition\"->True."];
@@ -109,10 +109,10 @@ gammaSeparate::usage =
     "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
 
 gammaTakeResidue::usage =
-    StringJoin["gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Def[index]: the index of the poles.", "\n", "Def[gamma]: the argument of the Gamma function.", "\n", "Def[sign]: the direction of contour.", "\n", "Value[sign]: {1, -1, Left, Right}.", "\n", "Default[sign]: 1.", "\n", "Default[\"SimplePole\"]: True.", "\n", "Default[\"ShowPole\"]: True."];
+    StringJoin["gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Info[index]: the index of the poles.", "\n", "Info[gamma]: the argument of the Gamma function.", "\n", "Info[sign]: the direction of contour.", "\n", "Value[sign]: {1, -1, Left, Right}.", "\n", "Default[sign]: 1.", "\n", "Default[\"SimplePole\"]: True.", "\n", "Default[\"ShowPole\"]: True."];
 
 multiGamma::usage =
-    StringJoin["multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator.", "\n", "Def[num]: list of arguments for Gamma functions in the numerator.", "\n", "Def[denom]: list of arguments for Gamma functions in the denominator."];
+    StringJoin["multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator.", "\n", "Info[num]: list of arguments for Gamma functions in the numerator.", "\n", "Info[denom]: list of arguments for Gamma functions in the denominator."];
 
 multiGammaFrom::usage =
     "multiGammaFrom[expr]: convert Gamma functions into multi-Gamma symbols.";
@@ -121,7 +121,7 @@ multiGammaSimplify::usage =
     StringJoin["multiGammaSimplify[expr]: simplify the multi-Gamma symbol with the assumption.", "\n", "Default[assume]: True."];
 
 multiGammaReduceByBarnesLemma::usage =
-    StringJoin["multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas.", "\n", "Def[s]: the variable parameter in the Barnes lemma reduction."];
+    StringJoin["multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas.", "\n", "Info[s]: the variable parameter in the Barnes lemma reduction."];
 
 
 (* Hyper.wl *)
@@ -169,7 +169,7 @@ WilsonPolynomialFromHyper::usage =
     StringJoin["WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.", "\n", "Default[head]: Inactive."];
 
 AppellF1FromIntegral::usage =
-    StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Def[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Inactive."];
+    StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Inactive."];
 
 
 (* Label.wl *)
@@ -214,7 +214,7 @@ matComm::usage =
     StringJoin["matComm[a, b]: compute the commutator of the two matrices.", "\n", "Sketch: a.b - b.a."];
 
 matJordan::usage =
-    StringJoin["matJordan[dim, a, b]: construct a Jordan matrix of specified dimension.", "\n", "Def[a]: the common diagonal element.", "\n", "Def[b]: the common super-diagonal element.", "\n", "Default[b]: 1."];
+    StringJoin["matJordan[dim, a, b]: construct a Jordan matrix of specified dimension.", "\n", "Info[a]: the common diagonal element.", "\n", "Info[b]: the common super-diagonal element.", "\n", "Default[b]: 1."];
 
 matAngularMomentum::usage =
     StringJoin["matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation.", "\n", "Value[direction]: {\"x\", \"y\", \"z\"|0, 1, -1}.", "\n", "Hint: the column/row indices run from j to -j."];
@@ -339,6 +339,9 @@ isRN0::usage =
 isC::usage =
     "isC[x..]: test whether the arguments are complex numbers.";
 
+levelQ::usage =
+    StringJoin["levelQ[level]: test whether the argument is a valid level specification.", "\n", "Hint: All==={0,Infinity}, Infinity==={1,Infinity}, n_Integer==={1,n}, {_Integer}, {_Integer,_Integer}."];
+
 presentQ::usage =
     StringJoin["presentQ[pattern][expr]: test whether the pattern occurs in the expression.", "\n", "Sketch: Not + FreeQ."];
 
@@ -364,7 +367,7 @@ relationFeynman::usage =
     StringJoin["relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors.", "\n", "Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s]."];
 
 relationPowerPhase::usage =
-    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Def[base]: the power base.", "\n", "Def[expanded]: the numerator factors to separate.", "\n", "Def[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Def[sign]: the phase direction.", "\n", "Default[sign]: 1."];
+    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Info[base]: the power base.", "\n", "Info[expanded]: the numerator factors to separate.", "\n", "Info[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Info[sign]: the phase direction.", "\n", "Default[sign]: 1."];
 
 
 (* SimplifyUnsafe.wl *)
@@ -414,23 +417,23 @@ powerBaseFocus::usage =
 powerExponentFocus::usage =
     StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
-powerSeparate::usage =
-    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Def[baseP]: the pattern of power bases to match."];
-
 powerBaseTogether::usage =
-    StringJoin["powerBaseTogether[baseP, basePreservedP][expr]: take together the bases of power factors.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve."];
+    StringJoin["powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerExpand::usage =
-    StringJoin["powerExpand[baseP, basePreservedP, baseExpandedP][expr]: expand the power factors after combining power bases.", "\n", "Def[baseP]: the pattern of power bases to combine.", "\n", "Def[basePreservedP]: the pattern of power bases to preserve."];
+    StringJoin["powerExpand[operation, level][expr]: expand the power factors after combining power bases.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerExpandBy::usage =
-    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Def[rules]: rules of the form base->{factor1, factor2, ...}."];
+    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Info[rules]: rules of the form base->{factor1, factor2, ...}."];
+
+powerSeparate::usage =
+    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: the pattern of power bases to match."];
 
 powerExponentCollect::usage =
     StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 trigPhaseReduce::usage =
-    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Def[vars]: the variables to consider for periodicity."];
+    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Info[vars]: the variables to consider for periodicity."];
 
 deltaReduce::usage =
     "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
@@ -448,7 +451,7 @@ vanishing::usage =
     StringJoin["vanishing[expr]: clean up the expression by removing redundant vanishing terms.", "\n", "Sketch: Simplify + Flatten + DeleteDuplicates."];
 
 extractSymbol::usage =
-    StringJoin["extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression.", "\n", "Def[exclusionList]: the contexts to exclude."];
+    StringJoin["extractSymbol[expr, exclusionList]: extract user-defined symbols from the expression.", "\n", "Info[exclusionList]: the contexts to exclude."];
 
 extractVariable::usage =
-    StringJoin["extractVariable[expr, exclusionList]: extract user-defined variables from the expression.", "\n", "Def[exclusionList]: the contexts to exclude."];
+    StringJoin["extractVariable[expr, exclusionList]: extract user-defined variables from the expression.", "\n", "Info[exclusionList]: the contexts to exclude."];
