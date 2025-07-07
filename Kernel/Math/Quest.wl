@@ -57,6 +57,11 @@ isC::usage =
     "isC[x..]: test whether the arguments are complex numbers.";
 
 
+levelQ::usage =
+    "levelQ[level]: test whether the argument is a valid level specification."<>
+    "\n"<>
+    "Hint: All==={0,Infinity}, Infinity==={1,Infinity}, n_Integer==={1,n}, {_Integer}, {_Integer,_Integer}.";
+
 presentQ::usage =
     "presentQ[pattern][expr]: test whether the pattern occurs in the expression."<>
     "\n"<>
@@ -220,6 +225,13 @@ isC[x__] :=
 
 isC[] :=
     True;
+
+
+levelQ[All|Infinity|_Integer|{_Integer}|{_Integer,_Integer}] :=
+    True;
+
+levelQ[_] :=
+    False;
 
 
 presentQ[expr_,args__] :=
