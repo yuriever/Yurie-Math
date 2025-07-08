@@ -252,11 +252,21 @@ VerificationTest[
 ]
 
 VerificationTest[
+    powerExpandBy[ε*(1 - χ) -> εb | 1 - χ][(ε*(1 - χ))^a]
+    ,
+    Quiet[εb^a*(1 - χ)^a]
+    ,
+    {Yurie`Math`powerExpandBy::SuspiciousRule}
+    ,
+    TestID->"31-Simplify-power.nb"
+]
+
+VerificationTest[
     expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
     ,
     Null
     ,
-    TestID->"31-Simplify-power.nb"
+    TestID->"32-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -264,7 +274,7 @@ VerificationTest[
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"32-Simplify-power.nb"
+    TestID->"33-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -272,7 +282,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"33-Simplify-power.nb"
+    TestID->"34-Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -280,7 +290,7 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"34-Simplify-power.nb"
+    TestID->"35-Simplify-power.nb"
 ]
 
 VerificationTest[

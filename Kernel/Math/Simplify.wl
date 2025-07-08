@@ -407,6 +407,10 @@ powerExpand[operation_,level_?levelQ,OptionsPattern[]][expr_] :=
 (*powerExpandBy*)
 
 
+powerExpandBy::SuspiciousRule =
+    "The base `1` is not equal to the product of the factors `2`.";
+
+
 powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
     expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
 
@@ -414,7 +418,16 @@ powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
     expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
 
 
-expandRuleForSpecifiedBase[_[base_,(List|Alternatives)[factors__]]] :=
+expandRuleForSpecifiedBase[Verbatim[Rule][base_,(List|Alternatives)[factors__]]] :=
+    Module[ {rhs = Simplify@Times[factors]},
+        If[ Simplify[rhs/base]=!=1,
+            Message[powerExpandBy::SuspiciousRule,base,rhs];
+        ];
+        Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}]
+    ];
+
+
+expandRuleForSpecifiedBase[Verbatim[RuleDelayed][base_,(List|Alternatives)[factors__]]] :=
     Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 
