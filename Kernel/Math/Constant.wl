@@ -113,7 +113,7 @@ gammaDataValueList =
 
 
 DLMFData = <|
-    (*Gamma*)
+    (* Gamma *)
     "PochhammerSwapA"->{
         Pochhammer[a_,n_]/;Simplify[IntegerQ[n]]:>
             (-1)^n*Pochhammer[-a-n+1,n]
@@ -142,7 +142,7 @@ DLMFData = <|
         Gamma[z_]:>
             1/Sqrt[π]*2^(z-1)*Gamma[z/2]*Gamma[z/2+1/2]
     },
-    (*Hypergeometric2F1*)
+    (* Hypergeometric2F1 *)
     "15.1.2"->{
         Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
             Hypergeometric2F1[a,b,c,z]/Gamma[c]
@@ -316,12 +316,12 @@ DLMFData = <|
                 Hypergeometric2F1[-1+2*a,-1+2*b,-(1/2)+a+b,1/2*(1+Sqrt[z])]
             )
     },
-    (*HypergeometricPFQ*)
+    (* HypergeometricPFQ *)
     "16.4.14"->{
         HoldPattern[HypergeometricPFQ[{-n_,a_,b_,c_},{d_,e_,f_},1]]/;Simplify[a+b+c-d-e-f+1-n==0]:>
             ((Pochhammer[e-a,n] Pochhammer[f-a,n]) HypergeometricPFQ[{-n,a,d-b,d-c},{d,a-e-n+1,a-f-n+1},1])/(Pochhammer[e,n] Pochhammer[f,n])
     },
-    (*LegendreToHypergeometric2F1*)
+    (* Legendre *)
     "14.3.1"->{
         LegendreP[a_,b_,z_]:>
             ((1+z)/(1-z))^(b/2)/Gamma[1-b]*Hypergeometric2F1[a+1,-a,1-b,1/2-z/2]
@@ -358,6 +358,15 @@ DLMFData = <|
             ((z+Sqrt[-1+z^2])^(1/2+a)+(z+Sqrt[-1+z^2])^(-(1/2)-a))/(Sqrt[2π]*(-1+z^2)^(1/4)),
         LegendreQ[a_,1/2,3,z_]:>
             (I*Sqrt[π]*(z+Sqrt[-1+z^2])^(-(1/2)-a))/(Sqrt[2]*(-1+z^2)^(1/4))
+    },
+    (* AppellF1 *)
+    "16.16.8.1"->{
+        AppellF1[a_,b1_,b2_,c_,z_,w_]:>
+            (1-z)^(-b1)*(1-w)^(-b2)*AppellF1[c-a,b1,b2,c,z/(z-1),w/(w-1)]
+    },
+    "16.16.8.2"->{
+        AppellF1[a_,b1_,b2_,c_,z_,w_]:>
+            (1-z)^(-a)*AppellF1[a,c-b1-b2,b2,c,z/(z-1),(w-z)/(1-z)]
     }
 |>;
 
