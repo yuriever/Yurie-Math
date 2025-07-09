@@ -688,19 +688,19 @@ diffCollect[funList_List,args___][expr_] :=
 (*diffReplace*)
 
 
-diffReplace[rules_] :=
-    ReplaceAll[getDiffReplaceRule[rules]];
+diffReplace[rules_,head_:Identity] :=
+    ReplaceAll[getDiffReplaceRule[head][rules]];
 
 
-getDiffReplaceRule[Rule[f_,rhs_]] :=
+getDiffReplaceRule[head_][Rule[f_,rhs_]] :=
     {
         f[___]:>rhs,
         Derivative[orders__][f][vars__]:>
-            D[rhs,Sequence@@cleanNumPairs@Transpose@{{vars},{orders}}]
+            head[D][rhs,Sequence@@cleanNumPairs@Transpose@{{vars},{orders}}]
     };
 
-getDiffReplaceRule[ruleList_List] :=
-    ruleList//Map[getDiffReplaceRule]//Flatten;
+getDiffReplaceRule[head_][ruleList_List] :=
+    ruleList//Map[getDiffReplaceRule[head]]//Flatten;
 
 
 (* ::Subsubsection:: *)

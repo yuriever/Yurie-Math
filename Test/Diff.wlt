@@ -248,6 +248,46 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = D[f[x]*g[x], {x, 2}]
+    ,
+    2*Derivative[1][f][x]*Derivative[1][g][x] + g[x]*Derivative[2][f][x] + f[x]*Derivative[2][g][x]
+    ,
+    TestID->"30-Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f -> x^2][expr]
+    ,
+    2*g[x] + 4*x*Derivative[1][g][x] + x^2*Derivative[2][g][x]
+    ,
+    TestID->"31-Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f -> x^2, Inactive][expr]
+    ,
+    g[x]*Inactive[D][x^2, {x, 2}] + 2*Inactive[D][x^2, {x, 1}]*Derivative[1][g][x] + x^2*Derivative[2][g][x]
+    ,
+    TestID->"32-Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f -> y^2][expr]
+    ,
+    y^2*Derivative[2][g][x]
+    ,
+    TestID->"33-Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f -> y^2, Inactive][expr]
+    ,
+    g[x]*Inactive[D][y^2, {x, 2}] + 2*Inactive[D][y^2, {x, 1}]*Derivative[1][g][x] + y^2*Derivative[2][g][x]
+    ,
+    TestID->"34-Diff.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,
