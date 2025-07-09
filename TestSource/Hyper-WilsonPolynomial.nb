@@ -10,17 +10,17 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[      8176,        250]
-NotebookOptionsPosition[      6610,        213]
-NotebookOutlinePosition[      7218,        233]
-CellTagsIndexPosition[      7175,        230]
+NotebookDataLength[     11440,        343]
+NotebookOptionsPosition[      9431,        298]
+NotebookOutlinePosition[     10040,        318]
+CellTagsIndexPosition[      9997,        315]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[
  RowBox[{"<<", "Yurie`Math`"}]], "Code",
- CellLabel->"In[28]:=",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
+ CellLabel->"In[65]:=",ExpressionUUID->"a05f334d-7963-477c-851a-805efec5f41c"],
 
 Cell[CellGroupData[{
 
@@ -33,7 +33,56 @@ Cell[BoxData[
   RowBox[{"WilsonPolynomial", "[", 
    RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "n", ",", "x"}], "]"}], "//", 
   RowBox[{"WilsonPolynomialToHyper", "[", "]"}]}]], "Code",
- CellLabel->"In[29]:=",ExpressionUUID->"0f49906b-9a65-4d5c-9184-9b3e97545e2e"],
+ CellLabel->"In[66]:=",ExpressionUUID->"0f49906b-9a65-4d5c-9184-9b3e97545e2e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "b", "+", "n"}], "]"}], " ", 
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "c", "+", "n"}], "]"}], " ", 
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "d", "+", "n"}], "]"}], " ", 
+    RowBox[{"HypergeometricPFQ", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "n"}], ",", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", "a", "+", "b", "+", "c", "+", "d", "+", 
+         "n"}], ",", 
+        RowBox[{"a", "-", 
+         RowBox[{"\[ImaginaryI]", " ", 
+          SqrtBox["x"]}]}], ",", 
+        RowBox[{"a", "+", 
+         RowBox[{"\[ImaginaryI]", " ", 
+          SqrtBox["x"]}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "+", "b"}], ",", 
+        RowBox[{"a", "+", "c"}], ",", 
+        RowBox[{"a", "+", "d"}]}], "}"}], ",", "1"}], "]"}]}], ")"}], "/", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "b"}], "]"}], " ", 
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "c"}], "]"}], " ", 
+    RowBox[{"Gamma", "[", 
+     RowBox[{"a", "+", "d"}], "]"}]}], ")"}]}]], "Output",
+ CellLabel->"Out[66]=",ExpressionUUID->"543ece46-be49-45e0-a011-b817c3e1479a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"WilsonPolynomial", "[", 
+   RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "n", ",", "x"}], "]"}], "//", 
+  RowBox[{"WilsonPolynomialToHyper", "[", "Inactive", "]"}]}]], "Code",
+ CellLabel->"In[67]:=",ExpressionUUID->"ab510c40-e43f-4b55-8ce7-76df197867a9"],
 
 Cell[BoxData[
  RowBox[{
@@ -77,7 +126,7 @@ Cell[BoxData[
      RowBox[{"a", "+", "c"}], "]"}], " ", 
     RowBox[{"Gamma", "[", 
      RowBox[{"a", "+", "d"}], "]"}]}], ")"}]}]], "Output",
- CellLabel->"Out[29]=",ExpressionUUID->"a4fd004e-5701-4ed7-b498-fae8aa113334"]
+ CellLabel->"Out[67]=",ExpressionUUID->"26d164b7-8bed-4378-8f5a-41b860a5d583"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -89,18 +138,13 @@ Cell[BoxData[
     RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "n", ",", "x"}], "]"}], "//", 
    RowBox[{"WilsonPolynomialToHyper", "[", "]"}]}], "//", 
   RowBox[{"WilsonPolynomialFromHyper", "[", "]"}]}]], "Code",
- CellLabel->"In[30]:=",ExpressionUUID->"dad96d35-e93d-46c6-abdd-a958aa448c1a"],
+ CellLabel->"In[68]:=",ExpressionUUID->"dad96d35-e93d-46c6-abdd-a958aa448c1a"],
 
 Cell[BoxData[
- RowBox[{
-  TemplateBox[{"WilsonPolynomial"},
-   "InactiveHead",
-   BaseStyle->"Inactive",
-   SyntaxForm->"Symbol",
-   Tooltip->"Inactive[WilsonPolynomial]"], "[", 
+ RowBox[{"WilsonPolynomial", "[", 
   RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "n", ",", "x"}], 
   "]"}]], "Output",
- CellLabel->"Out[30]=",ExpressionUUID->"37093614-c9f3-48f8-847f-8265bd17f1a6"]
+ CellLabel->"Out[68]=",ExpressionUUID->"c7a90f4b-e5fd-4f17-a37f-a90ce0d128ca"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -125,7 +169,53 @@ Cell[BoxData[
       RowBox[{"a", "+", "c"}], ",", 
       RowBox[{"a", "+", "d"}]}], "}"}], ",", "1"}], "]"}], "//", 
   RowBox[{"WilsonPolynomialFromHyper", "[", "]"}]}]], "Code",
- CellLabel->"In[31]:=",ExpressionUUID->"40643fed-bd6b-4a6b-85ac-7d59ee55f392"],
+ CellLabel->"In[69]:=",ExpressionUUID->"40643fed-bd6b-4a6b-85ac-7d59ee55f392"],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "b"}], "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "c"}], "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "d"}], "]"}], " ", 
+   RowBox[{"WilsonPolynomial", "[", 
+    RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "n", ",", 
+     SuperscriptBox["x", "2"]}], "]"}]}], 
+  RowBox[{
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "b", "+", "n"}], "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "c", "+", "n"}], "]"}], " ", 
+   RowBox[{"Gamma", "[", 
+    RowBox[{"a", "+", "d", "+", "n"}], "]"}]}]]], "Output",
+ CellLabel->"Out[69]=",ExpressionUUID->"62956b06-f533-4846-a8dc-4d1048b1299e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"HypergeometricPFQ", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "n"}], ",", 
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "a", "+", "b", "+", "c", "+", "d", "+", "n"}],
+       ",", 
+      RowBox[{"a", "-", 
+       RowBox[{"\[ImaginaryI]", " ", "x"}]}], ",", 
+      RowBox[{"a", "+", 
+       RowBox[{"\[ImaginaryI]", " ", "x"}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a", "+", "b"}], ",", 
+      RowBox[{"a", "+", "c"}], ",", 
+      RowBox[{"a", "+", "d"}]}], "}"}], ",", "1"}], "]"}], "//", 
+  RowBox[{"WilsonPolynomialFromHyper", "[", "Inactive", "]"}]}]], "Code",
+ CellLabel->"In[70]:=",ExpressionUUID->"eacf8a93-3502-4ba5-9e5c-cb41593808fe"],
 
 Cell[BoxData[
  FractionBox[
@@ -151,7 +241,7 @@ Cell[BoxData[
     RowBox[{"a", "+", "c", "+", "n"}], "]"}], " ", 
    RowBox[{"Gamma", "[", 
     RowBox[{"a", "+", "d", "+", "n"}], "]"}]}]]], "Output",
- CellLabel->"Out[31]=",ExpressionUUID->"65fea09e-65a7-4d5a-8913-3c74f84c2bb4"]
+ CellLabel->"Out[70]=",ExpressionUUID->"327cb30b-fefa-437c-9f17-3888dc545038"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -178,15 +268,10 @@ Cell[BoxData[
        RowBox[{"a", "+", "d"}]}], "}"}], ",", "1"}], "]"}], "//", 
    RowBox[{"WilsonPolynomialFromHyper", "[", "]"}]}], "//", 
   RowBox[{"WilsonPolynomialToHyper", "[", "]"}]}]], "Code",
- CellLabel->"In[32]:=",ExpressionUUID->"ce6b3000-6ff4-43c8-8dbf-89e713cb4f00"],
+ CellLabel->"In[71]:=",ExpressionUUID->"ce6b3000-6ff4-43c8-8dbf-89e713cb4f00"],
 
 Cell[BoxData[
- RowBox[{
-  TemplateBox[{"HypergeometricPFQ"},
-   "InactiveHead",
-   BaseStyle->"Inactive",
-   SyntaxForm->"Symbol",
-   Tooltip->"Inactive[HypergeometricPFQ]"], "[", 
+ RowBox[{"HypergeometricPFQ", "[", 
   RowBox[{
    RowBox[{"{", 
     RowBox[{
@@ -207,13 +292,13 @@ Cell[BoxData[
      RowBox[{"a", "+", "b"}], ",", 
      RowBox[{"a", "+", "c"}], ",", 
      RowBox[{"a", "+", "d"}]}], "}"}], ",", "1"}], "]"}]], "Output",
- CellLabel->"Out[32]=",ExpressionUUID->"c65b3fc4-57b4-4190-8f9d-8a76fb1051d5"]
+ CellLabel->"Out[71]=",ExpressionUUID->"f8de3a88-20e6-432f-8767-b585d028ea6a"]
 }, Open  ]]
 }, Open  ]]
 },
 Editable->True,
-WindowSize->{1280, 680},
-WindowMargins->{{Automatic, 0}, {0, Automatic}},
+WindowSize->{1280, 1387},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 TaggingRules-><|"TryRealOnly" -> False|>,
 FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
 StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
@@ -237,19 +322,27 @@ Cell[CellGroupData[{
 Cell[712, 26, 93, 0, 66, "Subsection",ExpressionUUID->"e979e924-1d36-4958-9af1-f2f91193453a"],
 Cell[CellGroupData[{
 Cell[830, 30, 280, 5, 65, "Code",ExpressionUUID->"0f49906b-9a65-4d5c-9184-9b3e97545e2e"],
-Cell[1113, 37, 1408, 42, 72, "Output",ExpressionUUID->"a4fd004e-5701-4ed7-b498-fae8aa113334"]
+Cell[1113, 37, 1262, 37, 72, "Output",ExpressionUUID->"543ece46-be49-45e0-a011-b817c3e1479a"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2558, 84, 354, 7, 65, "Code",ExpressionUUID->"dad96d35-e93d-46c6-abdd-a958aa448c1a"],
-Cell[2915, 93, 345, 9, 41, "Output",ExpressionUUID->"37093614-c9f3-48f8-847f-8265bd17f1a6"]
+Cell[2412, 79, 292, 5, 65, "Code",ExpressionUUID->"ab510c40-e43f-4b55-8ce7-76df197867a9"],
+Cell[2707, 86, 1408, 42, 72, "Output",ExpressionUUID->"26d164b7-8bed-4378-8f5a-41b860a5d583"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3297, 107, 719, 20, 65, "Code",ExpressionUUID->"40643fed-bd6b-4a6b-85ac-7d59ee55f392"],
-Cell[4019, 129, 857, 24, 64, "Output",ExpressionUUID->"65fea09e-65a7-4d5a-8913-3c74f84c2bb4"]
+Cell[4152, 133, 354, 7, 65, "Code",ExpressionUUID->"dad96d35-e93d-46c6-abdd-a958aa448c1a"],
+Cell[4509, 142, 215, 4, 41, "Output",ExpressionUUID->"c7a90f4b-e5fd-4f17-a37f-a90ce0d128ca"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4913, 158, 807, 22, 65, "Code",ExpressionUUID->"ce6b3000-6ff4-43c8-8dbf-89e713cb4f00"],
-Cell[5723, 182, 859, 27, 49, "Output",ExpressionUUID->"c65b3fc4-57b4-4190-8f9d-8a76fb1051d5"]
+Cell[4761, 151, 719, 20, 65, "Code",ExpressionUUID->"40643fed-bd6b-4a6b-85ac-7d59ee55f392"],
+Cell[5483, 173, 717, 19, 64, "Output",ExpressionUUID->"62956b06-f533-4846-a8dc-4d1048b1299e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6237, 197, 731, 20, 65, "Code",ExpressionUUID->"eacf8a93-3502-4ba5-9e5c-cb41593808fe"],
+Cell[6971, 219, 857, 24, 64, "Output",ExpressionUUID->"327cb30b-fefa-437c-9f17-3888dc545038"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7865, 248, 807, 22, 65, "Code",ExpressionUUID->"ce6b3000-6ff4-43c8-8dbf-89e713cb4f00"],
+Cell[8675, 272, 728, 22, 49, "Output",ExpressionUUID->"f8de3a88-20e6-432f-8767-b585d028ea6a"]
 }, Open  ]]
 }, Open  ]]
 }

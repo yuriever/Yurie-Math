@@ -20,7 +20,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    AppellF1FromIntegral[][u^a*(1 - u)^b*(1 - u*x)^c*(1 - u*y)^d]
+    AppellF1FromIntegral[All, Inactive][u^a*(1 - u)^b*(1 - u*x)^c*(1 - u*y)^d]
     ,
     (Gamma[1 + a]*Gamma[1 + b]*Inactive[AppellF1][1 + a, -c, -d, 2 + a + b, x, y])/Gamma[2 + a + b]
     ,
@@ -28,7 +28,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    AppellF1FromIntegral[All, Identity][u^a*(1 - u)^b*(1 - u*x)^c*(1 - u*y)^d]
+    AppellF1FromIntegral[][u^a*(1 - u)^b*(1 - u*x)^c*(1 - u*y)^d]
     ,
     (AppellF1[1 + a, -c, -d, 2 + a + b, x, y]*Gamma[1 + a]*Gamma[1 + b])/Gamma[2 + a + b]
     ,
@@ -38,7 +38,7 @@ VerificationTest[
 VerificationTest[
     AppellF1FromIntegral[u][u^a*(1 - u)^b*(1 - u*x)^c*(1 - u*y)^d]
     ,
-    (Gamma[1 + a]*Gamma[1 + b]*Inactive[AppellF1][1 + a, -c, -d, 2 + a + b, x, y])/Gamma[2 + a + b]
+    (AppellF1[1 + a, -c, -d, 2 + a + b, x, y]*Gamma[1 + a]*Gamma[1 + b])/Gamma[2 + a + b]
     ,
     TestID->"4-Hyper-AppellF1.nb"
 ]
