@@ -125,7 +125,9 @@ diffCollect::usage =
     "Info[args]: inherited from Collect.";
 
 diffReplace::usage =
-    "diffReplace[fun->res, ...]: replace the derivatives of the function.";
+    "diffReplace[fun->res...]: replace the derivatives of the function."<>
+    "\n"<>
+    "diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives.";
 
 diffComm::usage =
     "diffComm[X, Y]: compute the commutator of differential operators."<>

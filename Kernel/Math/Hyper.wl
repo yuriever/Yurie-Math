@@ -76,23 +76,23 @@ hyperFromAppellF1::usage =
 JacobiPhiToHyper::usage =
     "JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1."<>
     "\n"<>
-    "Default[head]: Inactive.";
+    "Default[head]: Identity.";
 
 JacobiPhiFromHyper::usage =
     "JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function."<>
     "\n"<>
-    "Default[head]: Inactive.";
+    "Default[head]: Identity.";
 
 
 WilsonPolynomialToHyper::usage =
     "WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3."<>
     "\n"<>
-    "Default[head]: Inactive.";
+    "Default[head]: Identity.";
 
 WilsonPolynomialFromHyper::usage =
     "WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial."<>
     "\n"<>
-    "Default[head]: Inactive.";
+    "Default[head]: Identity.";
 
 
 AppellF1FromIntegral::usage =
@@ -102,7 +102,7 @@ AppellF1FromIntegral::usage =
     "\n"<>
     "Default[var]: All."<>
     "\n"<>
-    "Default[head]: Inactive.";
+    "Default[head]: Identity.";
 
 
 (* ::Section:: *)
@@ -328,7 +328,7 @@ handleHyperHead[SUM][expr_] :=
 (*JacobiPhiToHyper*)
 
 
-JacobiPhiToHyper[head_:Inactive][expr_] :=
+JacobiPhiToHyper[head_:Identity][expr_] :=
     expr//ReplaceAll[ruleJacobiPhiToHyper[head]];
 
 
@@ -345,7 +345,7 @@ ruleJacobiPhiToHyper[head_] :=
 (*JacobiPhiFromHyper*)
 
 
-JacobiPhiFromHyper[head_:Inactive][expr_] :=
+JacobiPhiFromHyper[head_:Identity][expr_] :=
     expr//ReplaceAll[ruleJacobiPhiFromHyper[head]];
 
 
@@ -362,7 +362,7 @@ ruleJacobiPhiFromHyper[head_] :=
 (*WilsonPolynomialToHyper*)
 
 
-WilsonPolynomialToHyper[head_:Inactive][expr_] :=
+WilsonPolynomialToHyper[head_:Identity][expr_] :=
     expr//ReplaceAll[ruleWilsonPolynomialToHyper[head]];
 
 
@@ -380,7 +380,7 @@ ruleWilsonPolynomialToHyper[head_] :=
 (*WilsonPolynomialFromHyper*)
 
 
-WilsonPolynomialFromHyper[head_:Inactive][expr_] :=
+WilsonPolynomialFromHyper[head_:Identity][expr_] :=
     expr//ReplaceAll[ruleWilsonPolynomialFromHyper[head]];
 
 
@@ -399,9 +399,9 @@ ruleWilsonPolynomialFromHyper[head_] :=
 
 
 AppellF1FromIntegral[][expr_] :=
-    expr//ReplaceAll[ruleAppellF1FromIntegral[All,Inactive,indexOfINT[expr]]];
+    expr//ReplaceAll[ruleAppellF1FromIntegral[All,Identity,indexOfINT[expr]]];
 
-AppellF1FromIntegral[var_,head_:Inactive][expr_] :=
+AppellF1FromIntegral[var_,head_:Identity][expr_] :=
     expr//ReplaceAll[ruleAppellF1FromIntegral[var,head,indexOfINT[expr]]];
 
 
