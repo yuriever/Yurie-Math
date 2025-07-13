@@ -15,7 +15,7 @@ Needs["Yurie`Math`"];
 
 
 (* ::Subsection:: *)
-(*Operator form*)
+(*Simplify*)
 
 
 SS::usage =
@@ -29,6 +29,10 @@ FE::usage =
 
 FES::usage =
     "Sketch: FunctionExpand + Simplify.";
+
+
+(* ::Subsection:: *)
+(*Assuming*)
 
 
 AS::usage =
@@ -47,6 +51,10 @@ FESA::usage =
     "Sketch: FunctionExpand + Simplify + Assuming.";
 
 
+(* ::Subsection:: *)
+(*Module*)
+
+
 modularize::usage =
     "modularize[scope[code, iterators]]: modularize the scoping construction (e.g. Table, Sum, and Integrate) such that the iterators are lexically scoped.";
 
@@ -60,6 +68,10 @@ module::usage =
     "Sketch: Module.";
 
 
+(* ::Subsection:: *)
+(*ReplaceAll*)
+
+
 rep::usage =
     "rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.";
 
@@ -69,8 +81,17 @@ repdeep::usage =
     "Default[level]: All.";
 
 
+(* ::Subsection:: *)
+(*Part*)
+
+
 part::usage =
     "Sketch: Part.";
+
+
+(* ::Subsection:: *)
+(*Plus|Subtract|Times|Divide*)
+
 
 plus::usage =
     "Sketch: Plus.";
@@ -84,17 +105,34 @@ times::usage =
 divide::usage =
     "Sketch: Divide.";
 
+
+(* ::Subsection:: *)
+(*Series|Limit*)
+
+
 series::usage =
     "Sketch: Series + Normal.";
 
 limit::usage =
     "Sketch: Limit.";
 
+
+(* ::Subsection:: *)
+(*Solve*)
+
+
 solve::usage =
-    "Sketch: Solve.";
+    "Sketch: Solve + Part.";
 
 solve1::usage =
     "Sketch: Solve + First.";
+
+solveKernel;
+
+
+(* ::Subsection:: *)
+(*Collect*)
+
 
 collect::usage =
     "Sketch: Collect.";
@@ -112,7 +150,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Operator form*)
+(*Simplify*)
 
 
 SS :=
@@ -129,6 +167,10 @@ FE :=
 
 FES :=
     FunctionExpand/*Simplify;
+
+
+(* ::Subsection:: *)
+(*Assuming*)
 
 
 AS[assumption_] :=
@@ -158,6 +200,10 @@ FESA[assumption_][expr_] :=
 
 FESA[assumption_,excludedFormList_List][expr_] :=
     Simplify[FunctionExpand[expr,assumption],assumption,ExcludedForms->excludedFormList];
+
+
+(* ::Subsection:: *)
+(*Module*)
 
 
 modularize//Attributes =
@@ -223,6 +269,10 @@ module[localVarList_List] :=
     ];
 
 
+(* ::Subsection:: *)
+(*ReplaceAll*)
+
+
 rep[rules___][expr_] :=
     ReplaceAll[expr,Flatten[{rules}]];
 
@@ -231,8 +281,16 @@ repdeep[rules___][level_:All][expr_] :=
     Replace[expr,Flatten[{rules}],level];
 
 
+(* ::Subsection:: *)
+(*Part*)
+
+
 part :=
     GeneralUtilities`Slice;
+
+
+(* ::Subsection:: *)
+(*Plus|Subtract|Times|Divide*)
 
 
 plus[args___][expr_] :=
@@ -251,6 +309,10 @@ divide[args___][expr_] :=
     Divide[expr,Times[args]];
 
 
+(* ::Subsection:: *)
+(*Series|Limit*)
+
+
 series[args___][expr_] :=
     Normal@Series[expr,args];
 
@@ -259,11 +321,81 @@ limit[direction_][expr_] :=
     Limit[expr,direction];
 
 
-solve[args___][expr_] :=
-    Solve[expr,args];
+(* ::Subsection:: *)
+(*Solve*)
 
-solve1[args___][expr_] :=
-    First[Solve[expr,args],{}];
+
+solve::InvalidSolutionChoice =
+    "The choice of the solution is invalid."
+
+solve::InvalidEquation =
+    "The equations should be a list of expressions with the following heads: Equal|Rule|RuleDelayed."
+
+solve::NoSolution =
+    "No solution is found.";
+
+solve::UnknownError =
+    "An unknown error occurred while solving the equations.";
+
+
+solve[vars_][equations_] :=
+    solveKernel[prepareList[vars],All,False][prepareList[equations]]//Catch;
+
+solve[vars_,whichSolution_][equations_] :=
+    solveKernel[prepareList[vars],whichSolution,False][prepareList[equations]]//Catch;
+
+solve1[vars_][equations_] :=
+    solveKernel[prepareList[vars],1,False][prepareList[equations]]//Catch;
+
+
+solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
+    Module[ {eqList,solution},
+        eqList =
+            (* Throw exception if the equation list is invalid. *)
+            If[ MatchQ[eqList1,{(_Equal|_Rule|_RuleDelayed)..}],
+                eqList1//ReplaceAll[Rule|RuleDelayed->Equal],
+                (*Else*)
+                Message[solve::InvalidEquation];
+                Throw[eqList1]
+            ];
+        solution =
+            Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0];
+        (* Throw exception if solution is empty. *)
+        If[ solution==={},
+            Message[solve::NoSolution];
+            Throw[{}]
+        ];
+        solution =
+            (* Throw exception if Part operation is invalid. *)
+            Quiet[
+                Check[
+                    solution[[whichSolution]],
+                    Message[solve::InvalidSolutionChoice];
+                    Throw[solution],
+                    {Part::pkspec1,Part::partw}
+                ],
+                {Part::pkspec1,Part::partw}
+            ];
+        If[ ifListize===True&&MatchQ[solution,{__Rule}],
+            {solution},
+            (*Else*)
+            solution
+        ]
+    ];
+
+
+prepareList[list_List] :=
+    Flatten[list];
+
+prepareList[assoc_Association] :=
+    Normal[assoc];
+
+prepareList[other_] :=
+    Flatten[{other}];
+
+
+(* ::Subsection:: *)
+(*Collect*)
 
 
 collect[var_][expr_] :=
