@@ -9,6 +9,8 @@ BeginPackage["Yurie`Math`Diff`"];
 
 Needs["Yurie`Math`"];
 
+Needs["Yurie`Math`Simplify`"];
+
 
 (* ::Section:: *)
 (*Public*)
@@ -47,21 +49,22 @@ summation::usage =
 (*Variable change*)
 
 
-diffChange::usage =
-    "diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations."<>
+integrateChange::usage =
+    "integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals."<>
     "\n"<>
-    "Info[funList]: list of functions to transform."<>
+    "Info[signs]: Jacobian signs."<>
     "\n"<>
     "Default[\"Solution\"]: 1."<>
     "\n"<>
-    "Default[\"ShowSolution\"]: False.";
+    "Default[\"ShowSolution\"]: False."<>
+    "\n"<>
+    "Default[\"ShowJacobian\"]: False.";
 
-integrateChange::usage =
-    "integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals."<>
+
+diffChange::usage =
+    "diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations."<>
     "\n"<>
-    "Info[sign]: Jacobian sign."<>
-    "\n"<>
-    "Value[sign]: {-1, 1}."<>
+    "Info[funs]: list of functions to transform."<>
     "\n"<>
     "Default[\"Solution\"]: 1."<>
     "\n"<>
@@ -322,121 +325,170 @@ summation[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_SUM] :=
 (*Option*)
 
 
+integrateChange//Options = {
+    "Solution"->1,
+    "ShowSolution"->False,
+    "ShowJacobian"->False
+};
+
+
 diffChange//Options = {
     "Solution"->1,
     "ShowSolution"->False
 };
 
-integrateChange//Options = {
-    "Solution"->1,
-    "ShowSolution"->False
-};
+
+(* ::Subsubsection:: *)
+(*Message*)
+
+
+integrateChange::MismatchNumberOfJacobianSign =
+    "The number of the Jacobian sign does not match the number of solutions.";
 
 
 (* ::Subsubsection:: *)
 (*Main*)
 
 
-diffChange[eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]][expr_] :=
-    diffChangeKernel[expr,eqList,oldList,newList,funList,opts];
+integrateChange[eqs_,oldVars_,newVars_,opts:OptionsPattern[]][expr_] :=
+    integrateChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],{1},opts];
 
-diffChange[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[]] :=
-    diffChangeKernel[expr,eqList,oldList,newList,funList,opts];
+integrateChange[eqs_,oldVars_,newVars_,signs_,opts:OptionsPattern[]][expr_] :=
+    integrateChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],prepareList[signs],opts];
 
 
-integrateChange[eqList_List,oldList_List,newList_List,opts:OptionsPattern[]][expr_] :=
-    integrateChangeKernel[expr,eqList,oldList,newList,opts];
+integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,signOfJacobianList1_List,opts:OptionsPattern[integrateChange]] :=
+    Module[ {
+            res,
+            oldToNewList,jacobianList,newExprList,signOfJacobianList,
+            whichSolution = OptionValue[integrateChange,{opts},"Solution"],
+            ifShowSolution = OptionValue[integrateChange,{opts},"ShowSolution"],
+            ifShowJacobian = OptionValue[integrateChange,{opts},"ShowJacobian"]
+        },
+        oldToNewList =
+            solveKernel[oldList,whichSolution,True][eqList];
+        signOfJacobianList =
+            getSignOfJacobianList[signOfJacobianList1,Length[oldToNewList]];
+        jacobianList =
+            getJacobianList[oldList,newList,oldToNewList];
+        newExprList =
+            oldToNewList//Map[ReplaceAll[expr,#]&];
+        res =
+            MapThread[Times,{newExprList,jacobianList,signOfJacobianList}]//
+                integrateChangeConvertINT[oldList,newList]//
+                integrateChangeStripList;
+        showSolutionJacobian[ifShowSolution,ifShowJacobian][oldToNewList,jacobianList];
+        res
+    ]//Catch;
 
-integrateChange[expr_,eqList_List,oldList_List,newList_List,opts:OptionsPattern[]] :=
-    integrateChangeKernel[expr,eqList,oldList,newList,opts];
 
-integrateChange[eqList_List,oldList_List,newList_List,signOfJacobian:-1|1,opts:OptionsPattern[]][expr_] :=
-    signOfJacobian*integrateChangeKernel[expr,eqList,oldList,newList,opts];
+diffChange[eqList_,oldList_,newList_,funList_,opts:OptionsPattern[]][expr_] :=
+    diffChangeKernel[expr,prepareList[eqList],prepareList[oldList],prepareList[newList],prepareList[funList],opts];
 
-integrateChange[expr_,eqList_List,oldList_List,newList_List,signOfJacobian:-1|1,opts:OptionsPattern[]] :=
-    signOfJacobian*integrateChangeKernel[expr,eqList,oldList,newList,opts];
+
+diffChangeKernel[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
+    Module[ {
+            res,oldToNewList,
+            whichSolution = OptionValue[diffChange,{opts},"Solution"],
+            ifShowSolution = OptionValue[diffChange,{opts},"ShowSolution"]
+        },
+        oldToNewList =
+            solveKernel[oldList,whichSolution,True][eqList];
+        res =
+            expr//
+                ReplaceAll[getFunctionRuleList[whichSolution][eqList,oldList,newList,funList]]//
+                (*convert old variables to new ones.*)
+                ReplaceAll[oldToNewList]//
+                diffChangeStripList;
+        showSolution[ifShowSolution][oldToNewList];
+        res
+    ]//Catch;
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
 
-diffChangeKernel[expr_,eqList:{(_Equal|_Rule|_RuleDelayed)..},oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
-    With[ {
-            eqList1 = eqList//ReplaceAll[Rule|RuleDelayed->Equal],
-            whichSolution = OptionValue[diffChange,opts,"Solution"],
-            ifShowSolution = OptionValue[diffChange,opts,"ShowSolution"]
-        },
-        expr//
-            ReplaceAll[getFunctionRuleList[whichSolution][eqList1,oldList,newList,funList]]//
-            (*convert old variables to new ones.*)
-            ReplaceAll[cleanSolve[whichSolution,ifShowSolution][eqList1,oldList]]//
-            diffChangeStripList
-    ]//Catch;
+prepareList[list_List] :=
+    Flatten[list];
+
+prepareList[assoc_Association] :=
+    Normal[assoc];
+
+prepareList[other_] :=
+    Flatten[{other}];
 
 
-integrateChangeKernel[expr_,eqList:{(_Equal|_Rule|_RuleDelayed)..},oldList_List,newList_List,opts:OptionsPattern[integrateChange]] :=
-    Module[ {
-            oldToNew,oldToNewList,res,
-            eqList1 = eqList//ReplaceAll[Rule|RuleDelayed->Equal],
-            whichSolution = OptionValue[integrateChange,opts,"Solution"],
-            ifShowSolution = OptionValue[integrateChange,opts,"ShowSolution"]
-        },
-        oldToNewList =
-            cleanSolve[whichSolution,ifShowSolution][eqList1,oldList];
-        res =
-        Table[
-            ReplaceAll[expr,oldToNew]*Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
-            {oldToNew,oldToNewList}
-        ];
-        res//integrateChangeConvertINT[oldList,newList]//integrateChangeStripList
-    ]//Catch;
-
-
-cleanSolve::argx =
-    "the option \"Solution\" accepts a valid Part operation on the solution list."
-
-cleanSolve::nosoln =
-    "no solution found.";
-
-cleanSolve[whichSolution_,ifShowSolution_][eqList_,varList_] :=
-    Module[ {solutionList,solution},
-        solutionList =
-            Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0];
-        solution =
-            (* Throw exception if Part operation is invalid. *)
-            Quiet[
-                Check[
-                    solutionList[[whichSolution]],
-                    Message[cleanSolve::argx];
-                    Throw[solutionList],
-                    {Part::pkspec1,Part::partw}
-                ],
-                {Part::pkspec1,Part::partw}
-            ];
-        solution =
-            (* If solution is a list of rules, convert it to a list of lists. *)
-            (* Throw exception if solution is empty. *)
-            Which[
-                MatchQ[solution,{__Rule}],
-                    {solution},
-                MatchQ[solution,{__List}],
-                    solution,
-                solution==={},
-                    Message[cleanSolve::nosoln];
-                    Throw[solution]
-            ];
-        If[ ifShowSolution===True,
-            Print@Column@solution
-        ];
-        solution
+getSignOfJacobianList[signOfJacobianList_,oldToNewLength_] :=
+    Which[
+        (* If the sign of Jacobian is given as a single value, repeat it. *)
+        Length[signOfJacobianList]===1,
+            Table[signOfJacobianList[[1]],{oldToNewLength}],
+        Length[signOfJacobianList]===oldToNewLength,
+            signOfJacobianList,
+        True,
+            Message[integrateChange::MismatchNumberOfJacobianSign];
+            Throw[signOfJacobianList]
     ];
 
 
-getFunctionRuleList[whichSolution_][eqList_List,oldList_List,newList_List,funList_List] :=
+getJacobianList[oldList_,newList_,oldToNewList_] :=
+    Module[ {res,oldToNew},
+        res =
+            Table[
+                Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
+                {oldToNew,oldToNewList}
+            ];
+        (* Try to simplify the result *)
+        TimeConstrained[Simplify[res],2,res]
+    ];
+
+
+integrateChangeConvertINT[oldList_,newList_][expr_] :=
+    With[ {rule = MapThread[Rule,{oldList,newList}]},
+        expr//ReplaceAll[{
+            INT[args__]:>INT@@ReplaceAll[{args},rule]
+        }]
+    ];
+
+
+integrateChangeStripList[list_] :=
+    If[ Length[list]===1,
+        list[[1]],
+        (*Else*)
+        list
+    ];
+
+
+showSolutionJacobian[True,False][solList_,jacobianList_] :=
+    Print@Grid[
+        Transpose[{solList}],
+        Spacings->{1,1/2},
+        Alignment->{Left,Right}
+    ];
+
+showSolutionJacobian[False,True][solList_,jacobianList_] :=
+    Print@Grid[
+        Transpose[{jacobianList}],
+        Spacings->{1,1/2},
+        Alignment->{Left,Right}
+    ];
+
+showSolutionJacobian[False,False][solList_,jacobianList_] :=
+    Null;
+
+showSolutionJacobian[True,True][solList_,jacobianList_] :=
+    Print@Grid[
+        Transpose[{solList,jacobianList}],
+        Spacings->{1,1/2},
+        Alignment->{Left,Right}
+    ];
+
+
+getFunctionRuleList[whichSolution_][eqList_,oldList_,newList_,funList_] :=
     Module[ {newByOld,newByOldList,fun,head},
         newByOldList =
-            newList//ReplaceAll[cleanSolve[whichSolution,False][eqList,newList]];
+            newList//ReplaceAll[solveKernel[newList,whichSolution,True][eqList]];
         Table[
             Table[
                 Head[fun]->head[
@@ -455,14 +507,6 @@ getVarPositionList[fun_,variableList_] :=
     Flatten[Map[Position[fun,#]&,variableList],{{1},{2,3}}];
 
 
-integrateChangeConvertINT[oldList_,newList_][expr_] :=
-    With[ {rule = MapThread[Rule,{oldList,newList}]},
-        expr//ReplaceAll[{
-            INT[args__]:>INT@@ReplaceAll[{args},rule]
-        }]
-    ];
-
-
 diffChangeStripList[list_] :=
     If[ Length[list]===1,
         list[[1,1]],
@@ -471,12 +515,15 @@ diffChangeStripList[list_] :=
     ];
 
 
-integrateChangeStripList[list_] :=
-    If[ Length[list]===1,
-        list[[1]],
-        (*Else*)
-        list
+showSolution[True][solList_] :=
+    Print@Grid[
+        Transpose[{solList}],
+        Spacings->{1,1/2},
+        Alignment->{Left,Right}
     ];
+
+showSolution[False][_] :=
+    Null;
 
 
 (* ::Subsubsection:: *)
@@ -487,7 +534,7 @@ diffChange[] :=
     CellPrint@{
         ExpressionCell[
             ToExpression[
-                "diffChange[D[f[x,t],{t,2}]==c^2*D[f[x,t],{x,2}],{u==x+c*t,v==x-c*t},{x,t},{u,v},{f[x,t]}]//Simplify",
+                "D[f[x,t],{t,2}]==c^2*D[f[x,t],{x,2}]//diffChange[{u==x+c*t,v==x-c*t},{x,t},{u,v},{f[x,t]}]//Simplify",
                  StandardForm,
                  Defer
             ],
@@ -508,7 +555,7 @@ integrateChange[] :=
     CellPrint@{
         ExpressionCell[
             ToExpression[
-                "integrateChange[t^a,{t==1-x},{t},{x}]",
+                "t^a//integrateChange[t==1-x,t,x,-1]",
                  StandardForm,
                  Defer
             ],
@@ -516,7 +563,7 @@ integrateChange[] :=
         ],
         ExpressionCell[
             ToExpression[
-                "-(1-x)^a",
+                "(1-x)^a",
                 StandardForm,
                 Defer
             ],
