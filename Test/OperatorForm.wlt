@@ -60,7 +60,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    solve1[{x, y}][{x == 0, y == 0}]
+    solve[{x, y}, 1][{x == 0, y == 0}]
     ,
     {x -> 0, y -> 0}
     ,
@@ -68,11 +68,47 @@ VerificationTest[
 ]
 
 VerificationTest[
-    solve1[{y, z}][x == 0]
+    solve[{x, y}, 2][{x == 0, y == 0}]
     ,
-    {}
+    Quiet[{{x -> 0, y -> 0}}]
+    ,
+    {Yurie`Math`solve::InvalidSolutionChoice}
     ,
     TestID->"8-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve1[{x, y}][{x == 0, y == 0}]
+    ,
+    {x -> 0, y -> 0}
+    ,
+    TestID->"9-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve[x][x^2 == 1]
+    ,
+    {{x -> -1}, {x -> 1}}
+    ,
+    TestID->"10-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve[x, 1][x^2 == 1]
+    ,
+    {x -> -1}
+    ,
+    TestID->"11-OperatorForm.nb"
+]
+
+VerificationTest[
+    solve1[{y, z}][x == 0]
+    ,
+    Quiet[{}]
+    ,
+    {Yurie`Math`solve::NoSolution}
+    ,
+    TestID->"12-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -81,7 +117,7 @@ VerificationTest[
     ,
     {1, 2}
     ,
-    TestID->"9-OperatorForm.nb"
+    TestID->"13-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -89,7 +125,7 @@ VerificationTest[
     ,
     {n, n}
     ,
-    TestID->"10-OperatorForm.nb"
+    TestID->"14-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -97,7 +133,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"11-OperatorForm.nb"
+    TestID->"15-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -105,7 +141,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"12-OperatorForm.nb"
+    TestID->"16-OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -113,7 +149,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"13-OperatorForm.nb"
+    TestID->"17-OperatorForm.nb"
 ]
 
 VerificationTest[
