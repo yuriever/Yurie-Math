@@ -19,9 +19,9 @@
 
 * `#!wl summation` - summation[args][expr]: operator form of Sum. Default[GenerateConditions]: False.
 
-* `#!wl diffChange` - diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations. Info[funList]: list of functions to transform. Default["Solution"]: 1. Default["ShowSolution"]: False.
+* `#!wl integrateChange` - integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals. Info[signs]: Jacobian signs. Default["Solution"]: 1. Default["ShowSolution"]: False. Default["ShowJacobian"]: False.
 
-* `#!wl integrateChange` - integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals. Info[sign]: Jacobian sign. Value[sign]: {-1, 1}. Default["Solution"]: 1. Default["ShowSolution"]: False.
+* `#!wl diffChange` - diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations. Info[funs]: list of functions to transform. Default["Solution"]: 1. Default["ShowSolution"]: False.
 
 * `#!wl IBP` - IBP[fun][expr]: perform integration by parts. IBP[fun, vars][expr]: perform integration by parts with respect to specific variables.
 
@@ -37,7 +37,7 @@
 
 * `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Info[fun]: the head of the function. Info[args]: inherited from Collect.
 
-* `#!wl diffReplace` - diffReplace[fun->res, ...]: replace the derivatives of the function.
+* `#!wl diffReplace` - diffReplace[fun->res...]: replace the derivatives of the function. diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives.
 
 * `#!wl diffComm` - diffComm[X, Y]: compute the commutator of differential operators. Sketch: -(X[Y[#]]-Y[X[#]])&.
 
@@ -109,15 +109,15 @@
 
 * `#!wl hyperFromAppellF1` - hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation. hyperFromAppellF1[symbols, indicator][expr]: indicate the summation. Default[indicator]: SUM.
 
-* `#!wl JacobiPhiToHyper` - JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1. Default[head]: Inactive.
+* `#!wl JacobiPhiToHyper` - JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1. Default[head]: Identity.
 
-* `#!wl JacobiPhiFromHyper` - JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function. Default[head]: Inactive.
+* `#!wl JacobiPhiFromHyper` - JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function. Default[head]: Identity.
 
-* `#!wl WilsonPolynomialToHyper` - WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3. Default[head]: Inactive.
+* `#!wl WilsonPolynomialToHyper` - WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3. Default[head]: Identity.
 
-* `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial. Default[head]: Inactive.
+* `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial. Default[head]: Identity.
 
-* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Info[var]: integration variable to match. Default[var]: All. Default[head]: Inactive.
+* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Info[var]: integration variable to match. Default[var]: All. Default[head]: Identity.
 
 
 <!-- Label.wl -->
@@ -200,7 +200,7 @@
 
 * `#!wl limit` - Sketch: Limit.
 
-* `#!wl solve` - Sketch: Solve.
+* `#!wl solve` - Sketch: Solve + Part.
 
 * `#!wl solve1` - Sketch: Solve + First.
 

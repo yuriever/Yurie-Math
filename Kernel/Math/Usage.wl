@@ -27,11 +27,11 @@ integrate::usage =
 summation::usage =
     StringJoin["summation[args][expr]: operator form of Sum.", "\n", "Default[GenerateConditions]: False."];
 
-diffChange::usage =
-    StringJoin["diffChange[eqList, oldList, newList, funList][expr]: change variables in differential equations.", "\n", "Info[funList]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
-
 integrateChange::usage =
-    StringJoin["integrateChange[eqList, oldList, newList, sign][expr]: change variables in integrals.", "\n", "Info[sign]: Jacobian sign.", "\n", "Value[sign]: {-1, 1}.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
+    StringJoin["integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.", "\n", "Info[signs]: Jacobian signs.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False.", "\n", "Default[\"ShowJacobian\"]: False."];
+
+diffChange::usage =
+    StringJoin["diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations.", "\n", "Info[funs]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
 
 IBP::usage =
     StringJoin["IBP[fun][expr]: perform integration by parts.", "\n", "IBP[fun, vars][expr]: perform integration by parts with respect to specific variables."];
@@ -55,7 +55,7 @@ diffCollect::usage =
     StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Info[fun]: the head of the function.", "\n", "Info[args]: inherited from Collect."];
 
 diffReplace::usage =
-    "diffReplace[fun->res, ...]: replace the derivatives of the function.";
+    StringJoin["diffReplace[fun->res...]: replace the derivatives of the function.", "\n", "diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives."];
 
 diffComm::usage =
     StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
@@ -157,19 +157,19 @@ hyperFromAppellF1::usage =
     StringJoin["hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "hyperFromAppellF1[symbols, indicator][expr]: indicate the summation.", "\n", "Default[indicator]: SUM."];
 
 JacobiPhiToHyper::usage =
-    StringJoin["JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1.", "\n", "Default[head]: Inactive."];
+    StringJoin["JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1.", "\n", "Default[head]: Identity."];
 
 JacobiPhiFromHyper::usage =
-    StringJoin["JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function.", "\n", "Default[head]: Inactive."];
+    StringJoin["JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function.", "\n", "Default[head]: Identity."];
 
 WilsonPolynomialToHyper::usage =
-    StringJoin["WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3.", "\n", "Default[head]: Inactive."];
+    StringJoin["WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3.", "\n", "Default[head]: Identity."];
 
 WilsonPolynomialFromHyper::usage =
-    StringJoin["WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.", "\n", "Default[head]: Inactive."];
+    StringJoin["WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.", "\n", "Default[head]: Identity."];
 
 AppellF1FromIntegral::usage =
-    StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Inactive."];
+    StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
 
 
 (* Label.wl *)
@@ -289,7 +289,7 @@ limit::usage =
     "Sketch: Limit.";
 
 solve::usage =
-    "Sketch: Solve.";
+    "Sketch: Solve + Part.";
 
 solve1::usage =
     "Sketch: Solve + First.";
