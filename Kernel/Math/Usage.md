@@ -6,6 +6,8 @@
 
 * `#!wl powerExpandFactor` - factor the base of powers and then expand.
 
+* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
+
 
 <!-- Diff.wl -->
 
@@ -241,7 +243,7 @@
 
 * `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test linearity for all the variables.
 
-* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
+* `#!wl minusQ` - minusQ[expr]: test whether the expression is syntactically negative.
 
 * `#!wl patternPresentQ` - patternPresentQ[expr]: test whether any pattern construction occurs in the expression.
 

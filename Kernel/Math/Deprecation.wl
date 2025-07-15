@@ -26,6 +26,10 @@ powerExpandFactor::usage =
     "factor the base of powers and then expand.";
 
 
+syntacticNegativeQ::usage =
+    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -73,10 +77,6 @@ deprecation[old_String] :=
 (*Main*)
 
 
-(* ::Subsubsection:: *)
-(*relationPowerMono*)
-
-
 relationPowerMono[base_,expanded_List,sign:1|-1:1] :=
     With[ {exponent = Unique[]},
         {
@@ -88,7 +88,6 @@ relationPowerMono[base_,expanded_List,sign:1|-1:1] :=
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed]//
         deprecation["relationPowerMono","relationPowerPhase"];
-
 
 relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
     With[ {exponent = Unique[]},
@@ -104,10 +103,6 @@ relationPowerMono[base_,expanded_List,expanded2_List,sign:1|-1:1] :=
         deprecation["relationPowerMono","relationPowerPhase"];
 
 
-(* ::Subsubsection:: *)
-(*collectDerivative*)
-
-
 collectDerivative[var:Except[_List],operation_:Identity][expr_] :=
     Collect[expr,Derivative[___][var][___],operation]//
         deprecation["collectDerivative","diffCollect"];
@@ -117,10 +112,6 @@ collectDerivative[varList_List,operation_:Identity][expr_] :=
         deprecation["collectDerivative","diffCollect"];
 
 
-(* ::Subsubsection:: *)
-(*powerExpandFactor*)
-
-
 powerExpandFactor[][expr_] :=
     expr//powerBaseFocus[Factor]//PowerExpand//powerFocus[Simplify]//
         deprecation["powerExpandFactor","powerExpand"];
@@ -128,6 +119,11 @@ powerExpandFactor[][expr_] :=
 powerExpandFactor[frozenVar_][expr_] :=
     expr//powerBaseFocus[Factor]//freeze[frozenVar,PowerExpand]//powerFocus[Simplify]//
         deprecation["powerExpandFactor","powerExpand"];
+
+
+syntacticNegativeQ[expr_] :=
+    Internal`SyntacticNegativeQ[expr]//
+        deprecation["syntacticNegativeQ","minusQ"];
 
 
 (* ::Subsection:: *)

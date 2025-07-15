@@ -9,6 +9,9 @@ collectDerivative::usage =
 powerExpandFactor::usage =
     "factor the base of powers and then expand.";
 
+syntacticNegativeQ::usage =
+    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
+
 
 (* Diff.wl *)
 
@@ -348,8 +351,8 @@ presentQ::usage =
 linearQ::usage =
     StringJoin["linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present.", "\n", "linearQ[expr, varList]: test linearity for all the variables."];
 
-syntacticNegativeQ::usage =
-    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
+minusQ::usage =
+    "minusQ[expr]: test whether the expression is syntactically negative.";
 
 patternPresentQ::usage =
     "patternPresentQ[expr]: test whether any pattern construction occurs in the expression.";
