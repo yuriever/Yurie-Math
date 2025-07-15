@@ -361,7 +361,7 @@ patternFreeQ::usage =
 (* Random.wl *)
 
 randomize::usage =
-    StringJoin["randomize[domain, range, excludedList][expr]: randomize the expression by replacing variables with random numbers.", "\n", "Example: randomize[x+y] -> x1+y1, where x1 and y1 are random numbers."];
+    StringJoin["randomize[domain, range][expr]: randomize the expression by replacing variables with random numbers.", "\n", "Example: randomize[][x+y] -> x1+y1, where x1 and y1 are random numbers."];
 
 
 (* Relation.wl *)
