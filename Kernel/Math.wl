@@ -37,6 +37,9 @@ Get["Yurie`Math`Label`"];
 Get["Yurie`Math`Dye`"];
 
 
+Get["Yurie`Math`Random`"];
+
+
 Get["Yurie`Math`Deprecation`"];
 
 

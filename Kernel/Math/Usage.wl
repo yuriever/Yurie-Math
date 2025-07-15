@@ -358,6 +358,12 @@ patternFreeQ::usage =
     "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
 
+(* Random.wl *)
+
+randomize::usage =
+    StringJoin["randomize[domain, range, excludedList][expr]: randomize the expression by replacing variables with random numbers.", "\n", "Example: randomize[x+y] -> x1+y1, where x1 and y1 are random numbers."];
+
+
 (* Relation.wl *)
 
 relationMellinBarnes::usage =
