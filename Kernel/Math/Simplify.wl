@@ -630,8 +630,8 @@ extractSymbol[expr_,exclusionList_:{}] :=
 
 extractVariable[expr_,exclusionList_:{}] :=
     With[ {
-            res=Reduce`FreeVariables[expr],
-            excludedContext=Join[{"System`"},exclusionList]
+            res = Reduce`FreeVariables[expr],
+            excludedContext = Join[{"System`"},exclusionList]
         },
         Select[res,variableQ[excludedContext]]
     ];
