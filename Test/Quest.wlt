@@ -124,7 +124,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    syntacticNegativeQ[0]
+    minusQ[0]
     ,
     False
     ,
@@ -140,7 +140,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (Map[syntacticNegativeQ])[list]
+    (Map[minusQ])[list]
     ,
     {False, False, False, False, False, False, False, False, False}
     ,
@@ -148,7 +148,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (Map[syntacticNegativeQ])[-list]
+    (Map[minusQ])[-list]
     ,
     {True, True, True, True, True, True, True, True, True}
     ,
@@ -156,7 +156,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    syntacticNegativeQ[a - b]
+    minusQ[a - b]
     ,
     False
     ,
@@ -164,7 +164,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    syntacticNegativeQ[-a + b]
+    minusQ[-a + b]
     ,
     True
     ,
