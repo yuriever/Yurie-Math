@@ -285,6 +285,12 @@ times::usage =
 divide::usage =
     "Sketch: Divide.";
 
+timesOverPlus::usage =
+    "timesOverPlus[args][expr]: operator form of Times that automatically threads over Plus.";
+
+divideOverPlus::usage =
+    "divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.";
+
 series::usage =
     "Sketch: Series + Normal.";
 

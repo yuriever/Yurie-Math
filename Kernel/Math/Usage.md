@@ -198,6 +198,10 @@
 
 * `#!wl divide` - Sketch: Divide.
 
+* `#!wl timesOverPlus` - timesOverPlus[args][expr]: operator form of Times that automatically threads over Plus.
+
+* `#!wl divideOverPlus` - divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.
+
 * `#!wl series` - Sketch: Series + Normal.
 
 * `#!wl limit` - Sketch: Limit.
