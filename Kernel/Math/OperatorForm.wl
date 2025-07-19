@@ -315,20 +315,18 @@ divide[args___][expr_] :=
     Divide[expr,Times[args]];
 
 
-timesOverPlus[args__][expr_] :=
-    If[ Head[expr]===Plus,
-        Map[times[args],expr],
-        (*Else*)
-        expr//times[args]
-    ];
+timesOverPlus[args__][expr_Plus] :=
+    Map[Times[#,args]&,expr];
 
+timesOverPlus[args__][expr_] :=
+    Times[expr,args];
+
+
+divideOverPlus[args__][expr_Plus] :=
+    Map[Divide[#,Times[args]]&,expr];
 
 divideOverPlus[args__][expr_] :=
-    If[ Head[expr]===Plus,
-        Map[divide[args],expr],
-        (*Else*)
-        expr//divide[args]
-    ];
+    Divide[expr,Times[args]];
 
 
 (* ::Subsection:: *)
