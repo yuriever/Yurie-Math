@@ -1,13 +1,7 @@
 (* Deprecation.wl *)
 
-relationPowerMono::usage =
-    "relation for branch cut of Power at zero.";
-
 collectDerivative::usage =
     "collect by derivatives.";
-
-powerExpandFactor::usage =
-    "factor the base of powers and then expand.";
 
 syntacticNegativeQ::usage =
     "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";

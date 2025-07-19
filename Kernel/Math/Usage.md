@@ -1,10 +1,6 @@
 <!-- Deprecation.wl -->
 
-* `#!wl relationPowerMono` - relation for branch cut of Power at zero.
-
 * `#!wl collectDerivative` - collect by derivatives.
-
-* `#!wl powerExpandFactor` - factor the base of powers and then expand.
 
 * `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
 
