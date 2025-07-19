@@ -105,6 +105,12 @@ times::usage =
 divide::usage =
     "Sketch: Divide.";
 
+timesOverPlus::usage =
+    "timesOverPlus[args][expr]: operator form of Times that automatically threads over Plus.";
+
+divideOverPlus::usage =
+    "divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.";
+
 
 (* ::Subsection:: *)
 (*Series|Limit*)
@@ -307,6 +313,22 @@ times[args___][expr_] :=
 
 divide[args___][expr_] :=
     Divide[expr,Times[args]];
+
+
+timesOverPlus[args__][expr_] :=
+    If[ Head[expr]===Plus,
+        Map[times[args],expr],
+        (*Else*)
+        expr//times[args]
+    ];
+
+
+divideOverPlus[args__][expr_] :=
+    If[ Head[expr]===Plus,
+        Map[divide[args],expr],
+        (*Else*)
+        expr//divide[args]
+    ];
 
 
 (* ::Subsection:: *)
