@@ -441,6 +441,9 @@ powerSeparate::usage =
 powerExponentCollect::usage =
     StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
+togetherBy::usage =
+    StringJoin["togetherBy[base][expr]: take together the terms with the specified base pattern in the polynomial expression.", "\n", "Info[base]: the pattern of base to match."];
+
 trigPhaseReduce::usage =
     StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Info[vars]: the variables to consider for periodicity."];
 

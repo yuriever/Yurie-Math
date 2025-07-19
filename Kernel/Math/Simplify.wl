@@ -121,6 +121,16 @@ powerExponentCollect::usage =
 
 
 (* ::Subsection:: *)
+(*Polynomial*)
+
+
+togetherBy::usage =
+    "togetherBy[base][expr]: take together the terms with the specified base pattern in the polynomial expression."<>
+    "\n"<>
+    "Info[base]: the pattern of base to match.";
+
+
+(* ::Subsection:: *)
 (*Trig*)
 
 
@@ -521,6 +531,17 @@ ruleCollectPower[] =
                 ]
             ]*x^rest1*y^rest2
     };
+
+
+(* ::Subsection:: *)
+(*Polynomial*)
+
+
+togetherBy[baseP_][expr1_]:=
+    FixedPoint[
+        Replace[#,expr:Verbatim[Plus][___,Power[baseP,_?minusQ]*_.,___]:>Together[expr],All]&,
+        expr1
+    ];
 
 
 (* ::Subsection:: *)
