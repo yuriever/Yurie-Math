@@ -168,6 +168,23 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = (1 - u)^b*u^a*(1 - v)^e*v^d*(v + u*(1 - χ)*(1 - χb) + χ*χb)^c; 
+    ,
+    Null
+    ,
+    TestID->"20-Hyper.nb"
+]
+
+VerificationTest[
+    res = Comap[{integrate[{u, 0, 1}], hyperFromIntegral[], hyperFromIntegral[u]}][expr]; 
+    FES[{res[[1]]/res[[2]], res[[1]]/res[[3]]}]
+    ,
+    {1, 1}
+    ,
+    TestID->"21-Hyper.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,

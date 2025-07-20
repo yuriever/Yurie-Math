@@ -454,7 +454,7 @@ ruleHyperFromIntegral[u_,head_,intIndex_] :=
     u^a_*(1-u)^b_*(u*x_.+y_)^c_/;FreeQ[y,u]:>
         INT[u]^(-intIndex)*Map[
             Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[Hypergeometric2F1][1+a,-c,2+a+b,-x],
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)],
             {1,2}
         ];
 
@@ -478,18 +478,18 @@ AppellF1FromIntegral[var_,head_:Identity][expr_] :=
 
 
 ruleAppellF1FromIntegral[All,head_,intIndex_] :=
-    u_^a_*(1-u_)^b_*(1+u_*x_.)^c_*(1+u_*y_.)^d_:>
+    u_^a_*(1-u_)^b_*(u_*x_.+x1_)^c_*(u_*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
         INT[u]^(-intIndex)*Map[
             Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y],
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)],
             {1,2}
         ];
 
 ruleAppellF1FromIntegral[u_,head_,intIndex_] :=
-    u^a_*(1-u)^b_*(1+u*x_.)^c_*(1+u*y_.)^d_:>
+    u^a_*(1-u)^b_*(u*x_.+x1_)^c_*(u*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
         INT[u]^(-intIndex)*Map[
             Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y],
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)],
             {1,2}
         ];
 
