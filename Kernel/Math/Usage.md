@@ -101,6 +101,8 @@
 
 * `#!wl hyperToTaylor` - hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series. hyperToTaylor[symbols, indicator][expr]: indicate the summation. Default[indicator]: SUM.
 
+* `#!wl hyperToEuler` - hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral. hyperToEuler[symbols, indicator][expr]: indicate the integration. Default[indicator]: INT.
+
 * `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral. hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration. Default[indicator]: INT.
 
 * `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z). hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration. Default[indicator]: INT.
@@ -114,6 +116,8 @@
 * `#!wl WilsonPolynomialToHyper` - WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3. Default[head]: Identity.
 
 * `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial. Default[head]: Identity.
+
+* `#!wl hyperFromIntegral` - hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function. Info[var]: integration variable to match. Default[var]: All. Default[head]: Identity.
 
 * `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Info[var]: integration variable to match. Default[var]: All. Default[head]: Identity.
 

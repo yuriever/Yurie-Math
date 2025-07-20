@@ -51,6 +51,13 @@ hyperToTaylor::usage =
     "\n"<>
     "Default[indicator]: SUM.";
 
+hyperToEuler::usage =
+    "hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral."<>
+    "\n"<>
+    "hyperToEuler[symbols, indicator][expr]: indicate the integration."<>
+    "\n"<>
+    "Default[indicator]: INT.";
+
 hyperToMellinBarnes::usage =
     "hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral."<>
     "\n"<>
@@ -91,6 +98,16 @@ WilsonPolynomialToHyper::usage =
 
 WilsonPolynomialFromHyper::usage =
     "WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial."<>
+    "\n"<>
+    "Default[head]: Identity.";
+
+
+hyperFromIntegral::usage =
+    "hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function."<>
+    "\n"<>
+    "Info[var]: integration variable to match."<>
+    "\n"<>
+    "Default[var]: All."<>
     "\n"<>
     "Default[head]: Identity.";
 
@@ -190,6 +207,13 @@ hyperToTaylor[symbols_,head_:SUM][expr_] :=
         getSymbolList[symbols]
     ];
 
+hyperToEuler[symbols_,head_:INT][expr_] :=
+    hyperConvert[hyperToEulerRule][
+        expr,head,
+        _Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ,
+        getSymbolList[symbols]
+    ];
+
 hyperToMellinBarnes[symbols_,head_:INT][expr_] :=
     hyperConvert[hyperToMellinBarnesRule][
         expr,head,
@@ -244,6 +268,34 @@ hyperConvert[which_][expr0_,head_,pattern_,symbolList_List] :=
 (*Helper*)
 
 
+hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
+    hyper["Taylor",n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
+
+hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
+    hyper["Taylor",n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
+
+hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
+    hyper["Taylor",n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
+
+hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    hyper["Taylor",n][
+        Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
+    ];
+
+
+hyperToEulerRule[u_,Hypergeometric2F1[a_,b_,c_,z_]] :=
+    hyper["Euler",u][Pass];
+
+hyperToEulerRule[u_,Hypergeometric1F1[a_,b_,z_]] :=
+    hyper["Euler",u][Pass];
+
+hyperToEulerRule[u_,Hypergeometric0F1[a_,z_]] :=
+    hyper["Euler",u][Pass];
+
+hyperToEulerRule[u_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    hyper["Euler",u][Pass];
+
+
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
 
@@ -261,21 +313,6 @@ hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["MellinBarnes",s][((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
-
-
-hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
-
-hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
-
-hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
-
-hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyper["Taylor",n][
-        Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
-    ];
 
 
 hyperFromAppellF1Rule[n_,AppellF1[a_,b1_,b2_,c_,x_,y_]] :=
@@ -395,14 +432,49 @@ ruleWilsonPolynomialFromHyper[head_] :=
 
 
 (* ::Subsection:: *)
+(*hyperFromIntegral*)
+
+
+hyperFromIntegral[][expr_] :=
+    expr//ReplaceAll[ruleHyperFromIntegral[All,Identity,ifHasINT[expr]]];
+
+hyperFromIntegral[var_,head_:Identity][expr_] :=
+    expr//ReplaceAll[ruleHyperFromIntegral[var,head,ifHasINT[expr]]];
+
+
+ruleHyperFromIntegral[All,head_,intIndex_] :=
+    u_^a_*(1-u_)^b_*(u_*x_.+y_)^c_/;FreeQ[y,u]:>
+        INT[u]^(-intIndex)*Map[
+            Simplify,
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)],
+            {1,2}
+        ];
+
+ruleHyperFromIntegral[u_,head_,intIndex_] :=
+    u^a_*(1-u)^b_*(u*x_.+y_)^c_/;FreeQ[y,u]:>
+        INT[u]^(-intIndex)*Map[
+            Simplify,
+            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[Hypergeometric2F1][1+a,-c,2+a+b,-x],
+            {1,2}
+        ];
+
+
+ifHasINT[expr_]/;FreeQ[expr,_INT] :=
+    0;
+
+ifHasINT[expr_] :=
+    1;
+
+
+(* ::Subsection:: *)
 (*AppellF1FromIntegral*)
 
 
 AppellF1FromIntegral[][expr_] :=
-    expr//ReplaceAll[ruleAppellF1FromIntegral[All,Identity,indexOfINT[expr]]];
+    expr//ReplaceAll[ruleAppellF1FromIntegral[All,Identity,ifHasINT[expr]]];
 
 AppellF1FromIntegral[var_,head_:Identity][expr_] :=
-    expr//ReplaceAll[ruleAppellF1FromIntegral[var,head,indexOfINT[expr]]];
+    expr//ReplaceAll[ruleAppellF1FromIntegral[var,head,ifHasINT[expr]]];
 
 
 ruleAppellF1FromIntegral[All,head_,intIndex_] :=
@@ -420,13 +492,6 @@ ruleAppellF1FromIntegral[u_,head_,intIndex_] :=
             (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*head[AppellF1][1+a,-c,-d,2+a+b,-x,-y],
             {1,2}
         ];
-
-
-indexOfINT[expr_]/;FreeQ[expr,_INT] :=
-    0;
-
-indexOfINT[expr_] :=
-    1;
 
 
 (* ::Subsection:: *)

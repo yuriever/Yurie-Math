@@ -144,6 +144,9 @@ hyperRegularize::usage =
 hyperToTaylor::usage =
     StringJoin["hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series.", "\n", "hyperToTaylor[symbols, indicator][expr]: indicate the summation.", "\n", "Default[indicator]: SUM."];
 
+hyperToEuler::usage =
+    StringJoin["hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral.", "\n", "hyperToEuler[symbols, indicator][expr]: indicate the integration.", "\n", "Default[indicator]: INT."];
+
 hyperToMellinBarnes::usage =
     StringJoin["hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral.", "\n", "hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration.", "\n", "Default[indicator]: INT."];
 
@@ -164,6 +167,9 @@ WilsonPolynomialToHyper::usage =
 
 WilsonPolynomialFromHyper::usage =
     StringJoin["WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.", "\n", "Default[head]: Identity."];
+
+hyperFromIntegral::usage =
+    StringJoin["hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
 
 AppellF1FromIntegral::usage =
     StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
