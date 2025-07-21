@@ -107,7 +107,11 @@ powerExpand::usage =
 powerExpandBy::usage =
     "powerExpandBy[rules..][expr]: expand the power factors according to the rules."<>
     "\n"<>
-    "Info[rules]: rules of the form base->{factor1, factor2, ...}.";
+    "Info[rules]: base->{factor1, factor2, ...}."<>
+    "\n"<>
+    "Hint: To specify the phase direction, include Positive or Negative in the factor list."<>
+    "\n"<>
+    "Hint: To match powers with exponent 1, include Optional in the factor list.";
 
 powerSeparate::usage =
     "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
@@ -436,17 +440,25 @@ powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
 
 expandRuleForSpecifiedBase[head_[base_,factorList1_List]]:=
     With[ {
-            factorList = DeleteCases[factorList1,Positive|Negative],
+            factorList = DeleteCases[factorList1,Positive|Negative|Optional],
             phaseSign = getPhaseSign[factorList1],
+            ifOptional = MemberQ[factorList1,Optional],
             exponent = Unique[]
         },
         {
             powerFactorList = Times@@Map[Power[#,exponent]&,factorList]
         },
         expandRuleCheckEquality[head,phaseSign][base,factorList];
-        HoldComplete[
-            Power[base,exponent_],
-            Exp[phaseSign*I*π*exponent]*powerFactorList
+        If[ ifOptional,
+            HoldComplete[
+                Power[base,exponent_.],
+                Exp[phaseSign*I*π*exponent]*powerFactorList
+            ],
+            (*Else*)
+            HoldComplete[
+                Power[base,exponent_],
+                Exp[phaseSign*I*π*exponent]*powerFactorList
+            ]
         ]
     ]//ReplaceAll[HoldComplete->RuleDelayed];
 
