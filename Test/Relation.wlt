@@ -36,11 +36,19 @@ VerificationTest[
 ]
 
 VerificationTest[
+    (ReplaceAll[relationMellinBarnes[(a + b)^(-Δ), a, s, Identity]])[(a + b)^(-Δ)]
+    ,
+    a^s*b^(-s - Δ)*multiGamma[{-s, s + Δ}, {Δ}]
+    ,
+    TestID->"4-Relation.nb"
+]
+
+VerificationTest[
     (ReplaceAll[relationFeynman[1/(a1^Δ1*a2^Δ2), a1, s]])[1/(a1^Δ1*a2^Δ2)]
     ,
     s^(-1 + Δ2)*(a1 + a2*s)^(-Δ1 - Δ2)*INT[s]*multiGamma[{Δ1 + Δ2}, {Δ1, Δ2}]
     ,
-    TestID->"4-Relation.nb"
+    TestID->"5-Relation.nb"
 ]
 
 VerificationTest[
@@ -48,39 +56,47 @@ VerificationTest[
     ,
     s^(-1 + Δ2)*t^(-1 + Δ3)*(a1 + a2*s + a3*t)^(-Δ1 - Δ2 - Δ3)*INT[s, t]*multiGamma[{Δ1 + Δ2 + Δ3}, {Δ1, Δ2, Δ3}]
     ,
-    TestID->"5-Relation.nb"
-]
-
-VerificationTest[
-    (ReplaceAll[relationPowerPhase[-χ, {χ}, 1]])[(-χ)^a]
-    ,
-    E^(I*a*Pi)*χ^a
-    ,
     TestID->"6-Relation.nb"
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerPhase[-χ, {χ}, -1]])[(-χ)^a]
+    (ReplaceAll[relationFeynman[1/(a1^Δ1*a2^Δ2), a1, s, Identity]])[1/(a1^Δ1*a2^Δ2)]
     ,
-    χ^a/E^(I*a*Pi)
+    s^(-1 + Δ2)*(a1 + a2*s)^(-Δ1 - Δ2)*multiGamma[{Δ1 + Δ2}, {Δ1, Δ2}]
     ,
     TestID->"7-Relation.nb"
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerPhase[(-1 + χ)/χ, {1 - χ}, {χ}, 1]])[((-1 + χ)/χ)^a]
+    Null
     ,
-    (E^(I*a*Pi)*(1 - χ)^a)/χ^a
+    Null
     ,
     TestID->"8-Relation.nb"
 ]
 
 VerificationTest[
-    (ReplaceAll[relationPowerPhase[(-1 + χ)/χ, {1 - χ}, {χ}, -1]])[((-1 + χ)/χ)^a]
+    Null
     ,
-    (1 - χ)^a/(E^(I*a*Pi)*χ^a)
+    Null
     ,
     TestID->"9-Relation.nb"
+]
+
+VerificationTest[
+    Null
+    ,
+    Null
+    ,
+    TestID->"10-Relation.nb"
+]
+
+VerificationTest[
+    Null
+    ,
+    Null
+    ,
+    TestID->"11-Relation.nb"
 ]
 
 VerificationTest[

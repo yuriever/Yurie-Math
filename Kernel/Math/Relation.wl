@@ -41,24 +41,23 @@ Begin["`Private`"];
 (*Main*)
 
 
-(* ::Subsubsection:: *)
-(*Mellin-Barnes*)
-
-
-relationMellinBarnes[expr:Power[y_,a_],x_,s_] :=
+relationMellinBarnes[expr:Power[y_,a_],x_,s_,head_:INT] :=
     With[ {mg = Simplify@multiGamma[{-a+s,-s},{-a}],rest = Simplify[y-x]},
-        expr->mg*x^s*rest^(-s+a)*INT[s]
-    ];
+        expr->relation["MellinBarnes",s][mg*x^s*rest^(-s+a)]
+    ]//handleRelationHead[head];
 
 
-(* ::Subsubsection:: *)
-(*Feynman*)
-
-
-relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_] :=
+relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_,head_:INT] :=
     With[ {mg = Simplify@multiGamma[{-a-b},{-a,-b}]},
-        expr->mg*s^(-b-1)*(x+s*y)^(a+b)*INT[s]
-    ];
+        expr->relation["Feynman",s][mg*s^(-b-1)*(x+s*y)^(a+b)]
+    ]//handleRelationHead[head];
+
+
+handleRelationHead[head_][expr_] :=
+    expr//ReplaceAll[relation[__]->head];
+
+handleRelationHead[INT][expr_] :=
+    expr//ReplaceAll[relation["MellinBarnes"|"Feynman",var_][term_]:>INT[var]*term];
 
 
 (* ::Subsection:: *)
