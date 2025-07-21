@@ -418,7 +418,7 @@ powerExpand[operation_,level_?levelQ,OptionsPattern[]][expr_] :=
 
 
 powerExpandBy::SuspiciousRule =
-    "The base `1` is not equal to the product of the factors `2`.";
+    "The base `1` is not equal to the product of the factors, and the left factor is `2`.";
 
 
 powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
@@ -429,13 +429,12 @@ powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
 
 
 expandRuleForSpecifiedBase[Verbatim[Rule][base_,(List|Alternatives)[factors__]]] :=
-    Module[ {rhs = Simplify@Times[factors]},
-        If[ Simplify[rhs/base]=!=1,
-            Message[powerExpandBy::SuspiciousRule,base,rhs];
+    Module[ {ratio = Simplify[base/Times[factors]]},
+        If[ ratio =!= 1,
+            Message[powerExpandBy::SuspiciousRule,base,ratio];
         ];
         Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}]
     ];
-
 
 expandRuleForSpecifiedBase[Verbatim[RuleDelayed][base_,(List|Alternatives)[factors__]]] :=
     Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
