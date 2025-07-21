@@ -418,7 +418,13 @@ powerExpand[operation_,level_?levelQ,OptionsPattern[]][expr_] :=
 
 
 powerExpandBy::SuspiciousRule =
-    "The base `1` is not equal to the product of the factors, and the left factor is `2`.";
+    "The base `1` does not match the product of the factors, with the left factor being `2`.";
+
+powerExpandBy::SuspiciousRule2 =
+    "For the delayed rule, the base `1` may not match the product of the factors, with the left factor being `2`.";
+
+powerExpandBy::InvalidPhase =
+    "To specify the direction of the phase, use only one of {Positive, Negative}.";
 
 
 powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
@@ -428,16 +434,56 @@ powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
     expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
 
 
-expandRuleForSpecifiedBase[Verbatim[Rule][base_,List[factors__]]] :=
-    Module[ {ratio = Simplify[base/Times[factors]]},
+expandRuleForSpecifiedBase[head_[base_,factorList1_List]]:=
+    With[ {
+            factorList = DeleteCases[factorList1,Positive|Negative],
+            phaseSign = getPhaseSign[factorList1],
+            exponent = Unique[]
+        },
+        {
+            powerFactorList = Times@@Map[Power[#,exponent]&,factorList]
+        },
+        expandRuleCheckEquality[head,phaseSign][base,factorList];
+        HoldComplete[
+            Power[base,exponent_],
+            Exp[phaseSign*I*π*exponent]*powerFactorList
+        ]
+    ]//ReplaceAll[HoldComplete->RuleDelayed];
+
+
+getPhaseSign[factorList_List]/;FreeQ[factorList,Positive|Negative] :=
+    0;
+
+getPhaseSign[factorList_List]/;!FreeQ[factorList,Positive]&&FreeQ[factorList,Negative] :=
+    1;
+
+getPhaseSign[factorList_List]/;FreeQ[factorList,Positive]&&!FreeQ[factorList,Negative] :=
+    -1;
+
+getPhaseSign[factorList_List]/;!FreeQ[factorList,Positive]&&!FreeQ[factorList,Negative] :=
+    (
+        Message[powerExpandBy::InvalidPhase];
+        0
+    );
+
+
+expandRuleCheckEquality[Rule,phaseSign_][base_,List[factors___]] :=
+    With[ {
+            ratio = Simplify[Exp[phaseSign*I*π]*base/Times[factors]]
+        },
         If[ ratio =!= 1,
             Message[powerExpandBy::SuspiciousRule,base,ratio];
-        ];
-        Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}]
+        ]
     ];
 
-expandRuleForSpecifiedBase[Verbatim[RuleDelayed][base_,List[factors__]]] :=
-    Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
+expandRuleCheckEquality[RuleDelayed,phaseSign_][base_,List[factors___]] :=
+    With[ {
+            ratio = Simplify[Exp[phaseSign*I*π]*stripPattern[base,Identity]/Times[factors]]
+        },
+        If[ ratio =!= 1,
+            Message[powerExpandBy::SuspiciousRule2,base,ratio];
+        ]
+    ];
 
 
 (* ::Subsubsection:: *)
@@ -625,7 +671,7 @@ stripPattern//Attributes =
     {HoldAll};
 
 stripPattern[expr_,head_:Defer] :=
-    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,_]:>pattern];
+    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,___]:>pattern];
 
 
 (* ::Subsubsection:: *)
