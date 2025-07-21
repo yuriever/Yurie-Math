@@ -428,7 +428,7 @@ powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
     expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
 
 
-expandRuleForSpecifiedBase[Verbatim[Rule][base_,(List|Alternatives)[factors__]]] :=
+expandRuleForSpecifiedBase[Verbatim[Rule][base_,List[factors__]]] :=
     Module[ {ratio = Simplify[base/Times[factors]]},
         If[ ratio =!= 1,
             Message[powerExpandBy::SuspiciousRule,base,ratio];
@@ -436,7 +436,7 @@ expandRuleForSpecifiedBase[Verbatim[Rule][base_,(List|Alternatives)[factors__]]]
         Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}]
     ];
 
-expandRuleForSpecifiedBase[Verbatim[RuleDelayed][base_,(List|Alternatives)[factors__]]] :=
+expandRuleForSpecifiedBase[Verbatim[RuleDelayed][base_,List[factors__]]] :=
     Power[base,exponent_]:>Times@@Map[Power[#,exponent]&,{factors}];
 
 

@@ -132,7 +132,7 @@ getRuleIgnoringCondition[False,rules_] :=
 getRuleList[rule_String] :=
     {rule};
 
-getRuleList[(List|Alternatives)[rules___String]] :=
+getRuleList[List[rules___String]] :=
     {rules};
 
 
