@@ -431,14 +431,18 @@ powerExpandBy::InvalidPhase =
     "To specify the direction of the phase, use only one of {Positive, Negative}.";
 
 
-powerExpandBy[rule:_Rule|_RuleDelayed][expr_] :=
-    expr//ReplaceAll[expandRuleForSpecifiedBase[rule]];
+powerExpandBy[rule:_Rule|_RuleDelayed,factorHead:Except[_Rule|_RuleDelayed]:Identity][expr_] :=
+    expr//ReplaceAll[expandRuleForSpecifiedBase[rule]]//ReplaceAll[factorHeadOfExpandRule->factorHead];
 
-powerExpandBy[rules:(_Rule|_RuleDelayed)..][expr_] :=
-    expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]];
+powerExpandBy[rules:(_Rule|_RuleDelayed)..,factorHead:Except[_Rule|_RuleDelayed]:Identity][expr_] :=
+    expr//ReplaceAll[Map[expandRuleForSpecifiedBase,{rules}]]//ReplaceAll[factorHeadOfExpandRule->factorHead];
 
 
-expandRuleForSpecifiedBase[head_[base_,factorList1_List]]:=
+factorHeadOfExpandRule//Attributes = {
+    HoldAllComplete
+};
+
+expandRuleForSpecifiedBase[head_[base_,factorList1_List]] :=
     With[ {
             factorList = DeleteCases[factorList1,Positive|Negative|Optional],
             phaseSign = getPhaseSign[factorList1],
@@ -446,21 +450,21 @@ expandRuleForSpecifiedBase[head_[base_,factorList1_List]]:=
             exponent = Unique[]
         },
         {
-            powerFactorList = Times@@Map[Power[#,exponent]&,factorList]
+            powerFactorProduct = Times@@Map[factorHeadOfExpandRule[Power[#,exponent]]&,factorList]
         },
         expandRuleCheckEquality[head,phaseSign][base,factorList];
         If[ ifOptional,
             HoldComplete[
                 Power[base,exponent_.],
-                Exp[phaseSign*I*π*exponent]*powerFactorList
+                Exp[phaseSign*I*π*exponent]*powerFactorProduct
             ],
             (*Else*)
             HoldComplete[
                 Power[base,exponent_],
-                Exp[phaseSign*I*π*exponent]*powerFactorList
+                Exp[phaseSign*I*π*exponent]*powerFactorProduct
             ]
         ]
-    ]//ReplaceAll[HoldComplete->RuleDelayed];
+    ]//ReplaceAll[HoldComplete[args__]:>RuleDelayed[args]];
 
 
 getPhaseSign[factorList_List]/;FreeQ[factorList,Positive|Negative] :=
