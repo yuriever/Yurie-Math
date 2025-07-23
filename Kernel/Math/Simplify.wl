@@ -450,7 +450,7 @@ expandRuleForSpecifiedBase[head_[base_,factorList1_List]] :=
             exponent = Unique[]
         },
         {
-            powerFactorProduct = Times@@Map[factorHeadOfExpandRule[Power[#,exponent]]&,factorList]
+            powerFactorProduct = Times@@Map[Power[factorHeadOfExpandRule[#],exponent]&,factorList]
         },
         expandRuleCheckEquality[head,phaseSign][base,factorList];
         If[ ifOptional,
