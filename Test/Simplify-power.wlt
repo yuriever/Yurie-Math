@@ -386,7 +386,7 @@ VerificationTest[
 VerificationTest[
     powerExpandBy[ε - ε*χ -> {ε, 1 - χ}, Hold][expr]
     ,
-    (εb - εb*χb)^b*Hold[ε^a]*Hold[(1 - χ)^a]
+    (εb - εb*χb)^b*Hold[ε]^a*Hold[1 - χ]^a
     ,
     TestID->"46-Simplify-power.nb"
 ]
@@ -402,7 +402,7 @@ VerificationTest[
 VerificationTest[
     powerExpandBy[ε - ε*χ -> {ε, 1 - χ, Optional}, Hold][expr]
     ,
-    (εb - εb*χb)^b*Hold[ε^1]*Hold[(1 - χ)^1]
+    (εb - εb*χb)^b*Hold[ε]*Hold[1 - χ]
     ,
     TestID->"48-Simplify-power.nb"
 ]
