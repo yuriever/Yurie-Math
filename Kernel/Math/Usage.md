@@ -4,6 +4,8 @@
 
 * `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
 
+* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Info[base]: the power base. Info[expanded]: the numerator factors to separate. Info[expanded2]: the denominator factors to separate. This argument is optional. Info[sign]: the phase direction. Default[sign]: 1.
+
 
 <!-- Diff.wl -->
 
@@ -31,9 +33,9 @@
 
 * `#!wl PDCollect` - PDCollect[args][expr]: collect the terms with respect to PD[__]. Info[args]: inherited from Collect.
 
-* `#!wl diffCoefficient` - diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]. Info[fun]: the head of the function. Info[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
+* `#!wl diffCoefficient` - diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]. Info[post]: post-operation applied to the coefficients. Default[post]: Identity. Default["CheckLinearity"]: True.
 
-* `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Info[fun]: the head of the function. Info[args]: inherited from Collect.
+* `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]. diffCollect[funList, args][expr]: collect terms for multiple functions. Info[args]: inherited from Collect.
 
 * `#!wl diffReplace` - diffReplace[fun->res...]: replace the derivatives of the function. diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives.
 
@@ -265,8 +267,6 @@
 
 * `#!wl relationFeynman` - relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors. Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s].
 
-* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Info[base]: the power base. Info[expanded]: the numerator factors to separate. Info[expanded2]: the denominator factors to separate. This argument is optional. Info[sign]: the phase direction. Default[sign]: 1.
-
 
 <!-- SimplifyUnsafe.wl -->
 
@@ -305,7 +305,7 @@
 
 * `#!wl powerExpand` - powerExpand[operation, level][expr]: expand the power factors after combining power bases. Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used. Default[operation]: Simplify.
 
-* `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules. Info[rules]: rules of the form base->{factor1, factor2, ...}.
+* `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules. Info[rules]: base->{factor1, factor2, ...}. Hint: To specify the phase direction, include Positive or Negative in the factor list. Hint: To match powers with exponent 1, include Optional in the factor list.
 
 * `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors. Info[baseP]: the pattern of power bases to match.
 

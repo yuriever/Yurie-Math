@@ -6,6 +6,9 @@ collectDerivative::usage =
 syntacticNegativeQ::usage =
     "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
 
+relationPowerPhase::usage =
+    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Info[base]: the power base.", "\n", "Info[expanded]: the numerator factors to separate.", "\n", "Info[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Info[sign]: the phase direction.", "\n", "Default[sign]: 1."];
+
 
 (* Diff.wl *)
 
@@ -46,10 +49,10 @@ PDCollect::usage =
     StringJoin["PDCollect[args][expr]: collect the terms with respect to PD[__].", "\n", "Info[args]: inherited from Collect."];
 
 diffCoefficient::usage =
-    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Info[fun]: the head of the function.", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
+    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
 
 diffCollect::usage =
-    StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Info[fun]: the head of the function.", "\n", "Info[args]: inherited from Collect."];
+    StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Info[args]: inherited from Collect."];
 
 diffReplace::usage =
     StringJoin["diffReplace[fun->res...]: replace the derivatives of the function.", "\n", "diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives."];
@@ -381,9 +384,6 @@ relationMellinBarnes::usage =
 relationFeynman::usage =
     StringJoin["relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors.", "\n", "Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s]."];
 
-relationPowerPhase::usage =
-    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Info[base]: the power base.", "\n", "Info[expanded]: the numerator factors to separate.", "\n", "Info[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Info[sign]: the phase direction.", "\n", "Default[sign]: 1."];
-
 
 (* SimplifyUnsafe.wl *)
 
@@ -439,7 +439,7 @@ powerExpand::usage =
     StringJoin["powerExpand[operation, level][expr]: expand the power factors after combining power bases.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
 
 powerExpandBy::usage =
-    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Info[rules]: rules of the form base->{factor1, factor2, ...}."];
+    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Info[rules]: base->{factor1, factor2, ...}.", "\n", "Hint: To specify the phase direction, include Positive or Negative in the factor list.", "\n", "Hint: To match powers with exponent 1, include Optional in the factor list."];
 
 powerSeparate::usage =
     StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: the pattern of power bases to match."];

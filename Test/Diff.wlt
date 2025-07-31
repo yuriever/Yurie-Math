@@ -110,6 +110,94 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = A + B + g[x] + a*f[x, y] + b*f[x] + c*D[f[x, y], x, y] + d*D[f[x], x] + e*D[f[x, y, 1], x]
+    ,
+    A + B + b*f[x] + a*f[x, y] + g[x] + d*Derivative[1][f][x] + c*Derivative[1, 1][f][x, y] + e*Derivative[1, 0, 0][f][x, y, 1]
+    ,
+    TestID->"13-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f][expr]
+    ,
+    {{f[x]} -> b, {f[x, y]} -> a, {f[x], {x, 1}} -> d, {f[x, y], {x, 1}, {y, 1}} -> c, {f[x, y, 1], {x, 1}, {y, 0}} -> e, {} -> A + B + g[x]}
+    ,
+    TestID->"14-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][expr]
+    ,
+    {{f[x]} -> b, {f[x, y]} -> a, {g[x]} -> 1, {f[x], {x, 1}} -> d, {f[x, y], {x, 1}, {y, 1}} -> c, {f[x, y, 1], {x, 1}, {y, 0}} -> e, {} -> A + B}
+    ,
+    TestID->"15-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][f[x]*a]
+    ,
+    {{f[x]} -> a}
+    ,
+    TestID->"16-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][D[f[x, y, 1], x]*a]
+    ,
+    {{f[x, y, 1], {x, 1}, {y, 0}} -> a}
+    ,
+    TestID->"17-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][f[x]]
+    ,
+    {{f[x]} -> 1}
+    ,
+    TestID->"18-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][D[f[x], x]]
+    ,
+    {{f[x], {x, 1}} -> 1}
+    ,
+    TestID->"19-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][D[f[x, 1], {x, 2}]]
+    ,
+    {{f[x, 1], {x, 2}} -> 1}
+    ,
+    TestID->"20-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][a*b]
+    ,
+    {{} -> a*b}
+    ,
+    TestID->"21-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][a + b]
+    ,
+    {{} -> a + b}
+    ,
+    TestID->"22-Diff.nb"
+]
+
+VerificationTest[
+    diffCoefficient[f | g][a]
+    ,
+    {{} -> a}
+    ,
+    TestID->"23-Diff.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,
