@@ -110,8 +110,6 @@ PDCollect::usage =
 diffCoefficient::usage =
     "diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__]."<>
     "\n"<>
-    "Info[fun]: the head of the function."<>
-    "\n"<>
     "Info[post]: post-operation applied to the coefficients."<>
     "\n"<>
     "Default[post]: Identity."<>
@@ -122,8 +120,6 @@ diffCollect::usage =
     "diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]."<>
     "\n"<>
     "diffCollect[funList, args][expr]: collect terms for multiple functions."<>
-    "\n"<>
-    "Info[fun]: the head of the function."<>
     "\n"<>
     "Info[args]: inherited from Collect.";
 
@@ -662,14 +658,27 @@ PDCoefficient//Options = {
 };
 
 PDCoefficient[post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[ {expr1},
+    Module[ {},
         PDCheckLinearity[OptionValue["CheckLinearity"]][expr];
-        expr1 = Expand[expr];
-        Join[
-            Cases[expr1,PD[x__]*rest_.:>{{x},rest}],
-            Cases[expr1,rest_/;FreeQ[rest,_PD]:>{{},rest}]
-        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],post@Total[#[[All,2]]]]&]
+        expr//Expand//PDCoefficientKernel//MapAt[post,{All,2}]
     ]//Catch;
+
+
+PDCoefficientKernel[expr_Plus] :=
+    Join[
+        Cases[expr,PD[x__]*rest_.:>{{x},rest}],
+        Cases[expr,rest_/;FreeQ[rest,_PD]:>{{},rest}]
+    ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],Total[#[[All,2]]]]&];
+
+PDCoefficientKernel[expr_Times] :=
+    expr//separate[FreeQ[_PD]]//
+        ReplaceAll[{lhs_,PD[args__]|1}:>{{args}->lhs}];
+
+PDCoefficientKernel[PD[args__]] :=
+    {{args}->1};
+
+PDCoefficientKernel[expr_] :=
+    {{}->expr};
 
 
 PDCheckLinearity[True][expr_] :=
@@ -701,15 +710,39 @@ diffCoefficient//Options = {
     "CheckLinearity"->True
 };
 
-diffCoefficient[fun:Except[_List],post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[ {expr1},
-        diffCheckLinearity[OptionValue["CheckLinearity"]][expr,fun];
-        expr1 = Expand[expr];
-        Join[
-            Cases[expr1,Derivative[orders__][fun][vars__]*rest_.:>{cleanNumPairs@Transpose@{{vars},{orders}},rest}],
-            Cases[expr1,fun[__]*rest_.:>{{},rest}]
-        ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],post@Total[#[[All,2]]]]&]
+diffCoefficient[funP:Except[_List],post_:Identity,opts:OptionsPattern[]][expr_] :=
+    Module[ {},
+        diffCheckLinearity[OptionValue["CheckLinearity"]][expr,funP];
+        expr//Expand//diffCoefficientKernel[funP]//convertDerivative//MapAt[post,{All,2}]
     ]//Catch;
+
+
+diffCoefficientKernel[funP_][expr_Plus] :=
+    Join[
+        Cases[expr,(fun:funP[___]|Derivative[___][funP][___])*rest_.:>{fun,rest}],
+        Cases[expr,rest_/;FreeQ[rest,funP]:>{{},rest}]
+    ]//GatherBy[#,First]&//Map[Rule[#[[1,1]],Total[#[[All,2]]]]&];
+
+diffCoefficientKernel[funP_][expr_Times] :=
+    expr//separate[FreeQ[funP]]//
+        ReplaceAll[{
+            {lhs_,fun:funP[___]|Derivative[___][funP][___]}:>{fun->lhs},
+            {lhs_,1}:>{{}->lhs}
+        }];
+
+diffCoefficientKernel[funP_][expr_] :=
+    If[ MatchQ[expr,funP[___]|Derivative[___][funP][___]],
+        {expr->1},
+        (*Else*)
+        {{}->expr}
+    ];
+
+
+convertDerivative[list_List] :=
+    list//ReplaceAt[{
+        Derivative[orders__][fun_][vars__]:>{fun[vars],Splice@cleanNumPairs@Transpose@{{vars},{orders}}},
+        fun_[vars__]:>{fun[vars]}
+    },{All,1}];
 
 
 diffCheckLinearity[True][expr_,fun_] :=
