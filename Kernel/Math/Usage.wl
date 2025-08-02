@@ -280,7 +280,7 @@ plus::usage =
     "Sketch: Plus.";
 
 minus::usage =
-    "Sketch: Minus.";
+    "Sketch: Subtract.";
 
 times::usage =
     "Sketch: Times.";
@@ -359,6 +359,9 @@ presentQ::usage =
 
 linearQ::usage =
     StringJoin["linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present.", "\n", "linearQ[expr, varList]: test linearity for all the variables."];
+
+plusQ::usage =
+    "plusQ[expr]: test whether the expression is syntactically positive.";
 
 minusQ::usage =
     "minusQ[expr]: test whether the expression is syntactically negative.";

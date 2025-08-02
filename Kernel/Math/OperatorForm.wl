@@ -97,7 +97,7 @@ plus::usage =
     "Sketch: Plus.";
 
 minus::usage =
-    "Sketch: Minus.";
+    "Sketch: Subtract.";
 
 times::usage =
     "Sketch: Times.";

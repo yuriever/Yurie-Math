@@ -72,6 +72,9 @@ linearQ::usage =
     "\n"<>
     "linearQ[expr, varList]: test linearity for all the variables.";
 
+plusQ::usage =
+    "plusQ[expr]: test whether the expression is syntactically positive.";
+
 minusQ::usage =
     "minusQ[expr]: test whether the expression is syntactically negative.";
 
@@ -244,6 +247,9 @@ presentQ[form_][expr_] :=
 linearQ :=
     Internal`LinearQ;
 
+
+plusQ :=
+    Not@*Internal`SyntacticNegativeQ;
 
 minusQ :=
     Internal`SyntacticNegativeQ;

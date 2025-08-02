@@ -194,7 +194,7 @@
 
 * `#!wl plus` - Sketch: Plus.
 
-* `#!wl minus` - Sketch: Minus.
+* `#!wl minus` - Sketch: Subtract.
 
 * `#!wl times` - Sketch: Times.
 
@@ -248,6 +248,8 @@
 * `#!wl presentQ` - presentQ[pattern][expr]: test whether the pattern occurs in the expression. Sketch: Not + FreeQ.
 
 * `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present. linearQ[expr, varList]: test linearity for all the variables.
+
+* `#!wl plusQ` - plusQ[expr]: test whether the expression is syntactically positive.
 
 * `#!wl minusQ` - minusQ[expr]: test whether the expression is syntactically negative.
 
