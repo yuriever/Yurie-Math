@@ -125,6 +125,14 @@ powerExponentCollect::usage =
 
 
 (* ::Subsection:: *)
+(*Phase*)
+
+
+phaseIgnore::usage =
+    "phaseIgnore[expr]: ignore the phase factor in the product.";
+
+
+(* ::Subsection:: *)
 (*Polynomial*)
 
 
@@ -592,6 +600,38 @@ ruleCollectPower[] =
                 ]
             ]*x^rest1*y^rest2
     };
+
+
+(* ::Subsection:: *)
+(*Phase*)
+
+
+(* ::Subsubsection:: *)
+(*phaseIgnore*)
+
+
+phaseIgnore[expr:_Times|_Power] :=
+    expr//ReplaceAll[{
+        (-1)^_->1,
+        Power[E,π*_Complex*_.]->1,
+        Power[Complex[0,1|-1],_]->1
+    }]//dropMinusSign;
+
+phaseIgnore[(-1)^_] :=
+    1;
+
+phaseIgnore[Power[E,π*_Complex*_.]] :=
+    1;
+
+phaseIgnore[Power[Complex[0,1|-1],_]] :=
+    1;
+
+
+dropMinusSign[expr_?minusQ] :=
+    -expr;
+
+dropMinusSign[expr_] :=
+    expr;
 
 
 (* ::Subsection:: *)

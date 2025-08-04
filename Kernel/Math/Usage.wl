@@ -450,6 +450,9 @@ powerSeparate::usage =
 powerExponentCollect::usage =
     StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
+phaseIgnore::usage =
+    "phaseIgnore[expr]: ignore the phase factor in the product.";
+
 togetherBy::usage =
     StringJoin["togetherBy[base][expr]: take together the terms with the specified base pattern in the polynomial expression.", "\n", "Info[base]: the pattern of base to match."];
 

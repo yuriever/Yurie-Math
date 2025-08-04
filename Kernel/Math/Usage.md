@@ -313,6 +313,8 @@
 
 * `#!wl powerExponentCollect` - powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents. Hint: if no exponent is specified, try to collect all power factors.
 
+* `#!wl phaseIgnore` - phaseIgnore[expr]: ignore the phase factor in the product.
+
 * `#!wl togetherBy` - togetherBy[base][expr]: take together the terms with the specified base pattern in the polynomial expression. Info[base]: the pattern of base to match.
 
 * `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity. Info[vars]: the variables to consider for periodicity.
