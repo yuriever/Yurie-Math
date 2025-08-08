@@ -198,7 +198,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x, n, x, "SimplePole" -> False][Gamma[x]^2]
     ,
-    (2*(-1)^(2*n)*PolyGamma[0, 1 + n])/n!^2
+    (2*PolyGamma[0, 1 + n])/n!^2
     ,
     TestID->"23-Gamma.nb"
 ]
@@ -232,7 +232,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x[1], n[1], x[1], "SimplePole" -> False][Gamma[x[1]]^2]
     ,
-    (2*(-1)^(2*n[1])*PolyGamma[0, 1 + n[1]])/n[1]!^2
+    (2*PolyGamma[0, 1 + n[1]])/n[1]!^2
     ,
     TestID->"27-Gamma.nb"
 ]
