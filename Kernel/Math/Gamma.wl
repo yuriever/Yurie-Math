@@ -153,7 +153,7 @@ gammaFrom[expr_,OptionsPattern[]] :=
                     gammaData//Lookup[opt]//Flatten,
                 True,
                     Message[gammaFrom::noSuchKey,gammaDataKeyList];
-                    HoldComplete[expr]//Throw
+                    expr//Throw
             ];
         expr//ReplaceAll[ruleList]//
             ReplaceAll[gm_gamma:>Simplify@gm]//
@@ -279,16 +279,16 @@ gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
         !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_List],
             Message[gammaTakeResidue::NotProduct];
-            HoldComplete[expr]//Throw,
+            expr//Throw,
         !FreeQ[expr,index],
             Message[gammaTakeResidue::IndexConflict,index];
-            HoldComplete[expr]//Throw,
+            expr//Throw,
         !Internal`LinearQ[gmarg,{variable}],
             Message[gammaTakeResidue::NotMatchVar,gmarg,variable];
-            HoldComplete[expr]//Throw,
+            expr//Throw,
         FreeQ[expr,Gamma[gmarg]],
             Message[gammaTakeResidue::NotInExpr,HoldForm[Gamma][gmarg]];
-            HoldComplete[expr]//Throw
+            expr//Throw
     ];
 
 

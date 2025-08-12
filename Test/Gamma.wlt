@@ -150,7 +150,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x, n, -x][Gamma[x]]
     ,
-    Quiet[HoldComplete[Gamma[x]]]
+    Quiet[Gamma[x]]
     ,
     {Yurie`Math`gammaTakeResidue::NotInExpr}
     ,
@@ -160,7 +160,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x, x, -x][Gamma[x]]
     ,
-    Quiet[HoldComplete[Gamma[x]]]
+    Quiet[Gamma[x]]
     ,
     {Yurie`Math`gammaTakeResidue::IndexConflict}
     ,
@@ -170,7 +170,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x, n, f[x]][Gamma[x]]
     ,
-    Quiet[HoldComplete[Gamma[x]]]
+    Quiet[Gamma[x]]
     ,
     {Yurie`Math`gammaTakeResidue::NotMatchVar}
     ,
@@ -180,7 +180,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[y, n, f[x]][Gamma[x]]
     ,
-    Quiet[HoldComplete[Gamma[x]]]
+    Quiet[Gamma[x]]
     ,
     {Yurie`Math`gammaTakeResidue::NotMatchVar}
     ,
@@ -214,7 +214,7 @@ VerificationTest[
 VerificationTest[
     gammaTakeResidue[x[1], n[1], -x[1]][Gamma[-x]]
     ,
-    Quiet[HoldComplete[Gamma[-x]]]
+    Quiet[Gamma[-x]]
     ,
     {Yurie`Math`gammaTakeResidue::NotInExpr}
     ,
