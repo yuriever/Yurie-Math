@@ -119,6 +119,9 @@ divideOverPlus::usage =
 series::usage =
     "Sketch: Series + Normal.";
 
+seriesc::usage =
+    "Sketch: SeriesCoefficient.";
+
 limit::usage =
     "Sketch: Limit.";
 
@@ -335,6 +338,9 @@ divideOverPlus[args__][expr_] :=
 
 series[args___][expr_] :=
     Normal@Series[expr,args];
+
+seriesc[args___][expr_] :=
+    SeriesCoefficient[expr,args];
 
 
 limit[direction_][expr_] :=

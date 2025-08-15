@@ -297,6 +297,9 @@ divideOverPlus::usage =
 series::usage =
     "Sketch: Series + Normal.";
 
+seriesc::usage =
+    "Sketch: SeriesCoefficient.";
+
 limit::usage =
     "Sketch: Limit.";
 

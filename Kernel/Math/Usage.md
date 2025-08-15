@@ -206,6 +206,8 @@
 
 * `#!wl series` - Sketch: Series + Normal.
 
+* `#!wl seriesc` - Sketch: SeriesCoefficient.
+
 * `#!wl limit` - Sketch: Limit.
 
 * `#!wl solve` - Sketch: Solve + Part.
