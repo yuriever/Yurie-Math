@@ -153,6 +153,22 @@ VerificationTest[
 ]
 
 VerificationTest[
+    Normal[(Series[#1, {x, 0, 0}] & )[x]]
+    ,
+    x
+    ,
+    TestID->"18-OperatorForm.nb"
+]
+
+VerificationTest[
+    series[{x, 0, 0}][x]
+    ,
+    0
+    ,
+    TestID->"19-OperatorForm.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
 	End[]
     ,

@@ -336,8 +336,28 @@ divideOverPlus[args__][expr_] :=
 (*Series|Limit*)
 
 
-series[args___][expr_] :=
-    Normal@Series[expr,args];
+series[args___][expr_]/;$VersionNumber!=14.3 :=
+    Series[expr,args]//Normal;
+
+(* Fix a bug of Series in version 14.3 *)
+(* https://mathematica.stackexchange.com/q/314968/86893 *)
+
+series//Options =
+    Options@Series;
+
+series[{x_,x0_,n_},opts:OptionsPattern[]][expr_]/;$VersionNumber==14.3 :=
+    Module[ {res},
+        res = Series[expr,{x,x0,n},FilterRules[{opts,Options@series},Options@Series]];
+        If[ Head[res]===SeriesData&&res[[5]]>n+res[[6]]&&res[[3]]=!={},
+            res+SeriesData[x,x0,{},res[[4]],Max[res[[4]],n+res[[6]]],res[[6]]],
+            (*Else*)
+            res
+        ]//Normal
+    ];
+
+series[args__List,opts:OptionsPattern[]][expr_]/;$VersionNumber==14.3 :=
+    Fold[series[#2,opts][#1]&,expr,{args}];
+
 
 seriesc[args___][expr_] :=
     SeriesCoefficient[expr,args];
