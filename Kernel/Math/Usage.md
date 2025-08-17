@@ -123,11 +123,11 @@
 
 * `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1. Info[var]: integration variable to match. Default[var]: All. Default[head]: Identity.
 
-* `#!wl conformalIntegral2` - conformalIntegral2[{z1, z2}, {z0}][expr]: perform 1d two-point conformal integral. conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.
+* `#!wl conformalIntegral2` - conformalIntegral2[{z1, z2}, {z0}][expr]: perform 1d two-point conformal integral. conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy. Hint: see appendix of 1108.6194.
 
-* `#!wl conformalIntegral3` - conformalIntegral3[{z1, z2, z3}, {z0}][expr]: perform 1d three-point conformal integral. conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version.
+* `#!wl conformalIntegral3` - conformalIntegral3[{z1, z2, z3}, {z0}][expr]: perform 1d three-point conformal integral. conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy. Hint: see appendix of 1108.6194.
 
-* `#!wl conformalIntegralKLT` - conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form. conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.
+* `#!wl conformalIntegralKLT` - conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form. conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy. Hint: see appendix of 1706.05362.
 
 
 <!-- Label.wl -->

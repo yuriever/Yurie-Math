@@ -137,17 +137,23 @@ AppellF1FromIntegral::usage =
 conformalIntegral2::usage =
     "conformalIntegral2[{z1, z2}, {z0}][expr]: perform 1d two-point conformal integral."<>
     "\n"<>
-    "conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.";
+    "conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy."<>
+    "\n"<>
+    "Hint: see appendix of 1108.6194.";
 
 conformalIntegral3::usage =
     "conformalIntegral3[{z1, z2, z3}, {z0}][expr]: perform 1d three-point conformal integral."<>
     "\n"<>
-    "conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version.";
+    "conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy."<>
+    "\n"<>
+    "Hint: see appendix of 1108.6194.";
 
 conformalIntegralKLT::usage =
     "conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form."<>
     "\n"<>
-    "conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.";
+    "conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy."<>
+    "\n"<>
+    "Hint: see appendix of 1706.05362.";
 
 
 (* ::Section:: *)
@@ -473,6 +479,13 @@ ruleWilsonPolynomialFromHyper[head_] :=
 (*Helper*)
 
 
+gammaS[arg_] :=
+    Gamma@Simplify@arg;
+
+multiGammaS[args___] :=
+    gammaFrom@Simplify@multiGamma[args];
+
+
 INTCancel[expr_,{vars__}]/;!FreeQ[expr,_INT] :=
     1/INT[vars];
 
@@ -498,7 +511,7 @@ hyperFromIntegral[u_,head_:Identity][expr_] :=
 
 
 hyperFromIntegralKernel[{a_,b_,c_,x_,y_},head_] :=
-    (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)];
+    (gammaS[1+a]*gammaS[1+b])/gammaS[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)];
 
 
 (* ::Subsubsection:: *)
@@ -519,7 +532,7 @@ AppellF1FromIntegral[u_,head_:Identity][expr_] :=
 
 
 AppellF1FromIntegralKernel[{a_,b_,c_,d_,x_,x1_,y_,y1_},head_] :=
-    (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)];
+    (gammaS[1+a]*gammaS[1+b])/gammaS[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)];
 
 
 (* ::Subsubsection:: *)
@@ -541,7 +554,7 @@ conformalIntegral2[{z1_,zb1_,z2_,zb2_},{z0_,zb0_}][expr_] :=
 
 conformalIntegral2Kernel[{z1_,zb1_,z2_,zb2_},{h1_,hb1_,h2_,hb2_}] :=
     ConditionalExpression[
-        (-1)^(h1-hb1)*π^2*gammaFrom@multiGamma[{1+h1,1+h2},{-hb1,-hb2}]*
+        (-1)^(h1-hb1)*π^2*multiGammaS[{1+h1,1+h2},{-hb1,-hb2}]*
         DiracDelta[z1-z2,zb1-zb2],
         (* Condition *)
         2+h1+h2==0&&2+hb1+hb2==0&&isZ[h1-hb1,h2-hb2]
@@ -566,11 +579,36 @@ conformalIntegral3[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{z0_,zb0_}][expr_] :=
 
 conformalIntegral3Kernel[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{h1_,hb1_,h2_,hb2_,h3_,hb3_}] :=
     ConditionalExpression[
-        π*gammaFrom@multiGamma[{1+h1,1+h2,1+h3},{-hb1,-hb2,-hb3}]*
+        π*multiGammaS[{1+h1,1+h2,1+h3},{-hb1,-hb2,-hb3}]*
         (z1-z2)^(-1-h3)*(z2-z3)^(-1-h1)*(-z1+z3)^(-1-h2)*
         (zb1-zb2)^(-1-hb3)*(zb2-zb3)^(-1-hb1)*(-zb1+zb3)^(-1-hb2),
         (* Condition *)
         2+h1+h2+h3==0&&2+hb1+hb2+hb3==0&&isZ[h1-hb1,h2-hb2,h3-hb3]
+    ];
+
+
+(* ::Subsubsection:: *)
+(*conformalIntegralKLT*)
+
+
+conformalIntegralKLT[{z1_,zb1_,z2_,zb2_},All][expr_] :=
+    expr//ReplaceAll[
+        (z0_-z1)^h1_*(z0_-z2)^h2_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_:>
+            INTCancel[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+        ];
+
+conformalIntegralKLT[{z1_,zb1_,z2_,zb2_},{z0_,zb0_}][expr_] :=
+    expr//ReplaceAll[
+        (z0-z1)^h1_*(z0-z2)^h2_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_:>
+            INTCancel[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+    ];
+
+conformalIntegralKLTKernel[{z1_,zb1_,z2_,zb2_},{h1_,hb1_,h2_,hb2_}] :=
+    ConditionalExpression[
+        (-1)^(h1-hb1)*π*multiGammaS[{-1-h1-h2,1+hb1,1+hb2},{-h1,-h2,2+hb1+hb2}]*
+        (z1-z2)^(1+h1+h2)*(zb1-zb2)^(1+hb1+hb2),
+        (* Condition *)
+        isZ[h1-hb1,h2-hb2]
     ];
 
 
