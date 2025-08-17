@@ -1,14 +1,14 @@
 
 
-(*Simplify.nb*)
+(* Simplify.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Simplify.nb"
+    TestID->"[0] Simplify.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Simplify.nb"
+    TestID->"[1] Simplify.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     {b, a, c, d}
     ,
-    TestID->"2-Simplify.nb"
+    TestID->"[2] Simplify.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     {b, a, d, c}
     ,
-    TestID->"3-Simplify.nb"
+    TestID->"[3] Simplify.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     {{2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}}
     ,
-    TestID->"4-Simplify.nb"
+    TestID->"[4] Simplify.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     {Gamma[c]/(Gamma[a]*Gamma[b]), ((-z)^s*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/Gamma[c + s]}
     ,
-    TestID->"5-Simplify.nb"
+    TestID->"[5] Simplify.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"6-Simplify.nb"
+    TestID->"[6] Simplify.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"7-Simplify.nb"
+    TestID->"[7] Simplify.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     f[a^2 + 2*a*b + b^2] + g[a^2 + 2*a*b + b^2, 2]
     ,
-    TestID->"8-Simplify.nb"
+    TestID->"[8] Simplify.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     f[(a + b)^2] + g[(a + b)^2, 2]
     ,
-    TestID->"9-Simplify.nb"
+    TestID->"[9] Simplify.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     g[a^2 + 2*a*b + b^2, 2] + h[f[a^2 + 2*a*b + b^2]]
     ,
-    TestID->"10-Simplify.nb"
+    TestID->"[10] Simplify.nb"
 ]
 
 VerificationTest[
@@ -96,7 +96,7 @@ VerificationTest[
     ,
     1 + Sqrt[1 - x^2]/(1 - x)
     ,
-    TestID->"11-Simplify.nb"
+    TestID->"[11] Simplify.nb"
 ]
 
 VerificationTest[
@@ -104,7 +104,7 @@ VerificationTest[
     ,
     (-1)^k*Sin[a]
     ,
-    TestID->"12-Simplify.nb"
+    TestID->"[12] Simplify.nb"
 ]
 
 VerificationTest[
@@ -112,7 +112,7 @@ VerificationTest[
     ,
     Cos[b]*Sin[a]
     ,
-    TestID->"13-Simplify.nb"
+    TestID->"[13] Simplify.nb"
 ]
 
 VerificationTest[
@@ -120,14 +120,14 @@ VerificationTest[
     ,
     (-1)^k*Cos[b]*Cos[c]*Sin[a]
     ,
-    TestID->"14-Simplify.nb"
+    TestID->"[14] Simplify.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Simplify.nb"
+    TestID->"[∞] Simplify.nb"
 ]

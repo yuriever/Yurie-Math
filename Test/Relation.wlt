@@ -1,14 +1,14 @@
 
 
-(*Relation.nb*)
+(* Relation.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Relation.nb"
+    TestID->"[0] Relation.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Relation.nb"
+    TestID->"[1] Relation.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     a^s*b^(-s - Δ)*INT[s]*multiGamma[{-s, s + Δ}, {Δ}]
     ,
-    TestID->"2-Relation.nb"
+    TestID->"[2] Relation.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     a^s*b^t*c^(-s - t - Δ)*INT[s, t]*multiGamma[{-s, -t, s + t + Δ}, {Δ}]
     ,
-    TestID->"3-Relation.nb"
+    TestID->"[3] Relation.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     a^s*b^(-s - Δ)*multiGamma[{-s, s + Δ}, {Δ}]
     ,
-    TestID->"4-Relation.nb"
+    TestID->"[4] Relation.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     s^(-1 + Δ2)*(a1 + a2*s)^(-Δ1 - Δ2)*INT[s]*multiGamma[{Δ1 + Δ2}, {Δ1, Δ2}]
     ,
-    TestID->"5-Relation.nb"
+    TestID->"[5] Relation.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     s^(-1 + Δ2)*t^(-1 + Δ3)*(a1 + a2*s + a3*t)^(-Δ1 - Δ2 - Δ3)*INT[s, t]*multiGamma[{Δ1 + Δ2 + Δ3}, {Δ1, Δ2, Δ3}]
     ,
-    TestID->"6-Relation.nb"
+    TestID->"[6] Relation.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     s^(-1 + Δ2)*(a1 + a2*s)^(-Δ1 - Δ2)*multiGamma[{Δ1 + Δ2}, {Δ1, Δ2}]
     ,
-    TestID->"7-Relation.nb"
+    TestID->"[7] Relation.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"8-Relation.nb"
+    TestID->"[8] Relation.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"9-Relation.nb"
+    TestID->"[9] Relation.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"10-Relation.nb"
+    TestID->"[10] Relation.nb"
 ]
 
 VerificationTest[
@@ -96,14 +96,14 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"11-Relation.nb"
+    TestID->"[11] Relation.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Relation.nb"
+    TestID->"[∞] Relation.nb"
 ]

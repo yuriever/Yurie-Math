@@ -1,14 +1,14 @@
 
 
-(*Simplify-freeze.nb*)
+(* Simplify-freeze.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Simplify-freeze.nb"
+    TestID->"[0] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Simplify-freeze.nb"
+    TestID->"[1] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
     ,
     (-a)^(-1 + Δ)*b^(-1 + Δ)
     ,
-    TestID->"2-Simplify-freeze.nb"
+    TestID->"[2] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
     ,
     a^(-1 + Δ)*(-b)^(-1 + Δ)
     ,
-    TestID->"3-Simplify-freeze.nb"
+    TestID->"[3] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
     ,
     (-1)^(-1 + Δ)*(-a)^(-1 + Δ)*(-b)^(-1 + Δ)
     ,
-    TestID->"4-Simplify-freeze.nb"
+    TestID->"[4] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -49,7 +49,7 @@ VerificationTest[
     ,
     (-b)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)
     ,
-    TestID->"5-Simplify-freeze.nb"
+    TestID->"[5] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -57,7 +57,7 @@ VerificationTest[
     ,
     (-1)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)*h[k[b]]^(-1 + Δ)
     ,
-    TestID->"6-Simplify-freeze.nb"
+    TestID->"[6] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -65,7 +65,7 @@ VerificationTest[
     ,
     {f[g[a -> b]], f[g[c -> d]], {a, b}}
     ,
-    TestID->"7-Simplify-freeze.nb"
+    TestID->"[7] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -73,7 +73,7 @@ VerificationTest[
     ,
     {C[1], C[2], {a, b}}
     ,
-    TestID->"8-Simplify-freeze.nb"
+    TestID->"[8] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -81,7 +81,7 @@ VerificationTest[
     ,
     {C[1], c -> d, {a, b}}
     ,
-    TestID->"9-Simplify-freeze.nb"
+    TestID->"[9] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -91,7 +91,7 @@ VerificationTest[
     ,
     {Yurie`Math`freeze::BadInput}
     ,
-    TestID->"10-Simplify-freeze.nb"
+    TestID->"[10] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -99,7 +99,7 @@ VerificationTest[
     ,
     {a -> b, c -> d, C[1]}
     ,
-    TestID->"11-Simplify-freeze.nb"
+    TestID->"[11] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -107,7 +107,7 @@ VerificationTest[
     ,
     {a -> b, c -> d, C[1], C[2]}
     ,
-    TestID->"12-Simplify-freeze.nb"
+    TestID->"[12] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -115,7 +115,7 @@ VerificationTest[
     ,
     C[1]
     ,
-    TestID->"13-Simplify-freeze.nb"
+    TestID->"[13] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -123,7 +123,7 @@ VerificationTest[
     ,
     {C[1] -> C[2], C[3] -> C[4], {C[1], C[2]}, {C[3], C[4]}}
     ,
-    TestID->"14-Simplify-freeze.nb"
+    TestID->"[14] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -131,7 +131,7 @@ VerificationTest[
     ,
     {C[1] -> b, c -> d, {C[1], b}, {c, d}}
     ,
-    TestID->"15-Simplify-freeze.nb"
+    TestID->"[15] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -139,7 +139,7 @@ VerificationTest[
     ,
     {a -> b, c -> d, C[1], C[2]}
     ,
-    TestID->"16-Simplify-freeze.nb"
+    TestID->"[16] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -147,7 +147,7 @@ VerificationTest[
     ,
     {a -> b, c -> d, C[1], {c, d}}
     ,
-    TestID->"17-Simplify-freeze.nb"
+    TestID->"[17] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -155,7 +155,7 @@ VerificationTest[
     ,
     dot[p[1], p[2]] + 2*dot[p[1], p[3] + p[4]] + dot[p[1], p[5]]*f[x] + h[dot[p[1], p[2]], dot[p[1], p[2]]]
     ,
-    TestID->"18-Simplify-freeze.nb"
+    TestID->"[18] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -163,7 +163,7 @@ VerificationTest[
     ,
     C[1] + 2*C[2] + C[3]*f[x] + h[C[1], C[1]]
     ,
-    TestID->"19-Simplify-freeze.nb"
+    TestID->"[19] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -171,7 +171,7 @@ VerificationTest[
     ,
     {s[x], x[s[x]], x[x[s[x]]]}
     ,
-    TestID->"20-Simplify-freeze.nb"
+    TestID->"[20] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -179,7 +179,7 @@ VerificationTest[
     ,
     {s[x], x[s[x]], x[x[x]]}
     ,
-    TestID->"21-Simplify-freeze.nb"
+    TestID->"[21] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -187,7 +187,7 @@ VerificationTest[
     ,
     {s[t[x]], x[s[t[x]]], x[x[s[t[x]]]]}
     ,
-    TestID->"22-Simplify-freeze.nb"
+    TestID->"[22] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -195,7 +195,7 @@ VerificationTest[
     ,
     (-a)^(-1 + Δ)*b^(-1 + Δ)
     ,
-    TestID->"23-Simplify-freeze.nb"
+    TestID->"[23] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -203,7 +203,7 @@ VerificationTest[
     ,
     a^(-1 + Δ)*(-b)^(-1 + Δ)
     ,
-    TestID->"24-Simplify-freeze.nb"
+    TestID->"[24] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -211,7 +211,7 @@ VerificationTest[
     ,
     (-1)^(-1 + Δ)*(-a)^(-1 + Δ)*(-b)^(-1 + Δ)
     ,
-    TestID->"25-Simplify-freeze.nb"
+    TestID->"[25] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -219,7 +219,7 @@ VerificationTest[
     ,
     (-b)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)
     ,
-    TestID->"26-Simplify-freeze.nb"
+    TestID->"[26] Simplify-freeze.nb"
 ]
 
 VerificationTest[
@@ -227,14 +227,14 @@ VerificationTest[
     ,
     (-1)^(-1 + Δ)*a[]^(-1 + Δ)*f[g[a]]^(-1 + Δ)*h[k[b]]^(-1 + Δ)
     ,
-    TestID->"27-Simplify-freeze.nb"
+    TestID->"[27] Simplify-freeze.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Simplify-freeze.nb"
+    TestID->"[∞] Simplify-freeze.nb"
 ]

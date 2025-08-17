@@ -1,14 +1,14 @@
 
 
-(*Simplify-unsafe.nb*)
+(* Simplify-unsafe.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Simplify-unsafe.nb"
+    TestID->"[0] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Simplify-unsafe.nb"
+    TestID->"[1] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"2-Simplify-unsafe.nb"
+    TestID->"[2] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     (w^(a + b + a*b)*(x - y)^(a + b)*z^a)/(-x + y)^b
     ,
-    TestID->"3-Simplify-unsafe.nb"
+    TestID->"[3] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     (w^(a + b + a*b)*((x - y)*z)^a)/(-1)^b
     ,
-    TestID->"4-Simplify-unsafe.nb"
+    TestID->"[4] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     (w^(a + b + a*b)*((x - y)*z)^a)/(-1)^b
     ,
-    TestID->"5-Simplify-unsafe.nb"
+    TestID->"[5] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -57,7 +57,7 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"6-Simplify-unsafe.nb"
+    TestID->"[6] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -65,7 +65,7 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"7-Simplify-unsafe.nb"
+    TestID->"[7] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
@@ -73,14 +73,14 @@ VerificationTest[
     ,
     {(-1)^a*x^a, (-1)^a*x^a, 1/x^2, E^((I*a*Pi)/2)*x^a, E^(2*I*a*Pi)*x^(4*a), 1/x^2}
     ,
-    TestID->"8-Simplify-unsafe.nb"
+    TestID->"[8] Simplify-unsafe.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Simplify-unsafe.nb"
+    TestID->"[∞] Simplify-unsafe.nb"
 ]

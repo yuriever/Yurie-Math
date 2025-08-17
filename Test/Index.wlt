@@ -1,14 +1,14 @@
 
 
-(*Index.nb*)
+(* Index.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Index.nb"
+    TestID->"[0] Index.nb"
 ]
 
 VerificationTest[
@@ -16,14 +16,14 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Index.nb"
+    TestID->"[1] Index.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Index.nb"
+    TestID->"[∞] Index.nb"
 ]

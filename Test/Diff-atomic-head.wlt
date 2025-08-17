@@ -1,14 +1,14 @@
 
 
-(*Diff-atomic-head.nb*)
+(* Diff-atomic-head.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Diff-atomic-head.nb"
+    TestID->"[0] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Diff-atomic-head.nb"
+    TestID->"[1] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     PD[z[1], z[1]]
     ,
-    TestID->"2-Diff-atomic-head.nb"
+    TestID->"[2] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     PD[z[1], z[2]]
     ,
-    TestID->"3-Diff-atomic-head.nb"
+    TestID->"[3] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     PD[z[1], z[2], z[3], z[3]]
     ,
-    TestID->"4-Diff-atomic-head.nb"
+    TestID->"[4] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     PD[z[1], z[2], z[3]]
     ,
-    TestID->"5-Diff-atomic-head.nb"
+    TestID->"[5] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     PD[x]/PD[y]
     ,
-    TestID->"6-Diff-atomic-head.nb"
+    TestID->"[6] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     PD[y, z]
     ,
-    TestID->"7-Diff-atomic-head.nb"
+    TestID->"[7] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     PD[y]/PD[w]
     ,
-    TestID->"8-Diff-atomic-head.nb"
+    TestID->"[8] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     h[y] + g[x]*PD[x] + f[x]*PD[x, y]
     ,
-    TestID->"9-Diff-atomic-head.nb"
+    TestID->"[9] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     g[g[x]*PD[x]] + f[x]*PD[x, y]
     ,
-    TestID->"10-Diff-atomic-head.nb"
+    TestID->"[10] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -96,7 +96,7 @@ VerificationTest[
     ,
     {{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
     ,
-    TestID->"11-Diff-atomic-head.nb"
+    TestID->"[11] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -106,7 +106,7 @@ VerificationTest[
     ,
     {Yurie`Math`PDCoefficient::nonlinear}
     ,
-    TestID->"12-Diff-atomic-head.nb"
+    TestID->"[12] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -114,7 +114,7 @@ VerificationTest[
     ,
     {{z} -> a, {} -> b}
     ,
-    TestID->"13-Diff-atomic-head.nb"
+    TestID->"[13] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -122,7 +122,7 @@ VerificationTest[
     ,
     {{z} -> a}
     ,
-    TestID->"14-Diff-atomic-head.nb"
+    TestID->"[14] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -130,7 +130,7 @@ VerificationTest[
     ,
     {{z, zb} -> a}
     ,
-    TestID->"15-Diff-atomic-head.nb"
+    TestID->"[15] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -138,7 +138,7 @@ VerificationTest[
     ,
     {{z} -> 1}
     ,
-    TestID->"16-Diff-atomic-head.nb"
+    TestID->"[16] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -146,7 +146,7 @@ VerificationTest[
     ,
     {{z, zb} -> 1}
     ,
-    TestID->"17-Diff-atomic-head.nb"
+    TestID->"[17] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -154,7 +154,7 @@ VerificationTest[
     ,
     {{} -> a}
     ,
-    TestID->"18-Diff-atomic-head.nb"
+    TestID->"[18] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -162,7 +162,7 @@ VerificationTest[
     ,
     {{} -> a*b}
     ,
-    TestID->"19-Diff-atomic-head.nb"
+    TestID->"[19] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -170,7 +170,7 @@ VerificationTest[
     ,
     INT[y]
     ,
-    TestID->"20-Diff-atomic-head.nb"
+    TestID->"[20] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -180,7 +180,7 @@ VerificationTest[
     ,
     {Yurie`Math`INT::Duplicate}
     ,
-    TestID->"21-Diff-atomic-head.nb"
+    TestID->"[21] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -188,7 +188,7 @@ VerificationTest[
     ,
     SUM[y]
     ,
-    TestID->"22-Diff-atomic-head.nb"
+    TestID->"[22] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -198,7 +198,7 @@ VerificationTest[
     ,
     {Yurie`Math`SUM::Duplicate}
     ,
-    TestID->"23-Diff-atomic-head.nb"
+    TestID->"[23] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -206,14 +206,14 @@ VerificationTest[
     ,
     1/SUM[y]
     ,
-    TestID->"24-Diff-atomic-head.nb"
+    TestID->"[24] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Diff-atomic-head.nb"
+    TestID->"[∞] Diff-atomic-head.nb"
 ]

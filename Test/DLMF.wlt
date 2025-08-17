@@ -1,14 +1,14 @@
 
 
-(*DLMF.nb*)
+(* DLMF.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-DLMF.nb"
+    TestID->"[0] DLMF.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-DLMF.nb"
+    TestID->"[1] DLMF.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     ((-1)^n*Binomial[-1 - a + n, n])/Binomial[a, n]
     ,
-    TestID->"2-DLMF.nb"
+    TestID->"[2] DLMF.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"3-DLMF.nb"
+    TestID->"[3] DLMF.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     ((-1)^n*Pochhammer[1 - a - n, n])/Pochhammer[a, n]
     ,
-    TestID->"4-DLMF.nb"
+    TestID->"[4] DLMF.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"5-DLMF.nb"
+    TestID->"[5] DLMF.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     ((-1)^n*FactorialPower[-1 - a + n, n])/FactorialPower[a, n]
     ,
-    TestID->"6-DLMF.nb"
+    TestID->"[6] DLMF.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"7-DLMF.nb"
+    TestID->"[7] DLMF.nb"
 ]
 
 VerificationTest[
@@ -72,14 +72,14 @@ VerificationTest[
     ,
     (Gamma[c]*Gamma[-a - b + c])/(Gamma[-a + c]*Gamma[-b + c])
     ,
-    TestID->"8-DLMF.nb"
+    TestID->"[8] DLMF.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-DLMF.nb"
+    TestID->"[∞] DLMF.nb"
 ]

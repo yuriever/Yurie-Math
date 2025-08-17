@@ -1,14 +1,14 @@
 
 
-(*Matrix.nb*)
+(* Matrix.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Matrix.nb"
+    TestID->"[0] Matrix.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Matrix.nb"
+    TestID->"[1] Matrix.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"2-Matrix.nb"
+    TestID->"[2] Matrix.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}
     ,
-    TestID->"3-Matrix.nb"
+    TestID->"[3] Matrix.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}
     ,
-    TestID->"4-Matrix.nb"
+    TestID->"[4] Matrix.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}
     ,
-    TestID->"5-Matrix.nb"
+    TestID->"[5] Matrix.nb"
 ]
 
 VerificationTest[
@@ -56,14 +56,14 @@ VerificationTest[
     ,
     {{2, 0, 0}, {0, 2, 0}, {0, 0, 2}}
     ,
-    TestID->"6-Matrix.nb"
+    TestID->"[6] Matrix.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Matrix.nb"
+    TestID->"[∞] Matrix.nb"
 ]

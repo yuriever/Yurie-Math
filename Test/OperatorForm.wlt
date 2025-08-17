@@ -1,14 +1,14 @@
 
 
-(*OperatorForm.nb*)
+(* OperatorForm.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-OperatorForm.nb"
+    TestID->"[0] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-OperatorForm.nb"
+    TestID->"[1] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     x*y*z
     ,
-    TestID->"2-OperatorForm.nb"
+    TestID->"[2] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     x/(y*z)
     ,
-    TestID->"3-OperatorForm.nb"
+    TestID->"[3] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     x + y + z
     ,
-    TestID->"4-OperatorForm.nb"
+    TestID->"[4] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     x - y - z
     ,
-    TestID->"5-OperatorForm.nb"
+    TestID->"[5] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     {{x -> 0, y -> 0}}
     ,
-    TestID->"6-OperatorForm.nb"
+    TestID->"[6] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     {x -> 0, y -> 0}
     ,
-    TestID->"7-OperatorForm.nb"
+    TestID->"[7] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -74,7 +74,7 @@ VerificationTest[
     ,
     {Yurie`Math`solve::InvalidSolutionChoice}
     ,
-    TestID->"8-OperatorForm.nb"
+    TestID->"[8] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -82,7 +82,7 @@ VerificationTest[
     ,
     {x -> 0, y -> 0}
     ,
-    TestID->"9-OperatorForm.nb"
+    TestID->"[9] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -90,7 +90,7 @@ VerificationTest[
     ,
     {{x -> -1}, {x -> 1}}
     ,
-    TestID->"10-OperatorForm.nb"
+    TestID->"[10] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -98,7 +98,7 @@ VerificationTest[
     ,
     {x -> -1}
     ,
-    TestID->"11-OperatorForm.nb"
+    TestID->"[11] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -108,7 +108,7 @@ VerificationTest[
     ,
     {Yurie`Math`solve::NoSolution}
     ,
-    TestID->"12-OperatorForm.nb"
+    TestID->"[12] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -117,7 +117,7 @@ VerificationTest[
     ,
     {1, 2}
     ,
-    TestID->"13-OperatorForm.nb"
+    TestID->"[13] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -125,7 +125,7 @@ VerificationTest[
     ,
     {n, n}
     ,
-    TestID->"14-OperatorForm.nb"
+    TestID->"[14] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -133,7 +133,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"15-OperatorForm.nb"
+    TestID->"[15] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -141,7 +141,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"16-OperatorForm.nb"
+    TestID->"[16] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -149,7 +149,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"17-OperatorForm.nb"
+    TestID->"[17] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -157,7 +157,7 @@ VerificationTest[
     ,
     x
     ,
-    TestID->"18-OperatorForm.nb"
+    TestID->"[18] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -165,14 +165,14 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"19-OperatorForm.nb"
+    TestID->"[19] OperatorForm.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-OperatorForm.nb"
+    TestID->"[∞] OperatorForm.nb"
 ]

@@ -1,14 +1,14 @@
 
 
-(*Quest.nb*)
+(* Quest.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Quest.nb"
+    TestID->"[0] Quest.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Quest.nb"
+    TestID->"[1] Quest.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"2-Quest.nb"
+    TestID->"[2] Quest.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     x
     ,
-    TestID->"3-Quest.nb"
+    TestID->"[3] Quest.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"4-Quest.nb"
+    TestID->"[4] Quest.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"5-Quest.nb"
+    TestID->"[5] Quest.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"6-Quest.nb"
+    TestID->"[6] Quest.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"7-Quest.nb"
+    TestID->"[7] Quest.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"8-Quest.nb"
+    TestID->"[8] Quest.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"9-Quest.nb"
+    TestID->"[9] Quest.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"10-Quest.nb"
+    TestID->"[10] Quest.nb"
 ]
 
 VerificationTest[
@@ -96,7 +96,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"11-Quest.nb"
+    TestID->"[11] Quest.nb"
 ]
 
 VerificationTest[
@@ -104,7 +104,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"12-Quest.nb"
+    TestID->"[12] Quest.nb"
 ]
 
 VerificationTest[
@@ -112,7 +112,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"13-Quest.nb"
+    TestID->"[13] Quest.nb"
 ]
 
 VerificationTest[
@@ -120,7 +120,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"14-Quest.nb"
+    TestID->"[14] Quest.nb"
 ]
 
 VerificationTest[
@@ -128,7 +128,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"15-Quest.nb"
+    TestID->"[15] Quest.nb"
 ]
 
 VerificationTest[
@@ -136,7 +136,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"16-Quest.nb"
+    TestID->"[16] Quest.nb"
 ]
 
 VerificationTest[
@@ -144,7 +144,7 @@ VerificationTest[
     ,
     {False, False, False, False, False, False, False, False, False}
     ,
-    TestID->"17-Quest.nb"
+    TestID->"[17] Quest.nb"
 ]
 
 VerificationTest[
@@ -152,7 +152,7 @@ VerificationTest[
     ,
     {True, True, True, True, True, True, True, True, True}
     ,
-    TestID->"18-Quest.nb"
+    TestID->"[18] Quest.nb"
 ]
 
 VerificationTest[
@@ -160,7 +160,7 @@ VerificationTest[
     ,
     False
     ,
-    TestID->"19-Quest.nb"
+    TestID->"[19] Quest.nb"
 ]
 
 VerificationTest[
@@ -168,14 +168,14 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"20-Quest.nb"
+    TestID->"[20] Quest.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Quest.nb"
+    TestID->"[∞] Quest.nb"
 ]

@@ -1,14 +1,14 @@
 
 
-(*Hyper-JacobiPhi.nb*)
+(* Hyper-JacobiPhi.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Hyper-JacobiPhi.nb"
+    TestID->"[0] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Hyper-JacobiPhi.nb"
+    TestID->"[1] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     Hypergeometric2F1[(1/2)*(1 + a + b - I*c), (1/2)*(1 + a + b + I*c), 1 + a, -Sinh[z]^2]
     ,
-    TestID->"2-Hyper-JacobiPhi.nb"
+    TestID->"[2] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     Inactive[Hypergeometric2F1][(1/2)*(1 + a + b - I*c), (1/2)*(1 + a + b + I*c), 1 + a, -Sinh[z]^2]
     ,
-    TestID->"3-Hyper-JacobiPhi.nb"
+    TestID->"[3] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     JacobiPhi[a, b, c, z]
     ,
-    TestID->"4-Hyper-JacobiPhi.nb"
+    TestID->"[4] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     JacobiPhi[-1 + c, a + b - c, I*(a - b), ArcSinh[Sqrt[-z]]]
     ,
-    TestID->"5-Hyper-JacobiPhi.nb"
+    TestID->"[5] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     Inactive[JacobiPhi][-1 + c, a + b - c, I*(a - b), ArcSinh[Sqrt[-z]]]
     ,
-    TestID->"6-Hyper-JacobiPhi.nb"
+    TestID->"[6] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
@@ -64,14 +64,14 @@ VerificationTest[
     ,
     Hypergeometric2F1[a, b, c, z]
     ,
-    TestID->"7-Hyper-JacobiPhi.nb"
+    TestID->"[7] Hyper-JacobiPhi.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Hyper-JacobiPhi.nb"
+    TestID->"[∞] Hyper-JacobiPhi.nb"
 ]

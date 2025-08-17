@@ -1,14 +1,14 @@
 
 
-(*Simplify-power.nb*)
+(* Simplify-power.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Simplify-power.nb"
+    TestID->"[0] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Simplify-power.nb"
+    TestID->"[1] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     f[x]^f[a]
     ,
-    TestID->"2-Simplify-power.nb"
+    TestID->"[2] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     f[x]^a
     ,
-    TestID->"3-Simplify-power.nb"
+    TestID->"[3] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     x^f[a]
     ,
-    TestID->"4-Simplify-power.nb"
+    TestID->"[4] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     {x^a, 1}
     ,
-    TestID->"5-Simplify-power.nb"
+    TestID->"[5] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     {1, 1 + a}
     ,
-    TestID->"6-Simplify-power.nb"
+    TestID->"[6] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     {x^a*(x + y)^b, Gamma[x]}
     ,
-    TestID->"7-Simplify-power.nb"
+    TestID->"[7] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     {x^a*(x + y)^b, Gamma[x]}
     ,
-    TestID->"8-Simplify-power.nb"
+    TestID->"[8] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     {x^a, 1}
     ,
-    TestID->"9-Simplify-power.nb"
+    TestID->"[9] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     {1, 1 + a}
     ,
-    TestID->"10-Simplify-power.nb"
+    TestID->"[10] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -96,7 +96,7 @@ VerificationTest[
     ,
     {x^a*(x + y)^b, (x + z)^c*Gamma[x]}
     ,
-    TestID->"11-Simplify-power.nb"
+    TestID->"[11] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -104,7 +104,7 @@ VerificationTest[
     ,
     {x^a*(x + y)^b, (x + z)^c*Gamma[x]}
     ,
-    TestID->"12-Simplify-power.nb"
+    TestID->"[12] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -112,7 +112,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"13-Simplify-power.nb"
+    TestID->"[13] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -120,7 +120,7 @@ VerificationTest[
     ,
     ((-a + b)/b)^C[3]*((a + b)/b)^C[1]*((x + y)/y)^C[2]
     ,
-    TestID->"14-Simplify-power.nb"
+    TestID->"[14] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -128,7 +128,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"15-Simplify-power.nb"
+    TestID->"[15] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -136,7 +136,7 @@ VerificationTest[
     ,
     (b^(-C[1] - C[3])*(-a + b)^C[3]*(a + b)^C[1]*(x + y)^C[2])/y^C[2]
     ,
-    TestID->"16-Simplify-power.nb"
+    TestID->"[16] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -144,7 +144,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"17-Simplify-power.nb"
+    TestID->"[17] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -152,7 +152,7 @@ VerificationTest[
     ,
     (ε - ε*χ)^a*(εb - εb*χb)^b
     ,
-    TestID->"18-Simplify-power.nb"
+    TestID->"[18] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -160,7 +160,7 @@ VerificationTest[
     ,
     (-1)^(a + b)*ε^a*εb^b*(-1 + χ)^a*(-1 + χb)^b
     ,
-    TestID->"19-Simplify-power.nb"
+    TestID->"[19] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -168,7 +168,7 @@ VerificationTest[
     ,
     ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
     ,
-    TestID->"20-Simplify-power.nb"
+    TestID->"[20] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -176,7 +176,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"21-Simplify-power.nb"
+    TestID->"[21] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -184,7 +184,7 @@ VerificationTest[
     ,
     (ε - ε*χ)^a*(εb - εb*χb)^b
     ,
-    TestID->"22-Simplify-power.nb"
+    TestID->"[22] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -192,7 +192,7 @@ VerificationTest[
     ,
     (-1)^(a + b)*ε^a*εb^b*(-1 + χ)^a*(-1 + χb)^b
     ,
-    TestID->"23-Simplify-power.nb"
+    TestID->"[23] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -200,7 +200,7 @@ VerificationTest[
     ,
     ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
     ,
-    TestID->"24-Simplify-power.nb"
+    TestID->"[24] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -208,7 +208,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"25-Simplify-power.nb"
+    TestID->"[25] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -216,7 +216,7 @@ VerificationTest[
     ,
     ε^a*(1 - χ)^a*(εb - εb*χb)^b
     ,
-    TestID->"26-Simplify-power.nb"
+    TestID->"[26] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -224,7 +224,7 @@ VerificationTest[
     ,
     ε^a*εb^b*(1 - χ)^a*(1 - χb)^b
     ,
-    TestID->"27-Simplify-power.nb"
+    TestID->"[27] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -232,7 +232,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"28-Simplify-power.nb"
+    TestID->"[28] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -240,7 +240,7 @@ VerificationTest[
     ,
     E^(I*a*Pi)*ε^a*(-1 + χ)^a*(εb*(1 - χb))^b
     ,
-    TestID->"29-Simplify-power.nb"
+    TestID->"[29] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -248,7 +248,7 @@ VerificationTest[
     ,
     (εb^b*(ε*(1 - χ))^a*(-1 + χb)^b)/E^(I*b*Pi)
     ,
-    TestID->"30-Simplify-power.nb"
+    TestID->"[30] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -256,7 +256,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"31-Simplify-power.nb"
+    TestID->"[31] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -264,7 +264,7 @@ VerificationTest[
     ,
     ε^a*εb^b*((1 - χ)*(1 + χ))^a*((1 - χb)*(1 + χb))^b
     ,
-    TestID->"32-Simplify-power.nb"
+    TestID->"[32] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -272,7 +272,7 @@ VerificationTest[
     ,
     E^(I*a*Pi)*(-1 + χ)^a*(ε*(1 + χ))^a*(εb*(1 - χb)*(1 + χb))^b
     ,
-    TestID->"33-Simplify-power.nb"
+    TestID->"[33] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -280,7 +280,7 @@ VerificationTest[
     ,
     ((ε*(1 - χ)*(1 + χ))^a*(-1 + χb)^b*(εb*(1 + χb))^b)/E^(I*b*Pi)
     ,
-    TestID->"34-Simplify-power.nb"
+    TestID->"[34] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -290,7 +290,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::SuspiciousRule}
     ,
-    TestID->"35-Simplify-power.nb"
+    TestID->"[35] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -300,7 +300,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::InvalidPhase}
     ,
-    TestID->"36-Simplify-power.nb"
+    TestID->"[36] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -308,7 +308,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"37-Simplify-power.nb"
+    TestID->"[37] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -318,7 +318,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::SuspiciousRule}
     ,
-    TestID->"38-Simplify-power.nb"
+    TestID->"[38] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -328,7 +328,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::SuspiciousRule}
     ,
-    TestID->"39-Simplify-power.nb"
+    TestID->"[39] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -338,7 +338,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::SuspiciousRule2}
     ,
-    TestID->"40-Simplify-power.nb"
+    TestID->"[40] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -348,7 +348,7 @@ VerificationTest[
     ,
     {Yurie`Math`powerExpandBy::SuspiciousRule2}
     ,
-    TestID->"41-Simplify-power.nb"
+    TestID->"[41] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -356,7 +356,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"42-Simplify-power.nb"
+    TestID->"[42] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -364,7 +364,7 @@ VerificationTest[
     ,
     (ε - ε*χ)*(εb - εb*χb)^b + ε^2*(1 - χ)^2*(εb - εb*χb)^c
     ,
-    TestID->"43-Simplify-power.nb"
+    TestID->"[43] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -372,7 +372,7 @@ VerificationTest[
     ,
     ε*(1 - χ)*(εb - εb*χb)^b + ε^2*(1 - χ)^2*(εb - εb*χb)^c
     ,
-    TestID->"44-Simplify-power.nb"
+    TestID->"[44] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -380,7 +380,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"45-Simplify-power.nb"
+    TestID->"[45] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -388,7 +388,7 @@ VerificationTest[
     ,
     (εb - εb*χb)^b*Hold[ε]^a*Hold[1 - χ]^a
     ,
-    TestID->"46-Simplify-power.nb"
+    TestID->"[46] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -396,7 +396,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"47-Simplify-power.nb"
+    TestID->"[47] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -404,7 +404,7 @@ VerificationTest[
     ,
     (εb - εb*χb)^b*Hold[ε]*Hold[1 - χ]
     ,
-    TestID->"48-Simplify-power.nb"
+    TestID->"[48] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -412,7 +412,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"49-Simplify-power.nb"
+    TestID->"[49] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -420,7 +420,7 @@ VerificationTest[
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"50-Simplify-power.nb"
+    TestID->"[50] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -428,7 +428,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"51-Simplify-power.nb"
+    TestID->"[51] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -436,14 +436,14 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"52-Simplify-power.nb"
+    TestID->"[52] Simplify-power.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Simplify-power.nb"
+    TestID->"[∞] Simplify-power.nb"
 ]

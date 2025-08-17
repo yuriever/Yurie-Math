@@ -1,14 +1,14 @@
 
 
-(*Diff-var-change.nb*)
+(* Diff-var-change.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Diff-var-change.nb"
+    TestID->"[0] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Diff-var-change.nb"
+    TestID->"[1] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     -(1 - x)^a
     ,
-    TestID->"2-Diff-var-change.nb"
+    TestID->"[2] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     -(1 - x)^a
     ,
-    TestID->"3-Diff-var-change.nb"
+    TestID->"[3] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     (1 - x)^a
     ,
-    TestID->"4-Diff-var-change.nb"
+    TestID->"[4] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     (1 - x)^a
     ,
-    TestID->"5-Diff-var-change.nb"
+    TestID->"[5] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     (1 - x)^a
     ,
-    TestID->"6-Diff-var-change.nb"
+    TestID->"[6] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     1/2
     ,
-    TestID->"7-Diff-var-change.nb"
+    TestID->"[7] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     {1/2, 1/2}
     ,
-    TestID->"8-Diff-var-change.nb"
+    TestID->"[8] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -80,7 +80,7 @@ VerificationTest[
     ,
     {1/2, 1/2}
     ,
-    TestID->"9-Diff-var-change.nb"
+    TestID->"[9] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -88,7 +88,7 @@ VerificationTest[
     ,
     {1/2, 1/2}
     ,
-    TestID->"10-Diff-var-change.nb"
+    TestID->"[10] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -98,7 +98,7 @@ VerificationTest[
     ,
     {Yurie`Math`solve::InvalidSolutionChoice}
     ,
-    TestID->"11-Diff-var-change.nb"
+    TestID->"[11] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -106,7 +106,7 @@ VerificationTest[
     ,
     {"Solution" -> 1, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
-    TestID->"12-Diff-var-change.nb"
+    TestID->"[12] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -114,7 +114,7 @@ VerificationTest[
     ,
     {"Solution" -> All, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
-    TestID->"13-Diff-var-change.nb"
+    TestID->"[13] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -122,7 +122,7 @@ VerificationTest[
     ,
     {1/2, 1/2}
     ,
-    TestID->"14-Diff-var-change.nb"
+    TestID->"[14] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -130,7 +130,7 @@ VerificationTest[
     ,
     1/2
     ,
-    TestID->"15-Diff-var-change.nb"
+    TestID->"[15] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -138,7 +138,7 @@ VerificationTest[
     ,
     {"Solution" -> 1, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
-    TestID->"16-Diff-var-change.nb"
+    TestID->"[16] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -146,7 +146,7 @@ VerificationTest[
     ,
     2^(1 + a)*t^a*INT[t]
     ,
-    TestID->"17-Diff-var-change.nb"
+    TestID->"[17] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -154,7 +154,7 @@ VerificationTest[
     ,
     c*Derivative[1, 1][f][u, v] == 0
     ,
-    TestID->"18-Diff-var-change.nb"
+    TestID->"[18] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -162,7 +162,7 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"19-Diff-var-change.nb"
+    TestID->"[19] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -170,7 +170,7 @@ VerificationTest[
     ,
     {g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
     ,
-    TestID->"20-Diff-var-change.nb"
+    TestID->"[20] Diff-var-change.nb"
 ]
 
 VerificationTest[
@@ -178,14 +178,14 @@ VerificationTest[
     ,
     g[x] - 2*Sqrt[x]*Derivative[1][f][x]
     ,
-    TestID->"21-Diff-var-change.nb"
+    TestID->"[21] Diff-var-change.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Diff-var-change.nb"
+    TestID->"[∞] Diff-var-change.nb"
 ]

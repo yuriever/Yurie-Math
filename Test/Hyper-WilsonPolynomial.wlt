@@ -1,14 +1,14 @@
 
 
-(*Hyper-WilsonPolynomial.nb*)
+(* Hyper-WilsonPolynomial.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-Hyper-WilsonPolynomial.nb"
+    TestID->"[0] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-Hyper-WilsonPolynomial.nb"
+    TestID->"[1] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     (Gamma[a + b + n]*Gamma[a + c + n]*Gamma[a + d + n]*HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*Sqrt[x], a + I*Sqrt[x]}, {a + b, a + c, a + d}, 1])/(Gamma[a + b]*Gamma[a + c]*Gamma[a + d])
     ,
-    TestID->"2-Hyper-WilsonPolynomial.nb"
+    TestID->"[2] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     (Gamma[a + b + n]*Gamma[a + c + n]*Gamma[a + d + n]*Inactive[HypergeometricPFQ][{-n, -1 + a + b + c + d + n, a - I*Sqrt[x], a + I*Sqrt[x]}, {a + b, a + c, a + d}, 1])/(Gamma[a + b]*Gamma[a + c]*Gamma[a + d])
     ,
-    TestID->"3-Hyper-WilsonPolynomial.nb"
+    TestID->"[3] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     WilsonPolynomial[a, b, c, d, n, x]
     ,
-    TestID->"4-Hyper-WilsonPolynomial.nb"
+    TestID->"[4] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     (Gamma[a + b]*Gamma[a + c]*Gamma[a + d]*WilsonPolynomial[a, b, c, d, n, x^2])/(Gamma[a + b + n]*Gamma[a + c + n]*Gamma[a + d + n])
     ,
-    TestID->"5-Hyper-WilsonPolynomial.nb"
+    TestID->"[5] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     (Gamma[a + b]*Gamma[a + c]*Gamma[a + d]*Inactive[WilsonPolynomial][a, b, c, d, n, x^2])/(Gamma[a + b + n]*Gamma[a + c + n]*Gamma[a + d + n])
     ,
-    TestID->"6-Hyper-WilsonPolynomial.nb"
+    TestID->"[6] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
@@ -64,14 +64,14 @@ VerificationTest[
     ,
     HypergeometricPFQ[{-n, -1 + a + b + c + d + n, a - I*Sqrt[x^2], a + I*Sqrt[x^2]}, {a + b, a + c, a + d}, 1]
     ,
-    TestID->"7-Hyper-WilsonPolynomial.nb"
+    TestID->"[7] Hyper-WilsonPolynomial.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-Hyper-WilsonPolynomial.nb"
+    TestID->"[∞] Hyper-WilsonPolynomial.nb"
 ]
