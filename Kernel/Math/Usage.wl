@@ -177,6 +177,15 @@ hyperFromIntegral::usage =
 AppellF1FromIntegral::usage =
     StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
 
+conformalIntegral2::usage =
+    StringJoin["conformalIntegral2[{z1, z2}, {z0}][expr]: perform 1d two-point conformal integral.", "\n", "conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version."];
+
+conformalIntegral3::usage =
+    StringJoin["conformalIntegral3[{z1, z2, z3}, {z0}][expr]: perform 1d three-point conformal integral.", "\n", "conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version."];
+
+conformalIntegralKLT::usage =
+    StringJoin["conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form.", "\n", "conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version."];
+
 
 (* Label.wl *)
 

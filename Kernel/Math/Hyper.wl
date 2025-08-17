@@ -31,7 +31,7 @@ WilsonPolynomial::usage =
 
 
 (* ::Subsection:: *)
-(*Function*)
+(*Hyper utility*)
 
 
 hyperSeparate::usage =
@@ -42,6 +42,10 @@ hyperUnregularize::usage =
 
 hyperRegularize::usage =
     "hyperRegularize[expr]: convert hypergeometric function to the regularized one.";
+
+
+(* ::Subsection:: *)
+(*Hyper conversion*)
 
 
 hyperToTaylor::usage =
@@ -80,6 +84,10 @@ hyperFromAppellF1::usage =
     "Default[indicator]: SUM.";
 
 
+(* ::Subsection:: *)
+(*Hyper conversion 2*)
+
+
 JacobiPhiToHyper::usage =
     "JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1."<>
     "\n"<>
@@ -102,6 +110,10 @@ WilsonPolynomialFromHyper::usage =
     "Default[head]: Identity.";
 
 
+(* ::Subsection:: *)
+(*Integral conversion*)
+
+
 hyperFromIntegral::usage =
     "hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function."<>
     "\n"<>
@@ -122,6 +134,22 @@ AppellF1FromIntegral::usage =
     "Default[head]: Identity.";
 
 
+conformalIntegral2::usage =
+    "conformalIntegral2[{z1, z2}, {z0}][expr]: perform 1d two-point conformal integral."<>
+    "\n"<>
+    "conformalIntegral2[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.";
+
+conformalIntegral3::usage =
+    "conformalIntegral3[{z1, z2, z3}, {z0}][expr]: perform 1d three-point conformal integral."<>
+    "\n"<>
+    "conformalIntegral3[{z1, zb1, z2, zb2, z3, zb3}, {z0, zb0}][expr]: 2d version.";
+
+conformalIntegralKLT::usage =
+    "conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form."<>
+    "\n"<>
+    "conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -134,6 +162,10 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Hyper utility*)
+
+
+(* ::Subsubsection:: *)
 (*hyperSeparate*)
 
 
@@ -150,7 +182,7 @@ hyperSeparate[expr_] :=
     {1,expr};
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*hyperUnregularize*)
 
 
@@ -167,7 +199,7 @@ hyperUnregularize[expr_] :=
     }];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*hyperRegularize*)
 
 
@@ -185,7 +217,7 @@ hyperRegularize[expr_] :=
 
 
 (* ::Subsection:: *)
-(*hyperConvert*)
+(*Hyper conversion*)
 
 
 (* ::Subsubsection:: *)
@@ -269,13 +301,19 @@ hyperConvert[which_][expr0_,head_,pattern_,symbolList_List] :=
 
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])];
+    hyper["Taylor",n][
+        (z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])
+    ];
 
 hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])];
+    hyper["Taylor",n][
+        (z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])
+    ];
 
 hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
-    hyper["Taylor",n][(z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])];
+    hyper["Taylor",n][
+        (z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])
+    ];
 
 hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
     hyper["Taylor",n][
@@ -297,13 +335,19 @@ hyperToEulerRule[u_,HypergeometricPFQ[as_List,bs_List,z_]] :=
 
 
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])];
+    hyper["MellinBarnes",s][
+        ((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])
+    ];
 
 hyperToMellinBarnesRule[s_,Hypergeometric1F1[a_,b_,z_]] :=
-    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])];
+    hyper["MellinBarnes",s][
+        ((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])
+    ];
 
 hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
-    hyper["MellinBarnes",s][((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])];
+    hyper["MellinBarnes",s][
+        ((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])
+    ];
 
 hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
     hyper["MellinBarnes",s][
@@ -312,7 +356,9 @@ hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
 
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
-    hyper["MellinBarnes",s][((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])];
+    hyper["MellinBarnes",s][
+        ((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])
+    ];
 
 
 hyperFromAppellF1Rule[n_,AppellF1[a_,b1_,b2_,c_,x_,y_]] :=
@@ -362,6 +408,10 @@ handleHyperHead[SUM][expr_] :=
 
 
 (* ::Subsection:: *)
+(*Hyper conversion 2*)
+
+
+(* ::Subsubsection:: *)
 (*JacobiPhiToHyper*)
 
 
@@ -371,14 +421,10 @@ JacobiPhiToHyper[head_:Identity][expr_] :=
 
 ruleJacobiPhiToHyper[head_] :=
     (JacobiPhi|_[JacobiPhi])[a_,b_,c_,z_]:>
-        Map[
-            Simplify,
-            head[Hypergeometric2F1][(a+b+1-I*c)/2,(a+b+1+I*c)/2,a+1,-Sinh[z]^2],
-            {1,2}
-        ];
+        Simplify@head[Hypergeometric2F1][(a+b+1-I*c)/2,(a+b+1+I*c)/2,a+1,-Sinh[z]^2];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*JacobiPhiFromHyper*)
 
 
@@ -388,14 +434,10 @@ JacobiPhiFromHyper[head_:Identity][expr_] :=
 
 ruleJacobiPhiFromHyper[head_] :=
     (Hypergeometric2F1|_[Hypergeometric2F1])[a_,b_,c_,z_]:>
-        Map[
-            Simplify,
-            head[JacobiPhi][c-1,a+b-c,I(a-b),ArcSinh[Sqrt[-z]]],
-            {1,2}
-        ];
+        Simplify@head[JacobiPhi][c-1,a+b-c,I(a-b),ArcSinh[Sqrt[-z]]];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*WilsonPolynomialToHyper*)
 
 
@@ -405,15 +447,11 @@ WilsonPolynomialToHyper[head_:Identity][expr_] :=
 
 ruleWilsonPolynomialToHyper[head_] :=
     (WilsonPolynomial|_[WilsonPolynomial])[a_,b_,c_,d_,n_,x_]:>
-        Map[
-            Simplify,
-            (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*
-                head[HypergeometricPFQ][{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1],
-            {1,2}
-        ];
+        (Gamma[a+b+n]*Gamma[a+c+n]*Gamma[a+d+n])/(Gamma[a+b]*Gamma[a+c]*Gamma[a+d])*
+        Simplify@head[HypergeometricPFQ][{-n,-1+a+b+c+d+n,a-I*Sqrt[x],a+I*Sqrt[x]},{a+b,a+c,a+d},1];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*WilsonPolynomialFromHyper*)
 
 
@@ -423,75 +461,117 @@ WilsonPolynomialFromHyper[head_:Identity][expr_] :=
 
 ruleWilsonPolynomialFromHyper[head_] :=
     (HypergeometricPFQ|_[HypergeometricPFQ])[{-n_,a_,b_,c_},{d_,e_,f_},1]/;Simplify[a+b+c-d-e-f+1-n==0]:>
-        Map[
-            Simplify,
-            (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*
-                head[WilsonPolynomial][(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2],
-            {1,2}
-        ];
+        (Gamma[d]*Gamma[e]*Gamma[f])/(Gamma[1+a+b+c-d-e]*Gamma[1+a+b+c-d-f]*Gamma[1+a+b+c-e-f])*
+        Simplify@head[WilsonPolynomial][(b+c)/2,-(b/2)-c/2+d,-(b/2)-c/2+e,-(b/2)-c/2+f,n,-(1/4)*(b-c)^2];
 
 
 (* ::Subsection:: *)
-(*hyperFromIntegral*)
+(*Integral conversion*)
 
 
-hyperFromIntegral[][expr_] :=
-    expr//ReplaceAll[ruleHyperFromIntegral[All,Identity,ifHasINT[expr]]];
-
-hyperFromIntegral[var_,head_:Identity][expr_] :=
-    expr//ReplaceAll[ruleHyperFromIntegral[var,head,ifHasINT[expr]]];
+(* ::Subsubsection:: *)
+(*Helper*)
 
 
-ruleHyperFromIntegral[All,head_,intIndex_] :=
-    u_^a_*(1-u_)^b_*(u_*x_.+y_)^c_/;FreeQ[y,u]:>
-        INT[u]^(-intIndex)*Map[
-            Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)],
-            {1,2}
-        ];
+INTCancel[expr_,{vars__}]/;!FreeQ[expr,_INT] :=
+    1/INT[vars];
 
-ruleHyperFromIntegral[u_,head_,intIndex_] :=
-    u^a_*(1-u)^b_*(u*x_.+y_)^c_/;FreeQ[y,u]:>
-        INT[u]^(-intIndex)*Map[
-            Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)],
-            {1,2}
-        ];
-
-
-ifHasINT[expr_]/;FreeQ[expr,_INT] :=
-    0;
-
-ifHasINT[expr_] :=
+INTCancel[expr_,{vars__}]/;FreeQ[expr,_INT] :=
     1;
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
+(*hyperFromIntegral*)
+
+
+hyperFromIntegral[All,head_:Identity][expr_] :=
+    expr//ReplaceAll[
+        u_^a_*(1-u_)^b_*(u_*x_.+y_)^c_/;FreeQ[y,u]:>
+            INTCancel[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
+    ];
+
+hyperFromIntegral[u_,head_:Identity][expr_] :=
+    expr//ReplaceAll[
+        u^a_*(1-u)^b_*(u*x_.+y_)^c_/;FreeQ[y,u]:>
+            INTCancel[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
+    ];
+
+
+hyperFromIntegralKernel[{a_,b_,c_,x_,y_},head_] :=
+    (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*y^c*head[Hypergeometric2F1][1+a,-c,2+a+b,-(x/y)];
+
+
+(* ::Subsubsection:: *)
 (*AppellF1FromIntegral*)
 
 
-AppellF1FromIntegral[][expr_] :=
-    expr//ReplaceAll[ruleAppellF1FromIntegral[All,Identity,ifHasINT[expr]]];
+AppellF1FromIntegral[All,head_:Identity][expr_] :=
+    expr//ReplaceAll[
+        u_^a_*(1-u_)^b_*(u_*x_.+x1_)^c_*(u_*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
+            INTCancel[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
+    ];
 
-AppellF1FromIntegral[var_,head_:Identity][expr_] :=
-    expr//ReplaceAll[ruleAppellF1FromIntegral[var,head,ifHasINT[expr]]];
+AppellF1FromIntegral[u_,head_:Identity][expr_] :=
+    expr//ReplaceAll[
+        u^a_*(1-u)^b_*(u*x_.+x1_)^c_*(u*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
+            INTCancel[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
+    ];
 
 
-ruleAppellF1FromIntegral[All,head_,intIndex_] :=
-    u_^a_*(1-u_)^b_*(u_*x_.+x1_)^c_*(u_*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
-        INT[u]^(-intIndex)*Map[
-            Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)],
-            {1,2}
+AppellF1FromIntegralKernel[{a_,b_,c_,d_,x_,x1_,y_,y1_},head_] :=
+    (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)];
+
+
+(* ::Subsubsection:: *)
+(*conformalIntegral2*)
+
+
+conformalIntegral2[{z1_,zb1_,z2_,zb2_},All][expr_] :=
+    expr//ReplaceAll[
+        (z0_-z1)^h1_*(z0_-z2)^h2_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_:>
+            INTCancel[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+    ];
+
+conformalIntegral2[{z1_,zb1_,z2_,zb2_},{z0_,zb0_}][expr_] :=
+    expr//ReplaceAll[
+        (z0-z1)^h1_*(z0-z2)^h2_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_:>
+            INTCancel[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+    ];
+
+
+conformalIntegral2Kernel[{z1_,zb1_,z2_,zb2_},{h1_,hb1_,h2_,hb2_}] :=
+    ConditionalExpression[
+        (-1)^(h1-hb1)*π^2*gammaFrom@multiGamma[{1+h1,1+h2},{-hb1,-hb2}]*
+        DiracDelta[z1-z2,zb1-zb2],
+        (* Condition *)
+        2+h1+h2==0&&2+hb1+hb2==0&&isZ[h1-hb1,h2-hb2]
+    ];
+
+
+(* ::Subsubsection:: *)
+(*conformalIntegral3*)
+
+
+conformalIntegral3[{z1_,zb1_,z2_,zb2_,z3_,zb3_},All][expr_] :=
+    expr//ReplaceAll[
+        (z0_-z1)^h1_*(z0_-z2)^h2_*(z0_-z3)^h3_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_*(zb0_-zb3)^hb3_:>
+            INTCancel[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
         ];
 
-ruleAppellF1FromIntegral[u_,head_,intIndex_] :=
-    u^a_*(1-u)^b_*(u*x_.+x1_)^c_*(u*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
-        INT[u]^(-intIndex)*Map[
-            Simplify,
-            (Gamma[1+a]*Gamma[1+b])/Gamma[2+a+b]*x1^c*y1^d*head[AppellF1][1+a,-c,-d,2+a+b,-(x/x1),-(y/y1)],
-            {1,2}
-        ];
+conformalIntegral3[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{z0_,zb0_}][expr_] :=
+    expr//ReplaceAll[
+        (z0-z1)^h1_*(z0-z2)^h2_*(z0-z3)^h3_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_*(zb0-zb3)^hb3_:>
+            INTCancel[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
+    ];
+
+conformalIntegral3Kernel[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{h1_,hb1_,h2_,hb2_,h3_,hb3_}] :=
+    ConditionalExpression[
+        π*gammaFrom@multiGamma[{1+h1,1+h2,1+h3},{-hb1,-hb2,-hb3}]*
+        (z1-z2)^(-1-h3)*(z2-z3)^(-1-h1)*(-z1+z3)^(-1-h2)*
+        (zb1-zb2)^(-1-hb3)*(zb2-zb3)^(-1-hb1)*(-zb1+zb3)^(-1-hb2),
+        (* Condition *)
+        2+h1+h2+h3==0&&2+hb1+hb2+hb3==0&&isZ[h1-hb1,h2-hb2,h3-hb3]
+    ];
 
 
 (* ::Subsection:: *)
