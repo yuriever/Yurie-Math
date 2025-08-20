@@ -19,6 +19,12 @@ label::usage =
     "\n"<>
     "Default[head]: Function.";
 
+labelS::usage =
+    "labelS[vars, labs]: variant of label with Symbol as head.";
+
+label2::usage =
+    "label2[vars, labs]: variant of label with Symbol as head.";
+
 labelAt::usage =
     "labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules."<>
     "\n"<>
@@ -150,6 +156,11 @@ label::UndefinedType =
 label[var_,lab_,head_Symbol:Function] :=
     labelKernel[head,var,lab];
 
+labelS[var_,lab_] :=
+    label[var,lab,Symbol];
+
+label2[var_,lab_] :=
+    label[var,lab,Symbol];
 
 label[var_,(List|Alternatives)[labs__],head_Symbol:Function] :=
     Map[labelKernel[head,var,#]&,Unevaluated@Sequence[labs]];

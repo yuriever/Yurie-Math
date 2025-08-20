@@ -134,6 +134,10 @@
 
 * `#!wl label` - label[vars, labs, head]: join the variables and labels into labeled objects using specified head. Default[head]: Function.
 
+* `#!wl labelS` - labelS[vars, labs]: variant of label with Symbol as head.
+
+* `#!wl label2` - label2[vars, labs]: variant of label with Symbol as head.
+
 * `#!wl labelAt` - labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules. Default[head]: Function.
 
 * `#!wl labelConvert` - labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.

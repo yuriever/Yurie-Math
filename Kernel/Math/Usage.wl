@@ -192,6 +192,12 @@ conformalIntegralKLT::usage =
 label::usage =
     StringJoin["label[vars, labs, head]: join the variables and labels into labeled objects using specified head.", "\n", "Default[head]: Function."];
 
+labelS::usage =
+    "labelS[vars, labs]: variant of label with Symbol as head.";
+
+label2::usage =
+    "label2[vars, labs]: variant of label with Symbol as head.";
+
 labelAt::usage =
     StringJoin["labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules.", "\n", "Default[head]: Function."];
 
