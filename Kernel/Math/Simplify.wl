@@ -339,12 +339,12 @@ fracReduce[operation_,factor_][expr_] :=
 
 fracFocus[operation_:Simplify][expr_] :=
     expr//ReplaceAll[{
-        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
+        subexpr:Verbatim[Times][___,Power[_,_?minusQ],___]:>operation@subexpr
     }];
 
 fracFocus[operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
-        subexpr:Verbatim[Times][___,Power[_,_?Internal`SyntacticNegativeQ],___]:>operation@subexpr
+        subexpr:Verbatim[Times][___,Power[_,_?minusQ],___]:>operation@subexpr
     },level]&;
 
 

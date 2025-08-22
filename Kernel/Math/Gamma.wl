@@ -377,6 +377,7 @@ multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n>=2:
 multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n<=-2:=
     multiGamma[Catenate@ConstantArray[denom,-n],Catenate@ConstantArray[num,-n]];
 
+(* Verbatim is necessary here to prevent the attributes of Times. *)
 multiGamma/:prod:HoldPattern[Verbatim[Times][___,_multiGamma,___,_multiGamma,___]]:=
     With[ {
             mgList = Cases[Unevaluated@prod,_multiGamma],
