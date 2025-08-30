@@ -468,6 +468,9 @@ powerSeparate::usage =
 powerExponentCollect::usage =
     StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
+phase::usage =
+    "phase[expr]: phase factor.";
+
 phaseIgnore::usage =
     "phaseIgnore[expr]: ignore the phase factor in the product.";
 

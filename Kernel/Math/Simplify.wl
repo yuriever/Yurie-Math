@@ -128,6 +128,9 @@ powerExponentCollect::usage =
 (*Phase*)
 
 
+phase::usage =
+    "phase[expr]: phase factor."
+
 phaseIgnore::usage =
     "phaseIgnore[expr]: ignore the phase factor in the product.";
 
@@ -604,6 +607,17 @@ ruleCollectPower[] =
 
 (* ::Subsection:: *)
 (*Phase*)
+
+
+(* ::Subsubsection:: *)
+(*phase*)
+
+
+phase[] :=
+    1;
+
+phase[n_] :=
+    Exp[I*π*n];
 
 
 (* ::Subsubsection:: *)
