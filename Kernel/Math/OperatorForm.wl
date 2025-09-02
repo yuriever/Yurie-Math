@@ -80,6 +80,9 @@ repdeep::usage =
     "\n"<>
     "Default[level]: All.";
 
+repcheck::usage =
+    "repcheck[rules, sametest][expr]: variant of rep with the rules being checked.";
+
 
 (* ::Subsection:: *)
 (*Part*)
@@ -288,6 +291,26 @@ rep[rules___][expr_] :=
 
 repdeep[rules___][level_:All][expr_] :=
     Replace[expr,Flatten[{rules}],level];
+
+
+repcheck::SuspiciousRule =
+    "The rule `1` -> `2` is suspicious to equal.";
+
+repcheck[rules___,sameTest:Except[_Rule|_RuleDelayed|_List|Null]:Automatic][expr_] :=
+    Module[ {},
+        {rules}//ReplaceAll[Verbatim[Rule][lhs_,rhs_]:>repCheckEquality[lhs,rhs,sameTest]];
+        ReplaceAll[expr,Flatten[{rules}]]
+    ];
+
+repCheckEquality[lhs_,rhs_,Automatic] :=
+    If[ Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=1,
+        Message[repcheck::SuspiciousRule,lhs,rhs];
+    ];
+
+repCheckEquality[lhs_,rhs_,sameTest_] :=
+    If[ sameTest[lhs,rhs]=!=1&&sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=1,
+        Message[repcheck::SuspiciousRule,lhs,rhs];
+    ];
 
 
 (* ::Subsection:: *)

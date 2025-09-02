@@ -288,6 +288,9 @@ rep::usage =
 repdeep::usage =
     StringJoin["repdeep[rules][level][expr]: operator form of Replace with the rules being flattened.", "\n", "Default[level]: All."];
 
+repcheck::usage =
+    "repcheck[rules, sametest][expr]: variant of rep with the rules being checked.";
+
 part::usage =
     "Sketch: Part.";
 

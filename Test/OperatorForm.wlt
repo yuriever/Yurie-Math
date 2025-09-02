@@ -169,6 +169,32 @@ VerificationTest[
 ]
 
 VerificationTest[
+    rep[{{x -> y}}][x]
+    ,
+    y
+    ,
+    TestID->"[20] OperatorForm.nb"
+]
+
+VerificationTest[
+    repcheck[{{x -> y}}][x]
+    ,
+    Quiet[y]
+    ,
+    {Yurie`Math`repcheck::SuspiciousRule}
+    ,
+    TestID->"[21] OperatorForm.nb"
+]
+
+VerificationTest[
+    repcheck[Sin[x] -> Sin[2*n*Pi + x], SSA[isN[n]]][Sin[x]]
+    ,
+    Sin[2*n*Pi + x]
+    ,
+    TestID->"[22] OperatorForm.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,

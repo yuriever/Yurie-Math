@@ -200,6 +200,8 @@
 
 * `#!wl repdeep` - repdeep[rules][level][expr]: operator form of Replace with the rules being flattened. Default[level]: All.
 
+* `#!wl repcheck` - repcheck[rules, sametest][expr]: variant of rep with the rules being checked.
+
 * `#!wl part` - Sketch: Part.
 
 * `#!wl plus` - Sketch: Plus.
