@@ -303,12 +303,12 @@ repcheck[rules___,sameTest:Except[_Rule|_RuleDelayed|_List|Null]:Automatic][expr
     ];
 
 repCheckEquality[lhs_,rhs_,Automatic] :=
-    If[ Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=1,
+    If[ Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
     ];
 
 repCheckEquality[lhs_,rhs_,sameTest_] :=
-    If[ sameTest[lhs,rhs]=!=1&&sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=1,
+    If[ sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
     ];
 
