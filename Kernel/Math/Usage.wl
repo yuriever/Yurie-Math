@@ -190,37 +190,43 @@ conformalIntegralKLT::usage =
 (* Label.wl *)
 
 label::usage =
-    StringJoin["label[vars, labs, head]: join the variables and labels into labeled objects using specified head.", "\n", "Default[head]: Function."];
+    StringJoin["label[var, lab, head]: join the variable(s) and label into labeled objects using the specified head.", "\n", "Default[head]: Function."];
 
 label2::usage =
-    "label2[vars, labs]: variant of label with Symbol as head.";
+    "label2[var, lab]: variant of label with Symbol as head.";
+
+labelRange::usage =
+    StringJoin["labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head.", "\n", "Default[head]: Function.", "\n", "Example: labelRange[x, 3] gives x[1], x[2], x[3]."];
+
+labelRange2::usage =
+    "labelRange2[var, range, head]: variant of labelRange with Symbol as head.";
 
 labelAt::usage =
-    StringJoin["labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules.", "\n", "Default[head]: Function."];
+    StringJoin["labelAt[var, rules, head]: take the specific values of the labeled objects according to rules.", "\n", "Default[head]: Function."];
 
 labelConvert::usage =
-    "labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.";
+    "labelConvert[var, head1->head2]: convert the labeled objects according to the two specified label heads.";
 
 labelJoin::usage =
-    StringJoin["labelJoin[vars, head]: convert labeled objects from any head to Symbol.", "\n", "Default[head]: Function.", "\n", "Sketch: labelConvert with _->Symbol."];
+    StringJoin["labelJoin[var, head]: convert labeled objects from any head to Symbol.", "\n", "Default[head]: Function.", "\n", "Sketch: labelConvert with _->Symbol."];
 
 labelSplit::usage =
-    StringJoin["labelSplit[vars, head]: convert labeled objects from Symbol to any head.", "\n", "Default[head]: Function.", "\n", "Sketch: labelConvert with Symbol->_."];
+    StringJoin["labelSplit[var, head]: convert labeled objects from Symbol to any head.", "\n", "Default[head]: Function.", "\n", "Sketch: labelConvert with Symbol->_."];
 
 labelToZero::usage =
-    StringJoin["labelToZero[vars, labs, head]: shift to zero.", "\n", "Default[head]: Function.", "\n", "Example: x1->0."];
+    StringJoin["labelToZero[var, labs, head]: shift to zero.", "\n", "Default[head]: Function.", "\n", "Example: x1->0."];
 
 labelToEqual::usage =
-    StringJoin["labelToEqual[vars, rules, head]: shift the first to the second.", "\n", "Default[head]: Function.", "\n", "Example: x1->x2."];
+    StringJoin["labelToEqual[var, rules, head]: shift the first to the second.", "\n", "Default[head]: Function.", "\n", "Example: x1->x2."];
 
 labelToDiff::usage =
-    StringJoin["labelToDiff[vars, rules, head]: shift the first to the difference plus the second.", "\n", "Default[head]: Function.", "\n", "Example: x1->x12+x2."];
+    StringJoin["labelToDiff[var, rules, head]: shift the first to the difference plus the second.", "\n", "Default[head]: Function.", "\n", "Example: x1->x12+x2."];
 
 labelToDiffZero::usage =
-    StringJoin["labelToDiffZero[vars, rules, head]: shift the first to the difference and the second to zero.", "\n", "Default[head]: Function.", "\n", "Example: x1->x12, x2->0."];
+    StringJoin["labelToDiffZero[var, rules, head]: shift the first to the difference and the second to zero.", "\n", "Default[head]: Function.", "\n", "Example: x1->x12, x2->0."];
 
 labelToDiffBack::usage =
-    StringJoin["labelToDiffBack[vars, rules, head]: shift the difference back to the original two.", "\n", "Default[head]: Function.", "\n", "Example: x12->x1-x2."];
+    StringJoin["labelToDiffBack[var, rules, head]: shift the difference back to the original two.", "\n", "Default[head]: Function.", "\n", "Example: x12->x1-x2."];
 
 
 (* Matrix.wl *)

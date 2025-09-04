@@ -132,27 +132,31 @@
 
 <!-- Label.wl -->
 
-* `#!wl label` - label[vars, labs, head]: join the variables and labels into labeled objects using specified head. Default[head]: Function.
+* `#!wl label` - label[var, lab, head]: join the variable(s) and label into labeled objects using the specified head. Default[head]: Function.
 
-* `#!wl label2` - label2[vars, labs]: variant of label with Symbol as head.
+* `#!wl label2` - label2[var, lab]: variant of label with Symbol as head.
 
-* `#!wl labelAt` - labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules. Default[head]: Function.
+* `#!wl labelRange` - labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head. Default[head]: Function. Example: labelRange[x, 3] gives x[1], x[2], x[3].
 
-* `#!wl labelConvert` - labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.
+* `#!wl labelRange2` - labelRange2[var, range, head]: variant of labelRange with Symbol as head.
 
-* `#!wl labelJoin` - labelJoin[vars, head]: convert labeled objects from any head to Symbol. Default[head]: Function. Sketch: labelConvert with _->Symbol.
+* `#!wl labelAt` - labelAt[var, rules, head]: take the specific values of the labeled objects according to rules. Default[head]: Function.
 
-* `#!wl labelSplit` - labelSplit[vars, head]: convert labeled objects from Symbol to any head. Default[head]: Function. Sketch: labelConvert with Symbol->_.
+* `#!wl labelConvert` - labelConvert[var, head1->head2]: convert the labeled objects according to the two specified label heads.
 
-* `#!wl labelToZero` - labelToZero[vars, labs, head]: shift to zero. Default[head]: Function. Example: x1->0.
+* `#!wl labelJoin` - labelJoin[var, head]: convert labeled objects from any head to Symbol. Default[head]: Function. Sketch: labelConvert with _->Symbol.
 
-* `#!wl labelToEqual` - labelToEqual[vars, rules, head]: shift the first to the second. Default[head]: Function. Example: x1->x2.
+* `#!wl labelSplit` - labelSplit[var, head]: convert labeled objects from Symbol to any head. Default[head]: Function. Sketch: labelConvert with Symbol->_.
 
-* `#!wl labelToDiff` - labelToDiff[vars, rules, head]: shift the first to the difference plus the second. Default[head]: Function. Example: x1->x12+x2.
+* `#!wl labelToZero` - labelToZero[var, labs, head]: shift to zero. Default[head]: Function. Example: x1->0.
 
-* `#!wl labelToDiffZero` - labelToDiffZero[vars, rules, head]: shift the first to the difference and the second to zero. Default[head]: Function. Example: x1->x12, x2->0.
+* `#!wl labelToEqual` - labelToEqual[var, rules, head]: shift the first to the second. Default[head]: Function. Example: x1->x2.
 
-* `#!wl labelToDiffBack` - labelToDiffBack[vars, rules, head]: shift the difference back to the original two. Default[head]: Function. Example: x12->x1-x2.
+* `#!wl labelToDiff` - labelToDiff[var, rules, head]: shift the first to the difference plus the second. Default[head]: Function. Example: x1->x12+x2.
+
+* `#!wl labelToDiffZero` - labelToDiffZero[var, rules, head]: shift the first to the difference and the second to zero. Default[head]: Function. Example: x1->x12, x2->0.
+
+* `#!wl labelToDiffBack` - labelToDiffBack[var, rules, head]: shift the difference back to the original two. Default[head]: Function. Example: x12->x1-x2.
 
 
 <!-- Matrix.wl -->

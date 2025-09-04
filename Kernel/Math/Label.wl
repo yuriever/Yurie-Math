@@ -15,31 +15,41 @@ Needs["Yurie`Math`"];
 
 
 label::usage =
-    "label[vars, labs, head]: join the variables and labels into labeled objects using specified head."<>
+    "label[var, lab, head]: join the variable(s) and label into labeled objects using the specified head."<>
     "\n"<>
     "Default[head]: Function.";
 
 label2::usage =
-    "label2[vars, labs]: variant of label with Symbol as head.";
+    "label2[var, lab]: variant of label with Symbol as head.";
+
+labelRange::usage =
+    "labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head."<>
+    "\n"<>
+    "Default[head]: Function."<>
+    "\n"<>
+    "Example: labelRange[x, 3] gives x[1], x[2], x[3].";
+
+labelRange2::usage =
+    "labelRange2[var, range, head]: variant of labelRange with Symbol as head.";
 
 labelAt::usage =
-    "labelAt[vars, rules, head]: take the specific values of the labeled objects according to rules."<>
+    "labelAt[var, rules, head]: take the specific values of the labeled objects according to rules."<>
     "\n"<>
     "Default[head]: Function.";
 
 
 labelConvert::usage =
-    "labelConvert[vars, head1->head2]: convert the labeled objects according to the two specified label heads.";
+    "labelConvert[var, head1->head2]: convert the labeled objects according to the two specified label heads.";
 
 labelJoin::usage =
-    "labelJoin[vars, head]: convert labeled objects from any head to Symbol."<>
+    "labelJoin[var, head]: convert labeled objects from any head to Symbol."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
     "Sketch: labelConvert with _->Symbol.";
 
 labelSplit::usage =
-    "labelSplit[vars, head]: convert labeled objects from Symbol to any head."<>
+    "labelSplit[var, head]: convert labeled objects from Symbol to any head."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
@@ -47,35 +57,35 @@ labelSplit::usage =
 
 
 labelToZero::usage =
-    "labelToZero[vars, labs, head]: shift to zero."<>
+    "labelToZero[var, labs, head]: shift to zero."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
     "Example: x1->0.";
 
 labelToEqual::usage =
-    "labelToEqual[vars, rules, head]: shift the first to the second."<>
+    "labelToEqual[var, rules, head]: shift the first to the second."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
     "Example: x1->x2.";
 
 labelToDiff::usage =
-    "labelToDiff[vars, rules, head]: shift the first to the difference plus the second."<>
+    "labelToDiff[var, rules, head]: shift the first to the difference plus the second."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
     "Example: x1->x12+x2.";
 
 labelToDiffZero::usage =
-    "labelToDiffZero[vars, rules, head]: shift the first to the difference and the second to zero."<>
+    "labelToDiffZero[var, rules, head]: shift the first to the difference and the second to zero."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
     "Example: x1->x12, x2->0.";
 
 labelToDiffBack::usage =
-    "labelToDiffBack[vars, rules, head]: shift the difference back to the original two."<>
+    "labelToDiffBack[var, rules, head]: shift the difference back to the original two."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
@@ -139,7 +149,7 @@ labelInvalidSymbolF[var_,lab_] :=
 
 
 label::UndefinedType =
-    "the label type `` is undefined, and should be one of the followings:\n``."
+    "The label type `` is undefined, and should be one of the followings:\n``."
 
 
 (* ::Subsection:: *)
@@ -153,17 +163,30 @@ label::UndefinedType =
 label[var_,lab_,head_Symbol:Function] :=
     labelKernel[head,var,lab];
 
-label2[var_,lab_] :=
-    label[var,lab,Symbol];
-
-label[var_,(List|Alternatives)[labs__],head_Symbol:Function] :=
-    Map[labelKernel[head,var,#]&,Unevaluated@Sequence[labs]];
-
 label[(List|Alternatives)[vars__],lab_,head_Symbol:Function] :=
     Map[labelKernel[head,#,lab]&,Unevaluated@Sequence[vars]];
 
-label[(List|Alternatives)[vars__],(List|Alternatives)[labs__],head_Symbol:Function] :=
-    Outer[labelKernel[head,#1,#2]&,Unevaluated@Sequence[vars],Unevaluated@Sequence[labs]];
+label2[var_,lab_] :=
+    label[var,lab,Symbol];
+
+
+labelRange[var_,n_Integer?Positive,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,Range[1,n]];
+
+labelRange[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,Range[n1,n2]];
+
+labelRange[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,step_Integer?Positive,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,Range[n1,n2,step]];
+
+labelRange[var_,n1_String,n2_String,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,CharacterRange[n1,n2]];
+
+labelRange[var_,list_List,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,list];
+
+labelRange2[var_,args__] :=
+    labelRange[var,args,Symbol];
 
 
 (* ::Subsubsection:: *)
@@ -346,7 +369,7 @@ labelSplit[vars_,head_Symbol:Function,opts:OptionsPattern[]][expr_] :=
 (*Main*)
 
 
-labelToZero[(List|Alternatives)[vars__]|var_,(List|Alternatives)[labels__]|label_,head_Symbol:Function] :=
+labelToZero[(List|Alternatives)[vars__]|var_,{labels__}|label_,head_Symbol:Function] :=
     ReplaceAll[
         labelRulePrototype[(#[[1]]->0)&,head,{vars,var},Map[#->#&,{labels,label}]]
     ];
