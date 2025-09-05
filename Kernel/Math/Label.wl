@@ -170,8 +170,8 @@ label2[var_,lab_] :=
     label[var,lab,Symbol];
 
 
-labelRange[var_,n_Integer?Positive,head_Symbol:Function] :=
-    Sequence@@Map[label[var,#,head]&,Range[1,n]];
+labelRange[var_,n_Integer?NonNegative,head_Symbol:Function] :=
+    Sequence@@Map[label[var,#,head]&,Range[n]];
 
 labelRange[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,Range[n1,n2]];
