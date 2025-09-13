@@ -296,12 +296,13 @@ gammaTakeResidueShowPoleData[True][solution_,___] :=
     Echo[solution];
 
 gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
-    Module[ {sign,gammaList,gammaListNew},
+    Module[ {sign,gammaList},
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
         gammaList =
-            Cases[expr1,Gamma[arg_]/;!FreeQ[arg,variable]:>arg,All]//Map[{#,Simplify@ReplaceAll[#,solution]}&];
-        gammaListNew =
+            Cases[expr1,Gamma[arg_]/;!FreeQ[arg,variable]:>arg,All]//Map[{#,Simplify@ReplaceAll[#,solution],Exponent[expr1,Gamma[#]]}&];
+
+        gammaList =
             Switch[sign,
                 1,
                     separate[Simplify[Coefficient[#[[1]],variable]>0]&][gammaList],
@@ -310,9 +311,23 @@ gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
                 _,
                     gammaList
             ];
+
+        gammaList =
+            gammaList//MapAt[
+                Switch[ #[[3]],
+                    1,
+                        {#[[1]],#[[2]]},
+                    -1,
+                        {Style[#[[1]],StandardBlue],Style[#[[2]],StandardBlue]},
+                    _,
+                        {Style[#[[1]],StandardRed],Style[#[[2]],StandardRed]}
+                ]&,
+                {All,All}
+            ];
+
         Echo[solution];
         Print@Grid[
-            {Map[gammaListGrid,gammaListNew]},
+            {Map[gammaListGrid,gammaList]},
             Spacings->{1,0},
             Alignment->Top
         ];
