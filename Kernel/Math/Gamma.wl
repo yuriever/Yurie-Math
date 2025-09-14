@@ -44,6 +44,8 @@ gammaTakeResidue::usage =
     "\n"<>
     "Value[sign]: {1, -1, Left, Right}."<>
     "\n"<>
+    "Value[\"ShowPole\"]: {True, False, Full}."<>
+    "\n"<>
     "Default[sign]: 1."<>
     "\n"<>
     "Default[\"SimplePole\"]: True."<>
@@ -297,6 +299,7 @@ gammaTakeResidueShowPoleData[True][solution_,___] :=
 
 gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
     Module[ {sign,gammaList},
+
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
         gammaList =

@@ -76,7 +76,7 @@
 
 * `#!wl gammaSeparate` - gammaSeparate[expr]: separate a product into Gamma functions and the rest.
 
-* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor. gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series. Info[index]: the index of the poles. Info[gamma]: the argument of the Gamma function. Info[sign]: the direction of contour. Value[sign]: {1, -1, Left, Right}. Default[sign]: 1. Default["SimplePole"]: True. Default["ShowPole"]: True.
+* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor. gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series. Info[index]: the index of the poles. Info[gamma]: the argument of the Gamma function. Info[sign]: the direction of contour. Value[sign]: {1, -1, Left, Right}. Value["ShowPole"]: {True, False, Full}. Default[sign]: 1. Default["SimplePole"]: True. Default["ShowPole"]: True.
 
 * `#!wl multiGamma` - multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator. Info[num]: list of arguments for Gamma functions in the numerator. Info[denom]: list of arguments for Gamma functions in the denominator.
 
