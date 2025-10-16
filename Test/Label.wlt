@@ -100,7 +100,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (labelRange[x, {1, 2}, #1] & ) /@ {Symbol, Function, head}
+    (labels[x, {1, 2}, #1] & ) /@ {Symbol, Function, head}
     ,
     {x1, x2, x[1], x[2], head[x, 1], head[x, 2]}
     ,
@@ -108,7 +108,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (labelRange[x | y, {1}, #1] & ) /@ {Symbol, Function, head}
+    (labels[x | y, {1}, #1] & ) /@ {Symbol, Function, head}
     ,
     {x1, y1, x[1], y[1], head[x, 1], head[y, 1]}
     ,
@@ -116,7 +116,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (labelRange[x | y, {1, 2}, #1] & ) /@ {Symbol, Function, head}
+    (labels[x | y, {1, 2}, #1] & ) /@ {Symbol, Function, head}
     ,
     {x1, y1, x2, y2, x[1], y[1], x[2], y[2], head[x, 1], head[y, 1], head[x, 2], head[y, 2]}
     ,

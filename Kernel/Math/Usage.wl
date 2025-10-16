@@ -9,6 +9,15 @@ syntacticNegativeQ::usage =
 relationPowerPhase::usage =
     StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Info[base]: the power base.", "\n", "Info[expanded]: the numerator factors to separate.", "\n", "Info[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Info[sign]: the phase direction.", "\n", "Default[sign]: 1."];
 
+label2::usage =
+    "label2[var, lab]: variant of label with Symbol as head.";
+
+labelRange::usage =
+    StringJoin["labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head.", "\n", "Default[head]: Function.", "\n", "Example: labelRange[x, 3] gives x[1], x[2], x[3]."];
+
+labelRange2::usage =
+    "labelRange2[var, range]: variant of labelRange with Symbol as head.";
+
 
 (* Diff.wl *)
 
@@ -192,14 +201,14 @@ conformalIntegralKLT::usage =
 label::usage =
     StringJoin["label[var, lab, head]: join the variable(s) and label into labeled objects using the specified head.", "\n", "Default[head]: Function."];
 
-label2::usage =
-    "label2[var, lab]: variant of label with Symbol as head.";
+labell::usage =
+    "labell[var, lab]: variant of label with Symbol as head.";
 
-labelRange::usage =
-    StringJoin["labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head.", "\n", "Default[head]: Function.", "\n", "Example: labelRange[x, 3] gives x[1], x[2], x[3]."];
+labels::usage =
+    StringJoin["labels[var, range, head]: join the variable(s) and labels in the range using the specified head.", "\n", "Default[head]: Function.", "\n", "Example: labels[x, 3] gives x[1], x[2], x[3]."];
 
-labelRange2::usage =
-    "labelRange2[var, range, head]: variant of labelRange with Symbol as head.";
+labells::usage =
+    "labells[var, range]: variant of labels with Symbol as head.";
 
 labelAt::usage =
     StringJoin["labelAt[var, rules, head]: take the specific values of the labeled objects according to rules.", "\n", "Default[head]: Function."];
