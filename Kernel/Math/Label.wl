@@ -19,18 +19,18 @@ label::usage =
     "\n"<>
     "Default[head]: Function.";
 
-label2::usage =
-    "label2[var, lab]: variant of label with Symbol as head.";
+labell::usage =
+    "labell[var, lab]: variant of label with Symbol as head.";
 
-labelRange::usage =
-    "labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head."<>
+labels::usage =
+    "labels[var, range, head]: join the variable(s) and labels in the range using the specified head."<>
     "\n"<>
     "Default[head]: Function."<>
     "\n"<>
-    "Example: labelRange[x, 3] gives x[1], x[2], x[3].";
+    "Example: labels[x, 3] gives x[1], x[2], x[3].";
 
-labelRange2::usage =
-    "labelRange2[var, range, head]: variant of labelRange with Symbol as head.";
+labells::usage =
+    "labells[var, range]: variant of labels with Symbol as head.";
 
 labelAt::usage =
     "labelAt[var, rules, head]: take the specific values of the labeled objects according to rules."<>
@@ -166,27 +166,27 @@ label[var_,lab_,head_Symbol:Function] :=
 label[(List|Alternatives)[vars__],lab_,head_Symbol:Function] :=
     Map[labelKernel[head,#,lab]&,Unevaluated@Sequence[vars]];
 
-label2[var_,lab_] :=
+labell[var_,lab_] :=
     label[var,lab,Symbol];
 
 
-labelRange[var_,n_Integer?NonNegative,head_Symbol:Function] :=
+labels[var_,n_Integer?NonNegative,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,Range[n]];
 
-labelRange[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,head_Symbol:Function] :=
+labels[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,Range[n1,n2]];
 
-labelRange[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,step_Integer?Positive,head_Symbol:Function] :=
+labels[var_,n1_Integer?NonNegative,n2_Integer?NonNegative,step_Integer?Positive,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,Range[n1,n2,step]];
 
-labelRange[var_,n1_String,n2_String,head_Symbol:Function] :=
+labels[var_,n1_String,n2_String,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,CharacterRange[n1,n2]];
 
-labelRange[var_,list_List,head_Symbol:Function] :=
+labels[var_,list_List,head_Symbol:Function] :=
     Sequence@@Map[label[var,#,head]&,list];
 
-labelRange2[var_,args__] :=
-    labelRange[var,args,Symbol];
+labells[var_,args__] :=
+    labels[var,args,Symbol];
 
 
 (* ::Subsubsection:: *)
