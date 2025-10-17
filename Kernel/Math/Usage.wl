@@ -1,14 +1,5 @@
 (* Deprecation.wl *)
 
-collectDerivative::usage =
-    "collect by derivatives.";
-
-syntacticNegativeQ::usage =
-    "syntacticNegativeQ[expr]: test whether the expression is syntactically negative.";
-
-relationPowerPhase::usage =
-    StringJoin["relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor.", "\n", "Info[base]: the power base.", "\n", "Info[expanded]: the numerator factors to separate.", "\n", "Info[expanded2]: the denominator factors to separate. This argument is optional.", "\n", "Info[sign]: the phase direction.", "\n", "Default[sign]: 1."];
-
 label2::usage =
     "label2[var, lab]: variant of label with Symbol as head.";
 

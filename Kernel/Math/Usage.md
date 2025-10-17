@@ -1,11 +1,5 @@
 <!-- Deprecation.wl -->
 
-* `#!wl collectDerivative` - collect by derivatives.
-
-* `#!wl syntacticNegativeQ` - syntacticNegativeQ[expr]: test whether the expression is syntactically negative.
-
-* `#!wl relationPowerPhase` - relationPowerPhase[base, expanded, expanded2, sign]: generate transformation rule for separating the power factor. Info[base]: the power base. Info[expanded]: the numerator factors to separate. Info[expanded2]: the denominator factors to separate. This argument is optional. Info[sign]: the phase direction. Default[sign]: 1.
-
 * `#!wl label2` - label2[var, lab]: variant of label with Symbol as head.
 
 * `#!wl labelRange` - labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head. Default[head]: Function. Example: labelRange[x, 3] gives x[1], x[2], x[3].
