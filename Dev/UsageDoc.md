@@ -2,7 +2,6 @@
 
 This document establishes comprehensive guidelines for writing clear and consistent `Usage` messages for functions in Mathematica paclets.
 
-
 ## Example
 
 ```wl
@@ -15,7 +14,6 @@ fun::usage =
     "\n"<>
     "Default[argument]: {}.";
 ```
-
 
 ## Doc Rules
 
@@ -41,7 +39,6 @@ All `Usage` messages must adhere to the following rules:
 * **Preservation rule**: When updating existing usage messages, do not add new field types that were not previously included.
 
     * **This rule must be respected when updating usage!**
-
 
 ## Supported Field Types
 
