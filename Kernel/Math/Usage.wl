@@ -1,4 +1,12 @@
-(* Deprecation.wl *)
+(* ::Package:: *)
+
+(* ::Subsection:: *)
+(*Usage*)
+
+
+(* ::Subsubsection:: *)
+(*Deprecation.wl*)
+
 
 label2::usage =
     "label2[var, lab]: variant of label with Symbol as head.";
@@ -10,7 +18,9 @@ labelRange2::usage =
     "labelRange2[var, range]: variant of labelRange with Symbol as head.";
 
 
-(* Diff.wl *)
+(* ::Subsubsection:: *)
+(*Diff.wl*)
+
 
 PD::usage =
     "PD[vars]: head of partial derivative.";
@@ -61,7 +71,9 @@ diffComm::usage =
     StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
 
 
-(* DLMF.wl *)
+(* ::Subsubsection:: *)
+(*DLMF.wl*)
+
 
 DLMF::usage =
     StringJoin["DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.", "\n", "Default[\"IgnoreCondition\"]: False."];
@@ -79,7 +91,9 @@ DLMFRuleShow::usage =
     StringJoin["DLMFRuleShow[rules, opts]: show the DLMF rules without context marker.", "\n", "Default[\"IgnoreCondition\"]: False."];
 
 
-(* Dye.wl *)
+(* ::Subsubsection:: *)
+(*Dye.wl*)
+
 
 dye::usage =
     "dye[expr]: color the subexpressions at the first level.";
@@ -97,7 +111,9 @@ dyeOff::usage =
     "dyeOff[expr]: remove the coloring applied by dye functions.";
 
 
-(* Gamma.wl *)
+(* ::Subsubsection:: *)
+(*Gamma.wl*)
+
 
 gammaSimplify::usage =
     StringJoin["gammaSimplify[expr]: simplify Gamma functions in the expression.", "\n", "Sketch: Developer`GammaSimplify."];
@@ -124,7 +140,9 @@ multiGammaReduceByBarnesLemma::usage =
     StringJoin["multiGammaReduceByBarnesLemma[s][expr]: reduce the multi-Gamma symbol by the first and second Barnes lemmas.", "\n", "Info[s]: the variable parameter in the Barnes lemma reduction."];
 
 
-(* Hyper.wl *)
+(* ::Subsubsection:: *)
+(*Hyper.wl*)
+
 
 hyper::usage =
     "hyper[type, var][expr]: head used by hypergeometric conversion functions.";
@@ -187,7 +205,9 @@ conformalIntegralKLT::usage =
     StringJoin["conformalIntegralKLT[{z1, z2}, {z0}][expr]: perform 1d three-point conformal integral in the KLT form.", "\n", "conformalIntegralKLT[{z1, zb1, z2, zb2}, {z0, zb0}][expr]: 2d version with measure d^2z == dxdy.", "\n", "Hint: see appendix of 1706.05362."];
 
 
-(* Label.wl *)
+(* ::Subsubsection:: *)
+(*Label.wl*)
+
 
 label::usage =
     StringJoin["label[var, lab, head]: join the variable(s) and label into labeled objects using the specified head.", "\n", "Default[head]: Function."];
@@ -229,7 +249,9 @@ labelToDiffBack::usage =
     StringJoin["labelToDiffBack[var, rules, head]: shift the difference back to the original two.", "\n", "Default[head]: Function.", "\n", "Example: x12->x1-x2."];
 
 
-(* Matrix.wl *)
+(* ::Subsubsection:: *)
+(*Matrix.wl*)
+
 
 matSquareQ::usage =
     "matSquareQ[matrix]: test if the matrix is square.";
@@ -244,7 +266,9 @@ matAngularMomentum::usage =
     StringJoin["matAngularMomentum[j][direction]: generate angular momentum matrices for the spin-j representation.", "\n", "Value[direction]: {\"x\", \"y\", \"z\"|0, 1, -1}.", "\n", "Hint: the column/row indices run from j to -j."];
 
 
-(* OperatorForm.wl *)
+(* ::Subsubsection:: *)
+(*OperatorForm.wl*)
+
 
 SS::usage =
     "Sketch: Simplify.";
@@ -334,7 +358,9 @@ collect::usage =
     "Sketch: Collect.";
 
 
-(* Quest.wl *)
+(* ::Subsubsection:: *)
+(*Quest.wl*)
+
 
 isN::usage =
     "isN[x..]: test whether the arguments are natural numbers.";
@@ -397,13 +423,17 @@ patternFreeQ::usage =
     "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
 
-(* Random.wl *)
+(* ::Subsubsection:: *)
+(*Random.wl*)
+
 
 randomize::usage =
     StringJoin["randomize[domain, range][expr]: randomize the expression by replacing variables with random numbers.", "\n", "Example: randomize[][x+y] -> x1+y1, where x1 and y1 are random numbers."];
 
 
-(* Relation.wl *)
+(* ::Subsubsection:: *)
+(*Relation.wl*)
+
 
 relationMellinBarnes::usage =
     StringJoin["relationMellinBarnes[(x+y)^a, x, s]: generate Mellin-Barnes integral representation for the power factor.", "\n", "Example: (x+y)^a -> mg*x^s*y^(a-s)*INT[s]."];
@@ -412,7 +442,9 @@ relationFeynman::usage =
     StringJoin["relationFeynman[x^a*y^b, x, s]: generate Feynman-Schwinger integral representation for combining the two power factors.", "\n", "Example: x^a*y^b -> mg*(x+s*y)^(a+b)*s^(-b-1)*INT[s]."];
 
 
-(* SimplifyUnsafe.wl *)
+(* ::Subsubsection:: *)
+(*SimplifyUnsafe.wl*)
+
 
 unsafePowerTogether::usage =
     StringJoin["unsafePowerTogether[expr]: try to combine power factors.", "\n", "Hint: may produce mathematically invalid result."];
@@ -433,7 +465,9 @@ unsafeExprSimplify::usage =
     StringJoin["unsafeExprSimplify[expr]: try to simplify power factors, logarithms, and absolute values.", "\n", "Hint: may produce mathematically invalid result."];
 
 
-(* Simplify.wl *)
+(* ::Subsubsection:: *)
+(*Simplify.wl*)
+
 
 freeze::usage =
     StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\n", "freeze[pattern->transform, operation, level][expr]: additionally perform the transform to the frozen subexpressions.", "\n", "Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}.", "\n", "Default[operation]: Simplify.", "\n", "Default[level]: Infinity."];
