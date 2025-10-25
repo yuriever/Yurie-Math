@@ -222,7 +222,7 @@ modularize//Attributes =
     {HoldAllComplete};
 
 modularize[scope_[code_,iterators__]] :=
-    Replace[
+    ReplaceAll[
         DeleteCases[
             HoldComplete[iterators][[All,1]],
             Except[_Symbol]
@@ -253,7 +253,7 @@ with//Attributes =
 with[localVarLists___List] :=
     Function[
         expr,
-        Replace[
+        ReplaceAll[
             HoldComplete[localVarLists],
             HoldComplete[args___]:>
                 With[ args,
@@ -270,7 +270,7 @@ module//Attributes =
 module[localVarList_List] :=
     Function[
         expr,
-        Replace[
+        ReplaceAll[
             HoldComplete[localVarList],
             HoldComplete[arg_]:>
                 Module[ arg,
