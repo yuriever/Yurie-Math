@@ -275,7 +275,7 @@ hyperFromAppellF1[symbols_,head_:SUM][expr_] :=
 
 
 hyperConvert[which_][expr0_,head_,pattern_,symbolList_List] :=
-    Module[ {expr,positionList,numberOfHyper,numberOfSymbol,hyperList,convertedHyperList,result},
+    Module[{expr,positionList,numberOfHyper,numberOfSymbol,hyperList,convertedHyperList,result},
         expr =
             expr0//expandPower[pattern];
         positionList =

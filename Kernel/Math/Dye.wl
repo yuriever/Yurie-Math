@@ -102,7 +102,7 @@ dyeAtPosition[expr_,positionList_,color_] :=
 
 
 dyeAtPositionByColorFunction[expr_,positionList_,colorFunction_] :=
-    With[ {subexprList = Extract[expr,positionList],colorList = colorFunction[positionList]},
+    With[{subexprList = Extract[expr,positionList],colorList = colorFunction[positionList]},
         ReplacePart[
             expr,
             MapThread[#1->dyed[#2,#3]&,{positionList,subexprList,colorList}]
@@ -111,7 +111,7 @@ dyeAtPositionByColorFunction[expr_,positionList_,colorFunction_] :=
 
 
 singleColor[color_][positionList_] :=
-    Module[ {hue,saturationList,brightness},
+    Module[{hue,saturationList,brightness},
         {hue,brightness} =
             Extract[ColorConvert[color,"HSB"],{{1},{3}}];
         saturationList =
@@ -121,7 +121,7 @@ singleColor[color_][positionList_] :=
 
 
 rainbow[positionList_] :=
-    Module[ {HSBList,opacityList},
+    Module[{HSBList,opacityList},
         HSBList =
             Range[0,Length[positionList]-1]/(Length[positionList]+1/10);
         opacityList =

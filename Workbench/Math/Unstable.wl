@@ -50,10 +50,10 @@ multiGammaPoleAnalysis::nonlinear =
     "the arguments of Gamma factors are nonlinear with respect to the variables.";
 
 multiGammaPoleAnalysis[vars__][expr:(_Times|_multiGamma)] :=
-    Module[ {mgdata,result,mgdataPinched,pinchingData},
+    Module[{mgdata,result,mgdataPinched,pinchingData},
         mgdata =
             getMultiGammaData[expr];
-        If[ !multiGammaDataLinearQ[vars][mgdata],
+        If[!multiGammaDataLinearQ[vars][mgdata],
             Message[multiGammaPoleAnalysis::nonlinear];
             result = expr,
             (*Else*)
@@ -120,7 +120,7 @@ nestedMultiGammaDataFromPolePinching[var1_,var2__][mgdata_] :=
 
 
 newMultiGammaDataFromPolePinching[var_][mgdata_] :=
-    Module[ {right,left,rest,pinchingList},
+    Module[{right,left,rest,pinchingList},
         {right,left,rest} = {
             gammaFactorWithRightPole[var][mgdata],
             gammaFactorWithLeftPole[var][mgdata],
@@ -150,10 +150,10 @@ gammaFactorWithoutPole[var_][mgdata_] :=
 
 
 pairPolePinching[var_][right_,left_] :=
-    Module[ {gammaFactorChild},
+    Module[{gammaFactorChild},
         gammaFactorChild =
             right["gammaFactor"]+left["gammaFactor"]+Unique[$multiGammaPoleAnalysisNewSymbolHead];
-        If[ Coefficient[gammaFactorChild,var]===0,
+        If[Coefficient[gammaFactorChild,var]===0,
             <|
                 "gammaFactor"->gammaFactorChild,
                 "position"->1,
@@ -174,11 +174,11 @@ pairPolePinching[var_][right_,left_] :=
 
 
 getMultiGammaListFromNestedMultiGammaData[mgdataNested_] :=
-    Module[ {mgList},
+    Module[{mgList},
         mgList =
             mgdataNested//Query["newMultiGamma"];
         Map[
-            If[ !KeyExistsQ[#,"newMultiGamma"],
+            If[!KeyExistsQ[#,"newMultiGamma"],
                 multiGammaDataToMultiGamma[#],
                 (*Else*)
                 getMultiGammaListFromNestedMultiGammaData[#]
@@ -193,11 +193,11 @@ multiGammaDataToMultiGamma[mgdata_] :=
 
 
 getPinchingDataFromNestedMultiGammaData[mgdataNested_] :=
-    Module[ {mgList},
+    Module[{mgList},
         mgList =
             mgdataNested//Query["newMultiGamma"];
         Map[
-            If[ !KeyExistsQ[#,"newMultiGamma"],
+            If[!KeyExistsQ[#,"newMultiGamma"],
                 multiGammaDataToPinchingData[#],
                 (*Else*)
                 getPinchingDataFromNestedMultiGammaData[#]
@@ -229,7 +229,7 @@ Format[YSystem[u_,m_,ind_],TraditionalForm] :=
     Subsuperscript["sysY",m,Row[{"(",ind,")"}]][u];
 
 YSystemEquation[u_,m_,cartan_?MatrixQ] :=
-    Module[ {ind,$$ind},
+    Module[{ind,$$ind},
         Table[
             YSystem[u-1,m,ind] YSystem[u+1,m,ind]==
                 (1+1/YSystem[u,m-1,ind])(1+1/YSystem[u,m+1,ind])*

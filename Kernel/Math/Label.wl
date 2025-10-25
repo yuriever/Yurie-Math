@@ -202,8 +202,8 @@ labelKernel[Function,var_,lab_] :=
 
 
 labelKernel[Symbol,var_,lab_] :=
-    With[ {symbolname = varToString[var]<>ToString[lab]},
-        If[ Internal`SymbolNameQ[symbolname],
+    With[{symbolname = varToString[var]<>ToString[lab]},
+        If[Internal`SymbolNameQ[symbolname],
             ToExpression[symbolname],
             (*Else*)
             labelInvalidSymbolF[var,lab]
@@ -211,8 +211,8 @@ labelKernel[Symbol,var_,lab_] :=
     ];
 
 labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
-    With[ {symbolname = varToString[var]<>ToString[lab]},
-        If[ Internal`SymbolNameQ[symbolname],
+    With[{symbolname = varToString[var]<>ToString[lab]},
+        If[Internal`SymbolNameQ[symbolname],
             Pattern[Evaluate@ToExpression[symbolname],pat],
             (*Else*)
             labelInvalidSymbolF[var,lab]
@@ -264,8 +264,8 @@ expandRule[ruleList_] :=
 
 
 labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_Symbol,head2_Symbol],opts:OptionsPattern[]][expr_] :=
-    With[ {type = OptionValue["LabelType"]},
-        If[ Head[type]=!=String||Head[type]===String&&MemberQ[$labelTypeList,type],
+    With[{type = OptionValue["LabelType"]},
+        If[Head[type]=!=String||Head[type]===String&&MemberQ[$labelTypeList,type],
             labelConvertKernel[head1,head2,type][Alternatives[var,vars],expr],
             (*Else*)
             Message[label::UndefinedType,type,Column@$labelTypeList];
@@ -290,7 +290,7 @@ labelConvertKernel[head1:Except[Function|Symbol],head2:Function|Symbol,type_][va
     ];
 
 labelConvertKernel[Symbol,head2:Except[Symbol],type_][varP_,expr_] :=
-    With[ {varStringP = Map[varToString,varP]},
+    With[{varStringP = Map[varToString,varP]},
         expr//ReplaceAll[
             symbol_Symbol/;Context[symbol]=!="System`":>
                 RuleCondition@symbolPrepare[stringSplit[varToString[symbol],varStringP,type],symbol,head2]

@@ -228,7 +228,7 @@ modularize[scope_[code_,iterators__]] :=
             Except[_Symbol]
         ],
         HoldComplete[args___]:>
-            Module[ {args},
+            Module[{args},
                 scope[code,iterators]
             ]
     ];
@@ -240,10 +240,10 @@ block//Attributes =
 block[localVarList_List] :=
     Function[
         expr,
-        Block[ localVarList,
+        Block[localVarList,
             expr
         ],
-        {HoldAllComplete}
+        HoldAllComplete
     ];
 
 
@@ -256,11 +256,11 @@ with[localVarLists___List] :=
         ReplaceAll[
             HoldComplete[localVarLists],
             HoldComplete[args___]:>
-                With[ args,
+                With[args,
                     expr
                 ]
         ],
-        {HoldAllComplete}
+        HoldAllComplete
     ];
 
 
@@ -273,11 +273,11 @@ module[localVarList_List] :=
         ReplaceAll[
             HoldComplete[localVarList],
             HoldComplete[arg_]:>
-                Module[ arg,
+                Module[arg,
                     expr
                 ]
         ],
-        {HoldAllComplete}
+        HoldAllComplete
     ];
 
 
@@ -297,18 +297,18 @@ repcheck::SuspiciousRule =
     "The rule `1` -> `2` is suspicious to equal.";
 
 repcheck[rules___,sameTest:Except[_Rule|_RuleDelayed|_List|Null]:Automatic][expr_] :=
-    Module[ {},
+    Module[{},
         {rules}//ReplaceAll[Verbatim[Rule][lhs_,rhs_]:>repCheckEquality[lhs,rhs,sameTest]];
         ReplaceAll[expr,Flatten[{rules}]]
     ];
 
 repCheckEquality[lhs_,rhs_,Automatic] :=
-    If[ Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=0,
+    If[Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
     ];
 
 repCheckEquality[lhs_,rhs_,sameTest_] :=
-    If[ sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=0,
+    If[sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
     ];
 
@@ -373,9 +373,9 @@ series[args__,opts:OptionsPattern[]][expr_List]/;$VersionNumber==14.3 :=
     Map[series[args,opts],expr];
 
 series[{x_,x0_,n_},opts:OptionsPattern[]][expr:Except[_List]]/;$VersionNumber==14.3 :=
-    Module[ {res},
+    Module[{res},
         res = Series[expr,{x,x0,n},FilterRules[{opts,Options@series},Options@Series]];
-        If[ Head[res]===SeriesData&&res[[5]]>n+res[[6]]&&res[[3]]=!={},
+        If[Head[res]===SeriesData&&res[[5]]>n+res[[6]]&&res[[3]]=!={},
             res+SeriesData[x,x0,{},res[[4]],Max[res[[4]],n+res[[6]]],res[[6]]],
             (*Else*)
             res
@@ -422,10 +422,10 @@ solve1[vars_][equations_] :=
 
 
 solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
-    Module[ {eqList,solution},
+    Module[{eqList,solution},
         eqList =
             (* Throw exception if the equation list is invalid. *)
-            If[ MatchQ[eqList1,{(_Equal|_Rule|_RuleDelayed)..}],
+            If[MatchQ[eqList1,{(_Equal|_Rule|_RuleDelayed)..}],
                 eqList1//ReplaceAll[Rule|RuleDelayed->Equal],
                 (*Else*)
                 Message[solve::InvalidEquation];
@@ -434,7 +434,7 @@ solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
         solution =
             Solve[eqList,varList]//Normal//ReplaceAll[C[_]->0];
         (* Throw exception if solution is empty. *)
-        If[ solution==={},
+        If[solution==={},
             Message[solve::NoSolution];
             Throw[{}]
         ];
@@ -449,7 +449,7 @@ solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
                 ],
                 {Part::pkspec1,Part::partw}
             ];
-        If[ ifListize===True&&MatchQ[solution,{__Rule}],
+        If[ifListize===True&&MatchQ[solution,{__Rule}],
             {solution},
             (*Else*)
             solution

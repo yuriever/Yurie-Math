@@ -258,14 +258,14 @@ freezeNegative[
 
 
 freezeKernel[pattern_,operation_,default_,level_,expr_] :=
-    Module[ {ruleList,ruleInvList},
+    Module[{ruleList,ruleInvList},
         {ruleList,ruleInvList} =
             prepareFrozenRuleList[pattern,default,level,expr];
         Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
     ];
 
 freezeKernel[{patterns__},operation_,default_,level_,expr_] :=
-    Module[ {ruleList,ruleInvList},
+    Module[{ruleList,ruleInvList},
         {ruleList,ruleInvList} =
             Map[prepareFrozenRuleList[#,default,level,expr]&,{patterns}]//Transpose//MapApply[Join];
         Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
@@ -277,7 +277,7 @@ freezeKernel[{patterns__},operation_,default_,level_,expr_] :=
 
 
 prepareFrozenRuleList[pattern1_,default_,level_,expr_] :=
-    Module[ {pattern,fun,funInv,subExprList,tempList},
+    Module[{pattern,fun,funInv,subExprList,tempList},
         {pattern,fun,funInv} =
             patternAndTransformation[pattern1,default];
         subExprList =
@@ -454,7 +454,7 @@ factorHeadOfExpandRule//Attributes = {
 };
 
 expandRuleForSpecifiedBase[head_[base_,factorList1_List]] :=
-    With[ {
+    With[{
             factorList = DeleteCases[factorList1,Positive|Negative|Optional],
             phaseSign = getPhaseSign[factorList1],
             ifOptional = MemberQ[factorList1,Optional],
@@ -464,7 +464,7 @@ expandRuleForSpecifiedBase[head_[base_,factorList1_List]] :=
             powerFactorProduct = Times@@Map[Power[factorHeadOfExpandRule[#],exponent]&,factorList]
         },
         expandRuleCheckEquality[head,phaseSign][base,factorList];
-        If[ ifOptional,
+        If[ifOptional,
             HoldComplete[
                 Power[base,exponent_.],
                 Exp[phaseSign*I*π*exponent]*powerFactorProduct
@@ -495,19 +495,19 @@ getPhaseSign[factorList_List]/;!FreeQ[factorList,Positive]&&!FreeQ[factorList,Ne
 
 
 expandRuleCheckEquality[Rule,phaseSign_][base_,List[factors___]] :=
-    With[ {
+    With[{
             ratio = Simplify[Exp[phaseSign*I*π]*base/Times[factors]]
         },
-        If[ ratio =!= 1,
+        If[ratio =!= 1,
             Message[powerExpandBy::SuspiciousRule,base,ratio];
         ]
     ];
 
 expandRuleCheckEquality[RuleDelayed,phaseSign_][base_,List[factors___]] :=
-    With[ {
+    With[{
             ratio = Simplify[Exp[phaseSign*I*π]*stripPattern[base,Identity]/Times[factors]]
         },
-        If[ ratio =!= 1,
+        If[ratio =!= 1,
             Message[powerExpandBy::SuspiciousRule2,base,ratio];
         ]
     ];
@@ -531,14 +531,14 @@ powerSeparate[][expr_] :=
 
 
 powerSeparate[base1_][expr:Power[base_,_]] :=
-    If[ MatchQ[base,basePattern[base1]],
+    If[MatchQ[base,basePattern[base1]],
         {expr,1},
         (*Else*)
         {1,expr}
     ];
 
 powerSeparate[base1_][expr_Times] :=
-    With[ { baseP = basePattern[base1]},
+    With[{ baseP = basePattern[base1]},
         {
             Discard[expr,FreeQ[Power[baseP,_]]],
             Select[expr,FreeQ[Power[baseP,_]]]
@@ -583,8 +583,8 @@ ruleCollectPower[power_] :=
             IgnoringInactive[(x_^a_)^b_]:>
                 x^(a*b),
             IgnoringInactive[x_^(power*k1_.+rest1_.)*y_^(power*k2_.+rest2_.)]:>
-                With[ {var = Simplify[x^k1*y^k2]},
-                    If[ IntegerQ[x]||IntegerQ[y],
+                With[{var = Simplify[x^k1*y^k2]},
+                    If[IntegerQ[x]||IntegerQ[y],
                         Inactivate[var^power,Power|Sqrt],
                         var^power
                     ]
@@ -596,8 +596,8 @@ ruleCollectPower[] =
         IgnoringInactive[(x_^a_)^b_]:>
             x^(a*b),
         IgnoringInactive[x_^(power_*k1_.+rest1_.)*y_^(power_*k2_.+rest2_.)]:>
-            With[ {var = Simplify[x^k1*y^k2]},
-                If[ IntegerQ[x]||IntegerQ[y],
+            With[{var = Simplify[x^k1*y^k2]},
+                If[IntegerQ[x]||IntegerQ[y],
                     Inactivate[var^power,Power|Sqrt],
                     var^power
                 ]
@@ -765,7 +765,7 @@ extractSymbol[expr_,exclusionList_:{}] :=
 
 
 extractVariable[expr_,exclusionList_:{}] :=
-    With[ {
+    With[{
             res = Reduce`FreeVariables[expr],
             excludedContext = Join[{"System`"},exclusionList]
         },

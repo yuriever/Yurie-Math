@@ -93,7 +93,7 @@ DLMFTestPlot//Options = {
 
 
 DLMFTest[rule1_,{zmin_,zmax_},opts:OptionsPattern[]] :=
-    Module[ {rule,condition,randomArg,difference,ep},
+    Module[{rule,condition,randomArg,difference,ep},
         ep = OptionValue["Epsilon"];
         {rule,condition} =
             getRuleCondition[rule1];
@@ -112,7 +112,7 @@ DLMFTestPlot//SetOptions[#,{
 }]&;
 
 DLMFTestPlot[rule1_,{zmin_,zmax_},opts:OptionsPattern[]] :=
-    Module[ {rule,condition,randomArg,before,after,z,ep},
+    Module[{rule,condition,randomArg,before,after,z,ep},
         ep = OptionValue["Epsilon"];
         {rule,condition} =
             getRuleCondition[rule1];
@@ -146,7 +146,7 @@ testInInterval[{zmin_,zmax_},ep_] :=
 
 
 getRuleCondition[rule_] :=
-    Module[ {rule1,condition1},
+    Module[{rule1,condition1},
         condition1 = True;
         rule1 =
             ReplaceAll[
@@ -162,7 +162,7 @@ getRuleCondition[rule_] :=
 
 getRandomArgument[condition_,{zmin_,zmax_}] :=
     {a,b,c,z}->
-        If[ condition===True,
+        If[condition===True,
             Join[RandomReal[{0,2},3],RandomReal[{zmin,zmax},1]],
             (*Else*)
             Quiet@RandomPoint@ImplicitRegion[condition,{{a,0,1},{b,0,1},{c,0,2},{z,zmin,zmax}}]
@@ -182,7 +182,7 @@ DLMFExport[file_?FileExistsQ,data_:DLMFData] :=
 
 
 DLMFExportString[data_] :=
-    Block[ {Internal`$ContextMarks = False},
+    Block[{Internal`$ContextMarks = False},
         WithCleanup[
             MFArgConvert["{","}",","][Fpq[___List]],
             data//KeyValueMap[List]//
@@ -229,7 +229,7 @@ convertHypergeometricFunction[expr_] :=
 
 
 hideContext/:MakeBoxes[hideContext[expr_],form_] :=
-    Block[ {Internal`$ContextMarks = False},
+    Block[{Internal`$ContextMarks = False},
         MakeBoxes[expr,form]
     ];
 

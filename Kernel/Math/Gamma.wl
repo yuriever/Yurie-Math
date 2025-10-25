@@ -146,7 +146,7 @@ gammaSimplify :=
 
 
 gammaFrom[expr_,OptionsPattern[]] :=
-    Module[ {opt = OptionValue["Transformation"],ruleList},
+    Module[{opt = OptionValue["Transformation"],ruleList},
         ruleList =
             Which[
                 opt===Automatic,
@@ -188,9 +188,9 @@ gammaSeparate[expr_multiGamma] :=
     {gammaFrom[expr,"Transformation"->{"MultiGamma"}],1};
 
 gammaSeparate[expr_Times] :=
-    Module[ {expr1},
+    Module[{expr1},
         expr1 =
-            If[ FreeQ[expr,_multiGamma],
+            If[FreeQ[expr,_multiGamma],
                 expr,
                 (*Else*)
                 gammaFrom[expr,"Transformation"->{"MultiGamma"}]
@@ -214,7 +214,7 @@ gammaSeparate[expr_] :=
 
 
 gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr1_] :=
-    Module[ {expr,isSpecificPole,index,pos,solution,residue},
+    Module[{expr,isSpecificPole,index,pos,solution,residue},
         expr =
             expr1//gammaTakeResidueHandleMultiGamma;
         {isSpecificPole,index,pos} =
@@ -223,7 +223,7 @@ gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[
         solution =
             Part[Solve[gmarg==-index,{variable}],1,1];
         residue =
-            If[ OptionValue["SimplePole"]===True,
+            If[OptionValue["SimplePole"]===True,
                 Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
                     ReplaceAll[expr/Gamma[gmarg],solution],
                 (*Else*)
@@ -263,7 +263,7 @@ gammaTakeResidue[] :=
 
 
 gammaTakeResidueHandleMultiGamma[expr_] :=
-    If[ FreeQ[expr,_multiGamma],
+    If[FreeQ[expr,_multiGamma],
         expr,
         (*Else*)
         gammaFrom[expr,"Transformation"->{"MultiGamma"}]
@@ -298,7 +298,7 @@ gammaTakeResidueShowPoleData[True][solution_,___] :=
     Echo[solution];
 
 gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
-    Module[ {sign,gammaList},
+    Module[{sign,gammaList},
 
         sign =
             Simplify[Sign@Coefficient[solution[[2]],index]];
@@ -359,7 +359,7 @@ takeSpecificPole[False][index_,pos_] :=
 
 
 handleResidueWithINT[expr_,variable_][residue_] :=
-    If[ FreeQ[expr,_INT],
+    If[FreeQ[expr,_INT],
         residue,
         (*Else*)
         residue/INT[variable]
@@ -397,7 +397,7 @@ multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n<=-2
 
 (* Verbatim is necessary here to prevent the attributes of Times. *)
 multiGamma/:prod:HoldPattern[Verbatim[Times][___,_multiGamma,___,_multiGamma,___]]:=
-    With[ {
+    With[{
             mgList = Cases[Unevaluated@prod,_multiGamma],
             rest = Cases[Unevaluated@prod,Except[_multiGamma]]
         },
@@ -415,7 +415,7 @@ multiGammaFrom[expr_] :=
 
 
 multiGammaFromProduct[expr_Times] :=
-    With[ {
+    With[{
             num = Catenate@Cases[expr,Power[Gamma[x_],n_.]/;n>=1:>ConstantArray[x,n]],
             denom = Catenate@Cases[expr,Power[Gamma[x_],n_]/;n<=-1:>ConstantArray[x,-n]],
             rest = Cases[expr,Except[Power[_Gamma,_.]]]
@@ -432,7 +432,7 @@ listComplement[list1_List,list2_List]/;Length[list1]<=32 :=
     ];
 
 listComplement[list1_List,list2_List]/;Length[list1]>32 :=
-    With[ {t1 = 2Tally[list1],t2 = Tally@Join[list1,list2]},
+    With[{t1 = 2Tally[list1],t2 = Tally@Join[list1,list2]},
         {
             t2[[;;Length@t1,1]],
             t1[[All,2]]-t2[[;;Length@t1,2]]
@@ -485,7 +485,7 @@ multiGammaReduceByBarnesLemma[_][expr:Except[_Times|_multiGamma]] :=
     );
 
 multiGammaReduceByBarnesLemma[s_][mg_multiGamma] :=
-    Module[ {num,denom,numPlus,numMinus,denomPlus,numPlusMinusSum,numRest,denomRest},
+    Module[{num,denom,numPlus,numMinus,denomPlus,numPlusMinusSum,numRest,denomRest},
         {num,denom} =
             Collect[{mg[[1]],mg[[2]]},s];
         numPlus =
@@ -523,7 +523,7 @@ multiGammaReduceByBarnesLemma[s_][mg_multiGamma] :=
 
 
 multiGammaReduceByFirstBarnesLemma[numPlus_,numMinus_,numRest_,denomRest_,mg_,s_] :=
-    If[ FreeQ[numRest,s]&&FreeQ[denomRest,s],
+    If[FreeQ[numRest,s]&&FreeQ[denomRest,s],
         multiGamma[
             Join[numRest,Flatten@Outer[Plus,numPlus,numMinus]],
             Join[denomRest,{Total[{numPlus,numMinus},2]}]
@@ -535,7 +535,7 @@ multiGammaReduceByFirstBarnesLemma[numPlus_,numMinus_,numRest_,denomRest_,mg_,s_
 
 
 multiGammaReduceBySecondBarnesLemma[numPlus_,numMinus_,denomPlus_,numPlusMinusSum_,numRest_,denomRest_,mg_,s_] :=
-    If[ FreeQ[numRest,s]&&FreeQ[denomRest,s]&&Length[denomPlus]===1&&Simplify[denomPlus[[1]]-numPlusMinusSum]===0,
+    If[FreeQ[numRest,s]&&FreeQ[denomRest,s]&&Length[denomPlus]===1&&Simplify[denomPlus[[1]]-numPlusMinusSum]===0,
         multiGamma[
             Join[numRest,Flatten@Outer[Plus,numPlus,numMinus]],
             Join[denomRest,numPlusMinusSum-numPlus]

@@ -49,10 +49,10 @@ multiGammaPoleAnalysis::nonlinear =
 
 
 multiGammaPoleAnalysisKernel[varList_List,poleIndexList_List,isolatePoleData:{{_,_}...},assumption_][mg_multiGamma] :=
-    Module[ {mgdata},
+    Module[{mgdata},
         mgdata =
             getPoleData[isolatePoleData][mg];
-        If[ !poleStructureLinearQ[varList][mgdata],
+        If[!poleStructureLinearQ[varList][mgdata],
             Message[multiGammaPoleAnalysis::nonlinear];
             Throw[mg]
         ];

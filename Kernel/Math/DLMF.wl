@@ -95,9 +95,9 @@ DLMFRule[rules_,OptionsPattern[]] :=
 
 
 DLMFRuleShow/:MakeBoxes[DLMFRuleShow[rules_,OptionsPattern[]],form_] :=
-    Block[ {Internal`$ContextMarks = False},
+    Block[{Internal`$ContextMarks = False},
         (*here the function associated to the OptionValue should be specified.*)
-        With[ {expr = getRuleIgnoringCondition[OptionValue[DLMFRuleShow,"IgnoreCondition"],getRuleList[rules]]},
+        With[{expr = getRuleIgnoringCondition[OptionValue[DLMFRuleShow,"IgnoreCondition"],getRuleList[rules]]},
             MakeBoxes[expr,form]
         ]
     ];

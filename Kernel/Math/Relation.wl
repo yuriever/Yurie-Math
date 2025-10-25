@@ -42,13 +42,13 @@ Begin["`Private`"];
 
 
 relationMellinBarnes[expr:Power[y_,a_],x_,s_,head_:INT] :=
-    With[ {mg = Simplify@multiGamma[{-a+s,-s},{-a}],rest = Simplify[y-x]},
+    With[{mg = Simplify@multiGamma[{-a+s,-s},{-a}],rest = Simplify[y-x]},
         expr->relation["MellinBarnes",s][mg*x^s*rest^(-s+a)]
     ]//handleRelationHead[head];
 
 
 relationFeynman[expr:Power[x_,a_]*Power[y_,b_],x_,s_,head_:INT] :=
-    With[ {mg = Simplify@multiGamma[{-a-b},{-a,-b}]},
+    With[{mg = Simplify@multiGamma[{-a-b},{-a,-b}]},
         expr->relation["Feynman",s][mg*s^(-b-1)*(x+s*y)^(a+b)]
     ]//handleRelationHead[head];
 

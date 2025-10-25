@@ -287,28 +287,28 @@ integrate[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_INT] :=
     Integrate[expr,args,FilterRules[{opts,Options@integrate},Options@Integrate]];
 
 integrate[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
-    With[ {
-        expr1 = Cases[expr,Except[_INT],1]//Apply[Times],
-        int = DeleteCases[FirstCase[expr,INT[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-        fopts = Sequence@@FilterRules[{opts,Options@integrate},Options@Integrate]
-    },
+    With[{
+            expr1 = Cases[expr,Except[_INT],1]//Apply[Times],
+            int = DeleteCases[FirstCase[expr,INT[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
+            fopts = Sequence@@FilterRules[{opts,Options@integrate},Options@Integrate]
+        },
         Integrate[expr1,args,fopts]*INT@@int
     ];
 
 
 summation[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_SUM] :=
-    With[ {
-        fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
-    },
+    With[{
+            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
+        },
         Sum[expr,args,fopts]
     ];
 
 summation[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_SUM] :=
-    With[ {
-        expr1 = Cases[expr,Except[_SUM],1]//Apply[Times],
-        sum = DeleteCases[FirstCase[expr,SUM[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-        fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
-    },
+    With[{
+            expr1 = Cases[expr,Except[_SUM],1]//Apply[Times],
+            sum = DeleteCases[FirstCase[expr,SUM[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
+            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
+        },
         Sum[expr1,args,fopts]*SUM@@sum
     ];
 
@@ -354,7 +354,7 @@ integrateChange[eqs_,oldVars_,newVars_,signs_,opts:OptionsPattern[]][expr_] :=
 
 
 integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,signOfJacobianList1_List,opts:OptionsPattern[integrateChange]] :=
-    Module[ {
+    Module[{
             res,
             oldToNewList,jacobianList,newExprList,signOfJacobianList,
             whichSolution = OptionValue[integrateChange,{opts},"Solution"],
@@ -383,7 +383,7 @@ diffChange[eqList_,oldList_,newList_,funList_,opts:OptionsPattern[]][expr_] :=
 
 
 diffChangeKernel[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
-    Module[ {
+    Module[{
             res,oldToNewList,
             whichSolution = OptionValue[diffChange,{opts},"Solution"],
             ifShowSolution = OptionValue[diffChange,{opts},"ShowSolution"]
@@ -429,7 +429,7 @@ getSignOfJacobianList[signOfJacobianList_,oldToNewLength_] :=
 
 
 getJacobianList[oldList_,newList_,oldToNewList_] :=
-    Module[ {res,oldToNew},
+    Module[{res,oldToNew},
         res =
             Table[
                 Det@Outer[D,ReplaceAll[oldList,oldToNew],newList],
@@ -441,7 +441,7 @@ getJacobianList[oldList_,newList_,oldToNewList_] :=
 
 
 integrateChangeConvertINT[oldList_,newList_][expr_] :=
-    With[ {rule = MapThread[Rule,{oldList,newList}]},
+    With[{rule = MapThread[Rule,{oldList,newList}]},
         expr//ReplaceAll[{
             INT[args__]:>INT@@ReplaceAll[{args},rule]
         }]
@@ -449,7 +449,7 @@ integrateChangeConvertINT[oldList_,newList_][expr_] :=
 
 
 integrateChangeStripList[list_] :=
-    If[ Length[list]===1,
+    If[Length[list]===1,
         list[[1]],
         (*Else*)
         list
@@ -482,7 +482,7 @@ showSolutionJacobian[True,True][solList_,jacobianList_] :=
 
 
 getFunctionRuleList[whichSolution_][eqList_,oldList_,newList_,funList_] :=
-    Module[ {newByOld,newByOldList,fun,head},
+    Module[{newByOld,newByOldList,fun,head},
         newByOldList =
             newList//ReplaceAll[solveKernel[newList,whichSolution,True][eqList]];
         Table[
@@ -504,7 +504,7 @@ getVarPositionList[fun_,variableList_] :=
 
 
 diffChangeStripList[list_] :=
-    If[ Length[list]===1,
+    If[Length[list]===1,
         list[[1,1]],
         (*Else*)
         Flatten[list,1]
@@ -595,7 +595,7 @@ IBPRule[fun_] :=
 
 IBPRule[fun_,var_] :=
     Longest[exprs___]*Derivative[orders__][fun][vars__]:>
-        With[ {orderOfVar = getOrderOfVar[{vars},{orders},var]},
+        With[{orderOfVar = getOrderOfVar[{vars},{orders},var]},
             (-1)^orderOfVar*
                 D[Times[exprs],{var,orderOfVar}]*
                     Derivative[dropOrderByVar[{vars},{orders},var]][fun][vars]
@@ -603,7 +603,7 @@ IBPRule[fun_,var_] :=
 
 IBPRule[fun_,vars1__] :=
     Longest[exprs___]*Derivative[orders__][fun][vars__]:>
-        With[ {orderList1 = getOrderOfVar[{vars},{orders},{vars1}]},
+        With[{orderList1 = getOrderOfVar[{vars},{orders},{vars1}]},
             (-1)^Total@getOrderOfVar[{vars},{orders},{vars1}]*
                 D[Times[exprs],Sequence@@cleanNumPairs@Transpose@{{vars1},orderList1}]*
                     Derivative[dropOrderByVar[{vars},{orders},{vars1}]][fun][vars]
@@ -658,7 +658,7 @@ PDCoefficient//Options = {
 };
 
 PDCoefficient[post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[ {},
+    Module[{},
         PDCheckLinearity[OptionValue["CheckLinearity"]][expr];
         expr//Expand//PDCoefficientKernel//MapAt[post,{All,2}]
     ]//Catch;
@@ -682,7 +682,7 @@ PDCoefficientKernel[expr_] :=
 
 
 PDCheckLinearity[True][expr_] :=
-    If[ AnyTrue[Cases[expr,_PD,All],!Internal`LinearQ[expr,#]&],
+    If[AnyTrue[Cases[expr,_PD,All],!Internal`LinearQ[expr,#]&],
         Message[PDCoefficient::nonlinear];
         Throw[expr]
     ];
@@ -711,7 +711,7 @@ diffCoefficient//Options = {
 };
 
 diffCoefficient[funP:Except[_List],post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[ {},
+    Module[{},
         diffCheckLinearity[OptionValue["CheckLinearity"]][expr,funP];
         expr//Expand//diffCoefficientKernel[funP]//convertDerivative//MapAt[post,{All,2}]
     ]//Catch;
@@ -731,7 +731,7 @@ diffCoefficientKernel[funP_][expr_Times] :=
         }];
 
 diffCoefficientKernel[funP_][expr_] :=
-    If[ MatchQ[expr,funP[___]|Derivative[___][funP][___]],
+    If[MatchQ[expr,funP[___]|Derivative[___][funP][___]],
         {expr->1},
         (*Else*)
         {{}->expr}
@@ -746,7 +746,7 @@ convertDerivative[list_List] :=
 
 
 diffCheckLinearity[True][expr_,fun_] :=
-    If[ AnyTrue[Cases[expr,Derivative[__][fun][__],All],!Internal`LinearQ[expr,#]&],
+    If[AnyTrue[Cases[expr,Derivative[__][fun][__],All],!Internal`LinearQ[expr,#]&],
         Message[diffCoefficient::nonlinear];
         Throw[expr]
     ];
