@@ -218,6 +218,9 @@ FESA[assumption_,excludedFormList_List][expr_] :=
 (*Module*)
 
 
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::VariableError::Module:: *)
+
 modularize//Attributes =
     {HoldAllComplete};
 
@@ -233,6 +236,11 @@ modularize[scope_[code_,iterators__]] :=
             ]
     ];
 
+(* :!CodeAnalysis::EndBlock:: *)
+
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::Arguments::Block:: *)
 
 block//Attributes =
     {HoldAllComplete};
@@ -246,6 +254,11 @@ block[localVarList_List] :=
         HoldAllComplete
     ];
 
+(* :!CodeAnalysis::EndBlock:: *)
+
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::Arguments::With:: *)
 
 with//Attributes =
     {HoldAllComplete};
@@ -263,6 +276,11 @@ with[localVarLists___List] :=
         HoldAllComplete
     ];
 
+(* :!CodeAnalysis::EndBlock:: *)
+
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::Arguments::Module:: *)
 
 module//Attributes =
     {HoldAllComplete};
@@ -279,6 +297,8 @@ module[localVarList_List] :=
         ],
         HoldAllComplete
     ];
+
+(* :!CodeAnalysis::EndBlock:: *)
 
 
 (* ::Subsection:: *)
