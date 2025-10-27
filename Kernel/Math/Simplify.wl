@@ -180,7 +180,7 @@ separate::usage =
 stripPattern::usage =
     "stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head."<>
     "\n"<>
-    "Default[head]: Defer.";
+    "Default[head]: Identity.";
 
 
 vanishing::usage =
@@ -740,8 +740,11 @@ separate[crit_][expr_] :=
 stripPattern//Attributes =
     {HoldAll};
 
-stripPattern[expr_,head_:Defer] :=
-    head[expr]//ReplaceRepeated[(Verbatim[Pattern]|Verbatim[Optional]|Verbatim[PatternTest]|Verbatim[Condition])[pattern_,___]:>pattern];
+stripPattern[expr_,head_:Identity] :=
+    head[expr]//ReplaceRepeated[{
+        (Pattern|Optional|PatternTest|Condition)[pattern_,___]:>pattern,
+        (HoldPattern|Verbatim)[pattern_]:>pattern
+    }];
 
 
 (* ::Subsubsection:: *)
