@@ -78,7 +78,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    diffReplace[f -> x^2][expr]
+    diffReplace[f[x] -> x^2][expr]
     ,
     2*g[x] + 4*x*Derivative[1][g][x] + x^2*Derivative[2][g][x]
     ,
@@ -86,7 +86,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    diffReplace[f -> x^2, Inactive][expr]
+    diffReplace[f[x] -> x^2, Inactive][expr]
     ,
     g[x]*Inactive[D][x^2, {x, 2}] + 2*Inactive[D][x^2, {x, 1}]*Derivative[1][g][x] + x^2*Derivative[2][g][x]
     ,
@@ -94,7 +94,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    diffReplace[f -> y^2][expr]
+    diffReplace[f[x] -> y^2][expr]
     ,
     y^2*Derivative[2][g][x]
     ,
@@ -102,7 +102,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    diffReplace[f -> y^2, Inactive][expr]
+    diffReplace[f[x] -> y^2, Inactive][expr]
     ,
     g[x]*Inactive[D][y^2, {x, 2}] + 2*Inactive[D][y^2, {x, 1}]*Derivative[1][g][x] + y^2*Derivative[2][g][x]
     ,
@@ -110,11 +110,35 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = Table[D[f[x, i], {x, i}], {i, 4}]
+    ,
+    {Derivative[1, 0][f][x, 1], Derivative[2, 0][f][x, 2], Derivative[3, 0][f][x, 3], Derivative[4, 0][f][x, 4]}
+    ,
+    TestID->"[13] Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f[x, i_] :> x^i][expr]
+    ,
+    {1, 2, 6, 24}
+    ,
+    TestID->"[14] Diff.nb"
+]
+
+VerificationTest[
+    diffReplace[f[y_, i_] :> y^i][expr]
+    ,
+    {1, 2, 6, 24}
+    ,
+    TestID->"[15] Diff.nb"
+]
+
+VerificationTest[
     expr = A + B + g[x] + a*f[x, y] + b*f[x] + c*D[f[x, y], x, y] + d*D[f[x], x] + e*D[f[x, y, 1], x]
     ,
     A + B + b*f[x] + a*f[x, y] + g[x] + d*Derivative[1][f][x] + c*Derivative[1, 1][f][x, y] + e*Derivative[1, 0, 0][f][x, y, 1]
     ,
-    TestID->"[13] Diff.nb"
+    TestID->"[16] Diff.nb"
 ]
 
 VerificationTest[
@@ -122,7 +146,7 @@ VerificationTest[
     ,
     {{f[x]} -> b, {f[x, y]} -> a, {f[x], {x, 1}} -> d, {f[x, y], {x, 1}, {y, 1}} -> c, {f[x, y, 1], {x, 1}, {y, 0}} -> e, {} -> A + B + g[x]}
     ,
-    TestID->"[14] Diff.nb"
+    TestID->"[17] Diff.nb"
 ]
 
 VerificationTest[
@@ -130,7 +154,7 @@ VerificationTest[
     ,
     {{f[x]} -> b, {f[x, y]} -> a, {g[x]} -> 1, {f[x], {x, 1}} -> d, {f[x, y], {x, 1}, {y, 1}} -> c, {f[x, y, 1], {x, 1}, {y, 0}} -> e, {} -> A + B}
     ,
-    TestID->"[15] Diff.nb"
+    TestID->"[18] Diff.nb"
 ]
 
 VerificationTest[
@@ -138,7 +162,7 @@ VerificationTest[
     ,
     {{f[x]} -> a}
     ,
-    TestID->"[16] Diff.nb"
+    TestID->"[19] Diff.nb"
 ]
 
 VerificationTest[
@@ -146,7 +170,7 @@ VerificationTest[
     ,
     {{f[x, y, 1], {x, 1}, {y, 0}} -> a}
     ,
-    TestID->"[17] Diff.nb"
+    TestID->"[20] Diff.nb"
 ]
 
 VerificationTest[
@@ -154,7 +178,7 @@ VerificationTest[
     ,
     {{f[x]} -> 1}
     ,
-    TestID->"[18] Diff.nb"
+    TestID->"[21] Diff.nb"
 ]
 
 VerificationTest[
@@ -162,7 +186,7 @@ VerificationTest[
     ,
     {{f[x], {x, 1}} -> 1}
     ,
-    TestID->"[19] Diff.nb"
+    TestID->"[22] Diff.nb"
 ]
 
 VerificationTest[
@@ -170,7 +194,7 @@ VerificationTest[
     ,
     {{f[x, 1], {x, 2}} -> 1}
     ,
-    TestID->"[20] Diff.nb"
+    TestID->"[23] Diff.nb"
 ]
 
 VerificationTest[
@@ -178,7 +202,7 @@ VerificationTest[
     ,
     {{} -> a*b}
     ,
-    TestID->"[21] Diff.nb"
+    TestID->"[24] Diff.nb"
 ]
 
 VerificationTest[
@@ -186,7 +210,7 @@ VerificationTest[
     ,
     {{} -> a + b}
     ,
-    TestID->"[22] Diff.nb"
+    TestID->"[25] Diff.nb"
 ]
 
 VerificationTest[
@@ -194,7 +218,7 @@ VerificationTest[
     ,
     {{} -> a}
     ,
-    TestID->"[23] Diff.nb"
+    TestID->"[26] Diff.nb"
 ]
 
 VerificationTest[
