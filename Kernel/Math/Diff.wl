@@ -781,6 +781,13 @@ getDiffReplaceRule//Attributes = {
 getDiffReplaceRule[head_] :=
     Function[rule,getDiffReplaceRule[head,rule],HoldAllComplete];
 
+getDiffReplaceRule[head_,Verbatim[Rule][f_Symbol,rhs_]] :=
+    {
+        f[___]->rhs,
+        Derivative[orders__][f][vars___]:>
+            head[D][rhs,argumentD[{vars},{orders}]]
+    };
+
 getDiffReplaceRule[head_,(rule:Rule|RuleDelayed)[lhs:f_Symbol[args___],rhs_]] :=
     With[{
             varList = stripPattern[{args}]
