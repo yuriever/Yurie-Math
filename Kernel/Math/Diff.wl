@@ -590,7 +590,7 @@ IBP[fun_,vars__][expr_] :=
 IBPRule[fun_] :=
     Longest[exprs___]*Derivative[orders__][fun][vars__]:>
         (-1)^Total[{orders}]*
-            D[Times[exprs],Sequence@@cleanNumPairs@Transpose@{{vars},{orders}}]*
+            D[Times[exprs],argumentD[{vars},{orders}]]*
                 fun[vars];
 
 IBPRule[fun_,var_] :=
@@ -605,13 +605,13 @@ IBPRule[fun_,vars1__] :=
     Longest[exprs___]*Derivative[orders__][fun][vars__]:>
         With[{orderList1 = getOrderOfVar[{vars},{orders},{vars1}]},
             (-1)^Total@getOrderOfVar[{vars},{orders},{vars1}]*
-                D[Times[exprs],Sequence@@cleanNumPairs@Transpose@{{vars1},orderList1}]*
+                D[Times[exprs],argumentD[{vars1},orderList1]]*
                     Derivative[dropOrderByVar[{vars},{orders},{vars1}]][fun][vars]
         ];
 
 
-cleanNumPairs[varOrderPairList_] :=
-    DeleteCases[varOrderPairList,{_Integer,_Integer}];
+argumentD[varList_List,orderList_List] :=
+    Sequence@@DeleteCases[Transpose@{varList,orderList},{_Integer,_Integer}];
 
 
 getOrderOfVar[varList_,orderList_,varOrItsList_] :=
@@ -740,7 +740,7 @@ diffCoefficientKernel[funP_][expr_] :=
 
 convertDerivative[list_List] :=
     list//ReplaceAt[{
-        Derivative[orders__][fun_][vars__]:>{fun[vars],Splice@cleanNumPairs@Transpose@{{vars},{orders}}},
+        Derivative[orders__][fun_][vars__]:>{fun[vars],argumentD[{vars},{orders}]},
         fun_[vars__]:>{fun[vars]}
     },{All,1}];
 
@@ -774,14 +774,27 @@ diffReplace[rules_,head_:Identity] :=
     ReplaceAll[getDiffReplaceRule[head][rules]];
 
 
-getDiffReplaceRule[head_][Rule[f_,rhs_]] :=
-    {
-        f[___]:>rhs,
-        Derivative[orders__][f][vars__]:>
-            head[D][rhs,Sequence@@cleanNumPairs@Transpose@{{vars},{orders}}]
-    };
+getDiffReplaceRule//Attributes = {
+    HoldAllComplete
+};
 
-getDiffReplaceRule[head_][ruleList_List] :=
+getDiffReplaceRule[head_] :=
+    Function[rule,getDiffReplaceRule[head,rule],HoldAllComplete];
+
+getDiffReplaceRule[head_,(rule:Rule|RuleDelayed)[lhs:f_Symbol[args___],rhs_]] :=
+    With[{
+            varList = stripPattern[{args}]
+        },
+        {
+            rule[lhs,rhs],
+            HoldComplete[
+                Derivative[orders__][f][args],
+                head[D][rhs,argumentD[varList,{orders}]]
+            ]//ReplaceAll[HoldComplete->RuleDelayed]
+        }
+    ];
+
+getDiffReplaceRule[head_,ruleList_List] :=
     ruleList//Map[getDiffReplaceRule[head]]//Flatten;
 
 
