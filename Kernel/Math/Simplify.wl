@@ -624,27 +624,22 @@ phase[n_] :=
 (*phaseIgnore*)
 
 
-phaseIgnore[expr:_Times|_Power] :=
-    expr//ReplaceAll[{
-        (-1)^_->1,
-        Power[E,π*_Complex*_.]->1,
-        Power[Complex[0,1|-1],_]->1
-    }]//dropMinusSign;
+phaseIgnore[(num:_Integer|_Rational|_Real)*rest_.] :=
+    Abs[num]*rest;
 
-phaseIgnore[(-1)^_] :=
-    1;
+phaseIgnore[Complex[0,im_]*rest_.] :=
+    Abs[im]*rest;
 
-phaseIgnore[Power[E,π*_Complex*_.]] :=
-    1;
+phaseIgnore[Power[base:_Integer|_Rational|_Real,exp_]*rest_.] :=
+    Abs[base]^exp*rest;
 
-phaseIgnore[Power[Complex[0,1|-1],_]] :=
-    1;
+phaseIgnore[Power[Complex[0,im_],exp_]*rest_.] :=
+    Abs[im]^exp*rest;
 
+phaseIgnore[Power[E,π*_Complex*_.]*rest_.] :=
+    rest;
 
-dropMinusSign[expr_?minusQ] :=
-    -expr;
-
-dropMinusSign[expr_] :=
+phaseIgnore[expr_] :=
     expr;
 
 
