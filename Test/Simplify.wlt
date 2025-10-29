@@ -124,6 +124,42 @@ VerificationTest[
 ]
 
 VerificationTest[
+    list1 = {1, -1, I, -I, 1/2, -2^(-1), I/2, -I/2}; 
+    (Map[phaseIgnore])[list1]
+    ,
+    {1, 1, 1, 1, 1/2, 1/2, 1/2, 1/2}
+    ,
+    TestID->"[15] Simplify.nb"
+]
+
+VerificationTest[
+    list2 = Flatten[Outer[Times, list1, {c, C[1]}]]; 
+    (Map[phaseIgnore])[list2]
+    ,
+    {c, C[1], c, C[1], c, C[1], c, C[1], c/2, C[1]/2, c/2, C[1]/2, c/2, C[1]/2, c/2, C[1]/2}
+    ,
+    TestID->"[16] Simplify.nb"
+]
+
+VerificationTest[
+    list3 = {(-1)^a, (-I)^a, (-2^(-1))^a, (-I/2)^a, Exp[I*(Pi/2)*a]}; 
+    (Map[phaseIgnore])[list3]
+    ,
+    {1, 1, 2^(-a), 2^(-a), 1}
+    ,
+    TestID->"[17] Simplify.nb"
+]
+
+VerificationTest[
+    list4 = Flatten[Outer[Times, list3, {C[1]}]]; 
+    (Map[phaseIgnore])[list4]
+    ,
+    {C[1], C[1], C[1]/2^a, C[1]/2^a, C[1]}
+    ,
+    TestID->"[18] Simplify.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
