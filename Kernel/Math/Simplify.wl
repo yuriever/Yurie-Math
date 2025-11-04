@@ -624,20 +624,20 @@ phase[n_] :=
 (*phaseIgnore*)
 
 
-phaseIgnore[(num:_Integer|_Rational|_Real)*rest_.] :=
-    Abs[num]*rest;
+phaseIgnore[(num:_Integer|_Rational|_Real)*rest_.]/;Negative[num] :=
+    -num*phaseIgnore[rest];
 
 phaseIgnore[Complex[0,im_]*rest_.] :=
-    Abs[im]*rest;
+    Abs[im]*phaseIgnore[rest];
 
-phaseIgnore[Power[base:_Integer|_Rational|_Real,exp_]*rest_.] :=
-    Abs[base]^exp*rest;
+phaseIgnore[Power[base:_Integer|_Rational|_Real,exp_]*rest_.]/;Negative[base] :=
+    (-base)^exp*phaseIgnore[rest];
 
 phaseIgnore[Power[Complex[0,im_],exp_]*rest_.] :=
-    Abs[im]^exp*rest;
+    Abs[im]^exp*phaseIgnore[rest];
 
 phaseIgnore[Power[E,π*_Complex*_.]*rest_.] :=
-    rest;
+    phaseIgnore[rest];
 
 phaseIgnore[expr_] :=
     expr;

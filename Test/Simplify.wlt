@@ -160,6 +160,30 @@ VerificationTest[
 ]
 
 VerificationTest[
+    phaseIgnore[I^h]
+    ,
+    1
+    ,
+    TestID->"[19] Simplify.nb"
+]
+
+VerificationTest[
+    phaseIgnore[I^h*2^h]
+    ,
+    2^h
+    ,
+    TestID->"[20] Simplify.nb"
+]
+
+VerificationTest[
+    phaseIgnore[I^(1 + h)*2^h]
+    ,
+    2^h
+    ,
+    TestID->"[21] Simplify.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
