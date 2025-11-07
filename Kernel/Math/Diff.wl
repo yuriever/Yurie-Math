@@ -134,6 +134,13 @@ diffComm::usage =
     "Sketch: -(X[Y[#]]-Y[X[#]])&.";
 
 
+INTCancel::usage =
+    "INTCancel[vars][expr]: cancel the possible INT head in the expression.";
+
+SUMCancel::usage =
+    "SUMCancel[vars][expr]: cancel the possible SUM head in the expression.";
+
+
 (* ::Section:: *)
 (*Private*)
 
@@ -146,6 +153,30 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Helper*)
+
+
+complementList[list1_List,list2_List]/;Length[list1]<=32 :=
+    Fold[
+        Function[{list,tallied},DeleteCases[list,tallied[[1]],{1},tallied[[2]]]],
+        list1,
+        Tally@list2
+    ];
+
+complementList[list1_List,list2_List]/;Length[list1]>32 :=
+    With[{t1 = 2Tally[list1],t2 = Tally@Join[list1,list2]},
+        {
+            t2[[;;Length@t1,1]],
+            t1[[All,2]]-t2[[;;Length@t1,2]]
+        }//Transpose//Pick[#,Sign@#[[All,2]],1]&//MapApply[ConstantArray]//Apply[Join]//Sort
+    ];
+
+
+argumentD[varList_List,orderList_List] :=
+    Sequence@@DeleteCases[Transpose@{varList,orderList},{_Integer,_Integer}];
+
+
+(* ::Subsection:: *)
 (*Atomic head*)
 
 
@@ -154,10 +185,10 @@ Begin["`Private`"];
 
 
 INT::Duplicate =
-    "the original expression contains duplicate integral(s) with respect to ``."
+    "The original expression contains duplicate integral(s) with respect to ``."
 
 SUM::Duplicate =
-    "the original expression contains duplicate sum(s) with respect to ``.";
+    "The original expression contains duplicate sum(s) with respect to ``.";
 
 
 (* ::Subsubsection:: *)
@@ -174,17 +205,17 @@ head_PD/;System`Private`HoldNotValidQ[head] :=
     );
 
 
-PD/:PD[x__]PD[y__]:=
-    PD[x,y];
-
-PD/:Power[PD[x__],n_Integer]/;n>=1:=
-    PD@@Flatten@ConstantArray[{x},n];
-
-PD/:PD[x__]Power[PD[y_,rest___],-1]/;MemberQ[{x},y]:=
-    PD@@DeleteCases[{x},y,{1},1]/PD[rest];
-
 PD[] :=
     1;
+
+PD/:PD[x__]PD[y__] :=
+    PD[x,y];
+
+PD/:Power[PD[x__],n_Integer]/;n>=1 :=
+    PD@@Flatten@ConstantArray[{x},n];
+
+PD/:PD[x__]Power[PD[y__],-1]/;!Language`EmptyIntersectionQ[{x},{y}] :=
+    PD@@complementList[{x},{y}]/PD@@complementList[{y},{x}];
 
 
 (* ::Subsubsection:: *)
@@ -204,8 +235,14 @@ head_INT/;System`Private`HoldNotValidQ[head] :=
     );
 
 
-INT/:INT[x__]INT[y__]:=
+INT[] :=
+    1;
+
+INT/:INT[x__]INT[y__] :=
     INT[x,y];
+
+INT/:INT[x__]Power[INT[y__],-1]/;!Language`EmptyIntersectionQ[{x},{y}] :=
+    INT@@complementList[{x},{y}]/INT@@complementList[{y},{x}];
 
 HoldPattern[INT][x__]/;!DuplicateFreeQ[{x}] :=
     (
@@ -215,12 +252,6 @@ HoldPattern[INT][x__]/;!DuplicateFreeQ[{x}] :=
         ];
         INT@@DeleteDuplicates[{x}]
     );
-
-INT/:INT[x__]Power[INT[y_,rest___],-1]/;MemberQ[{x},y]:=
-    INT@@DeleteCases[{x},y,{1},1]/INT[rest];
-
-INT[] :=
-    1;
 
 
 (* ::Subsubsection:: *)
@@ -240,8 +271,14 @@ head_SUM/;System`Private`HoldNotValidQ[head] :=
     );
 
 
-SUM/:SUM[x__]SUM[y__]:=
+SUM[] :=
+    1;
+
+SUM/:SUM[x__]SUM[y__] :=
     SUM[x,y];
+
+SUM/:SUM[x__]Power[SUM[y__],-1]/;!Language`EmptyIntersectionQ[{x},{y}] :=
+    SUM@@complementList[{x},{y}]/SUM@@complementList[{y},{x}];
 
 HoldPattern[SUM][x__]/;!DuplicateFreeQ[{x}] :=
     (
@@ -251,12 +288,6 @@ HoldPattern[SUM][x__]/;!DuplicateFreeQ[{x}] :=
         ];
         SUM@@DeleteDuplicates[{x}]
     );
-
-SUM/:SUM[x__]Power[SUM[y_,rest___],-1]/;MemberQ[{x},y]:=
-    SUM@@DeleteCases[{x},y,{1},1]/SUM[rest];
-
-SUM[] :=
-    1;
 
 
 (* ::Subsection:: *)
@@ -610,10 +641,6 @@ IBPRule[fun_,vars1__] :=
         ];
 
 
-argumentD[varList_List,orderList_List] :=
-    Sequence@@DeleteCases[Transpose@{varList,orderList},{_Integer,_Integer}];
-
-
 getOrderOfVar[varList_,orderList_,varOrItsList_] :=
     Lookup[
         AssociationThread[varList->orderList],
@@ -811,6 +838,30 @@ getDiffReplaceRule[head_,ruleList_List] :=
 
 diffComm[x_,y_] :=
     -(x[y[#]]-y[x[#]])&;
+
+
+(* ::Subsubsection:: *)
+(*INTCancel|SUMCancel*)
+
+
+INTCancel[vars___][expr_] :=
+    headCancel[INT,{vars}][expr];
+
+SUMCancel[vars___][expr_] :=
+    headCancel[SUM,{vars}][expr];
+
+
+headCancel[head_,varList_List][expr_]/;FreeQ[expr,_head] :=
+    expr;
+
+headCancel[head_,varList_List][Verbatim[Times][prec___,head_[vars2___],succ___]] :=
+    prec*head@@complementList[{vars2},varList]*succ;
+
+headCancel[head_,varList_List][expr_List] :=
+    expr//Map[headCancel[head,varList]];
+
+headCancel[head_,varList_List][expr_] :=
+    expr;
 
 
 (* ::Subsection:: *)
