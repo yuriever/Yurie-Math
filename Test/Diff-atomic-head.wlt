@@ -76,101 +76,11 @@ VerificationTest[
 ]
 
 VerificationTest[
-    expr = PD[x, y]*f[x] + PD[x]*g[x] + h[y]
-    ,
-    h[y] + g[x]*PD[x] + f[x]*PD[x, y]
-    ,
-    TestID->"[9] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    expr2 = PD[x, y]*f[x] + g[PD[x]*g[x]]
-    ,
-    g[g[x]*PD[x]] + f[x]*PD[x, y]
-    ,
-    TestID->"[10] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][expr]
-    ,
-    {{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
-    ,
-    TestID->"[11] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][expr2]
-    ,
-    Quiet[g[g[x]*PD[x]] + f[x]*PD[x, y]]
-    ,
-    {Yurie`Math`PDCoefficient::nonlinear}
-    ,
-    TestID->"[12] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][PD[z]*a + b]
-    ,
-    {{z} -> a, {} -> b}
-    ,
-    TestID->"[13] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][PD[z]*a]
-    ,
-    {{z} -> a}
-    ,
-    TestID->"[14] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][PD[z, zb]*a]
-    ,
-    {{z, zb} -> a}
-    ,
-    TestID->"[15] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][PD[z]]
-    ,
-    {{z} -> 1}
-    ,
-    TestID->"[16] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][PD[z, zb]]
-    ,
-    {{z, zb} -> 1}
-    ,
-    TestID->"[17] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][a]
-    ,
-    {{} -> a}
-    ,
-    TestID->"[18] Diff-atomic-head.nb"
-]
-
-VerificationTest[
-    PDCoefficient[][a*b]
-    ,
-    {{} -> a*b}
-    ,
-    TestID->"[19] Diff-atomic-head.nb"
-]
-
-VerificationTest[
     INT[x, y]/INT[x]
     ,
     INT[y]
     ,
-    TestID->"[20] Diff-atomic-head.nb"
+    TestID->"[9] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -180,7 +90,7 @@ VerificationTest[
     ,
     {Yurie`Math`INT::Duplicate}
     ,
-    TestID->"[21] Diff-atomic-head.nb"
+    TestID->"[10] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -188,7 +98,7 @@ VerificationTest[
     ,
     SUM[y]
     ,
-    TestID->"[22] Diff-atomic-head.nb"
+    TestID->"[11] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -198,7 +108,7 @@ VerificationTest[
     ,
     {Yurie`Math`SUM::Duplicate}
     ,
-    TestID->"[23] Diff-atomic-head.nb"
+    TestID->"[12] Diff-atomic-head.nb"
 ]
 
 VerificationTest[
@@ -206,7 +116,105 @@ VerificationTest[
     ,
     1/SUM[y]
     ,
+    TestID->"[13] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    expr = PD[x, y]*f[x] + PD[x]*g[x] + h[y]
+    ,
+    h[y] + g[x]*PD[x] + f[x]*PD[x, y]
+    ,
+    TestID->"[14] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    expr2 = PD[x, y]*f[x] + g[PD[x]*g[x]]
+    ,
+    g[g[x]*PD[x]] + f[x]*PD[x, y]
+    ,
+    TestID->"[15] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][expr]
+    ,
+    {{x} -> g[x], {x, y} -> f[x], {} -> h[y]}
+    ,
+    TestID->"[16] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][expr2]
+    ,
+    Quiet[g[g[x]*PD[x]] + f[x]*PD[x, y]]
+    ,
+    {Yurie`Math`PDCoefficient::nonlinear}
+    ,
+    TestID->"[17] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][PD[z]*a + b]
+    ,
+    {{z} -> a, {} -> b}
+    ,
+    TestID->"[18] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][PD[z]*a]
+    ,
+    {{z} -> a}
+    ,
+    TestID->"[19] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][PD[z, zb]*a]
+    ,
+    {{z, zb} -> a}
+    ,
+    TestID->"[20] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][PD[z]]
+    ,
+    {{z} -> 1}
+    ,
+    TestID->"[21] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][PD[z, zb]]
+    ,
+    {{z, zb} -> 1}
+    ,
+    TestID->"[22] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][a]
+    ,
+    {{} -> a}
+    ,
+    TestID->"[23] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    PDCoefficient[][a*b]
+    ,
+    {{} -> a*b}
+    ,
     TestID->"[24] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    INTCancel[x, y][{f[x], f[x]*INT[x, y, z], f[x]*INT[z, w], f[x]*INT[x] + 1}]
+    ,
+    {f[x], f[x]*INT[z], f[x]*INT[w, z], 1 + f[x]*INT[x]}
+    ,
+    TestID->"[25] Diff-atomic-head.nb"
 ]
 
 VerificationTest[

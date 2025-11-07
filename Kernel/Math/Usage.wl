@@ -70,6 +70,12 @@ diffReplace::usage =
 diffComm::usage =
     StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
 
+INTCancel::usage =
+    "INTCancel[vars][expr]: cancel the possible INT head in the expression.";
+
+SUMCancel::usage =
+    "SUMCancel[vars][expr]: cancel the possible SUM head in the expression.";
+
 
 (* ::Subsubsection:: *)
 (*DLMF.wl*)
@@ -530,7 +536,7 @@ separate::usage =
     "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
 
 stripPattern::usage =
-    StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\n", "Default[head]: Defer."];
+    StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\n", "Default[head]: Identity."];
 
 vanishing::usage =
     StringJoin["vanishing[expr]: clean up the expression by removing redundant vanishing terms.", "\n", "Sketch: Simplify + Flatten + DeleteDuplicates."];

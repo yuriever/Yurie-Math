@@ -88,6 +88,10 @@
 
     * Sketch: -(X[Y[#]]-Y[X[#]])&.
 
+* `#!wl INTCancel` - INTCancel[vars][expr]: cancel the possible INT head in the expression.
+
+* `#!wl SUMCancel` - SUMCancel[vars][expr]: cancel the possible SUM head in the expression.
+
 ## DLMF.wl
 
 * `#!wl DLMF` - DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.
@@ -612,7 +616,7 @@
 
 * `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.
 
-    * Default[head]: Defer.
+    * Default[head]: Identity.
 
 * `#!wl vanishing` - vanishing[expr]: clean up the expression by removing redundant vanishing terms.
 
