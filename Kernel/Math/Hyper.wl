@@ -486,10 +486,10 @@ multiGammaS[args___] :=
     gammaFrom@Simplify@multiGamma[args];
 
 
-INTCancel[expr_,{vars__}]/;!FreeQ[expr,_INT] :=
-    1/INT[vars];
+INTPossible[Verbatim[Times][___,INT[vars2__],___],{vars__}]/;!Language`EmptyIntersectionQ[{vars2},{vars}] :=
+    INT[vars];
 
-INTCancel[expr_,{vars__}]/;FreeQ[expr,_INT] :=
+INTPossible[expr_,{vars__}] :=
     1;
 
 
@@ -500,13 +500,13 @@ INTCancel[expr_,{vars__}]/;FreeQ[expr,_INT] :=
 hyperFromIntegral[All,head_:Identity][expr_] :=
     expr//ReplaceAll[
         u_^a_*(1-u_)^b_*(u_*x_.+y_)^c_/;FreeQ[y,u]:>
-            INTCancel[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
+            1/INTPossible[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
     ];
 
 hyperFromIntegral[u_,head_:Identity][expr_] :=
     expr//ReplaceAll[
         u^a_*(1-u)^b_*(u*x_.+y_)^c_/;FreeQ[y,u]:>
-            INTCancel[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
+            1/INTPossible[expr,{u}]*hyperFromIntegralKernel[{a,b,c,x,y},head]
     ];
 
 
@@ -521,13 +521,13 @@ hyperFromIntegralKernel[{a_,b_,c_,x_,y_},head_] :=
 AppellF1FromIntegral[All,head_:Identity][expr_] :=
     expr//ReplaceAll[
         u_^a_*(1-u_)^b_*(u_*x_.+x1_)^c_*(u_*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
-            INTCancel[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
+            1/INTPossible[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
     ];
 
 AppellF1FromIntegral[u_,head_:Identity][expr_] :=
     expr//ReplaceAll[
         u^a_*(1-u)^b_*(u*x_.+x1_)^c_*(u*y_.+y1_)^d_/;FreeQ[{x1,y1},u]:>
-            INTCancel[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
+            1/INTPossible[expr,{u}]*AppellF1FromIntegralKernel[{a,b,c,d,x,x1,y,y1},head]
     ];
 
 
@@ -542,13 +542,13 @@ AppellF1FromIntegralKernel[{a_,b_,c_,d_,x_,x1_,y_,y1_},head_] :=
 conformalIntegral2[{z1_,zb1_,z2_,zb2_},All][expr_] :=
     expr//ReplaceAll[
         (z0_-z1)^h1_*(z0_-z2)^h2_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_:>
-            INTCancel[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+            1/INTPossible[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
     ];
 
 conformalIntegral2[{z1_,zb1_,z2_,zb2_},{z0_,zb0_}][expr_] :=
     expr//ReplaceAll[
         (z0-z1)^h1_*(z0-z2)^h2_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_:>
-            INTCancel[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+            1/INTPossible[expr,{z0}]*conformalIntegral2Kernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
     ];
 
 
@@ -568,13 +568,13 @@ conformalIntegral2Kernel[{z1_,zb1_,z2_,zb2_},{h1_,hb1_,h2_,hb2_}] :=
 conformalIntegral3[{z1_,zb1_,z2_,zb2_,z3_,zb3_},All][expr_] :=
     expr//ReplaceAll[
         (z0_-z1)^h1_*(z0_-z2)^h2_*(z0_-z3)^h3_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_*(zb0_-zb3)^hb3_:>
-            INTCancel[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
+            1/INTPossible[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
         ];
 
 conformalIntegral3[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{z0_,zb0_}][expr_] :=
     expr//ReplaceAll[
         (z0-z1)^h1_*(z0-z2)^h2_*(z0-z3)^h3_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_*(zb0-zb3)^hb3_:>
-            INTCancel[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
+            1/INTPossible[expr,{z0}]*conformalIntegral3Kernel[{z1,zb1,z2,zb2,z3,zb3},{h1,hb1,h2,hb2,h3,hb3}]
     ];
 
 conformalIntegral3Kernel[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{h1_,hb1_,h2_,hb2_,h3_,hb3_}] :=
@@ -594,13 +594,13 @@ conformalIntegral3Kernel[{z1_,zb1_,z2_,zb2_,z3_,zb3_},{h1_,hb1_,h2_,hb2_,h3_,hb3
 conformalIntegralKLT[{z1_,zb1_,z2_,zb2_},All][expr_] :=
     expr//ReplaceAll[
         (z0_-z1)^h1_*(z0_-z2)^h2_*(zb0_-zb1)^hb1_*(zb0_-zb2)^hb2_:>
-            INTCancel[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+            1/INTPossible[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
         ];
 
 conformalIntegralKLT[{z1_,zb1_,z2_,zb2_},{z0_,zb0_}][expr_] :=
     expr//ReplaceAll[
         (z0-z1)^h1_*(z0-z2)^h2_*(zb0-zb1)^hb1_*(zb0-zb2)^hb2_:>
-            INTCancel[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
+            1/INTPossible[expr,{z0}]*conformalIntegralKLTKernel[{z1,zb1,z2,zb2},{h1,hb1,h2,hb2}]
     ];
 
 conformalIntegralKLTKernel[{z1_,zb1_,z2_,zb2_},{h1_,hb1_,h2_,hb2_}] :=
