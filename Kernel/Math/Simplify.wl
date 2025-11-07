@@ -647,7 +647,7 @@ phaseIgnore[expr_] :=
 (*Polynomial*)
 
 
-togetherBy[baseP_][expr1_]:=
+togetherBy[baseP_][expr1_] :=
     FixedPoint[
         Replace[#,expr:Verbatim[Plus][___,Power[baseP,_?minusQ]*_.,___]:>Together[expr],All]&,
         expr1

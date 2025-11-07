@@ -77,7 +77,7 @@ getPoleData[isolatePoleData_List][mg_multiGamma] :=
 poleStructureLinearQ[varList_List][mgdata_List] :=
     mgdata//Query[All,"Argument",Internal`LinearQ[#,varList]||FreeQ[#,Alternatives@@varList]&]//AllTrue[#,TrueQ]&;
 
-poleStructureLinearQ[___][___]:=
+poleStructureLinearQ[___][___] :=
     False;
 
 

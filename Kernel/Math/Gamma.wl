@@ -206,7 +206,7 @@ gammaSeparate[expr_] :=
 
 
 (* ::Subsection:: *)
-(*gammaResidue*)
+(*gammaTakeResidue*)
 
 
 (* ::Subsubsection:: *)
@@ -386,17 +386,17 @@ HoldPattern[multiGamma[num_List,denom_List]]/;!OrderedQ[num] :=
 HoldPattern[multiGamma[num_List,denom_List]]/;!OrderedQ[denom] :=
     multiGamma[num,Sort@denom];
 
-multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],-1]:=
+multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],-1] :=
     multiGamma[denom,num];
 
-multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n>=2:=
+multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n>=2 :=
     multiGamma[Catenate@ConstantArray[num,n],Catenate@ConstantArray[denom,n]];
 
-multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n<=-2:=
+multiGamma/:Power[HoldPattern[multiGamma[num_List,denom_List]],n_Integer]/;n<=-2 :=
     multiGamma[Catenate@ConstantArray[denom,-n],Catenate@ConstantArray[num,-n]];
 
 (* Verbatim is necessary here to prevent the attributes of Times. *)
-multiGamma/:prod:HoldPattern[Verbatim[Times][___,_multiGamma,___,_multiGamma,___]]:=
+multiGamma/:prod:HoldPattern[Verbatim[Times][___,_multiGamma,___,_multiGamma,___]] :=
     With[{
             mgList = Cases[Unevaluated@prod,_multiGamma],
             rest = Cases[Unevaluated@prod,Except[_multiGamma]]
