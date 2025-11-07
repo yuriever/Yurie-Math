@@ -470,7 +470,7 @@ multiGammaFunctionExpand[assume_][mg_] :=
 
 
 multiGammaReduceByBarnesLemma[s_][k_*mg_multiGamma]/;FreeQ[k,s] :=
-    k*multiGammaReduceByBarnesLemma[s][mg];
+    k*multiGammaReduceByBarnesLemma[s][mg]//INTCancel[s];
 
 multiGammaReduceByBarnesLemma[s_][expr:k_*_multiGamma]/;!FreeQ[k,s] :=
     (
