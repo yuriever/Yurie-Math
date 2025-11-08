@@ -666,25 +666,31 @@ togetherBy[baseP_][expr1_] :=
 
 
 trigPhaseReduce[vars__][expr_] :=
-    expr//ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Expand@arg]//
-        trigPhaseReduceKernel[vars]//
-            ReplaceAll[(trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@Simplify@arg];
+    expr//trigFocus[Expand]//trigPhaseReduceKernel[vars]//trigFocus[Simplify];
 
 
 trigPhaseReduceKernel[var_][expr_] :=
     expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
 
 trigPhaseReduceKernel[var_,rest__][expr_] :=
-    trigPhaseReduceKernel[rest][
-        trigPhaseReduceKernel[var][expr]
-    ];
+    expr//trigPhaseReduceKernel[var]//trigPhaseReduceKernel[rest];
+
+trigFocus[operation_:Simplify][expr_] :=
+    expr//ReplaceAll[{
+        (trig:Sin|Cos|Tan|Cot|Csc|Sec)[arg_]:>trig@operation@arg,
+        Power[E,arg_]/;!FreeQ[arg,_Complex]:>Power[E,operation@arg]
+    }];
 
 
 ruleTrigPhase[var_] :=
     ruleTrigPhase[var] =
         {
-            (h:Sin|Cos|Csc|Sec)[k_.*π*var+rest_.]/;IntegerQ[k]:>(-1)^(Mod[k,2] var)*h[rest],
-            (h:Tan|Cot)[k_.*π*var+rest_.]/;IntegerQ[k]:>h[rest]
+            (h:Sin|Cos|Csc|Sec)[k_.*π*var+rest_.]/;IntegerQ[k]:>
+                (-1)^(Mod[k,2]*var)*h[rest],
+            (h:Tan|Cot)[k_.*π*var+rest_.]/;IntegerQ[k]:>
+                h[rest],
+            Power[E,Complex[0,k_]*π*var+rest_.]/;IntegerQ[k]:>
+                (-1)^(Mod[k,2]*var)*Power[E,rest]
         };
 
 
