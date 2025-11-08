@@ -639,6 +639,9 @@ phaseIgnore[Power[Complex[0,im_],exp_]*rest_.] :=
 phaseIgnore[Power[E,π*_Complex*_.]*rest_.] :=
     phaseIgnore[rest];
 
+phaseIgnore[expr_List] :=
+    Map[phaseIgnore,expr];
+
 phaseIgnore[expr_] :=
     expr;
 
