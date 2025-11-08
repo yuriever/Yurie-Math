@@ -684,11 +684,11 @@ PDCoefficient//Options = {
     "CheckLinearity"->True
 };
 
-PDCoefficient[post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[{},
+PDCoefficient[post:Except[_Rule]:Identity,opts:OptionsPattern[]][expr_] :=
+    Catch[
         PDCheckLinearity[OptionValue["CheckLinearity"]][expr];
         expr//Expand//PDCoefficientKernel//MapAt[post,{All,2}]
-    ]//Catch;
+    ];
 
 
 PDCoefficientKernel[expr_Plus] :=
@@ -737,11 +737,11 @@ diffCoefficient//Options = {
     "CheckLinearity"->True
 };
 
-diffCoefficient[funP:Except[_List],post_:Identity,opts:OptionsPattern[]][expr_] :=
-    Module[{},
+diffCoefficient[funP:Except[_List],post:Except[_Rule]:Identity,opts:OptionsPattern[]][expr_] :=
+    Catch[
         diffCheckLinearity[OptionValue["CheckLinearity"]][expr,funP];
         expr//Expand//diffCoefficientKernel[funP]//convertDerivative//MapAt[post,{All,2}]
-    ]//Catch;
+    ];
 
 
 diffCoefficientKernel[funP_][expr_Plus] :=
