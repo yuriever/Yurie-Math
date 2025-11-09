@@ -408,11 +408,19 @@ VerificationTest[
 ]
 
 VerificationTest[
+    powerExponentCollect[n][a^((1/2)*(A + 2*n))*b^((B + n)/2)*c^n*d^m]
+    ,
+    a^(A/2)*b^(B/2)*(a*Sqrt[b]*c)^n*d^m
+    ,
+    TestID->"[49] Simplify-power.nb"
+]
+
+VerificationTest[
     expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
     ,
     Null
     ,
-    TestID->"[49] Simplify-power.nb"
+    TestID->"[50] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -420,7 +428,7 @@ VerificationTest[
     ,
     (-w^(1 + a))^b*(w*(x - y)*z)^a
     ,
-    TestID->"[50] Simplify-power.nb"
+    TestID->"[51] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -428,7 +436,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"[51] Simplify-power.nb"
+    TestID->"[52] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -436,7 +444,31 @@ VerificationTest[
     ,
     (-w)^b*(w^(1 + b)*(x - y)*z)^a
     ,
-    TestID->"[52] Simplify-power.nb"
+    TestID->"[53] Simplify-power.nb"
+]
+
+VerificationTest[
+    expr = 2^n*a^n; 
+    ,
+    Null
+    ,
+    TestID->"[54] Simplify-power.nb"
+]
+
+VerificationTest[
+    powerExponentCollect[n][expr]
+    ,
+    2^n*a^n
+    ,
+    TestID->"[55] Simplify-power.nb"
+]
+
+VerificationTest[
+    powerExponentCollect[n, "Inactive" -> True][expr]
+    ,
+    Inactive[Power][2*a, n]
+    ,
+    TestID->"[56] Simplify-power.nb"
 ]
 
 VerificationTest[
