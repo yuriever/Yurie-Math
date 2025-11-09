@@ -512,7 +512,7 @@ powerSeparate::usage =
     StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: the pattern of power bases to match."];
 
 powerExponentCollect::usage =
-    StringJoin["powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
+    StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: to avoid auto-expansion of integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 phase::usage =
     "phase[expr]: phase factor.";

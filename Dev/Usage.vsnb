@@ -2,14 +2,14 @@
  "cells": [
   {
    "kind": 2,
-   "value": "<<Yurie`Math`\n<<Yurie`Math`Info`\n<<Yurie`Autocode`\n\n\nexportPublicSymbolUsage[\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    \"ExcludedFile\"->{\"Constant.wl\",\"Usage.wl\"}\n];\n\n\nexportArgumentCompletion[\n    $thisCompletionDir,\n    {\n        \"freeze\"->{0,0,{\"DefaultTransformation\"}->2},\n        \"integrateChange\"->{0,0,0,_->_},\n        \"diffChange\"->{0,0,0,0,_->_},\n        \"diffCoefficient\",\n        \"PDCoefficient\",\n        \"gammaFrom\",\n        \"gammaTakeResidue\"->{0,0,0,_->2},\n        \"labelConvert\",\n        \"labelJoin\",\n        \"labelSplit\",\n        \"powerExpand\"->{_->2}\n    },\n    {\n        \"DLMF\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMF]},\n        \"DLMFAs\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFAsTrue\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFRule\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRule]},\n        \"DLMFRuleShow\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRuleShow]}\n    }\n];",
+   "value": "<<Yurie`Math`\n<<Yurie`Math`Info`\n<<Yurie`Autocode`\n\n\nexportPublicSymbolUsage[\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    FileNameJoin@{$thisKernelDir,\"Math\"},\n    \"ExcludedFile\"->{\"Constant.wl\",\"Usage.wl\"}\n];\n\n\nexportArgumentCompletion[\n    $thisCompletionDir,\n    {\n        \"freeze\"->{0,0,{\"DefaultTransformation\"}->2},\n        \"integrateChange\"->{0,0,0,_->_},\n        \"diffChange\"->{0,0,0,0,_->_},\n        \"diffCoefficient\",\n        \"PDCoefficient\",\n        \"gammaFrom\",\n        \"gammaTakeResidue\"->{0,0,0,_->2},\n        \"labelConvert\",\n        \"labelJoin\",\n        \"labelSplit\",\n        \"powerExpand\"->{_->2},\n        \"powerExponentCollect\"->{_->4}\n    },\n    {\n        \"DLMF\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMF]},\n        \"DLMFAs\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFAsTrue\"->{Keys@Yurie`Math`Constant`DLMFData},\n        \"DLMFRule\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRule]},\n        \"DLMFRuleShow\"->{Keys@Yurie`Math`Constant`DLMFData,Keys@Options[DLMFRuleShow]}\n    }\n];",
    "languageId": "wolfram",
    "outputs": [],
    "metadata": {},
    "executionSummary": {
     "timing": {
-     "startTime": 1760689859361,
-     "endTime": 1760689860584
+     "startTime": 1762689747424,
+     "endTime": 1762689749497
     },
     "executionOrder": 5,
     "success": true

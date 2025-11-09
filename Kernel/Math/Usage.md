@@ -590,7 +590,9 @@
 
     * Info[baseP]: the pattern of power bases to match.
 
-* `#!wl powerExponentCollect` - powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents.
+* `#!wl powerExponentCollect` - powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.
+
+    * Info[Inactive]: to avoid auto-expansion of integer base.
 
     * Hint: if no exponent is specified, try to collect all power factors.
 
