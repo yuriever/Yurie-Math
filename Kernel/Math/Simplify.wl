@@ -119,7 +119,9 @@ powerSeparate::usage =
     "Info[baseP]: the pattern of power bases to match.";
 
 powerExponentCollect::usage =
-    "powerExponentCollect[exponents...][expr]: collect and combine power factors with common exponents."<>
+    "powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents."<>
+    "\n"<>
+    "Info[Inactive]: to avoid auto-expansion of integer base."<>
     "\n"<>
     "Hint: if no exponent is specified, try to collect all power factors.";
 
@@ -563,33 +565,37 @@ basePattern[base_] :=
 (*powerExponentCollect*)
 
 
-powerExponentCollect[powers___][expr_] :=
+powerExponentCollect//Options = {
+    "Inactive"->False
+};
+
+powerExponentCollect[exponents___,opts:OptionsPattern[]][expr_] :=
     expr//
         powerExponentFocus[Expand]//
-        powerExponentCollectKernel[powers]//Activate//
+        powerExponentCollectKernel[exponents]//ifInactivate[OptionValue["Inactive"]]//
         powerExponentFocus[Simplify];
 
 
 powerExponentCollectKernel[][expr_] :=
     expr//ReplaceRepeated[ruleCollectPower[]];
 
-powerExponentCollectKernel[power_][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[power]];
+powerExponentCollectKernel[exponent_][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[exponent]];
 
-powerExponentCollectKernel[power_,rest__][expr_] :=
-    expr//powerExponentCollectKernel[power]//powerExponentCollectKernel[rest];
+powerExponentCollectKernel[exponent_,rest__][expr_] :=
+    expr//powerExponentCollectKernel[exponent]//powerExponentCollectKernel[rest];
 
 
-ruleCollectPower[power_] :=
-    ruleCollectPower[power] =
+ruleCollectPower[exponent_] :=
+    ruleCollectPower[exponent] =
         {
             IgnoringInactive[(x_^a_)^b_]:>
                 x^(a*b),
-            IgnoringInactive[x_^(power*k1_.+rest1_.)*y_^(power*k2_.+rest2_.)]:>
-                With[{var = Simplify[x^k1*y^k2]},
+            IgnoringInactive[x_^(exponent*k1_.+rest1_.)*y_^(exponent*k2_.+rest2_.)]:>
+                With[{base = Simplify[x^k1*y^k2]},
                     If[IntegerQ[x]||IntegerQ[y],
-                        Inactivate[var^power,Power|Sqrt],
-                        var^power
+                        Inactive[Power][base,exponent],
+                        base^exponent
                     ]
                 ]*x^rest1*y^rest2
         };
@@ -598,14 +604,21 @@ ruleCollectPower[] =
     {
         IgnoringInactive[(x_^a_)^b_]:>
             x^(a*b),
-        IgnoringInactive[x_^(power_*k1_.+rest1_.)*y_^(power_*k2_.+rest2_.)]:>
-            With[{var = Simplify[x^k1*y^k2]},
+        IgnoringInactive[x_^(exponent_*k1_.+rest1_.)*y_^(exponent_*k2_.+rest2_.)]:>
+            With[{base = Simplify[x^k1*y^k2]},
                 If[IntegerQ[x]||IntegerQ[y],
-                    Inactivate[var^power,Power|Sqrt],
-                    var^power
+                    Inactive[Power][base,exponent],
+                    base^exponent
                 ]
             ]*x^rest1*y^rest2
     };
+
+
+ifInactivate[True] :=
+    Identity;
+
+ifInactivate[False] :=
+    Activate;
 
 
 (* ::Subsection:: *)
