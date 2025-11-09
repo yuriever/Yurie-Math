@@ -564,7 +564,10 @@ basePattern[base_] :=
 
 
 powerExponentCollect[powers___][expr_] :=
-    powerExponentCollectKernel[powers][expr]//Activate;
+    expr//
+        powerExponentFocus[Expand]//
+        powerExponentCollectKernel[powers]//Activate//
+        powerExponentFocus[Simplify];
 
 
 powerExponentCollectKernel[][expr_] :=
