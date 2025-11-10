@@ -218,6 +218,30 @@ VerificationTest[
 ]
 
 VerificationTest[
+    INTCancel[a][INT[a, b]]
+    ,
+    INT[b]
+    ,
+    TestID->"[26] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    INTCancel[a][ConditionalExpression[INT[a, b], condition]]
+    ,
+    ConditionalExpression[INT[b], condition]
+    ,
+    TestID->"[27] Diff-atomic-head.nb"
+]
+
+VerificationTest[
+    INTCancel[a][Piecewise[{{INT[a, b1], condition1}, {INT[a, b2], condition2}}, INT[a, b]]]
+    ,
+    Piecewise[{{INT[b1], condition1}, {INT[b2], condition2}}, INT[b]]
+    ,
+    TestID->"[28] Diff-atomic-head.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
