@@ -854,11 +854,23 @@ SUMCancel[vars___][expr_] :=
 headCancel[head_,varList_List][expr_]/;FreeQ[expr,_head] :=
     expr;
 
+headCancel[head_,varList_List][head_[vars__]] :=
+    head@@complementList[{vars},varList];
+
 headCancel[head_,varList_List][Verbatim[Times][prec___,head_[vars2___],succ___]] :=
     prec*head@@complementList[{vars2},varList]*succ;
 
 headCancel[head_,varList_List][expr_List] :=
     expr//Map[headCancel[head,varList]];
+
+headCancel[head_,varList_List][HoldPattern[ConditionalExpression[ce_,condition_]]] :=
+    ConditionalExpression[headCancel[head,varList][ce],condition];
+
+headCancel[head_,varList_List][HoldPattern[Piecewise[pw_,default_]]] :=
+    Piecewise[
+        MapAt[headCancel[head,varList],pw,{All,1}],
+        headCancel[head,varList][default]
+    ];
 
 headCancel[head_,varList_List][expr_] :=
     expr;
