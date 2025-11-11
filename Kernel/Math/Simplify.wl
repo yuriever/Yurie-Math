@@ -523,6 +523,59 @@ expandRuleCheckEquality[RuleDelayed,phaseSign_][base_,List[factors___]] :=
 
 
 (* ::Subsubsection:: *)
+(*powerExpandPhase*)
+
+
+powerExpandPhase[ε_,assume_][expr_] :=
+    powerExpandPhaseKernel[ε,Automatic,assume][expr];
+
+powerExpandPhase[{ε_,s_},assume_][expr_] :=
+    powerExpandPhaseKernel[ε,s,assume][expr];
+
+powerExpandPhase[sε_][expr_] :=
+    powerExpandPhase[sε,$Assumptions][expr];
+
+
+powerExpandPhaseKernel[ε_,sign_,assume_][expr_] :=
+    expr//ReplaceAll[{
+        Power[base_,exponent_]/;linearQ[base,ε]:>
+            Exp[π*getPhaseSign[Coefficient[base,ε,1],sign,assume]*exponent]*
+            Power[-Coefficient[base,ε,0],exponent]
+    }];
+
+
+getPhaseSign[coefficient_,sign_,assume_]/;!FreeQ[coefficient,PlusMinus] :=
+    Simplify[
+        Sign@Cancel[coefficient/PlusMinus[I]]*PlusMinus[I],
+        assume
+    ];
+
+getPhaseSign[coefficient_,sign_,assume_]/;!FreeQ[coefficient,MinusPlus] :=
+    Simplify[
+        Sign@Cancel[coefficient/MinusPlus[I]]*MinusPlus[I],
+        assume
+    ];
+
+getPhaseSign[coefficient_,Automatic,assume_] :=
+    Simplify[
+        Sign@Cancel[-I*coefficient]*I,
+        assume
+    ];
+
+getPhaseSign[coefficient_,sign:Except[Automatic],assume_] :=
+    Simplify[
+        Sign@Cancel[-I*coefficient/sign]*sign*I,
+        assume
+    ];
+
+getPhaseSign[coefficient_,sign:Except[Automatic],assume_]/;FreeQ[coefficient,sign] :=
+    Simplify[
+        Sign@Cancel[-I*coefficient]*I,
+        assume
+    ];
+
+
+(* ::Subsubsection:: *)
 (*powerSeparate*)
 
 
