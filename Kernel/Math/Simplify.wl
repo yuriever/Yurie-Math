@@ -41,7 +41,7 @@ freezeNegative::usage =
 focus::usage =
     "focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
@@ -53,7 +53,7 @@ focus::usage =
 fracFocus::usage =
     "fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers)."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
@@ -72,56 +72,63 @@ fracReduce::usage =
 powerFocus::usage =
     "powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerBaseFocus::usage =
     "powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerExponentFocus::usage =
     "powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerBaseTogether::usage =
     "powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerExpand::usage =
     "powerExpand[operation, level][expr]: expand the power factors after combining power bases."<>
     "\n"<>
-    "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used."<>
+    "Info[level]: ReplaceAll/Replace is used without/with specified level."<>
     "\n"<>
     "Default[operation]: Simplify.";
 
 powerExpandBy::usage =
     "powerExpandBy[rules..][expr]: expand the power factors according to the rules."<>
     "\n"<>
-    "Info[rules]: base->{factor1, factor2, ...}."<>
+    "Info[rules]: base->{factor1, factor2, ..., tag}."<>
     "\n"<>
-    "Hint: To specify the phase direction, include Positive or Negative in the factor list."<>
+    "Info[tag:Positive|Negative]: specify the phase direction."<>
     "\n"<>
-    "Hint: To match powers with exponent 1, include Optional in the factor list.";
+    "Info[tag:Optional]: match powers with exponent 1.";
+
+powerExpandPhase::usage =
+    "phaseFrom[{ε, sign}, assumption]: expand the phase factor from iε prescription of power factors."<>
+    "\n"<>
+    "Info[sign]: sign indicator."<>
+    "\n"<>
+    "Info[assumption]: assumption for simplifying the phase.";
 
 powerSeparate::usage =
     "powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors."<>
     "\n"<>
-    "Info[baseP]: the pattern of power bases to match.";
+    "Info[baseP]: pattern of power bases to match.";
 
 powerExponentCollect::usage =
     "powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents."<>
     "\n"<>
-    "Info[Inactive]: to avoid auto-expansion of integer base."<>
+    "Info[Inactive]: avoid auto-expansion of integer base."<>
     "\n"<>
     "Hint: if no exponent is specified, try to collect all power factors.";
 

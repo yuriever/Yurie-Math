@@ -473,37 +473,40 @@ freezeNegative::usage =
     "freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.";
 
 focus::usage =
-    StringJoin["focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 fracFocus::usage =
-    StringJoin["fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 fracReduce::usage =
     StringJoin["fracReduce[operation, factor][expr]: multiply the factor to the numerator and denominator, then apply the operation separately to them.", "\n", "Default[operation]: Simplify.", "\n", "Default[factor]: 1."];
 
 powerFocus::usage =
-    StringJoin["powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 powerBaseFocus::usage =
-    StringJoin["powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 powerExponentFocus::usage =
-    StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 powerBaseTogether::usage =
-    StringJoin["powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 powerExpand::usage =
-    StringJoin["powerExpand[operation, level][expr]: expand the power factors after combining power bases.", "\n", "Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.", "\n", "Default[operation]: Simplify."];
+    StringJoin["powerExpand[operation, level][expr]: expand the power factors after combining power bases.", "\n", "Info[level]: ReplaceAll/Replace is used without/with specified level.", "\n", "Default[operation]: Simplify."];
 
 powerExpandBy::usage =
-    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Info[rules]: base->{factor1, factor2, ...}.", "\n", "Hint: To specify the phase direction, include Positive or Negative in the factor list.", "\n", "Hint: To match powers with exponent 1, include Optional in the factor list."];
+    StringJoin["powerExpandBy[rules..][expr]: expand the power factors according to the rules.", "\n", "Info[rules]: base->{factor1, factor2, ..., tag}.", "\n", "Info[tag:Positive|Negative]: specify the phase direction.", "\n", "Info[tag:Optional]: match powers with exponent 1."];
+
+powerExpandPhase::usage =
+    StringJoin["phaseFrom[{ε, sign}, assumption]: expand the phase factor from iε prescription of power factors.", "\n", "Info[sign]: sign indicator.", "\n", "Info[assumption]: assumption for simplifying the phase."];
 
 powerSeparate::usage =
-    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: the pattern of power bases to match."];
+    StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: pattern of power bases to match."];
 
 powerExponentCollect::usage =
-    StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: to avoid auto-expansion of integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
+    StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: avoid auto-expansion of integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 phase::usage =
     "phase[expr]: phase factor.";

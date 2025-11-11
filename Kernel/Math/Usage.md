@@ -514,13 +514,13 @@
 
 * `#!wl focus` - focus[pattern, operation, level][expr]: apply the operation to the arguments of functions with the specified heads.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl fracFocus` - fracFocus[operation, level][expr]: apply the operation to fractions (expressions containing negative powers).
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
@@ -532,49 +532,55 @@
 
 * `#!wl powerFocus` - powerFocus[operation, level][expr]: apply the operation to the base and exponent of power factors.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl powerBaseFocus` - powerBaseFocus[operation, level][expr]: apply the operation to the base of power factors only.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl powerExponentFocus` - powerExponentFocus[operation, level][expr]: apply the operation to the exponent of power factors only.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl powerBaseTogether` - powerBaseTogether[operation, level][expr]: take together the bases of power factors and then apply the operation to the combined base.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl powerExpand` - powerExpand[operation, level][expr]: expand the power factors after combining power bases.
 
-    * Hint: if level is not specified, ReplaceAll is used to match the pattern, otherwise Replace is used.
+    * Info[level]: ReplaceAll/Replace is used without/with specified level.
 
     * Default[operation]: Simplify.
 
 * `#!wl powerExpandBy` - powerExpandBy[rules..][expr]: expand the power factors according to the rules.
 
-    * Info[rules]: base->{factor1, factor2, ...}.
+    * Info[rules]: base->{factor1, factor2, ..., tag}.
 
-    * Hint: To specify the phase direction, include Positive or Negative in the factor list.
+    * Info[tag:Positive|Negative]: specify the phase direction.
 
-    * Hint: To match powers with exponent 1, include Optional in the factor list.
+    * Info[tag:Optional]: match powers with exponent 1.
+
+* `#!wl powerExpandPhase` - phaseFrom[{ε, sign}, assumption]: expand the phase factor from iε prescription of power factors.
+
+    * Info[sign]: sign indicator.
+
+    * Info[assumption]: assumption for simplifying the phase.
 
 * `#!wl powerSeparate` - powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.
 
-    * Info[baseP]: the pattern of power bases to match.
+    * Info[baseP]: pattern of power bases to match.
 
 * `#!wl powerExponentCollect` - powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.
 
-    * Info[Inactive]: to avoid auto-expansion of integer base.
+    * Info[Inactive]: avoid auto-expansion of integer base.
 
     * Hint: if no exponent is specified, try to collect all power factors.
 
