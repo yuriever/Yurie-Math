@@ -579,16 +579,16 @@ getPhaseSign[coefficient_,sign:Except[Automatic],assume_]/;FreeQ[coefficient,sig
 (*powerSeparate*)
 
 
-powerSeparate[][expr_Power] :=
+powerSeparate[All|PatternSequence[]][expr_Power] :=
     {expr,1};
 
-powerSeparate[][expr_Times] :=
+powerSeparate[All|PatternSequence[]][expr_Times] :=
     {
         Discard[expr,FreeQ[_Power]],
         Select[expr,FreeQ[_Power]]
     };
 
-powerSeparate[][expr_] :=
+powerSeparate[All|PatternSequence[]][expr_] :=
     {1,expr};
 
 
@@ -611,9 +611,6 @@ powerSeparate[base1_][expr_] :=
     {1,expr};
 
 
-basePattern[All] :=
-    _;
-
 basePattern[base_List] :=
     Alternatives@@base;
 
@@ -632,12 +629,13 @@ powerExponentCollect//Options = {
 powerExponentCollect[exponents___,opts:OptionsPattern[]][expr_] :=
     expr//
         powerExponentFocus[Expand]//
-        powerExponentCollectKernel[exponents]//ifInactivate[OptionValue["Inactive"]]//
+        powerExponentCollectKernel[exponents]//
+        ifInactivate[OptionValue["Inactive"]]//
         powerExponentFocus[Simplify];
 
 
-powerExponentCollectKernel[][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[]];
+powerExponentCollectKernel[All|PatternSequence[]][expr_] :=
+    expr//ReplaceRepeated[ruleCollectPower[All]];
 
 powerExponentCollectKernel[exponent_][expr_] :=
     expr//ReplaceRepeated[ruleCollectPower[exponent]];
@@ -660,7 +658,7 @@ ruleCollectPower[exponent_] :=
                 ]*x^rest1*y^rest2
         };
 
-ruleCollectPower[] =
+ruleCollectPower[All] =
     {
         IgnoringInactive[(x_^a_)^b_]:>
             x^(a*b),
@@ -750,6 +748,7 @@ trigPhaseReduceKernel[var_][expr_] :=
 
 trigPhaseReduceKernel[var_,rest__][expr_] :=
     expr//trigPhaseReduceKernel[var]//trigPhaseReduceKernel[rest];
+
 
 trigFocus[operation_:Simplify][expr_] :=
     expr//ReplaceAll[{
