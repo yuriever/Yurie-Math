@@ -472,6 +472,38 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = {(I*ε - A)^λ, ((-I)*ε - A)^λ, (s*I*ε - A)^λ, (s*y*I*ε - A)^λ, ((±I)*ε - A)^λ, ((∓I)*ε - A)^λ, (y*(±I)*ε - A)^λ, (y*(∓I)*ε - A)^λ, (s*ε*I + ε*I*s*a - A - B)^λ}
+    ,
+    {(-A + I*ε)^λ, (-A - I*ε)^λ, (-A + I*s*ε)^λ, (-A + I*s*y*ε)^λ, (-A + ε*(±I))^λ, (-A + ε*(∓I))^λ, (-A + y*ε*(±I))^λ, (-A + y*ε*(∓I))^λ, (-A - B + I*s*ε + I*a*s*ε)^λ}
+    ,
+    TestID->"[57] Simplify-power.nb"
+]
+
+VerificationTest[
+    Simplify[powerExpandPhase[ε][expr]]
+    ,
+    {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*λ*Sign[s]), A^λ*E^(I*Pi*λ*Sign[s*y]), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)*Sign[y]), A^λ*E^(Pi*λ*(∓I)*Sign[y]), (A + B)^λ*E^(I*Pi*λ*Sign[s + a*s])}
+    ,
+    TestID->"[58] Simplify-power.nb"
+]
+
+VerificationTest[
+    Simplify[powerExpandPhase[{ε, s}][expr]]
+    ,
+    {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(I*Pi*s*λ*Sign[y]), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)*Sign[y]), A^λ*E^(Pi*λ*(∓I)*Sign[y]), (A + B)^λ*E^(I*Pi*s*λ*Sign[1 + a])}
+    ,
+    TestID->"[59] Simplify-power.nb"
+]
+
+VerificationTest[
+    Simplify[powerExpandPhase[{ε, s}, y > 0 && a > -1][expr]]
+    ,
+    {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), (A + B)^λ*E^(I*Pi*s*λ)}
+    ,
+    TestID->"[60] Simplify-power.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
