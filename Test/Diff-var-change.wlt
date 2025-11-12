@@ -20,7 +20,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t == 1 - x, t, x][t^a]
+    integrationChange[t == 1 - x, t, x][t^a]
     ,
     -(1 - x)^a
     ,
@@ -28,7 +28,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[{t == 1 - x}, {t}, {x}][t^a]
+    integrationChange[{t == 1 - x}, {t}, {x}][t^a]
     ,
     -(1 - x)^a
     ,
@@ -36,7 +36,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t == 1 - x, t, x, -1][t^a]
+    integrationChange[t == 1 - x, t, x, -1][t^a]
     ,
     (1 - x)^a
     ,
@@ -44,7 +44,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t -> 1 - x, t, x, -1][t^a]
+    integrationChange[t -> 1 - x, t, x, -1][t^a]
     ,
     (1 - x)^a
     ,
@@ -52,7 +52,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[t :> 1 - x, t, x, -1][t^a]
+    integrationChange[t :> 1 - x, t, x, -1][t^a]
     ,
     (1 - x)^a
     ,
@@ -60,7 +60,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x][t]
+    integrationChange[x == t^2, t, x][t]
     ,
     1/2
     ,
@@ -68,7 +68,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x, "Solution" -> All][t]
+    integrationChange[x == t^2, t, x, "Solution" -> All][t]
     ,
     {1/2, 1/2}
     ,
@@ -76,7 +76,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x, "Solution" -> {1, 2}][t]
+    integrationChange[x == t^2, t, x, "Solution" -> {1, 2}][t]
     ,
     {1/2, 1/2}
     ,
@@ -84,7 +84,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x, "Solution" -> 1 ;; 2][t]
+    integrationChange[x == t^2, t, x, "Solution" -> 1 ;; 2][t]
     ,
     {1/2, 1/2}
     ,
@@ -92,7 +92,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x, "Solution" -> 3][t]
+    integrationChange[x == t^2, t, x, "Solution" -> 3][t]
     ,
     Quiet[{{t -> -Sqrt[x]}, {t -> Sqrt[x]}}]
     ,
@@ -102,7 +102,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    opts = Options[integrateChange]
+    opts = Options[integrationChange]
     ,
     {"Solution" -> 1, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
@@ -110,7 +110,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    SetOptions[integrateChange, "Solution" -> All]
+    SetOptions[integrationChange, "Solution" -> All]
     ,
     {"Solution" -> All, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
@@ -118,7 +118,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x][t]
+    integrationChange[x == t^2, t, x][t]
     ,
     {1/2, 1/2}
     ,
@@ -126,7 +126,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == t^2, t, x, "Solution" -> 1][t]
+    integrationChange[x == t^2, t, x, "Solution" -> 1][t]
     ,
     1/2
     ,
@@ -134,7 +134,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    SetOptions[integrateChange, opts]
+    SetOptions[integrationChange, opts]
     ,
     {"Solution" -> 1, "ShowSolution" -> False, "ShowJacobian" -> False}
     ,
@@ -142,7 +142,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrateChange[x == 2*t, x, t][INT[x]*x^a]
+    integrationChange[x == 2*t, x, t][INT[x]*x^a]
     ,
     2^(1 + a)*t^a*INT[t]
     ,

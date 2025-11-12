@@ -20,28 +20,12 @@ VerificationTest[
 ]
 
 VerificationTest[
-    integrate[{ϕ, 0, 1}][ϕ^a]
-    ,
-    1/(1 + a)
-    ,
-    TestID->"[2] Diff.nb"
-]
-
-VerificationTest[
-    integrate[{ϕ, 0, 1}, {η, 0, 1}][ϕ^a*η^b*INT[ϕ, κ]]
-    ,
-    INT[κ]/(1 + a + b + a*b)
-    ,
-    TestID->"[3] Diff.nb"
-]
-
-VerificationTest[
     expr = D[f[x, y, z, w], {x, 1}, {y, 1}]*D[g[x, y, z, w], {z, 1}, {w, 1}]; 
     IBP[f][expr]
     ,
     f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
     ,
-    TestID->"[4] Diff.nb"
+    TestID->"[2] Diff.nb"
 ]
 
 VerificationTest[
@@ -49,7 +33,7 @@ VerificationTest[
     ,
     (-Derivative[0, 1, 0, 0][f][x, y, z, w])*Derivative[1, 0, 1, 1][g][x, y, z, w]
     ,
-    TestID->"[5] Diff.nb"
+    TestID->"[3] Diff.nb"
 ]
 
 VerificationTest[
@@ -57,7 +41,7 @@ VerificationTest[
     ,
     f[x, y, z, w]*Derivative[1, 1, 1, 1][g][x, y, z, w]
     ,
-    TestID->"[6] Diff.nb"
+    TestID->"[4] Diff.nb"
 ]
 
 VerificationTest[
@@ -66,7 +50,7 @@ VerificationTest[
     ,
     (-f[x])*Derivative[1][f][x]
     ,
-    TestID->"[7] Diff.nb"
+    TestID->"[5] Diff.nb"
 ]
 
 VerificationTest[
@@ -74,7 +58,7 @@ VerificationTest[
     ,
     g[x]*Derivative[1][f][x] + f[x]*Derivative[1][g][x]
     ,
-    TestID->"[8] Diff.nb"
+    TestID->"[6] Diff.nb"
 ]
 
 VerificationTest[
@@ -82,7 +66,7 @@ VerificationTest[
     ,
     2*x*g[x] + x^2*Derivative[1][g][x]
     ,
-    TestID->"[9] Diff.nb"
+    TestID->"[7] Diff.nb"
 ]
 
 VerificationTest[
@@ -90,7 +74,7 @@ VerificationTest[
     ,
     g[x]*Inactive[D][x^2, {x, 1}] + x^2*Derivative[1][g][x]
     ,
-    TestID->"[10] Diff.nb"
+    TestID->"[8] Diff.nb"
 ]
 
 VerificationTest[
@@ -98,7 +82,7 @@ VerificationTest[
     ,
     y^2*Derivative[1][g][x]
     ,
-    TestID->"[11] Diff.nb"
+    TestID->"[9] Diff.nb"
 ]
 
 VerificationTest[
@@ -106,7 +90,7 @@ VerificationTest[
     ,
     g[x]*Inactive[D][y^2, {x, 1}] + y^2*Derivative[1][g][x]
     ,
-    TestID->"[12] Diff.nb"
+    TestID->"[10] Diff.nb"
 ]
 
 VerificationTest[
@@ -114,7 +98,7 @@ VerificationTest[
     ,
     {Derivative[1, 0][f][x, 1], Derivative[2, 0][f][x, 2], Derivative[3, 0][f][x, 3], Derivative[4, 0][f][x, 4]}
     ,
-    TestID->"[13] Diff.nb"
+    TestID->"[11] Diff.nb"
 ]
 
 VerificationTest[
@@ -122,7 +106,7 @@ VerificationTest[
     ,
     {1, 2, 6, 24}
     ,
-    TestID->"[14] Diff.nb"
+    TestID->"[12] Diff.nb"
 ]
 
 VerificationTest[
@@ -130,7 +114,7 @@ VerificationTest[
     ,
     {1, 2, 6, 24}
     ,
-    TestID->"[15] Diff.nb"
+    TestID->"[13] Diff.nb"
 ]
 
 VerificationTest[
@@ -138,7 +122,7 @@ VerificationTest[
     ,
     g[x]*Derivative[1][f][x] + f[x]*Derivative[1][g][x]
     ,
-    TestID->"[16] Diff.nb"
+    TestID->"[14] Diff.nb"
 ]
 
 VerificationTest[
@@ -146,13 +130,29 @@ VerificationTest[
     ,
     2*x*g[x] + x^2*Derivative[1][g][x]
     ,
-    TestID->"[17] Diff.nb"
+    TestID->"[15] Diff.nb"
 ]
 
 VerificationTest[
     diffReplace[f -> x^2, Inactive][expr]
     ,
     g[x]*Inactive[D][x^2, {x, 1}] + x^2*Derivative[1][g][x]
+    ,
+    TestID->"[16] Diff.nb"
+]
+
+VerificationTest[
+    integration[{ϕ, 0, 1}][ϕ^a]
+    ,
+    1/(1 + a)
+    ,
+    TestID->"[17] Diff.nb"
+]
+
+VerificationTest[
+    integration[{ϕ, 0, 1}, {η, 0, 1}][ϕ^a*η^b*INT[ϕ, κ]]
+    ,
+    INT[κ]/(1 + a + b + a*b)
     ,
     TestID->"[18] Diff.nb"
 ]

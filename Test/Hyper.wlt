@@ -176,7 +176,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    res = Comap[{integrate[{u, 0, 1}], hyperFromIntegral[All], hyperFromIntegral[u]}][expr]; 
+    res = Comap[{integration[{u, 0, 1}], hyperFromIntegral[All], hyperFromIntegral[u]}][expr]; 
     FES[{res[[1]]/res[[2]], res[[1]]/res[[3]]}]
     ,
     {1, 1}
