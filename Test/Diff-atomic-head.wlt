@@ -212,7 +212,7 @@ VerificationTest[
 VerificationTest[
     INTCancel[x, y][{f[x], f[x]*INT[x, y, z], f[x]*INT[z, w], f[x]*INT[x] + 1}]
     ,
-    {f[x], f[x]*INT[z], f[x]*INT[w, z], 1 + f[x]*INT[x]}
+    {f[x], f[x]*INT[z], f[x]*INT[w, z], 1 + f[x]}
     ,
     TestID->"[25] Diff-atomic-head.nb"
 ]

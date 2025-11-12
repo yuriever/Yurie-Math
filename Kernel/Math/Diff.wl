@@ -860,6 +860,9 @@ headCancel[head_,varList_List][head_[vars__]] :=
 headCancel[head_,varList_List][Verbatim[Times][prec___,head_[vars2___],succ___]] :=
     prec*head@@complementList[{vars2},varList]*succ;
 
+headCancel[head_,varList_List][expr_Plus] :=
+    expr//Map[headCancel[head,varList]];
+
 headCancel[head_,varList_List][expr_List] :=
     expr//Map[headCancel[head,varList]];
 
