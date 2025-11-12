@@ -314,33 +314,37 @@ SetOptions[summation,GenerateConditions->False];
 (*Main*)
 
 
-integration[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_INT] :=
-    Integrate[expr,args,FilterRules[{opts,Options@integration},Options@Integrate]];
-
-integration[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
+integration[iterator:{dummy_,__},opts:OptionsPattern[]][expr_Times] :=
     With[{
-            expr1 = Cases[expr,Except[_INT],1]//Apply[Times],
-            int = DeleteCases[FirstCase[expr,INT[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-            fopts = Sequence@@FilterRules[{opts,Options@integration},Options@Integrate]
+            fopts = Sequence@@FilterRules[{opts,Options@integration},Options@Integrate],
+            expr1 = expr//separate[FreeQ[dummy]]
         },
-        Integrate[expr1,args,fopts]*INT@@int
+        Integrate[expr1[[2]],iterator,fopts]*expr1[[1]]//INTCancel[dummy]
+    ];
+
+integration[args__List,opts:OptionsPattern[]][expr_] :=
+    With[{
+            fopts = Sequence@@FilterRules[{opts,Options@integration},Options@Integrate],
+            dummies = Sequence@@Cases[{args},{var_,__}:>var]
+        },
+        Integrate[expr,args,fopts]//INTCancel[dummies]
     ];
 
 
-summation[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_SUM] :=
+summation[iterator:{dummy_,__},opts:OptionsPattern[]][expr_Times] :=
     With[{
-            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
+            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum],
+            expr1 = expr//separate[FreeQ[dummy]]
         },
-        Sum[expr,args,fopts]
+        Sum[expr1[[2]],iterator,fopts]*expr1[[1]]//SUMCancel[dummy]
     ];
 
-summation[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_SUM] :=
+summation[args__List,opts:OptionsPattern[]][expr_] :=
     With[{
-            expr1 = Cases[expr,Except[_SUM],1]//Apply[Times],
-            sum = DeleteCases[FirstCase[expr,SUM[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum]
+            fopts = Sequence@@FilterRules[{opts,Options@summation},Options@Sum],
+            dummies = Sequence@@Cases[{args},{var_,__}:>var]
         },
-        Sum[expr1,args,fopts]*SUM@@sum
+        Sum[expr,args,fopts]//SUMCancel[dummies]
     ];
 
 
