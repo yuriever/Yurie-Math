@@ -31,14 +31,14 @@ INT::usage =
 SUM::usage =
     "SUM[vars]: head of summation.";
 
-integrate::usage =
-    StringJoin["integrate[args][expr]: operator form of Integrate.", "\n", "Default[GenerateConditions]: False."];
+integration::usage =
+    StringJoin["integration[args][expr]: operator form of Integrate.", "\n", "Default[GenerateConditions]: False."];
 
 summation::usage =
     StringJoin["summation[args][expr]: operator form of Sum.", "\n", "Default[GenerateConditions]: False."];
 
-integrateChange::usage =
-    StringJoin["integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.", "\n", "Info[signs]: Jacobian signs.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False.", "\n", "Default[\"ShowJacobian\"]: False."];
+integrationChange::usage =
+    StringJoin["integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.", "\n", "Info[signs]: Jacobian signs.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False.", "\n", "Default[\"ShowJacobian\"]: False."];
 
 diffChange::usage =
     StringJoin["diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations.", "\n", "Info[funs]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];

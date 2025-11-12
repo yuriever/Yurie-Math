@@ -20,7 +20,7 @@
 
 * `#!wl SUM` - SUM[vars]: head of summation.
 
-* `#!wl integrate` - integrate[args][expr]: operator form of Integrate.
+* `#!wl integration` - integration[args][expr]: operator form of Integrate.
 
     * Default[GenerateConditions]: False.
 
@@ -28,7 +28,7 @@
 
     * Default[GenerateConditions]: False.
 
-* `#!wl integrateChange` - integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.
+* `#!wl integrationChange` - integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.
 
     * Info[signs]: Jacobian signs.
 

@@ -34,8 +34,8 @@ SUM::usage =
 (*Operator form*)
 
 
-integrate::usage =
-    "integrate[args][expr]: operator form of Integrate."<>
+integration::usage =
+    "integration[args][expr]: operator form of Integrate."<>
     "\n"<>
     "Default[GenerateConditions]: False.";
 
@@ -49,8 +49,8 @@ summation::usage =
 (*Variable change*)
 
 
-integrateChange::usage =
-    "integrateChange[equations, oldVars, newVars, signs][expr]: change variables in integrals."<>
+integrationChange::usage =
+    "integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals."<>
     "\n"<>
     "Info[signs]: Jacobian signs."<>
     "\n"<>
@@ -298,10 +298,10 @@ HoldPattern[SUM][x__]/;!DuplicateFreeQ[{x}] :=
 (*Option*)
 
 
-integrate//Options =
+integration//Options =
     Options@Integrate;
 
-SetOptions[integrate,GenerateConditions->False];
+SetOptions[integration,GenerateConditions->False];
 
 
 summation//Options =
@@ -314,14 +314,14 @@ SetOptions[summation,GenerateConditions->False];
 (*Main*)
 
 
-integrate[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_INT] :=
-    Integrate[expr,args,FilterRules[{opts,Options@integrate},Options@Integrate]];
+integration[args__List,opts:OptionsPattern[]][expr_]/;FreeQ[expr,_INT] :=
+    Integrate[expr,args,FilterRules[{opts,Options@integration},Options@Integrate]];
 
-integrate[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
+integration[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_INT] :=
     With[{
             expr1 = Cases[expr,Except[_INT],1]//Apply[Times],
             int = DeleteCases[FirstCase[expr,INT[vars__]:>{vars},{}],Alternatives@@Cases[{args},{var_,__}:>var]],
-            fopts = Sequence@@FilterRules[{opts,Options@integrate},Options@Integrate]
+            fopts = Sequence@@FilterRules[{opts,Options@integration},Options@Integrate]
         },
         Integrate[expr1,args,fopts]*INT@@int
     ];
@@ -352,7 +352,7 @@ summation[args__List,opts:OptionsPattern[]][expr_Times]/;!FreeQ[expr,_SUM] :=
 (*Option*)
 
 
-integrateChange//Options = {
+integrationChange//Options = {
     "Solution"->1,
     "ShowSolution"->False,
     "ShowJacobian"->False
@@ -369,7 +369,7 @@ diffChange//Options = {
 (*Message*)
 
 
-integrateChange::MismatchNumberOfJacobianSign =
+integrationChange::MismatchNumberOfJacobianSign =
     "The number of the Jacobian sign does not match the number of solutions.";
 
 
@@ -377,20 +377,20 @@ integrateChange::MismatchNumberOfJacobianSign =
 (*Main*)
 
 
-integrateChange[eqs_,oldVars_,newVars_,opts:OptionsPattern[]][expr_] :=
+integrationChange[eqs_,oldVars_,newVars_,opts:OptionsPattern[]][expr_] :=
     integrateChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],{1},opts];
 
-integrateChange[eqs_,oldVars_,newVars_,signs_,opts:OptionsPattern[]][expr_] :=
+integrationChange[eqs_,oldVars_,newVars_,signs_,opts:OptionsPattern[]][expr_] :=
     integrateChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],prepareList[signs],opts];
 
 
-integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,signOfJacobianList1_List,opts:OptionsPattern[integrateChange]] :=
+integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,signOfJacobianList1_List,opts:OptionsPattern[integrationChange]] :=
     Module[{
             res,
             oldToNewList,jacobianList,newExprList,signOfJacobianList,
-            whichSolution = OptionValue[integrateChange,{opts},"Solution"],
-            ifShowSolution = OptionValue[integrateChange,{opts},"ShowSolution"],
-            ifShowJacobian = OptionValue[integrateChange,{opts},"ShowJacobian"]
+            whichSolution = OptionValue[integrationChange,{opts},"Solution"],
+            ifShowSolution = OptionValue[integrationChange,{opts},"ShowSolution"],
+            ifShowJacobian = OptionValue[integrationChange,{opts},"ShowJacobian"]
         },
         oldToNewList =
             solveKernel[oldList,whichSolution,True][eqList];
@@ -454,7 +454,7 @@ getSignOfJacobianList[signOfJacobianList_,oldToNewLength_] :=
         Length[signOfJacobianList]===oldToNewLength,
             signOfJacobianList,
         True,
-            Message[integrateChange::MismatchNumberOfJacobianSign];
+            Message[integrationChange::MismatchNumberOfJacobianSign];
             Throw[signOfJacobianList]
     ];
 
@@ -578,11 +578,11 @@ diffChange[] :=
     };
 
 
-integrateChange[] :=
+integrationChange[] :=
     CellPrint@{
         ExpressionCell[
             ToExpression[
-                "t^a//integrateChange[t==1-x,t,x,-1]",
+                "t^a//integrationChange[t==1-x,t,x,-1]",
                  StandardForm,
                  Defer
             ],
