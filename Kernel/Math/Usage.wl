@@ -506,7 +506,7 @@ powerSeparate::usage =
     StringJoin["powerSeparate[baseP][expr]: separate the product expression into power factors and non-power factors.", "\n", "Info[baseP]: pattern of power bases to match."];
 
 powerExponentCollect::usage =
-    StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: avoid auto-expansion of integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
+    StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: avoid auto-expansion of power factors with integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 phase::usage =
     "phase[expr]: phase factor.";
@@ -518,7 +518,10 @@ togetherBy::usage =
     StringJoin["togetherBy[base][expr]: take together the terms with the specified base pattern in the polynomial expression.", "\n", "Info[base]: the pattern of base to match."];
 
 trigPhaseReduce::usage =
-    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.", "\n", "Info[vars]: the variables to consider for periodicity."];
+    StringJoin["trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric/exponential functions using periodicity.", "\n", "Info[vars]: integer variables."];
+
+trigFromExp::usage =
+    "trigFromExp[expr]: variant of ExpToTrig that only affects Exp.";
 
 deltaReduce::usage =
     "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";

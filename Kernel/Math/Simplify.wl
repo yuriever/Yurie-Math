@@ -128,7 +128,7 @@ powerSeparate::usage =
 powerExponentCollect::usage =
     "powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents."<>
     "\n"<>
-    "Info[Inactive]: avoid auto-expansion of integer base."<>
+    "Info[Inactive]: avoid auto-expansion of power factors with integer base."<>
     "\n"<>
     "Hint: if no exponent is specified, try to collect all power factors.";
 
@@ -159,9 +159,12 @@ togetherBy::usage =
 
 
 trigPhaseReduce::usage =
-    "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity."<>
+    "trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric/exponential functions using periodicity."<>
     "\n"<>
-    "Info[vars]: the variables to consider for periodicity.";
+    "Info[vars]: integer variables.";
+
+trigFromExp::usage =
+    "trigFromExp[expr]: variant of ExpToTrig that only affects Exp.";
 
 
 (* ::Subsection:: *)
@@ -767,6 +770,12 @@ ruleTrigPhase[var_] :=
             Power[E,Complex[0,k_]*π*var+rest_.]/;IntegerQ[k]:>
                 (-1)^(Mod[k,2]*var)*Power[E,rest]
         };
+
+
+trigFromExp[exponentP:_:Blank[]][expr_] :=
+    expr//ReplaceAll[{
+        Power[E,exponent:exponentP]:>Cos@Cancel[exponent/I]+I*Sin@Cancel[exponent/I]
+    }];
 
 
 (* ::Subsection:: *)

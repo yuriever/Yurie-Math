@@ -580,7 +580,7 @@
 
 * `#!wl powerExponentCollect` - powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.
 
-    * Info[Inactive]: avoid auto-expansion of integer base.
+    * Info[Inactive]: avoid auto-expansion of power factors with integer base.
 
     * Hint: if no exponent is specified, try to collect all power factors.
 
@@ -592,9 +592,11 @@
 
     * Info[base]: the pattern of base to match.
 
-* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric functions using periodicity.
+* `#!wl trigPhaseReduce` - trigPhaseReduce[vars..][expr]: reduce phase factors in trigonometric/exponential functions using periodicity.
 
-    * Info[vars]: the variables to consider for periodicity.
+    * Info[vars]: integer variables.
+
+* `#!wl trigFromExp` - trigFromExp[expr]: variant of ExpToTrig that only affects Exp.
 
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
