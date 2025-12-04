@@ -493,14 +493,14 @@ multiGammaReduceByBarnesLemma[s_][mg_multiGamma] :=
         numMinus =
             Cases[num,-s+b_.:>b,{1}];
         Which[
-            (*first Barnes lemma.*)
+            (* First Barnes lemma. *)
             Length[numPlus]===Length[numMinus]===2,
                 numRest =
                     num//DeleteCases[s+_.|-s+_.];
                 denomRest =
                     denom;
                 multiGammaReduceByFirstBarnesLemma[numPlus,numMinus,numRest,denomRest,mg,s],
-            (*second Barnes lemma.*)
+            (* Second Barnes lemma. *)
             Length[numPlus]===3&&Length[numMinus]===2,
                 denomPlus =
                     Cases[denom,s+a_.:>a,{1}];
