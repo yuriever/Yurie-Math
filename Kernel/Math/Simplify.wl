@@ -329,15 +329,13 @@ patternAndTransformation[pattern_,default_] :=
 focus[pattern_,operation_:Simplify][expr_] :=
     expr//ReplaceAll[{
         (head:pattern):>operation@head,
-        (head:pattern)[arg_]:>head@operation@arg,
-        (head:pattern)[args__]:>head@@Map[operation,{args}]
+        (head:pattern)[args___]:>head@@Map[operation,{args}]
     }];
 
 focus[pattern_,operation_,level_?levelQ][expr_] :=
     expr//Replace[#,{
         (head:pattern):>operation@head,
-        (head:pattern)[arg_]:>head@operation@arg,
-        (head:pattern)[args__]:>head@@Map[operation,{args}]
+        (head:pattern)[args___]:>head@@Map[operation,{args}]
     },level]&;
 
 

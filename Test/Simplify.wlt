@@ -92,11 +92,35 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = {Hold[1 + 1], a :> 1 + 1}
+    ,
+    {Hold[1 + 1], a :> 1 + 1}
+    ,
+    TestID->"[11] Simplify.nb"
+]
+
+VerificationTest[
+    focus[Hold, Simplify][expr]
+    ,
+    {Hold[2], a :> 1 + 1}
+    ,
+    TestID->"[12] Simplify.nb"
+]
+
+VerificationTest[
+    focus[RuleDelayed, Simplify][expr]
+    ,
+    {Hold[1 + 1], a :> 2}
+    ,
+    TestID->"[13] Simplify.nb"
+]
+
+VerificationTest[
     fracFocus[fracReduce[Simplify, Sqrt[1 - x]]][1 + Sqrt[1 + x]/Sqrt[1 - x]]
     ,
     1 + Sqrt[1 - x^2]/(1 - x)
     ,
-    TestID->"[11] Simplify.nb"
+    TestID->"[14] Simplify.nb"
 ]
 
 VerificationTest[
@@ -104,7 +128,7 @@ VerificationTest[
     ,
     (-1)^k*Cos[b]*Sin[a]
     ,
-    TestID->"[12] Simplify.nb"
+    TestID->"[15] Simplify.nb"
 ]
 
 VerificationTest[
@@ -112,7 +136,7 @@ VerificationTest[
     ,
     {Sin[a], (-1)^k*Sin[a], Sin[a], (-1)^k*Sin[a], Sin[a]}
     ,
-    TestID->"[13] Simplify.nb"
+    TestID->"[16] Simplify.nb"
 ]
 
 VerificationTest[
@@ -120,7 +144,7 @@ VerificationTest[
     ,
     {Cos[a], (-1)^k*Cos[a], Cos[a], (-1)^k*Cos[a], Cos[a]}
     ,
-    TestID->"[14] Simplify.nb"
+    TestID->"[17] Simplify.nb"
 ]
 
 VerificationTest[
@@ -128,7 +152,7 @@ VerificationTest[
     ,
     {Tan[a], Tan[a], Tan[a], Tan[a], Tan[a]}
     ,
-    TestID->"[15] Simplify.nb"
+    TestID->"[18] Simplify.nb"
 ]
 
 VerificationTest[
@@ -137,7 +161,7 @@ VerificationTest[
     ,
     {(-1)^n*E^(I*(a1 + a2 + a3)*Pi), (-1)^n*E^(I*(a1 + a2)*Pi), (-1)^n*E^(I*a1*Pi)}
     ,
-    TestID->"[16] Simplify.nb"
+    TestID->"[19] Simplify.nb"
 ]
 
 VerificationTest[
@@ -146,7 +170,7 @@ VerificationTest[
     ,
     {E^((1/2)*I*(a1 + a2 + a3)*Pi), E^((1/2)*I*(a1 + a2)*Pi), E^((I*a1*Pi)/2)}
     ,
-    TestID->"[17] Simplify.nb"
+    TestID->"[20] Simplify.nb"
 ]
 
 VerificationTest[
@@ -155,7 +179,7 @@ VerificationTest[
     ,
     {1, 1, 1, 1, 1/2, 1/2, 1/2, 1/2}
     ,
-    TestID->"[18] Simplify.nb"
+    TestID->"[21] Simplify.nb"
 ]
 
 VerificationTest[
@@ -164,7 +188,7 @@ VerificationTest[
     ,
     {c, C[1], c, C[1], c, C[1], c, C[1], c/2, C[1]/2, c/2, C[1]/2, c/2, C[1]/2, c/2, C[1]/2}
     ,
-    TestID->"[19] Simplify.nb"
+    TestID->"[22] Simplify.nb"
 ]
 
 VerificationTest[
@@ -173,7 +197,7 @@ VerificationTest[
     ,
     {1, 1, 2^(-a), 2^(-a), 1}
     ,
-    TestID->"[20] Simplify.nb"
+    TestID->"[23] Simplify.nb"
 ]
 
 VerificationTest[
@@ -182,7 +206,7 @@ VerificationTest[
     ,
     {C[1], C[1], C[1]/2^a, C[1]/2^a, C[1]}
     ,
-    TestID->"[21] Simplify.nb"
+    TestID->"[24] Simplify.nb"
 ]
 
 VerificationTest[
@@ -190,7 +214,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"[22] Simplify.nb"
+    TestID->"[25] Simplify.nb"
 ]
 
 VerificationTest[
@@ -198,7 +222,7 @@ VerificationTest[
     ,
     2^h
     ,
-    TestID->"[23] Simplify.nb"
+    TestID->"[26] Simplify.nb"
 ]
 
 VerificationTest[
@@ -206,7 +230,7 @@ VerificationTest[
     ,
     2^h
     ,
-    TestID->"[24] Simplify.nb"
+    TestID->"[27] Simplify.nb"
 ]
 
 VerificationTest[
