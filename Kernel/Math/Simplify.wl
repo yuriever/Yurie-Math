@@ -252,7 +252,7 @@ freeze[
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,OptionValue["DefaultTransformation"],level,expr],
-        "badInput",
+        "BadInput",
         HoldComplete[expr]&
     ];
 
@@ -264,7 +264,7 @@ freezeNegative[
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,{-#&,-#&},level,expr],
-        "badInput",
+        "BadInput",
         HoldComplete[expr]&
     ];
 
@@ -318,7 +318,7 @@ patternAndTransformation[(Rule|RuleDelayed)[pattern_,{fun_,funInv_}],{_,_}] :=
 patternAndTransformation[pattern_,default_] :=
     (
         Message[freeze::BadInput,pattern,default];
-        Throw[Null,"badInput"]
+        Throw[Null,"BadInput"]
     );
 
 
