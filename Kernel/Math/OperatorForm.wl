@@ -76,12 +76,15 @@ rep::usage =
     "rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.";
 
 repdeep::usage =
-    "repdeep[rules][level][expr]: operator form of Replace with the rules being flattened."<>
+    "repdeep[rules, level][expr]: operator form of Replace with the rules being flattened."<>
     "\n"<>
     "Default[level]: All.";
 
 repcheck::usage =
-    "repcheck[rules, sametest][expr]: variant of rep with the rules being checked.";
+    "repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.";
+
+replim::usage =
+    "replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
 
 
 (* ::Subsection:: *)
@@ -309,27 +312,66 @@ rep[rules___][expr_] :=
     ReplaceAll[expr,Flatten[{rules}]];
 
 
-repdeep[rules___][level_:All][expr_] :=
+repdeep[rules___,level:_?levelQ:All][expr_] :=
     Replace[expr,Flatten[{rules}],level];
 
 
 repcheck::SuspiciousRule =
     "The rule `1` -> `2` is suspicious to equal.";
 
+repcheck::UncheckedRule =
+    "There are unchecked rules, possibly due to RuleDelayed or Condition.";
+
 repcheck[rules___,sameTest:Except[_Rule|_RuleDelayed|_List|Null]:Automatic][expr_] :=
-    Module[{},
-        {rules}//ReplaceAll[Verbatim[Rule][lhs_,rhs_]:>repCheckEquality[lhs,rhs,sameTest]];
-        ReplaceAll[expr,Flatten[{rules}]]
+    With[{
+            rule = separateSimpleRule[rules]
+        },
+        repCheckReportComplexRule[rule["Complex"]];
+
+        Scan[repCheckEquality[sameTest],rule["Simple"]];
+
+        ReplaceAll[expr,rule["All"]]
     ];
 
-repCheckEquality[lhs_,rhs_,Automatic] :=
+
+replim[rules___][expr_] :=
+    With[{
+            rule = separateSimpleRule[rules]
+        },
+        Quiet@Check[
+            ReplaceAll[expr,rule["All"]],
+            expr//ReplaceAll[rule["Complex"]]//Limit[#,rule["Simple"]]&,
+            {Infinity::indet,Power::infy}
+        ]
+    ];
+
+
+repCheckReportComplexRule[ruleList_List] :=
+    If[ruleList=!={},
+        Message[repcheck::UncheckedRule];
+    ];
+
+repCheckEquality[Automatic][Rule[lhs_,rhs_]] :=
     If[Simplify[lhs/rhs]=!=1&&Simplify[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
     ];
 
-repCheckEquality[lhs_,rhs_,sameTest_] :=
+repCheckEquality[sameTest_][Rule[lhs_,rhs_]] :=
     If[sameTest[rhs/lhs]=!=1&&sameTest[lhs-rhs]=!=0,
         Message[repcheck::SuspiciousRule,lhs,rhs];
+    ];
+
+
+
+separateSimpleRule[rules___] :=
+    With[{
+            ruleList = Flatten[{rules}]
+        },
+        <|
+            "Simple"->Cases[ruleList,Verbatim[Rule][Except[_Condition],Except[_Condition]]],
+            "Complex"->DeleteCases[ruleList,Verbatim[Rule][Except[_Condition],Except[_Condition]]],
+            "All"->ruleList
+        |>
     ];
 
 
