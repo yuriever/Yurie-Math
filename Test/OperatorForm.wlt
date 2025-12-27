@@ -187,11 +187,39 @@ VerificationTest[
 ]
 
 VerificationTest[
+    repcheck[{{x -> y}, z :> w}][x]
+    ,
+    Quiet[y]
+    ,
+    {Yurie`Math`repcheck::UncheckedRule,Yurie`Math`repcheck::SuspiciousRule}
+    ,
+    TestID->"[22] OperatorForm.nb"
+]
+
+VerificationTest[
     repcheck[Sin[x] -> Sin[2*n*Pi + x], SSA[isN[n]]][Sin[x]]
     ,
     Sin[2*n*Pi + x]
     ,
-    TestID->"[22] OperatorForm.nb"
+    TestID->"[23] OperatorForm.nb"
+]
+
+VerificationTest[
+    rep[x -> 0][Sin[x]/x]
+    ,
+    Quiet[Indeterminate]
+    ,
+    {Power::infy,Infinity::indet}
+    ,
+    TestID->"[24] OperatorForm.nb"
+]
+
+VerificationTest[
+    replim[x -> 0, y :> z][(Sin[x]/x)*y]
+    ,
+    z
+    ,
+    TestID->"[25] OperatorForm.nb"
 ]
 
 VerificationTest[

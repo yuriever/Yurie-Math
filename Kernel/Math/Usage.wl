@@ -310,10 +310,13 @@ rep::usage =
     "rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.";
 
 repdeep::usage =
-    StringJoin["repdeep[rules][level][expr]: operator form of Replace with the rules being flattened.", "\n", "Default[level]: All."];
+    StringJoin["repdeep[rules, level][expr]: operator form of Replace with the rules being flattened.", "\n", "Default[level]: All."];
 
 repcheck::usage =
-    "repcheck[rules, sametest][expr]: variant of rep with the rules being checked.";
+    "repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.";
+
+replim::usage =
+    "replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
 
 part::usage =
     "Sketch: Part.";

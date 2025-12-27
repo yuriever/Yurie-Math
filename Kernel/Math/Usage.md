@@ -376,11 +376,13 @@
 
 * `#!wl rep` - rep[rules][expr]: operator form of ReplaceAll with the rules being flattened.
 
-* `#!wl repdeep` - repdeep[rules][level][expr]: operator form of Replace with the rules being flattened.
+* `#!wl repdeep` - repdeep[rules, level][expr]: operator form of Replace with the rules being flattened.
 
     * Default[level]: All.
 
-* `#!wl repcheck` - repcheck[rules, sametest][expr]: variant of rep with the rules being checked.
+* `#!wl repcheck` - repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.
+
+* `#!wl replim` - replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.
 
 * `#!wl part` - Sketch: Part.
 
