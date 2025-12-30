@@ -133,6 +133,9 @@ diffComm::usage =
     "\n"<>
     "Sketch: -(X[Y[#]]-Y[X[#]])&.";
 
+diffSymbolicOrder::usage =
+    "diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.";
+
 
 INTCancel::usage =
     "INTCancel[vars][expr]: cancel the possible INT head in the expression.";
@@ -842,6 +845,17 @@ getDiffReplaceRule[head_,ruleList_List] :=
 
 diffComm[x_,y_] :=
     -(x[y[#]]-y[x[#]])&;
+
+
+(* ::Subsubsection:: *)
+(*diffSymbolicOrder*)
+
+
+diffSymbolicOrder[x_,n_][expr_] :=
+    PiecewiseExpand[
+        System`Private`SymbolicD[expr,x,n],
+        n>=1
+    ];
 
 
 (* ::Subsubsection:: *)
