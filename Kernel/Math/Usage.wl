@@ -70,6 +70,9 @@ diffReplace::usage =
 diffComm::usage =
     StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
 
+diffSymbolicOrder::usage =
+    "diffSymbolicOrder[fun, {x, n}]: take the derivative with symbolic order.";
+
 INTCancel::usage =
     "INTCancel[vars][expr]: cancel the possible INT head in the expression.";
 

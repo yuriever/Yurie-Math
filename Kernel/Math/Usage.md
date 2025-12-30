@@ -88,6 +88,8 @@
 
     * Sketch: -(X[Y[#]]-Y[X[#]])&.
 
+* `#!wl diffSymbolicOrder` - diffSymbolicOrder[fun, {x, n}]: take the derivative with symbolic order.
+
 * `#!wl INTCancel` - INTCancel[vars][expr]: cancel the possible INT head in the expression.
 
 * `#!wl SUMCancel` - SUMCancel[vars][expr]: cancel the possible SUM head in the expression.
