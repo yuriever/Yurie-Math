@@ -209,8 +209,6 @@ ruleCombineExpr =
         Abs[x_]^a_:>
             Abs[x^a],
         Log[Exp[x_]]:>
-            x,
-        f_[g_[x_]]/;Simplify[g[f[_]]===_]:>
             x
     };
 

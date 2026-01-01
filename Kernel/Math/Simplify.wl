@@ -580,16 +580,16 @@ getPhaseSign[coefficient_,sign:Except[Automatic],assume_]/;FreeQ[coefficient,sig
 (*powerSeparate*)
 
 
-powerSeparate[All|PatternSequence[]][expr_Power] :=
+powerSeparate[All|PatternSequence[]|Verbatim[Blank[]]][expr_Power] :=
     {expr,1};
 
-powerSeparate[All|PatternSequence[]][expr_Times] :=
+powerSeparate[All|PatternSequence[]|Verbatim[Blank[]]][expr_Times] :=
     {
         Discard[expr,FreeQ[_Power]],
         Select[expr,FreeQ[_Power]]
     };
 
-powerSeparate[All|PatternSequence[]][expr_] :=
+powerSeparate[All|PatternSequence[]|Verbatim[Blank[]]][expr_] :=
     {1,expr};
 
 
@@ -635,35 +635,21 @@ powerExponentCollect[exponents___,opts:OptionsPattern[]][expr_] :=
         powerExponentFocus[Simplify];
 
 
-powerExponentCollectKernel[All|PatternSequence[]][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[All]];
+powerExponentCollectKernel[All|PatternSequence[]|Verbatim[Blank[]]][expr_] :=
+    expr//ReplaceRepeated[powerExponentCollectRule[_]];
 
 powerExponentCollectKernel[exponent_][expr_] :=
-    expr//ReplaceRepeated[ruleCollectPower[exponent]];
+    expr//ReplaceRepeated[powerExponentCollectRule[exponent]];
 
 powerExponentCollectKernel[exponent_,rest__][expr_] :=
     expr//powerExponentCollectKernel[exponent]//powerExponentCollectKernel[rest];
 
 
-ruleCollectPower[exponent_] :=
-    ruleCollectPower[exponent] =
-        {
-            IgnoringInactive[(x_^a_)^b_]:>
-                x^(a*b),
-            IgnoringInactive[x_^(exponent*k1_.+rest1_.)*y_^(exponent*k2_.+rest2_.)]:>
-                With[{base = Simplify[x^k1*y^k2]},
-                    If[IntegerQ[x]||IntegerQ[y],
-                        Inactive[Power][base,exponent],
-                        base^exponent
-                    ]
-                ]*x^rest1*y^rest2
-        };
-
-ruleCollectPower[All] =
+powerExponentCollectRule[p_] :=
     {
         IgnoringInactive[(x_^a_)^b_]:>
             x^(a*b),
-        IgnoringInactive[x_^(exponent_*k1_.+rest1_.)*y_^(exponent_*k2_.+rest2_.)]:>
+        IgnoringInactive[x_^((exponent:p)*k1_.+rest1_.)*y_^((exponent:p)*k2_.+rest2_.)]:>
             With[{base = Simplify[x^k1*y^k2]},
                 If[IntegerQ[x]||IntegerQ[y],
                     Inactive[Power][base,exponent],
@@ -744,11 +730,12 @@ trigPhaseReduce[vars__][expr_] :=
     expr//trigFocus[Expand]//trigPhaseReduceKernel[vars]//trigFocus[Simplify];
 
 
-trigPhaseReduceKernel[var_][expr_] :=
-    expr//ReplaceAll[ruleTrigPhase[var]]//ReplaceAll[(-1)^(k_.*var)/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
+trigPhaseReduceKernel[varP_][expr_] :=
+    expr//ReplaceAll[trigPhaseReduceRule[varP]]//
+        ReplaceAll[(-1)^(k_.*(var:varP))/;IntegerQ[k]:>(-1)^(Mod[k,2]*var)];
 
-trigPhaseReduceKernel[var_,rest__][expr_] :=
-    expr//trigPhaseReduceKernel[var]//trigPhaseReduceKernel[rest];
+trigPhaseReduceKernel[varP_,rest__][expr_] :=
+    expr//trigPhaseReduceKernel[varP]//trigPhaseReduceKernel[rest];
 
 
 trigFocus[operation_:Simplify][expr_] :=
@@ -758,39 +745,56 @@ trigFocus[operation_:Simplify][expr_] :=
     }];
 
 
-ruleTrigPhase[var_] :=
-    ruleTrigPhase[var] =
-        {
-            (h:Sin|Cos|Csc|Sec)[k_.*π*var+rest_.]/;IntegerQ[k]:>
-                (-1)^(Mod[k,2]*var)*h[rest],
-            (h:Tan|Cot)[k_.*π*var+rest_.]/;IntegerQ[k]:>
-                h[rest],
-            Power[E,Complex[0,k_]*π*var+rest_.]/;IntegerQ[k]:>
-                (-1)^(Mod[k,2]*var)*Power[E,rest]
-        };
+trigPhaseReduceRule[p_] :=
+    {
+        (h:Sin|Cos|Csc|Sec)[k_.*π*(var:p)+rest_.]/;IntegerQ[k]:>
+            (-1)^(Mod[k,2]*var)*h[rest],
+        (h:Tan|Cot)[k_.*π*(var:p)+rest_.]/;IntegerQ[k]:>
+            h[rest],
+        Power[E,Complex[0,k_]*π*(var:p)+rest_.]/;IntegerQ[k]:>
+            (-1)^(Mod[k,2]*var)*Power[E,rest]
+    };
 
 
-trigFromExp[exponentP:_:Blank[]][expr_] :=
-    expr//ReplaceAll[{
-        Power[E,exponent:exponentP]:>Cos@Cancel[exponent/I]+I*Sin@Cancel[exponent/I]
-    }];
+(* ::Subsubsection:: *)
+(*trigFromExp*)
+
+
+trigFromExp[All|PatternSequence[]|Verbatim[Blank[]]][expr_] :=
+    expr//ReplaceAll[trigFromExpRule[_]];
+
+trigFromExp[exponentP_][expr_] :=
+    expr//ReplaceAll[trigFromExpRule[exponentP]];
+
+
+trigFromExpRule[p_] :=
+    {
+        Power[E,exponent:p]:>Cos@Cancel[exponent/I]+I*Sin@Cancel[exponent/I]
+    };
 
 
 (* ::Subsection:: *)
 (*DiracDelta*)
 
 
-deltaReduce[expr_] :=
-    expr//ReplaceRepeated[{
-        x_*DiracDelta[x_]:>
+deltaReduce[All|PatternSequence[]|Verbatim[Blank[]]][expr_] :=
+    expr//ReplaceRepeated[deltaReduceRule[_]];
+
+deltaReduce[varP_][expr_] :=
+    expr//ReplaceRepeated[deltaReduceRule[varP]];
+
+
+deltaReduceRule[p_] :=
+    {
+        (x:p)*DiracDelta[x:p]:>
             0,
-        x_*Derivative[m_][DiracDelta][x_]:>
+        (x:p)*Derivative[m_][DiracDelta][x:p]:>
             -m*Derivative[m-1][DiracDelta][x],
-        Power[x_,n_]*DiracDelta[x_]/;Simplify[n>=1]:>
+        Power[x:p,n_]*DiracDelta[x:p]/;Simplify[n>=1]:>
             0,
-        Power[x_,n_]*Derivative[m_][DiracDelta][x_]/;Simplify[n>=1&&m>=1]:>
+        Power[x:p,n_]*Derivative[m_][DiracDelta][x:p]/;Simplify[n>=1&&m>=1]:>
             -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]
-    }];
+    };
 
 
 (* ::Subsection:: *)
