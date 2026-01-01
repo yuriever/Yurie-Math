@@ -472,11 +472,43 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = ((w^a)^b*((w*(x - y))/z)^(a + b)*z^(2*a))/((-x + y)/z)^b; 
+    ,
+    Null
+    ,
+    TestID->"[57] Simplify-power.nb"
+]
+
+VerificationTest[
+    powerExponentCollect[][expr]
+    ,
+    (-w^(1 + a))^b*(w*(x - y)*z)^a
+    ,
+    TestID->"[58] Simplify-power.nb"
+]
+
+VerificationTest[
+    expr = a^((1/2)*(A + 2*n))*b^((B + n)/2)*c^n*d^m
+    ,
+    a^((1/2)*(A + 2*n))*b^((B + n)/2)*c^n*d^m
+    ,
+    TestID->"[59] Simplify-power.nb"
+]
+
+VerificationTest[
+    powerExponentCollect[][expr]
+    ,
+    Sqrt[a^A*b^B]*(a*Sqrt[b]*c)^n*d^m
+    ,
+    TestID->"[60] Simplify-power.nb"
+]
+
+VerificationTest[
     expr = {(I*ε - A)^λ, ((-I)*ε - A)^λ, (s*I*ε - A)^λ, (s*y*I*ε - A)^λ, ((±I)*ε - A)^λ, ((∓I)*ε - A)^λ, (y*(±I)*ε - A)^λ, (y*(∓I)*ε - A)^λ, (s*ε*I + ε*I*s*a - A - B)^λ}
     ,
     {(-A + I*ε)^λ, (-A - I*ε)^λ, (-A + I*s*ε)^λ, (-A + I*s*y*ε)^λ, (-A + ε*(±I))^λ, (-A + ε*(∓I))^λ, (-A + y*ε*(±I))^λ, (-A + y*ε*(∓I))^λ, (-A - B + I*s*ε + I*a*s*ε)^λ}
     ,
-    TestID->"[57] Simplify-power.nb"
+    TestID->"[61] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -484,7 +516,7 @@ VerificationTest[
     ,
     {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*λ*Sign[s]), A^λ*E^(I*Pi*λ*Sign[s*y]), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)*Sign[y]), A^λ*E^(Pi*λ*(∓I)*Sign[y]), (A + B)^λ*E^(I*Pi*λ*Sign[s + a*s])}
     ,
-    TestID->"[58] Simplify-power.nb"
+    TestID->"[62] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -492,7 +524,7 @@ VerificationTest[
     ,
     {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(I*Pi*s*λ*Sign[y]), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)*Sign[y]), A^λ*E^(Pi*λ*(∓I)*Sign[y]), (A + B)^λ*E^(I*Pi*s*λ*Sign[1 + a])}
     ,
-    TestID->"[59] Simplify-power.nb"
+    TestID->"[63] Simplify-power.nb"
 ]
 
 VerificationTest[
@@ -500,7 +532,7 @@ VerificationTest[
     ,
     {A^λ*E^(I*Pi*λ), A^λ/E^(I*Pi*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(I*Pi*s*λ), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), A^λ*E^(Pi*λ*(±I)), A^λ*E^(Pi*λ*(∓I)), (A + B)^λ*E^(I*Pi*s*λ)}
     ,
-    TestID->"[60] Simplify-power.nb"
+    TestID->"[64] Simplify-power.nb"
 ]
 
 VerificationTest[
