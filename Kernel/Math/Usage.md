@@ -32,19 +32,9 @@
 
     * Info[signs]: Jacobian signs.
 
-    * Default["Solution"]: 1.
-
-    * Default["ShowSolution"]: False.
-
-    * Default["ShowJacobian"]: False.
-
 * `#!wl diffChange` - diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations.
 
     * Info[funs]: list of functions to transform.
-
-    * Default["Solution"]: 1.
-
-    * Default["ShowSolution"]: False.
 
 * `#!wl IBP` - IBP[fun][expr]: perform integration by parts.
 
@@ -60,8 +50,6 @@
 
     * Default[post]: Identity.
 
-    * Default["CheckLinearity"]: True.
-
 * `#!wl PDCollect` - PDCollect[args][expr]: collect the terms with respect to PD[\_\_].
 
     * Info[args]: inherited from Collect.
@@ -71,8 +59,6 @@
     * Info[post]: post-operation applied to the coefficients.
 
     * Default[post]: Identity.
-
-    * Default["CheckLinearity"]: True.
 
 * `#!wl diffCollect` - diffCollect[fun, args][expr]: collect the terms with respect to Derivative[\_\_][\_][\_\_].
 
@@ -88,7 +74,7 @@
 
     * Sketch: -(X[Y[#]]-Y[X[#]])&.
 
-* `#!wl diffSymbolicOrder` - diffSymbolicOrder[fun, {x, n}]: take the derivative with symbolic order.
+* `#!wl diffSymbolicOrder` - diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.
 
 * `#!wl INTCancel` - INTCancel[vars][expr]: cancel the possible INT head in the expression.
 
@@ -97,8 +83,6 @@
 ## DLMF.wl
 
 * `#!wl DLMF` - DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.
-
-    * Default["IgnoreCondition"]: False.
 
 * `#!wl DLMFAs` - DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption.
 
@@ -110,11 +94,7 @@
 
 * `#!wl DLMFRule` - DLMFRule[rules, opts]: return the DLMF rules.
 
-    * Default["IgnoreCondition"]: False.
-
 * `#!wl DLMFRuleShow` - DLMFRuleShow[rules, opts]: show the DLMF rules without context marker.
-
-    * Default["IgnoreCondition"]: False.
 
 ## Dye.wl
 
@@ -144,10 +124,6 @@
 
 * `#!wl gammaFrom` - gammaFrom[expr, opts]: expand everything to Gamma functions.
 
-    * Default["Transformation"]: Automatic.
-
-    * Default["ActivateGamma"]: True.
-
 * `#!wl gammaSeparate` - gammaSeparate[expr]: separate a product into Gamma functions and the rest.
 
 * `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.
@@ -165,10 +141,6 @@
     * Value["ShowPole"]: {True, False, Full}.
 
     * Default[sign]: 1.
-
-    * Default["SimplePole"]: True.
-
-    * Default["ShowPole"]: True.
 
 * `#!wl multiGamma` - multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator.
 

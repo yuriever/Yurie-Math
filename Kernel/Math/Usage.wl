@@ -38,10 +38,10 @@ summation::usage =
     StringJoin["summation[args][expr]: operator form of Sum.", "\n", "Default[GenerateConditions]: False."];
 
 integrationChange::usage =
-    StringJoin["integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.", "\n", "Info[signs]: Jacobian signs.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False.", "\n", "Default[\"ShowJacobian\"]: False."];
+    StringJoin["integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals.", "\n", "Info[signs]: Jacobian signs."];
 
 diffChange::usage =
-    StringJoin["diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations.", "\n", "Info[funs]: list of functions to transform.", "\n", "Default[\"Solution\"]: 1.", "\n", "Default[\"ShowSolution\"]: False."];
+    StringJoin["diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations.", "\n", "Info[funs]: list of functions to transform."];
 
 IBP::usage =
     StringJoin["IBP[fun][expr]: perform integration by parts.", "\n", "IBP[fun, vars][expr]: perform integration by parts with respect to specific variables."];
@@ -53,13 +53,13 @@ jacobianDet::usage =
     "jacobianDet[funList, varList]: Jacobian determinant.";
 
 PDCoefficient::usage =
-    StringJoin["PDCoefficient[post, opts][expr]: extract the coefficients of PD[__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
+    StringJoin["PDCoefficient[post, opts][expr]: extract the coefficients of PD[__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity."];
 
 PDCollect::usage =
     StringJoin["PDCollect[args][expr]: collect the terms with respect to PD[__].", "\n", "Info[args]: inherited from Collect."];
 
 diffCoefficient::usage =
-    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity.", "\n", "Default[\"CheckLinearity\"]: True."];
+    StringJoin["diffCoefficient[fun, post, opts][expr]: extract the coefficients of Derivative[__][_][__].", "\n", "Info[post]: post-operation applied to the coefficients.", "\n", "Default[post]: Identity."];
 
 diffCollect::usage =
     StringJoin["diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__].", "\n", "diffCollect[funList, args][expr]: collect terms for multiple functions.", "\n", "Info[args]: inherited from Collect."];
@@ -71,7 +71,7 @@ diffComm::usage =
     StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
 
 diffSymbolicOrder::usage =
-    "diffSymbolicOrder[fun, {x, n}]: take the derivative with symbolic order.";
+    "diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.";
 
 INTCancel::usage =
     "INTCancel[vars][expr]: cancel the possible INT head in the expression.";
@@ -85,7 +85,7 @@ SUMCancel::usage =
 
 
 DLMF::usage =
-    StringJoin["DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.", "\n", "Default[\"IgnoreCondition\"]: False."];
+    "DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.";
 
 DLMFAs::usage =
     StringJoin["DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption.", "\n", "Info[as]: the assumption."];
@@ -94,10 +94,10 @@ DLMFAsTrue::usage =
     StringJoin["DLMFAsTrue[rules][expr]: simplify the expression by the DLMF rules ignoring all the conditions.", "\n", "Hint: this is equivalent to DLMF with \"IgnoreCondition\"->True."];
 
 DLMFRule::usage =
-    StringJoin["DLMFRule[rules, opts]: return the DLMF rules.", "\n", "Default[\"IgnoreCondition\"]: False."];
+    "DLMFRule[rules, opts]: return the DLMF rules.";
 
 DLMFRuleShow::usage =
-    StringJoin["DLMFRuleShow[rules, opts]: show the DLMF rules without context marker.", "\n", "Default[\"IgnoreCondition\"]: False."];
+    "DLMFRuleShow[rules, opts]: show the DLMF rules without context marker.";
 
 
 (* ::Subsubsection:: *)
@@ -128,13 +128,13 @@ gammaSimplify::usage =
     StringJoin["gammaSimplify[expr]: simplify Gamma functions in the expression.", "\n", "Sketch: Developer`GammaSimplify."];
 
 gammaFrom::usage =
-    StringJoin["gammaFrom[expr, opts]: expand everything to Gamma functions.", "\n", "Default[\"Transformation\"]: Automatic.", "\n", "Default[\"ActivateGamma\"]: True."];
+    "gammaFrom[expr, opts]: expand everything to Gamma functions.";
 
 gammaSeparate::usage =
     "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
 
 gammaTakeResidue::usage =
-    StringJoin["gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Info[index]: the index of the poles.", "\n", "Info[gamma]: the argument of the Gamma function.", "\n", "Info[sign]: the direction of contour.", "\n", "Value[sign]: {1, -1, Left, Right}.", "\n", "Value[\"ShowPole\"]: {True, False, Full}.", "\n", "Default[sign]: 1.", "\n", "Default[\"SimplePole\"]: True.", "\n", "Default[\"ShowPole\"]: True."];
+    StringJoin["gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Info[index]: the index of the poles.", "\n", "Info[gamma]: the argument of the Gamma function.", "\n", "Info[sign]: the direction of contour.", "\n", "Value[sign]: {1, -1, Left, Right}.", "\n", "Value[\"ShowPole\"]: {True, False, Full}.", "\n", "Default[sign]: 1."];
 
 multiGamma::usage =
     StringJoin["multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator.", "\n", "Info[num]: list of arguments for Gamma functions in the numerator.", "\n", "Info[denom]: list of arguments for Gamma functions in the denominator."];

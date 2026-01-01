@@ -17,9 +17,7 @@ Needs["Yurie`Math`Constant`"];
 
 
 DLMF::usage =
-    "DLMF[rules, opts][expr]: simplify the expression by the DLMF rules."<>
-    "\n"<>
-    "Default[\"IgnoreCondition\"]: False.";
+    "DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.";
 
 DLMFAs::usage =
     "DLMFAs[rules, as][expr]: simplify the expression by the DLMF rules under the assumption."<>
@@ -33,14 +31,10 @@ DLMFAsTrue::usage =
 
 
 DLMFRule::usage =
-    "DLMFRule[rules, opts]: return the DLMF rules."<>
-    "\n"<>
-    "Default[\"IgnoreCondition\"]: False.";
+    "DLMFRule[rules, opts]: return the DLMF rules.";
 
 DLMFRuleShow::usage =
-    "DLMFRuleShow[rules, opts]: show the DLMF rules without context marker."<>
-    "\n"<>
-    "Default[\"IgnoreCondition\"]: False.";
+    "DLMFRuleShow[rules, opts]: show the DLMF rules without context marker.";
 
 
 (* ::Section:: *)

@@ -22,11 +22,7 @@ gammaSimplify::usage =
     "Sketch: Developer`GammaSimplify.";
 
 gammaFrom::usage =
-    "gammaFrom[expr, opts]: expand everything to Gamma functions."<>
-    "\n"<>
-    "Default[\"Transformation\"]: Automatic."<>
-    "\n"<>
-    "Default[\"ActivateGamma\"]: True.";
+    "gammaFrom[expr, opts]: expand everything to Gamma functions.";
 
 gammaSeparate::usage =
     "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
@@ -46,11 +42,7 @@ gammaTakeResidue::usage =
     "\n"<>
     "Value[\"ShowPole\"]: {True, False, Full}."<>
     "\n"<>
-    "Default[sign]: 1."<>
-    "\n"<>
-    "Default[\"SimplePole\"]: True."<>
-    "\n"<>
-    "Default[\"ShowPole\"]: True.";
+    "Default[sign]: 1.";
 
 
 multiGamma::usage =

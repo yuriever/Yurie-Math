@@ -52,23 +52,13 @@ summation::usage =
 integrationChange::usage =
     "integrationChange[equations, oldVars, newVars, signs][expr]: change variables in integrals."<>
     "\n"<>
-    "Info[signs]: Jacobian signs."<>
-    "\n"<>
-    "Default[\"Solution\"]: 1."<>
-    "\n"<>
-    "Default[\"ShowSolution\"]: False."<>
-    "\n"<>
-    "Default[\"ShowJacobian\"]: False.";
+    "Info[signs]: Jacobian signs.";
 
 
 diffChange::usage =
     "diffChange[equations, oldVars, newVars, funs][expr]: change variables in differential equations."<>
     "\n"<>
-    "Info[funs]: list of functions to transform."<>
-    "\n"<>
-    "Default[\"Solution\"]: 1."<>
-    "\n"<>
-    "Default[\"ShowSolution\"]: False.";
+    "Info[funs]: list of functions to transform.";
 
 
 (* ::Subsection:: *)
@@ -97,9 +87,7 @@ PDCoefficient::usage =
     "\n"<>
     "Info[post]: post-operation applied to the coefficients."<>
     "\n"<>
-    "Default[post]: Identity."<>
-    "\n"<>
-    "Default[\"CheckLinearity\"]: True.";
+    "Default[post]: Identity.";
 
 PDCollect::usage =
     "PDCollect[args][expr]: collect the terms with respect to PD[__]."<>
@@ -112,9 +100,7 @@ diffCoefficient::usage =
     "\n"<>
     "Info[post]: post-operation applied to the coefficients."<>
     "\n"<>
-    "Default[post]: Identity."<>
-    "\n"<>
-    "Default[\"CheckLinearity\"]: True.";
+    "Default[post]: Identity.";
 
 diffCollect::usage =
     "diffCollect[fun, args][expr]: collect the terms with respect to Derivative[__][_][__]."<>
