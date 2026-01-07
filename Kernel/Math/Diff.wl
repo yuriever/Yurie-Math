@@ -117,7 +117,7 @@ diffReplace::usage =
 diffComm::usage =
     "diffComm[X, Y]: compute the commutator of differential operators."<>
     "\n"<>
-    "Sketch: -(X[Y[#]]-Y[X[#]])&.";
+    "Sketch: sign*(X[Y[#]]-Y[X[#]])&.";
 
 diffSymbolicOrder::usage =
     "diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.";
@@ -840,8 +840,17 @@ getDiffReplaceRule[head_,ruleList_List] :=
 (*diffComm*)
 
 
-diffComm[x_,y_] :=
-    -(x[y[#]]-y[x[#]])&;
+diffComm//Options = {
+    "Sign"->-1
+};
+
+
+diffComm[x_,y_,opts:OptionsPattern[]] :=
+    diffCommKernel[x,y,OptionValue["Sign"]];
+
+
+diffCommKernel[x_,y_,sign_] :=
+    sign*(x[y[#]]-y[x[#]])&;
 
 
 (* ::Subsubsection:: *)

@@ -72,7 +72,7 @@
 
 * `#!wl diffComm` - diffComm[X, Y]: compute the commutator of differential operators.
 
-    * Sketch: -(X[Y[#]]-Y[X[#]])&.
+    * Sketch: sign*(X[Y[#]]-Y[X[#]])&.
 
 * `#!wl diffSymbolicOrder` - diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.
 

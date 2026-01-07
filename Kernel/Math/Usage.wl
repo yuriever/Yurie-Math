@@ -68,7 +68,7 @@ diffReplace::usage =
     StringJoin["diffReplace[fun->res...]: replace the derivatives of the function.", "\n", "diffReplace[fun->res..., head]: prevent the evaluation of symbolic derivatives."];
 
 diffComm::usage =
-    StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: -(X[Y[#]]-Y[X[#]])&."];
+    StringJoin["diffComm[X, Y]: compute the commutator of differential operators.", "\n", "Sketch: sign*(X[Y[#]]-Y[X[#]])&."];
 
 diffSymbolicOrder::usage =
     "diffSymbolicOrder[x, n][fun]: take the derivative with symbolic order.";

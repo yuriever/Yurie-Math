@@ -2,9 +2,10 @@
  "integrationChange" -> {0, 0, 0, {"Solution", "ShowSolution", 
     "ShowJacobian"}, {"Solution", "ShowSolution", "ShowJacobian"}, 
    {"Solution", "ShowSolution", "ShowJacobian"}}, 
- "diffChange" -> {0, 0, 0, 0, {"Solution", "ShowSolution"}, 
-   {"Solution", "ShowSolution"}}, "diffCoefficient" -> 
-  {0, {"CheckLinearity"}}, "PDCoefficient" -> {{"CheckLinearity"}}, 
+ "diffComm" -> {0, 0, {"Sign"}}, "diffChange" -> 
+  {0, 0, 0, 0, {"Solution", "ShowSolution"}, {"Solution", "ShowSolution"}}, 
+ "diffCoefficient" -> {0, {"CheckLinearity"}}, 
+ "PDCoefficient" -> {{"CheckLinearity"}}, 
  "gammaFrom" -> {0, {"Transformation", "ActivateGamma"}}, 
  "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole"}, 
    {"SimplePole", "ShowPole"}}, "labelConvert" -> {0, 0, {"LabelType"}}, 
