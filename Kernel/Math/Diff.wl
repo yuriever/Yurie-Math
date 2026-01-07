@@ -489,14 +489,14 @@ integrateChangeStripList[list_] :=
 
 
 showSolutionJacobian[True,False][solList_,jacobianList_] :=
-    Print@Grid[
+    Echo@Grid[
         Transpose[{solList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
     ];
 
 showSolutionJacobian[False,True][solList_,jacobianList_] :=
-    Print@Grid[
+    Echo@Grid[
         Transpose[{jacobianList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
@@ -506,7 +506,7 @@ showSolutionJacobian[False,False][solList_,jacobianList_] :=
     Null;
 
 showSolutionJacobian[True,True][solList_,jacobianList_] :=
-    Print@Grid[
+    Echo@Grid[
         Transpose[{solList,jacobianList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
