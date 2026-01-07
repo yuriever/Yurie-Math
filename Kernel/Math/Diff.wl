@@ -377,58 +377,53 @@ integrationChange[eqs_,oldVars_,newVars_,signs_,opts:OptionsPattern[]][expr_] :=
     integrateChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],prepareList[signs],opts];
 
 
-integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,signOfJacobianList1_List,opts:OptionsPattern[integrationChange]] :=
+integrateChangeKernel[expr_,eqList_List,oldList_List,newList_List,jacSignList_List,opts:OptionsPattern[integrationChange]] :=
     Module[{
             res,
-            oldToNewList,jacobianList,newExprList,signOfJacobianList,
-            whichSolution = OptionValue[integrationChange,{opts},"Solution"],
-            ifShowSolution = OptionValue[integrationChange,{opts},"ShowSolution"],
-            ifShowJacobian = OptionValue[integrationChange,{opts},"ShowJacobian"]
+            oldToNewList,jacSignList1,jacobianList,newExprList,
+            whichSol = OptionValue[integrationChange,{opts},"Solution"],
+            ifShowSol = OptionValue[integrationChange,{opts},"ShowSolution"],
+            ifShowJac = OptionValue[integrationChange,{opts},"ShowJacobian"]
         },
         oldToNewList =
-            solveKernel[oldList,whichSolution,True][eqList];
-        signOfJacobianList =
-            getSignOfJacobianList[signOfJacobianList1,Length[oldToNewList]];
+            solveKernel[oldList,whichSol,True][eqList];
+        jacSignList1 =
+            intcJacobianSignList[jacSignList,Length[oldToNewList]];
         jacobianList =
-            getJacobianList[oldList,newList,oldToNewList];
+            intcJacobianList[oldList,newList,oldToNewList];
         newExprList =
             oldToNewList//Map[ReplaceAll[expr,#]&];
         res =
-            MapThread[Times,{newExprList,jacobianList,signOfJacobianList}]//
-                integrateChangeConvertINT[oldList,newList]//
-                integrateChangeStripList;
-        showSolutionJacobian[ifShowSolution,ifShowJacobian][oldToNewList,jacobianList];
+            MapThread[Times,{newExprList,jacobianList,jacSignList1}]//
+                intcConvertINT[oldList,newList]//
+                intcStripList;
+        intcShowSolutionJacobian[ifShowSol,ifShowJac][oldToNewList,jacobianList];
         res
     ]//Catch;
 
 
-diffChange[eqList_,oldList_,newList_,funList_,opts:OptionsPattern[]][expr_] :=
-    diffChangeKernel[expr,prepareList[eqList],prepareList[oldList],prepareList[newList],prepareList[funList],opts];
+diffChange[eqs_,oldVars_,newVars_,funs_,opts:OptionsPattern[]][expr_] :=
+    diffChangeKernel[expr,prepareList[eqs],prepareList[oldVars],prepareList[newVars],prepareList[funs],opts];
 
 
 diffChangeKernel[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:OptionsPattern[diffChange]] :=
     Module[{
-            res,oldToNewList,
-            whichSolution = OptionValue[diffChange,{opts},"Solution"],
-            ifShowSolution = OptionValue[diffChange,{opts},"ShowSolution"]
+            res,
+            eqList1,oldList1,funList1,expr1,oldToNewList,oldSymToOldList,
+            whichSol = OptionValue[diffChange,{opts},"Solution"]//diffcDuplicateOption,
+            ifShowSol = OptionValue[diffChange,{opts},"ShowSolution"]//diffcDuplicateOption
         },
-        If[whichSolution===All,
-            (* Then *)
-            whichSolution = {All,All}
-        ];
-        If[ifShowSolution===True,
-            (* Then *)
-            ifShowSolution = {True,True}
-        ];
+        {eqList1,oldList1,funList1,expr1,oldSymToOldList} =
+            {eqList,oldList,funList,expr}//diffcSymbolizeVar[oldList];
         oldToNewList =
-            solveKernel[oldList,whichSolution[[1]],True][eqList];
-        showSolution[ifShowSolution[[1]]][oldToNewList];
+            eqList1//solveKernel[oldList1,whichSol[[1]],True]//
+                diffcShowSolution[ifShowSol[[1]],oldSymToOldList];
         res =
-            expr//
-                ReplaceAll[getFunctionRuleList[whichSolution[[2]],ifShowSolution[[2]]][eqList,oldList,newList,funList]]//
+            expr1//
+                ReplaceAll[diffcFunRuleList[whichSol[[2]],ifShowSol[[2]],oldSymToOldList][eqList1,oldList1,newList,funList1]]//
                 (*convert old variables to new ones.*)
                 ReplaceAll[oldToNewList]//
-                diffChangeStripList;
+                diffcStripList;
         res
     ]//Catch;
 
@@ -447,20 +442,20 @@ prepareList[other_] :=
     Flatten[{other}];
 
 
-getSignOfJacobianList[signOfJacobianList_,oldToNewLength_] :=
+intcJacobianSignList[jacSignList_,oldToNewLength_] :=
     Which[
         (* If the sign of Jacobian is given as a single value, repeat it. *)
-        Length[signOfJacobianList]===1,
-            Table[signOfJacobianList[[1]],{oldToNewLength}],
-        Length[signOfJacobianList]===oldToNewLength,
-            signOfJacobianList,
+        Length[jacSignList]===1,
+            Table[jacSignList[[1]],{oldToNewLength}],
+        Length[jacSignList]===oldToNewLength,
+            jacSignList,
         True,
             Message[integrationChange::MismatchNumberOfJacobianSign];
-            Throw[signOfJacobianList]
+            Throw[jacSignList]
     ];
 
 
-getJacobianList[oldList_,newList_,oldToNewList_] :=
+intcJacobianList[oldList_,newList_,oldToNewList_] :=
     Module[{res,oldToNew},
         res =
             Table[
@@ -472,7 +467,7 @@ getJacobianList[oldList_,newList_,oldToNewList_] :=
     ];
 
 
-integrateChangeConvertINT[oldList_,newList_][expr_] :=
+intcConvertINT[oldList_,newList_][expr_] :=
     With[{rule = MapThread[Rule,{oldList,newList}]},
         expr//ReplaceAll[{
             INT[args__]:>INT@@ReplaceAll[{args},rule]
@@ -480,7 +475,7 @@ integrateChangeConvertINT[oldList_,newList_][expr_] :=
     ];
 
 
-integrateChangeStripList[list_] :=
+intcStripList[list_] :=
     If[Length[list]===1,
         list[[1]],
         (*Else*)
@@ -488,24 +483,24 @@ integrateChangeStripList[list_] :=
     ];
 
 
-showSolutionJacobian[True,False][solList_,jacobianList_] :=
+intcShowSolutionJacobian[True,False][solList_,jacobianList_] :=
     Echo@Grid[
         Transpose[{solList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
     ];
 
-showSolutionJacobian[False,True][solList_,jacobianList_] :=
+intcShowSolutionJacobian[False,True][solList_,jacobianList_] :=
     Echo@Grid[
         Transpose[{jacobianList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
     ];
 
-showSolutionJacobian[False,False][solList_,jacobianList_] :=
+intcShowSolutionJacobian[False,False][solList_,jacobianList_] :=
     Null;
 
-showSolutionJacobian[True,True][solList_,jacobianList_] :=
+intcShowSolutionJacobian[True,True][solList_,jacobianList_] :=
     Echo@Grid[
         Transpose[{solList,jacobianList}],
         Spacings->{1,1/2},
@@ -513,18 +508,46 @@ showSolutionJacobian[True,True][solList_,jacobianList_] :=
     ];
 
 
-getFunctionRuleList[whichSolution_,ifShowSolution_][eqList_,oldList_,newList_,funList_] :=
+diffcDuplicateOption[opt_] :=
+    If[MatchQ[opt,{_,_}],
+        (* Then *)
+        opt,
+        (* Else *)
+        {opt,opt}
+    ];
+
+
+diffcSymbolizeVar[varList:{__Symbol}][{exprs__}] :=
+    {
+        exprs,
+        {}
+    };
+
+diffcSymbolizeVar[varList_][{exprs__}] :=
+    Module[{symList,ruleList},
+        symList =
+            Table[Unique["$",Temporary],Length[varList]];
+        ruleList =
+            varList->symList//Thread;
+        {
+            Splice@{exprs}//ReplaceAll[ruleList],
+            ruleList//Map[Reverse]
+        }
+    ];
+
+
+diffcFunRuleList[whichSol_,ifShowSol_,oldSymToOldList_][eqList_,oldList_,newList_,funList_] :=
     Module[{newByOld,newByOldList,newToOldList,fun,head},
         newToOldList =
-            solveKernel[newList,whichSolution,True][eqList];
+            eqList//solveKernel[newList,whichSol,True]//
+                diffcShowSolution[ifShowSol,oldSymToOldList];
         newByOldList =
             newList//ReplaceAll[newToOldList];
-        showSolution[ifShowSolution][newToOldList];
         Table[
             Table[
                 Head[fun]->head[
                     Apply[List,fun],
-                    ReplacePart[fun,Thread[getVarPositionList[fun,oldList]->newByOld]]
+                    ReplacePart[fun,Thread[diffcGetVarPositionList[fun,oldList]->newByOld]]
                 ]
                 ,
                 {fun,funList}
@@ -534,11 +557,11 @@ getFunctionRuleList[whichSolution_,ifShowSolution_][eqList_,oldList_,newList_,fu
     ];
 
 
-getVarPositionList[fun_,variableList_] :=
+diffcGetVarPositionList[fun_,variableList_] :=
     Flatten[Map[Position[fun,#]&,variableList],{{1},{2,3}}];
 
 
-diffChangeStripList[list_] :=
+diffcStripList[list_] :=
     If[Length[list]===1,
         list[[1,1]],
         (*Else*)
@@ -546,15 +569,18 @@ diffChangeStripList[list_] :=
     ];
 
 
-showSolution[True][solList_] :=
-    Echo@Grid[
-        Transpose[{solList}],
-        Spacings->{1,1/2},
-        Alignment->{Left,Right}
-    ];
+diffcShowSolution[True,oldSymToOldList_][solList_] :=
+    (
+        Echo@Grid[
+            {solList}//ReplaceAll[oldSymToOldList]//Transpose,
+            Spacings->{1,1/2},
+            Alignment->{Left,Right}
+        ];
+        solList
+    )
 
-showSolution[False][_] :=
-    Null;
+diffcShowSolution[False,_][solList_] :=
+    solList;
 
 
 (* ::Subsubsection:: *)
