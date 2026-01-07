@@ -166,7 +166,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    diffChange[x == t^2, t, x, {f[t], g[t]}, "Solution" -> All][g[t] + Derivative[1][f][t]]
+    diffChange[x == t^2, t, x, {f[t], g[t]}, "Solution" -> {All, All}][g[t] + Derivative[1][f][t]]
     ,
     {g[x] - 2*Sqrt[x]*Derivative[1][f][x], g[x] + 2*Sqrt[x]*Derivative[1][f][x]}
     ,

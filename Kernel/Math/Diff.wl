@@ -353,8 +353,8 @@ integrationChange//Options = {
 
 
 diffChange//Options = {
-    "Solution"->1,
-    "ShowSolution"->False
+    "Solution"->{1,1},
+    "ShowSolution"->{False,False}
 };
 
 
@@ -412,15 +412,23 @@ diffChangeKernel[expr_,eqList_List,oldList_List,newList_List,funList_List,opts:O
             whichSolution = OptionValue[diffChange,{opts},"Solution"],
             ifShowSolution = OptionValue[diffChange,{opts},"ShowSolution"]
         },
+        If[whichSolution===All,
+            (* Then *)
+            whichSolution = {All,All}
+        ];
+        If[ifShowSolution===True,
+            (* Then *)
+            ifShowSolution = {True,True}
+        ];
         oldToNewList =
-            solveKernel[oldList,whichSolution,True][eqList];
+            solveKernel[oldList,whichSolution[[1]],True][eqList];
+        showSolution[ifShowSolution[[1]]][oldToNewList];
         res =
             expr//
-                ReplaceAll[getFunctionRuleList[whichSolution][eqList,oldList,newList,funList]]//
+                ReplaceAll[getFunctionRuleList[whichSolution[[2]],ifShowSolution[[2]]][eqList,oldList,newList,funList]]//
                 (*convert old variables to new ones.*)
                 ReplaceAll[oldToNewList]//
                 diffChangeStripList;
-        showSolution[ifShowSolution][oldToNewList];
         res
     ]//Catch;
 
@@ -505,10 +513,13 @@ showSolutionJacobian[True,True][solList_,jacobianList_] :=
     ];
 
 
-getFunctionRuleList[whichSolution_][eqList_,oldList_,newList_,funList_] :=
-    Module[{newByOld,newByOldList,fun,head},
+getFunctionRuleList[whichSolution_,ifShowSolution_][eqList_,oldList_,newList_,funList_] :=
+    Module[{newByOld,newByOldList,newToOldList,fun,head},
+        newToOldList =
+            solveKernel[newList,whichSolution,True][eqList];
         newByOldList =
-            newList//ReplaceAll[solveKernel[newList,whichSolution,True][eqList]];
+            newList//ReplaceAll[newToOldList];
+        showSolution[ifShowSolution][newToOldList];
         Table[
             Table[
                 Head[fun]->head[
@@ -536,7 +547,7 @@ diffChangeStripList[list_] :=
 
 
 showSolution[True][solList_] :=
-    Print@Grid[
+    Echo@Grid[
         Transpose[{solList}],
         Spacings->{1,1/2},
         Alignment->{Left,Right}
