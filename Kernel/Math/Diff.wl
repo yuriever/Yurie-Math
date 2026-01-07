@@ -841,7 +841,7 @@ getDiffReplaceRule[head_,ruleList_List] :=
 
 
 diffComm//Options = {
-    "Sign"->-1
+    "Sign"->Automatic
 };
 
 
@@ -851,6 +851,9 @@ diffComm[x_,y_,opts:OptionsPattern[]] :=
 
 diffCommKernel[x_,y_,sign_] :=
     sign*(x[y[#]]-y[x[#]])&;
+
+diffCommKernel[x_,y_,Automatic] :=
+    (x[y[#]]-y[x[#]])&;
 
 
 (* ::Subsubsection:: *)
