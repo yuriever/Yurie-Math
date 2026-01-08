@@ -845,7 +845,7 @@ getDiffReplaceRule[head_,Verbatim[Rule][f_Symbol,rhs_]] :=
             head[D][rhs,argumentD[{vars},{orders}]]
     };
 
-getDiffReplaceRule[head_,(rule:Rule|RuleDelayed)[lhs:f_Symbol[args___],rhs_]] :=
+getDiffReplaceRule[head_,(rule:Rule|RuleDelayed)[lhs:f_[args___],rhs_]] :=
     With[{
             varList = stripPattern[{args}]
         },
