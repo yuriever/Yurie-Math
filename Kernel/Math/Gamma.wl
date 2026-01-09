@@ -101,8 +101,8 @@ gammaFrom::KeyNotFound =
     "The transformations are expected as a subset of ``.";
 
 
-gammaTakeResidue::NotProduct =
-    "The expression is expected to be a product involving Gamma functions.";
+gammaTakeResidue::InvalidExpr =
+    "The expression is expected to be a product/sum involving Gamma functions.";
 
 gammaTakeResidue::IndexConflict =
     "The index `` conflicts with the expression.";
@@ -278,13 +278,13 @@ gammaTakeResidueGetIndex[index_] :=
 
 gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
     Which[
-        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_List],
-            Message[gammaTakeResidue::NotProduct];
+        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_Plus|_List],
+            Message[gammaTakeResidue::InvalidExpr];
             expr//Throw,
         !FreeQ[expr,index],
             Message[gammaTakeResidue::IndexConflict,index];
             expr//Throw,
-        !Internal`LinearQ[gmarg,{variable}],
+        !linearQ[gmarg,{variable}],
             Message[gammaTakeResidue::NotMatchVar,gmarg,variable];
             expr//Throw,
         FreeQ[expr,Gamma[gmarg]],

@@ -739,7 +739,7 @@ PDCoefficientKernel[expr_] :=
 
 
 PDCheckLinearity[True][expr_] :=
-    If[AnyTrue[Cases[expr,_PD,All],!Internal`LinearQ[expr,#]&],
+    If[AnyTrue[Cases[expr,_PD,All],!linearQ[expr,#]&],
         Message[PDCoefficient::nonlinear];
         Throw[expr]
     ];
@@ -803,7 +803,7 @@ convertDerivative[list_List] :=
 
 
 diffCheckLinearity[True][expr_,fun_] :=
-    If[AnyTrue[Cases[expr,Derivative[__][fun][__],All],!Internal`LinearQ[expr,#]&],
+    If[AnyTrue[Cases[expr,Derivative[__][fun][__],All],!linearQ[expr,#]&],
         Message[diffCoefficient::nonlinear];
         Throw[expr]
     ];
