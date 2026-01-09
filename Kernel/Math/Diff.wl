@@ -478,7 +478,7 @@ intcConvertINT[oldList_,newList_][expr_] :=
 intcStripList[list_] :=
     If[Length[list]===1,
         list[[1]],
-        (*Else*)
+        (* Else *)
         list
     ];
 
@@ -564,7 +564,7 @@ diffcGetVarPositionList[fun_,variableList_] :=
 diffcStripList[list_] :=
     If[Length[list]===1,
         list[[1,1]],
-        (*Else*)
+        (* Else *)
         Flatten[list,1]
     ];
 
@@ -790,7 +790,7 @@ diffCoefficientKernel[funP_][expr_Times] :=
 diffCoefficientKernel[funP_][expr_] :=
     If[MatchQ[expr,funP[___]|Derivative[___][funP][___]],
         {expr->1},
-        (*Else*)
+        (* Else *)
         {{}->expr}
     ];
 

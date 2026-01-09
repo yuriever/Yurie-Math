@@ -479,7 +479,7 @@ expandRuleForSpecifiedBase[head_[base_,factorList1_List]] :=
                 Power[base,exponent_.],
                 Exp[phaseSign*I*π*exponent]*powerFactorProduct
             ],
-            (*Else*)
+            (* Else *)
             HoldComplete[
                 Power[base,exponent_],
                 Exp[phaseSign*I*π*exponent]*powerFactorProduct
@@ -596,7 +596,7 @@ powerSeparate[All|PatternSequence[]|Verbatim[Blank[]]][expr_] :=
 powerSeparate[base1_][expr:Power[base_,_]] :=
     If[MatchQ[base,basePattern[base1]],
         {expr,1},
-        (*Else*)
+        (* Else *)
         {1,expr}
     ];
 

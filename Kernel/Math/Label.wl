@@ -205,7 +205,7 @@ labelKernel[Symbol,var_,lab_] :=
     With[{symbolname = varToString[var]<>ToString[lab]},
         If[Internal`SymbolNameQ[symbolname],
             ToExpression[symbolname],
-            (*Else*)
+            (* Else *)
             labelInvalidSymbolF[var,lab]
         ]
     ];
@@ -214,7 +214,7 @@ labelKernel[Symbol,Verbatim[Pattern][var_Symbol,pat_],lab_] :=
     With[{symbolname = varToString[var]<>ToString[lab]},
         If[Internal`SymbolNameQ[symbolname],
             Pattern[Evaluate@ToExpression[symbolname],pat],
-            (*Else*)
+            (* Else *)
             labelInvalidSymbolF[var,lab]
         ]
     ];
@@ -267,7 +267,7 @@ labelConvert[(List|Alternatives)[vars__]|var_,Rule[head1_Symbol,head2_Symbol],op
     With[{type = OptionValue["LabelType"]},
         If[Head[type]=!=String||Head[type]===String&&MemberQ[$labelTypeList,type],
             labelConvertKernel[head1,head2,type][Alternatives[var,vars],expr],
-            (*Else*)
+            (* Else *)
             Message[label::UndefinedType,type,Column@$labelTypeList];
             expr
         ]

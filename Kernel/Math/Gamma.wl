@@ -184,7 +184,7 @@ gammaSeparate[expr_Times] :=
         expr1 =
             If[FreeQ[expr,_multiGamma],
                 expr,
-                (*Else*)
+                (* Else *)
                 gammaFrom[expr,"Transformation"->{"MultiGamma"}]
             ];
         {
@@ -250,7 +250,7 @@ gammaTakeResidueKernel[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPa
             If[OptionValue["SimplePole"]===True,
                 Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
                     ReplaceAll[expr/Gamma[gmarg],solution],
-                (*Else*)
+                (* Else *)
                 Residue[expr,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
             ];
         gammaTakeResidueShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr];
@@ -264,7 +264,7 @@ gammaTakeResidueKernel[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPa
 gammaTakeResidueHandleMultiGamma[expr_] :=
     If[FreeQ[expr,_multiGamma],
         expr,
-        (*Else*)
+        (* Else *)
         gammaFrom[expr,"Transformation"->{"MultiGamma"}]
     ];
 
@@ -360,7 +360,7 @@ takeSpecificPole[False][index_,pos_] :=
 handleResidueWithINT[expr_,variable_][residue_] :=
     If[FreeQ[expr,_INT],
         residue,
-        (*Else*)
+        (* Else *)
         residue/INT[variable]
     ];
 
@@ -527,7 +527,7 @@ multiGammaReduceByFirstBarnesLemma[numPlus_,numMinus_,numRest_,denomRest_,mg_,s_
             Join[numRest,Flatten@Outer[Plus,numPlus,numMinus]],
             Join[denomRest,{Total[{numPlus,numMinus},2]}]
         ],
-        (*Else*)
+        (* Else *)
         Message[multiGammaReduceByBarnesLemma::NotMatch];
         mg//Throw
     ];
@@ -539,7 +539,7 @@ multiGammaReduceBySecondBarnesLemma[numPlus_,numMinus_,denomPlus_,numPlusMinusSu
             Join[numRest,Flatten@Outer[Plus,numPlus,numMinus]],
             Join[denomRest,numPlusMinusSum-numPlus]
         ],
-        (*Else*)
+        (* Else *)
         Message[multiGammaReduceByBarnesLemma::NotMatch];
         mg//Throw
     ];

@@ -439,7 +439,7 @@ series[{x_,x0_,n_},opts:OptionsPattern[]][expr:Except[_List]]/;$VersionNumber==1
         res = Series[expr,{x,x0,n},FilterRules[{opts,Options@series},Options@Series]];
         If[Head[res]===SeriesData&&res[[5]]>n+res[[6]]&&res[[3]]=!={},
             res+SeriesData[x,x0,{},res[[4]],Max[res[[4]],n+res[[6]]],res[[6]]],
-            (*Else*)
+            (* Else *)
             res
         ]//Normal
     ];
@@ -489,7 +489,7 @@ solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
             (* Throw exception if the equation list is invalid. *)
             If[MatchQ[eqList1,{(_Equal|_Rule|_RuleDelayed)..}],
                 eqList1//ReplaceAll[Rule|RuleDelayed->Equal],
-                (*Else*)
+                (* Else *)
                 Message[solve::InvalidEquation];
                 Throw[eqList1]
             ];
@@ -513,7 +513,7 @@ solveKernel[varList_,whichSolution_,ifListize_][eqList1_] :=
             ];
         If[ifListize===True&&MatchQ[solution,{__Rule}],
             {solution},
-            (*Else*)
+            (* Else *)
             solution
         ]
     ];

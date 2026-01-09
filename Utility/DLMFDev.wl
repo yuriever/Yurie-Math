@@ -164,7 +164,7 @@ getRandomArgument[condition_,{zmin_,zmax_}] :=
     {a,b,c,z}->
         If[condition===True,
             Join[RandomReal[{0,2},3],RandomReal[{zmin,zmax},1]],
-            (*Else*)
+            (* Else *)
             Quiet@RandomPoint@ImplicitRegion[condition,{{a,0,1},{b,0,1},{c,0,2},{z,zmin,zmax}}]
         ]//Thread;
 
