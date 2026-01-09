@@ -28,17 +28,15 @@ gammaSeparate::usage =
     "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
 
 gammaTakeResidue::usage =
-    "gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor."<>
+    "gammaTakeResidue[var, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor."<>
     "\n"<>
-    "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series."<>
+    "gammaTakeResidue[var, index->n, gamma, sign, opts][expr]: specify one pole in the series."<>
     "\n"<>
     "Info[index]: the index of the poles."<>
     "\n"<>
     "Info[gamma]: the argument of the Gamma function."<>
     "\n"<>
     "Info[sign]: the direction of contour."<>
-    "\n"<>
-    "Value[sign]: {1, -1, Left, Right}."<>
     "\n"<>
     "Value[\"ShowPole\"]: {True, False, Full}."<>
     "\n"<>
@@ -89,7 +87,8 @@ gammaFrom//Options = {
 
 gammaTakeResidue//Options = {
     "SimplePole"->True,
-    "ShowPole"->True
+    "ShowPole"->True,
+    "PlusListable"->False
 };
 
 
@@ -101,17 +100,26 @@ gammaFrom::KeyNotFound =
     "The transformations are expected as a subset of ``.";
 
 
+gammaTakeResidue::Listable =
+    "Turn on the option \"Listable\" to handle nested list.";
+
+gammaTakeResidue::PlusListable =
+    "Turn on the option \"PlusListable\" to handle sum.";
+
 gammaTakeResidue::InvalidExpr =
-    "The expression is expected to be a product/sum involving Gamma functions.";
+    "A product involving Gamma functions is expected for the expression ``.";
 
 gammaTakeResidue::IndexConflict =
-    "The index `` conflicts with the expression.";
+    "The index `` conflicts with the expression ``.";
 
-gammaTakeResidue::NotMatchVar =
-    "The argument `` should be a linear function of the variable ``.";
+gammaTakeResidue::NonlinearInVar =
+    "The argument `` should be linear to the variable ``.";
 
-gammaTakeResidue::NotInExpr =
-    "The factor `` does not appear in the expression.";
+gammaTakeResidue::GammaNotInExpr =
+    "The factor `` does not appear in the expression ``.";
+
+gammaTakeResidue::InvalidSign =
+    "The sign `` should be either 1|Left or -1|Right.";
 
 
 multiGammaReduceByBarnesLemma::NotMatch =
@@ -205,11 +213,24 @@ gammaSeparate[expr_] :=
 (*Main*)
 
 
+gammaTakeResidue[args__,opts:OptionsPattern[]][expr:Except[_List|_Plus]] :=
+    gammaTakeResidueKernel[args,opts][expr];
+
+
+(* _List is fully listable. *)
+(* _Plus is listable at the top level if the option "PlusListable" is turned on. *)
+
 gammaTakeResidue[args__,opts:OptionsPattern[]][expr_List] :=
     Map[gammaTakeResidue[args,opts],expr];
 
-gammaTakeResidue[args__,opts:OptionsPattern[]][expr:Except[_List]] :=
-    gammaTakeResidueKernel[args,opts][expr];
+gammaTakeResidue[args__,opts:OptionsPattern[]][expr_Plus] :=
+    If[OptionValue["PlusListable"]===True,
+        (* Then *)
+        Map[gammaTakeResidueKernel[args,opts],expr],
+        (* Else *)
+        Message[gammaTakeResidue::PlusListable];
+        expr
+    ];
 
 
 gammaTakeResidue[] :=
@@ -237,27 +258,36 @@ gammaTakeResidue[] :=
 (*Helper*)
 
 
-gammaTakeResidueKernel[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[gammaTakeResidue]][expr1_] :=
-    Module[{expr,isSpecificPole,index,pos,solution,residue},
-        expr =
-            expr1//gammaTakeResidueHandleMultiGamma;
-        {isSpecificPole,index,pos} =
-            index1//gammaTakeResidueGetIndex;
-        gammaTakeResidueCheck[variable,index,gmarg][expr];
+gammaTakeResidueKernel[var_,ind_,gm_,opts:OptionsPattern[gammaTakeResidue]][expr_] :=
+    gammaTakeResidueKernel[var,ind,gm,1,opts][expr];
+
+gammaTakeResidueKernel[var_,ind_,gm_,sign_,OptionsPattern[gammaTakeResidue]][expr_] :=
+    (
+        Message[gammaTakeResidue::InvalidExpr,Short[expr]];
+        expr
+    );
+
+gammaTakeResidueKernel[var_,ind_,gm_,sign_,OptionsPattern[gammaTakeResidue]][expr:_Gamma|_multiGamma|_Times|_Power] :=
+    Module[{expr1,isSpecificPole,ind1,pos,solution,residue},
+        expr1 =
+            expr//gammaTakeResidueHandleMultiGamma;
+        {isSpecificPole,ind1,pos} =
+            ind//gammaTakeResidueGetIndex;
+        gammaTakeResidueCheck[var,ind1,gm,sign][expr1];
         solution =
-            Part[Solve[gmarg==-index,{variable}],1,1];
+            Part[Solve[gm==-ind1,{var}],1,1];
         residue =
             If[OptionValue["SimplePole"]===True,
-                Residue[Gamma[gmarg],{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]*
-                    ReplaceAll[expr/Gamma[gmarg],solution],
+                Residue[Gamma[gm],{var,solution[[2]]},Assumptions->ind1>=0&&Element[ind1,Integers]]*
+                    ReplaceAll[expr1/Gamma[gm],solution],
                 (* Else *)
-                Residue[expr,{variable,solution[[2]]},Assumptions->index>=0&&Element[index,Integers]]
+                Residue[expr1,{var,solution[[2]]},Assumptions->ind1>=0&&Element[ind1,Integers]]
             ];
-        gammaTakeResidueShowPoleData[OptionValue["ShowPole"]][solution,variable,index,expr];
+        gammaTakeResidueShowPoleData[OptionValue["ShowPole"]][solution,var,ind1,expr1];
         residueSign[sign]*residue//
-            takeSpecificPole[isSpecificPole][index,pos]//
-            ReplaceAll[gm_Gamma:>Simplify[gm]]//
-            handleResidueWithINT[expr,variable]
+            takeSpecificPole[isSpecificPole][ind1,pos]//
+            ReplaceAll[gm1_Gamma:>Simplify[gm1]]//
+            handleResidueWithINT[expr1,var]
     ]//Catch;
 
 
@@ -269,26 +299,26 @@ gammaTakeResidueHandleMultiGamma[expr_] :=
     ];
 
 
-gammaTakeResidueGetIndex[(Rule|List)[index_,pos_]] :=
-    {True,index,pos};
+gammaTakeResidueGetIndex[(Rule|List)[ind_,pos_]] :=
+    {True,ind,pos};
 
-gammaTakeResidueGetIndex[index_] :=
-    {False,index,Null};
+gammaTakeResidueGetIndex[ind_] :=
+    {False,ind,Null};
 
 
-gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
+gammaTakeResidueCheck[var_,ind_,gm_,sign_][expr_] :=
     Which[
-        !MatchQ[expr,_Gamma|_multiGamma|_Times|_Power|_Plus|_List],
-            Message[gammaTakeResidue::InvalidExpr];
+        !FreeQ[expr,ind],
+            Message[gammaTakeResidue::IndexConflict,ind,Short[expr]];
             expr//Throw,
-        !FreeQ[expr,index],
-            Message[gammaTakeResidue::IndexConflict,index];
+        !linearQ[gm,{var}],
+            Message[gammaTakeResidue::NonlinearInVar,gm,var];
             expr//Throw,
-        !linearQ[gmarg,{variable}],
-            Message[gammaTakeResidue::NotMatchVar,gmarg,variable];
+        FreeQ[expr,Gamma[gm]],
+            Message[gammaTakeResidue::GammaNotInExpr,HoldForm[Gamma][gm],Short[expr]];
             expr//Throw,
-        FreeQ[expr,Gamma[gmarg]],
-            Message[gammaTakeResidue::NotInExpr,HoldForm[Gamma][gmarg]];
+        !MatchQ[sign,1|-1|Left|Right],
+            Message[gammaTakeResidue::InvalidSign,sign];
             expr//Throw
     ];
 
@@ -296,20 +326,20 @@ gammaTakeResidueCheck[variable_,index_,gmarg_][expr_] :=
 gammaTakeResidueShowPoleData[True][solution_,___] :=
     Echo[solution];
 
-gammaTakeResidueShowPoleData[Full][solution_,variable_,index_,expr1_] :=
+gammaTakeResidueShowPoleData[Full][solution_,var_,ind_,expr1_] :=
     Module[{sign,gammaList},
 
         sign =
-            Simplify[Sign@Coefficient[solution[[2]],index]];
+            Simplify[Sign@Coefficient[solution[[2]],ind]];
         gammaList =
-            Cases[expr1,Gamma[arg_]/;!FreeQ[arg,variable]:>arg,All]//Map[{#,Simplify@ReplaceAll[#,solution],Exponent[expr1,Gamma[#]]}&];
+            Cases[expr1,Gamma[arg_]/;!FreeQ[arg,var]:>arg,All]//Map[{#,Simplify@ReplaceAll[#,solution],Exponent[expr1,Gamma[#]]}&];
 
         gammaList =
             Switch[sign,
                 1,
-                    separate[Simplify[Coefficient[#[[1]],variable]>0]&][gammaList],
+                    separate[Simplify[Coefficient[#[[1]],var]>0]&][gammaList],
                 -1,
-                    separate[Simplify[Coefficient[#[[1]],variable]<0]&][gammaList],
+                    separate[Simplify[Coefficient[#[[1]],var]<0]&][gammaList],
                 _,
                     gammaList
             ];
@@ -350,18 +380,18 @@ residueSign[Left|1] :=
     1;
 
 
-takeSpecificPole[True][index_,pos_] :=
-    ReplaceAll[index->pos];
+takeSpecificPole[True][ind_,pos_] :=
+    ReplaceAll[ind->pos];
 
-takeSpecificPole[False][index_,pos_] :=
+takeSpecificPole[False][ind_,pos_] :=
     Identity;
 
 
-handleResidueWithINT[expr_,variable_][residue_] :=
+handleResidueWithINT[expr_,var_][residue_] :=
     If[FreeQ[expr,_INT],
         residue,
         (* Else *)
-        residue/INT[variable]
+        residue/INT[var]
     ];
 
 
