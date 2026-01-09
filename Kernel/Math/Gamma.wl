@@ -97,28 +97,28 @@ gammaTakeResidue//Options = {
 (*Message*)
 
 
-gammaFrom::noSuchKey =
-    "the transformations are expected as a subset of ``.";
+gammaFrom::KeyNotFound =
+    "The transformations are expected as a subset of ``.";
 
 
 gammaTakeResidue::NotProduct =
-    "the expression is expected to be a product involving Gamma functions.";
+    "The expression is expected to be a product involving Gamma functions.";
 
 gammaTakeResidue::IndexConflict =
-    "the index `` conflicts with the expression.";
+    "The index `` conflicts with the expression.";
 
 gammaTakeResidue::NotMatchVar =
-    "the argument `` should be a linear function of the variable ``.";
+    "The argument `` should be a linear function of the variable ``.";
 
 gammaTakeResidue::NotInExpr =
-    "the factor `` does not appear in the expression.";
+    "The factor `` does not appear in the expression.";
 
 
 multiGammaReduceByBarnesLemma::NotMatch =
-    "the multi-Gamma symbol cannot be reduced by the Barnes lemmas."
+    "The multi-Gamma symbol cannot be reduced by the Barnes lemmas."
 
 multiGammaReduceByBarnesLemma::NotProduct =
-    "the expression is expected to be a product involving Gamma functions.";
+    "The expression is expected to be a product involving Gamma functions.";
 
 
 (* ::Subsection:: *)
@@ -146,7 +146,7 @@ gammaFrom[expr_,OptionsPattern[]] :=
                 Head[opt]===List&&SubsetQ[gammaDataKeyList,opt],
                     gammaData//Lookup[opt]//Flatten,
                 True,
-                    Message[gammaFrom::noSuchKey,gammaDataKeyList];
+                    Message[gammaFrom::KeyNotFound,gammaDataKeyList];
                     expr//Throw
             ];
         expr//ReplaceAll[ruleList]//
