@@ -142,7 +142,7 @@ VerificationTest[
 VerificationTest[
     SetOptions[gammaTakeResidue, "ShowPole" -> False]
     ,
-    {"SimplePole" -> True, "ShowPole" -> False}
+    {"SimplePole" -> True, "ShowPole" -> False, "PlusListable" -> False}
     ,
     TestID->"[17] Gamma.nb"
 ]
@@ -152,7 +152,7 @@ VerificationTest[
     ,
     Quiet[Gamma[x]]
     ,
-    {Yurie`Math`gammaTakeResidue::NotInExpr}
+    {Yurie`Math`gammaTakeResidue::GammaNotInExpr}
     ,
     TestID->"[18] Gamma.nb"
 ]
@@ -172,7 +172,7 @@ VerificationTest[
     ,
     Quiet[Gamma[x]]
     ,
-    {Yurie`Math`gammaTakeResidue::NotMatchVar}
+    {Yurie`Math`gammaTakeResidue::NonlinearInVar}
     ,
     TestID->"[20] Gamma.nb"
 ]
@@ -182,7 +182,7 @@ VerificationTest[
     ,
     Quiet[Gamma[x]]
     ,
-    {Yurie`Math`gammaTakeResidue::NotMatchVar}
+    {Yurie`Math`gammaTakeResidue::NonlinearInVar}
     ,
     TestID->"[21] Gamma.nb"
 ]
@@ -216,7 +216,7 @@ VerificationTest[
     ,
     Quiet[Gamma[-x]]
     ,
-    {Yurie`Math`gammaTakeResidue::NotInExpr}
+    {Yurie`Math`gammaTakeResidue::GammaNotInExpr}
     ,
     TestID->"[25] Gamma.nb"
 ]
@@ -238,7 +238,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    expr = Gamma[x]*INT[x]; 
+    expr = Gamma[x]; 
     ,
     Null
     ,
@@ -270,13 +270,75 @@ VerificationTest[
 ]
 
 VerificationTest[
-    gammaTakeResidue[s, n, s][{{Gamma[s], Gamma[-s + 1]*Gamma[s]}, {Gamma[s + a], Gamma[-s + 1] + Gamma[s]}}]
+    expr = Gamma[x]*INT[x, y]; 
     ,
-    Quiet[{{(-1)^n/n!, ((-1)^n*Gamma[1 + n])/n!}, {Gamma[a + s], Gamma[1 - s] + Gamma[s]}}]
-    ,
-    {Yurie`Math`gammaTakeResidue::NotInExpr,Yurie`Math`gammaTakeResidue::NotProduct}
+    Null
     ,
     TestID->"[32] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[x, n, x][expr]
+    ,
+    ((-1)^n*INT[y])/n!
+    ,
+    TestID->"[33] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[s, n, -s, Right][{Gamma[-s]*s^a, Gamma[-s]*s^b}]
+    ,
+    {((-1)^n*n^a)/n!, ((-1)^n*n^b)/n!}
+    ,
+    TestID->"[34] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[s, n, -s, Right][{{Gamma[-s]*s^a, Gamma[-s]*s^b}, {Gamma[s + a]}}]
+    ,
+    Quiet[{{((-1)^n*n^a)/n!, ((-1)^n*n^b)/n!}, {Gamma[a + s]}}]
+    ,
+    {Yurie`Math`gammaTakeResidue::GammaNotInExpr}
+    ,
+    TestID->"[35] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[s, n, s][Gamma[-s + 1] + Gamma[s]]
+    ,
+    Quiet[Gamma[1 - s] + Gamma[s]]
+    ,
+    {Yurie`Math`gammaTakeResidue::PlusListable}
+    ,
+    TestID->"[36] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[s, n, s, "PlusListable" -> True][Gamma[-s + 1] + Gamma[s]]
+    ,
+    Quiet[(-1)^n/n! + Gamma[1 - s]]
+    ,
+    {Yurie`Math`gammaTakeResidue::GammaNotInExpr}
+    ,
+    TestID->"[37] Gamma.nb"
+]
+
+VerificationTest[
+    gammaTakeResidue[s, n, s, "PlusListable" -> True][{Gamma[s], Gamma[-s + 1] + Gamma[s]}]
+    ,
+    Quiet[{(-1)^n/n!, (-1)^n/n! + Gamma[1 - s]}]
+    ,
+    {Yurie`Math`gammaTakeResidue::GammaNotInExpr}
+    ,
+    TestID->"[38] Gamma.nb"
+]
+
+VerificationTest[
+    SetOptions[gammaTakeResidue, {"SimplePole" -> True, "ShowPole" -> True, "PlusListable" -> False}]
+    ,
+    {"SimplePole" -> True, "ShowPole" -> True, "PlusListable" -> False}
+    ,
+    TestID->"[39] Gamma.nb"
 ]
 
 VerificationTest[
@@ -284,7 +346,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"[33] Gamma.nb"
+    TestID->"[40] Gamma.nb"
 ]
 
 VerificationTest[
@@ -292,7 +354,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"[34] Gamma.nb"
+    TestID->"[41] Gamma.nb"
 ]
 
 VerificationTest[
@@ -300,7 +362,7 @@ VerificationTest[
     ,
     multiGamma[{x, y}, {}]
     ,
-    TestID->"[35] Gamma.nb"
+    TestID->"[42] Gamma.nb"
 ]
 
 VerificationTest[
@@ -308,7 +370,7 @@ VerificationTest[
     ,
     multiGamma[{y}, {}]
     ,
-    TestID->"[36] Gamma.nb"
+    TestID->"[43] Gamma.nb"
 ]
 
 VerificationTest[
@@ -316,7 +378,7 @@ VerificationTest[
     ,
     f[multiGamma[{b}, {d}]] + multiGamma[{a}, {}] + multiGamma[{b, c}, {}]
     ,
-    TestID->"[37] Gamma.nb"
+    TestID->"[44] Gamma.nb"
 ]
 
 VerificationTest[
@@ -324,7 +386,7 @@ VerificationTest[
     ,
     (1 + multiGamma[{a}, {}])/x
     ,
-    TestID->"[38] Gamma.nb"
+    TestID->"[45] Gamma.nb"
 ]
 
 VerificationTest[
@@ -332,7 +394,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b, b}]*(1 + multiGamma[{a}, {}])
     ,
-    TestID->"[39] Gamma.nb"
+    TestID->"[46] Gamma.nb"
 ]
 
 VerificationTest[
@@ -340,7 +402,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b}]*(1 + multiGamma[{a, a}, {}])
     ,
-    TestID->"[40] Gamma.nb"
+    TestID->"[47] Gamma.nb"
 ]
 
 VerificationTest[
@@ -348,7 +410,7 @@ VerificationTest[
     ,
     multiGamma[{Gamma[x]}, {}]
     ,
-    TestID->"[41] Gamma.nb"
+    TestID->"[48] Gamma.nb"
 ]
 
 VerificationTest[
@@ -356,7 +418,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"[42] Gamma.nb"
+    TestID->"[49] Gamma.nb"
 ]
 
 VerificationTest[
@@ -366,7 +428,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[43] Gamma.nb"
+    TestID->"[50] Gamma.nb"
 ]
 
 VerificationTest[
@@ -376,7 +438,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[44] Gamma.nb"
+    TestID->"[51] Gamma.nb"
 ]
 
 VerificationTest[
@@ -384,7 +446,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, a1 + b3, a2 + b3, c}, {a1 + a2 + b1 + b2, a1 + a2 + b1 + b3, a1 + a2 + b2 + b3, d}]
     ,
-    TestID->"[45] Gamma.nb"
+    TestID->"[52] Gamma.nb"
 ]
 
 VerificationTest[
@@ -394,7 +456,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[46] Gamma.nb"
+    TestID->"[53] Gamma.nb"
 ]
 
 VerificationTest[
@@ -404,7 +466,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[47] Gamma.nb"
+    TestID->"[54] Gamma.nb"
 ]
 
 VerificationTest[
@@ -412,7 +474,7 @@ VerificationTest[
     ,
     t^a*multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"[48] Gamma.nb"
+    TestID->"[55] Gamma.nb"
 ]
 
 VerificationTest[
@@ -422,7 +484,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[49] Gamma.nb"
+    TestID->"[56] Gamma.nb"
 ]
 
 VerificationTest[
@@ -432,7 +494,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[50] Gamma.nb"
+    TestID->"[57] Gamma.nb"
 ]
 
 VerificationTest[
@@ -442,7 +504,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotProduct}
     ,
-    TestID->"[51] Gamma.nb"
+    TestID->"[58] Gamma.nb"
 ]
 
 VerificationTest[
@@ -450,7 +512,7 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"[52] Gamma.nb"
+    TestID->"[59] Gamma.nb"
 ]
 
 VerificationTest[
