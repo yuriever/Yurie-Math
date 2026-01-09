@@ -205,10 +205,39 @@ gammaSeparate[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[args__][expr_List] :=
-    Map[gammaTakeResidue[args],expr];
+gammaTakeResidue[args__,opts:OptionsPattern[]][expr_List] :=
+    Map[gammaTakeResidue[args,opts],expr];
 
-gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr1:Except[_List]] :=
+gammaTakeResidue[args__,opts:OptionsPattern[]][expr:Except[_List]] :=
+    gammaTakeResidueKernel[args,opts][expr];
+
+
+gammaTakeResidue[] :=
+    CellPrint@{
+        ExpressionCell[
+            ToExpression[
+                "gammaTakeResidue[x,n,-x,Right]@Gamma[-x]",
+                 StandardForm,
+                 Defer
+            ],
+            "Code"
+        ],
+        ExpressionCell[
+            ToExpression[
+                "(-1)^n/(2 n!)",
+                StandardForm,
+                Defer
+            ],
+            "Output"
+        ]
+    };
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+gammaTakeResidueKernel[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[gammaTakeResidue]][expr1_] :=
     Module[{expr,isSpecificPole,index,pos,solution,residue},
         expr =
             expr1//gammaTakeResidueHandleMultiGamma;
@@ -230,31 +259,6 @@ gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[
             ReplaceAll[gm_Gamma:>Simplify[gm]]//
             handleResidueWithINT[expr,variable]
     ]//Catch;
-
-
-gammaTakeResidue[] :=
-    CellPrint@{
-        ExpressionCell[
-            ToExpression[
-                "gammaTakeResidue[x,n,2x+1,\"ShowPole\"->True]@Gamma[2x+1]",
-                 StandardForm,
-                 Defer
-            ],
-            "Code"
-        ],
-        ExpressionCell[
-            ToExpression[
-                "{(-1)^n/(2 n!),x->1/2 (-1-n)}",
-                StandardForm,
-                Defer
-            ],
-            "Output"
-        ]
-    };
-
-
-(* ::Subsubsection:: *)
-(*Helper*)
 
 
 gammaTakeResidueHandleMultiGamma[expr_] :=
