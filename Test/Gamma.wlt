@@ -270,15 +270,17 @@ VerificationTest[
 ]
 
 VerificationTest[
-    multiGamma[{}, {}]
+    gammaTakeResidue[s, n, s][{{Gamma[s], Gamma[-s + 1]*Gamma[s]}, {Gamma[s + a], Gamma[-s + 1] + Gamma[s]}}]
     ,
-    1
+    Quiet[{{(-1)^n/n!, ((-1)^n*Gamma[1 + n])/n!}, {Gamma[a + s], Gamma[1 - s] + Gamma[s]}}]
+    ,
+    {Yurie`Math`gammaTakeResidue::NotInExpr,Yurie`Math`gammaTakeResidue::NotProduct}
     ,
     TestID->"[32] Gamma.nb"
 ]
 
 VerificationTest[
-    multiGamma[{x}, {x}]
+    multiGamma[{}, {}]
     ,
     1
     ,
@@ -286,11 +288,19 @@ VerificationTest[
 ]
 
 VerificationTest[
+    multiGamma[{x}, {x}]
+    ,
+    1
+    ,
+    TestID->"[34] Gamma.nb"
+]
+
+VerificationTest[
     multiGamma[{y, x}, {}]
     ,
     multiGamma[{x, y}, {}]
     ,
-    TestID->"[34] Gamma.nb"
+    TestID->"[35] Gamma.nb"
 ]
 
 VerificationTest[
@@ -298,7 +308,7 @@ VerificationTest[
     ,
     multiGamma[{y}, {}]
     ,
-    TestID->"[35] Gamma.nb"
+    TestID->"[36] Gamma.nb"
 ]
 
 VerificationTest[
@@ -306,7 +316,7 @@ VerificationTest[
     ,
     f[multiGamma[{b}, {d}]] + multiGamma[{a}, {}] + multiGamma[{b, c}, {}]
     ,
-    TestID->"[36] Gamma.nb"
+    TestID->"[37] Gamma.nb"
 ]
 
 VerificationTest[
@@ -314,7 +324,7 @@ VerificationTest[
     ,
     (1 + multiGamma[{a}, {}])/x
     ,
-    TestID->"[37] Gamma.nb"
+    TestID->"[38] Gamma.nb"
 ]
 
 VerificationTest[
@@ -322,7 +332,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b, b}]*(1 + multiGamma[{a}, {}])
     ,
-    TestID->"[38] Gamma.nb"
+    TestID->"[39] Gamma.nb"
 ]
 
 VerificationTest[
@@ -330,7 +340,7 @@ VerificationTest[
     ,
     multiGamma[{}, {b}]*(1 + multiGamma[{a, a}, {}])
     ,
-    TestID->"[39] Gamma.nb"
+    TestID->"[40] Gamma.nb"
 ]
 
 VerificationTest[
@@ -338,7 +348,7 @@ VerificationTest[
     ,
     multiGamma[{Gamma[x]}, {}]
     ,
-    TestID->"[40] Gamma.nb"
+    TestID->"[41] Gamma.nb"
 ]
 
 VerificationTest[
@@ -346,7 +356,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"[41] Gamma.nb"
+    TestID->"[42] Gamma.nb"
 ]
 
 VerificationTest[
@@ -356,7 +366,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[42] Gamma.nb"
+    TestID->"[43] Gamma.nb"
 ]
 
 VerificationTest[
@@ -366,7 +376,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[43] Gamma.nb"
+    TestID->"[44] Gamma.nb"
 ]
 
 VerificationTest[
@@ -374,7 +384,7 @@ VerificationTest[
     ,
     multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, a1 + b3, a2 + b3, c}, {a1 + a2 + b1 + b2, a1 + a2 + b1 + b3, a1 + a2 + b2 + b3, d}]
     ,
-    TestID->"[44] Gamma.nb"
+    TestID->"[45] Gamma.nb"
 ]
 
 VerificationTest[
@@ -384,7 +394,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[45] Gamma.nb"
+    TestID->"[46] Gamma.nb"
 ]
 
 VerificationTest[
@@ -394,7 +404,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[46] Gamma.nb"
+    TestID->"[47] Gamma.nb"
 ]
 
 VerificationTest[
@@ -402,7 +412,7 @@ VerificationTest[
     ,
     t^a*multiGamma[{a1 + b1, a2 + b1, a1 + b2, a2 + b2, c}, {a1 + a2 + b1 + b2, d}]
     ,
-    TestID->"[47] Gamma.nb"
+    TestID->"[48] Gamma.nb"
 ]
 
 VerificationTest[
@@ -412,7 +422,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[48] Gamma.nb"
+    TestID->"[49] Gamma.nb"
 ]
 
 VerificationTest[
@@ -422,7 +432,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotMatch}
     ,
-    TestID->"[49] Gamma.nb"
+    TestID->"[50] Gamma.nb"
 ]
 
 VerificationTest[
@@ -432,7 +442,7 @@ VerificationTest[
     ,
     {Yurie`Math`multiGammaReduceByBarnesLemma::NotProduct}
     ,
-    TestID->"[50] Gamma.nb"
+    TestID->"[51] Gamma.nb"
 ]
 
 VerificationTest[
@@ -440,7 +450,7 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"[51] Gamma.nb"
+    TestID->"[52] Gamma.nb"
 ]
 
 VerificationTest[

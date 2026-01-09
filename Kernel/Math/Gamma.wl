@@ -205,7 +205,10 @@ gammaSeparate[expr_] :=
 (*Main*)
 
 
-gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr1_] :=
+gammaTakeResidue[args__][expr_List] :=
+    Map[gammaTakeResidue[args],expr];
+
+gammaTakeResidue[variable_,index1_,gmarg_,sign:1|-1|Left|Right:1,OptionsPattern[]][expr1:Except[_List]] :=
     Module[{expr,isSpecificPole,index,pos,solution,residue},
         expr =
             expr1//gammaTakeResidueHandleMultiGamma;
