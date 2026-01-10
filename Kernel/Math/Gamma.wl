@@ -21,6 +21,9 @@ gammaSimplify::usage =
     "\n"<>
     "Sketch: Developer`GammaSimplify.";
 
+gammaShift::usage =
+    "gammaShift[var, shift][expr]: shift the argument of Gamma functions by the specified integer.";
+
 gammaFrom::usage =
     "gammaFrom[expr, opts]: expand everything to Gamma functions.";
 
@@ -135,6 +138,16 @@ multiGammaReduceByBarnesLemma::NotProduct =
 
 gammaSimplify :=
     Developer`GammaSimplify;
+
+
+(* ::Subsection:: *)
+(*gammaShift*)
+
+
+gammaShift[Rule[gm_,shift_]][expr_] :=
+    expr//ReplaceAll[{
+        Gamma[arg:gm]:>Simplify@Gamma[arg+shift]/Simplify@Pochhammer[arg,shift]
+    }];
 
 
 (* ::Subsection:: *)

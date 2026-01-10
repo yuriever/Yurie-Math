@@ -122,21 +122,21 @@
 
     * Sketch: Developer\`GammaSimplify.
 
+* `#!wl gammaShift` - gammaShift[var, shift][expr]: shift the argument of Gamma functions by the specified integer.
+
 * `#!wl gammaFrom` - gammaFrom[expr, opts]: expand everything to Gamma functions.
 
 * `#!wl gammaSeparate` - gammaSeparate[expr]: separate a product into Gamma functions and the rest.
 
-* `#!wl gammaTakeResidue` - gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.
+* `#!wl gammaTakeResidue` - gammaTakeResidue[var, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.
 
-    * gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.
+    * gammaTakeResidue[var, index->n, gamma, sign, opts][expr]: specify one pole in the series.
 
     * Info[index]: the index of the poles.
 
     * Info[gamma]: the argument of the Gamma function.
 
     * Info[sign]: the direction of contour.
-
-    * Value[sign]: {1, -1, Left, Right}.
 
     * Value["ShowPole"]: {True, False, Full}.
 

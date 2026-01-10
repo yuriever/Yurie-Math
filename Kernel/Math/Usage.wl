@@ -127,6 +127,9 @@ dyeOff::usage =
 gammaSimplify::usage =
     StringJoin["gammaSimplify[expr]: simplify Gamma functions in the expression.", "\n", "Sketch: Developer`GammaSimplify."];
 
+gammaShift::usage =
+    "gammaShift[var, shift][expr]: shift the argument of Gamma functions by the specified integer.";
+
 gammaFrom::usage =
     "gammaFrom[expr, opts]: expand everything to Gamma functions.";
 
@@ -134,7 +137,7 @@ gammaSeparate::usage =
     "gammaSeparate[expr]: separate a product into Gamma functions and the rest.";
 
 gammaTakeResidue::usage =
-    StringJoin["gammaTakeResidue[variable, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[variable, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Info[index]: the index of the poles.", "\n", "Info[gamma]: the argument of the Gamma function.", "\n", "Info[sign]: the direction of contour.", "\n", "Value[sign]: {1, -1, Left, Right}.", "\n", "Value[\"ShowPole\"]: {True, False, Full}.", "\n", "Default[sign]: 1."];
+    StringJoin["gammaTakeResidue[var, index, gamma, sign, opts][expr]: take residue of a series of poles from the Gamma factor.", "\n", "gammaTakeResidue[var, index->n, gamma, sign, opts][expr]: specify one pole in the series.", "\n", "Info[index]: the index of the poles.", "\n", "Info[gamma]: the argument of the Gamma function.", "\n", "Info[sign]: the direction of contour.", "\n", "Value[\"ShowPole\"]: {True, False, Full}.", "\n", "Default[sign]: 1."];
 
 multiGamma::usage =
     StringJoin["multiGamma[num, denom]: represent a product of Gamma functions in numerator and denominator.", "\n", "Info[num]: list of arguments for Gamma functions in the numerator.", "\n", "Info[denom]: list of arguments for Gamma functions in the denominator."];

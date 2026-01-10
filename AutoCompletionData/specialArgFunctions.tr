@@ -7,11 +7,9 @@
  "diffCoefficient" -> {0, {"CheckLinearity"}}, 
  "PDCoefficient" -> {{"CheckLinearity"}}, 
  "gammaFrom" -> {0, {"Transformation", "ActivateGamma"}}, 
- "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole", "Listable", 
-    "PlusListable"}, {"SimplePole", "ShowPole", "Listable", "PlusListable"}, 
-   {"SimplePole", "ShowPole", "Listable", "PlusListable"}, 
-   {"SimplePole", "ShowPole", "Listable", "PlusListable"}, 
-   {"SimplePole", "ShowPole", "Listable", "PlusListable"}}, 
+ "gammaTakeResidue" -> {0, 0, 0, {"SimplePole", "ShowPole", "PlusListable"}, 
+   {"SimplePole", "ShowPole", "PlusListable"}, {"SimplePole", "ShowPole", 
+    "PlusListable"}, {"SimplePole", "ShowPole", "PlusListable"}}, 
  "labelConvert" -> {0, 0, {"LabelType"}}, "labelJoin" -> {0, {"LabelType"}}, 
  "labelSplit" -> {0, {"LabelType"}}, "powerExpand" -> 
   {{"Assumptions"}, {"Assumptions"}}, "powerExponentCollect" -> 
