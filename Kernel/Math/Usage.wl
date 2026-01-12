@@ -539,7 +539,10 @@ swap::usage =
     StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\n", "swap[{a, b}..][expr]: swap the pairs simultaneously."];
 
 separate::usage =
-    "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
+    "separate[crit][expr_]: separate the elements based on whether they satisfy the crit.";
+
+separateLongest::usage =
+    "separateLongest[crit][expr_]: separate the longest term in the sum/product.";
 
 stripPattern::usage =
     StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\n", "Default[head]: Identity."];

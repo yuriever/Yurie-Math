@@ -186,7 +186,11 @@ swap::usage =
 
 
 separate::usage =
-    "separate[criterion][expr_]: separate the elements based on whether they satisfy the criterion.";
+    "separate[crit][expr_]: separate the elements based on whether they satisfy the crit.";
+
+
+separateLongest::usage =
+    "separateLongest[crit][expr_]: separate the longest term in the sum/product.";
 
 
 stripPattern::usage =
@@ -821,6 +825,40 @@ separate[crit_][expr_] :=
         Select[expr,crit[#]&],
         Select[expr,!crit[#]&]
     };
+
+
+(* ::Subsubsection:: *)
+(*separateLongest*)
+
+
+separateLongest::BadInput =
+    "The input `1` is not a sum, product, or list.";
+
+
+separateLongest[crit_:LeafCount][expr_] :=
+    separateLongestKernel[crit][expr];
+
+
+separateLongestKernel[crit_][(head:Plus|Times|List)[terms___]] :=
+    Module[{termList,lenList,longestIndex},
+        termList =
+            {terms};
+        lenList =
+            Map[crit,termList];
+        longestIndex =
+            First@FirstPosition[lenList,Max[lenList]];
+
+        {
+            termList[[longestIndex]],
+            head@@Delete[termList,longestIndex]
+        }
+    ];
+
+separateLongestKernel[_][expr_] :=
+    (
+        Message[separateLongest::BadInput,expr];
+        expr
+    );
 
 
 (* ::Subsubsection:: *)

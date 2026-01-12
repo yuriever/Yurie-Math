@@ -580,7 +580,9 @@
 
     * swap[{a, b}..][expr]: swap the pairs simultaneously.
 
-* `#!wl separate` - separate[criterion][expr\_]: separate the elements based on whether they satisfy the criterion.
+* `#!wl separate` - separate[crit][expr\_]: separate the elements based on whether they satisfy the crit.
+
+* `#!wl separateLongest` - separateLongest[crit][expr\_]: separate the longest term in the sum/product.
 
 * `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.
 
