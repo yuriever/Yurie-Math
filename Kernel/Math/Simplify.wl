@@ -832,29 +832,37 @@ separate[crit_][expr_] :=
 
 
 separateLongest::BadInput =
-    "The input `1` is not a sum, product, or list.";
+    "The input `1` is invalid. The expression should be a sum, product, or list.";
+
+separateLongest::BadIndex =
+    "The index of longest term `1` is invalid. Something wrong with the crit?";
 
 
-separateLongest[crit_:LeafCount][expr_] :=
-    separateLongestKernel[crit][expr];
+separateLongest[n:_Integer?Positive:1,crit_:LeafCount][expr_] :=
+    separateLongestKernel[n,crit][expr]//Catch;
 
 
-separateLongestKernel[crit_][(head:Plus|Times|List)[terms___]] :=
-    Module[{termList,lenList,longestIndex},
+separateLongestKernel[n_,crit_][(head:Plus|Times|List)[terms___]] :=
+    Module[{termList,lengthList,longestIndex},
         termList =
             {terms};
-        lenList =
+        lengthList =
             Map[crit,termList];
         longestIndex =
-            First@FirstPosition[lenList,Max[lenList]];
+            PositionLargest[lengthList,n]//Flatten//Map[List];
+
+        If[!MatchQ[longestIndex,{___Integer}],
+            Message[separateLongest::BadIndex,longestIndex];
+            Throw[head[terms]];
+        ];
 
         {
-            termList[[longestIndex]],
+            head@@Extract[termList,longestIndex],
             head@@Delete[termList,longestIndex]
         }
     ];
 
-separateLongestKernel[_][expr_] :=
+separateLongestKernel[__][expr_] :=
     (
         Message[separateLongest::BadInput,expr];
         expr
