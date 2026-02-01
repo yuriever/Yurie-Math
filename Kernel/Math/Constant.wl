@@ -142,11 +142,21 @@ DLMFData = <|
         Gamma[z_]:>
             1/Sqrt[π]*2^(z-1)*Gamma[z/2]*Gamma[z/2+1/2]
     },
-    (* Hypergeometric2F1 *)
-    "15.1.2"->{
-        Hypergeometric2F1Regularized[a_,b_,c_,z_]:>
-            Hypergeometric2F1[a,b,c,z]/Gamma[c]
+    (* Hypergeometric1F1 *)
+    "13.2.39"->{
+        Hypergeometric1F1[a_,b_,z_]:>
+            Exp[z]*Hypergeometric1F1[b-a,b,-z]
     },
+    "13.2.40"->{
+        HypergeometricU[a_,b_,z_]:>
+            z^(1-b)*HypergeometricU[1+a-b,2-b,z]
+    },
+    "13.2.42"->{
+        HypergeometricU[a_,b_,z_]:>
+            Gamma[1-b]/Gamma[a-b+1]*Hypergeometric1F1[a,b,z]+
+            Gamma[b-1]/Gamma[a]*z^(1-b)*Hypergeometric1F1[a-b+1,2-b,z]
+    },
+    (* Hypergeometric2F1 *)
     "15.4.20"->{
         Hypergeometric2F1[a_,b_,c_,1]/;Simplify[c-a-b>0]:>
             Gamma[c]*Gamma[c-a-b]/(Gamma[c-a]*Gamma[c-b])

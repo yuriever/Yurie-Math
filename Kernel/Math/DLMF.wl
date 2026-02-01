@@ -101,10 +101,10 @@ DLMFRuleShow/:MakeBoxes[DLMFRuleShow[rules_,OptionsPattern[]],form_] :=
 (*Helper*)
 
 
-(*convert Hypergeometric2F1Regularized to Hypergeometric2F1.*)
+(* convert regularized hypergeometric functions. *)
 
 DLMFPreprocess[expr_] :=
-    expr//ReplaceRepeated[DLMFData["15.1.2"]];
+    expr//hyperUnregularize;
 
 
 DLMFKernel[{rule_String},ifIgnoreCondition_][expr_] :=
