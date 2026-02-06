@@ -356,7 +356,7 @@
 
 * `#!wl repcheck` - repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.
 
-* `#!wl replim` - replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.
+* `#!wl replimit` - replimit[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.
 
 * `#!wl part` - Sketch: Part.
 

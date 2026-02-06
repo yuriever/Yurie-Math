@@ -83,8 +83,8 @@ repdeep::usage =
 repcheck::usage =
     "repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.";
 
-replim::usage =
-    "replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
+replimit::usage =
+    "replimit[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
 
 
 (* ::Subsection:: *)
@@ -334,7 +334,7 @@ repcheck[rules___,sameTest:Except[_Rule|_RuleDelayed|_List|Null]:Automatic][expr
     ];
 
 
-replim[rules___][expr_] :=
+replimit[rules___][expr_] :=
     With[{
             rule = separateSimpleRule[rules]
         },

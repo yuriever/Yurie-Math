@@ -25,8 +25,8 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"times", "[", 
+ RowBox[{"x", "//",
+  RowBox[{"times", "[",
    RowBox[{"y", ",", "z"}], "]"}]}]], "Code",
  CellLabel->
   "In[1786]:=",ExpressionUUID->"65055ca0-f2c0-4df4-a6a3-8f4ca5bf9b0f"],
@@ -40,14 +40,14 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"divide", "[", 
+ RowBox[{"x", "//",
+  RowBox[{"divide", "[",
    RowBox[{"y", ",", "z"}], "]"}]}]], "Code",
  CellLabel->
   "In[1787]:=",ExpressionUUID->"9b2aad18-4d06-46bf-853c-c3ac5973c283"],
 
 Cell[BoxData[
- FractionBox["x", 
+ FractionBox["x",
   RowBox[{"y", " ", "z"}]]], "Output",
  CellLabel->
   "Out[1787]=",ExpressionUUID->"9d5ce5f0-ddf3-4573-8663-3023fdd920f3"]
@@ -56,8 +56,8 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"plus", "[", 
+ RowBox[{"x", "//",
+  RowBox[{"plus", "[",
    RowBox[{"y", ",", "z"}], "]"}]}]], "Code",
  CellLabel->
   "In[1788]:=",ExpressionUUID->"af94783c-39c4-4ed6-8c16-b94c1e841084"],
@@ -71,8 +71,8 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"minus", "[", 
+ RowBox[{"x", "//",
+  RowBox[{"minus", "[",
    RowBox[{"y", ",", "z"}], "]"}]}]], "Code",
  CellLabel->
   "In[1789]:=",ExpressionUUID->"a8c56ad0-2f6c-42c7-8d3f-49bfbf2c23d5"],
@@ -91,20 +91,20 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"{", 
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "==", "0"}], ",", 
-    RowBox[{"y", "==", "0"}]}], "}"}], "//", 
-  RowBox[{"solve", "[", 
-   RowBox[{"{", 
+    RowBox[{"x", "==", "0"}], ",",
+    RowBox[{"y", "==", "0"}]}], "}"}], "//",
+  RowBox[{"solve", "[",
+   RowBox[{"{",
     RowBox[{"x", ",", "y"}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[46]:=",ExpressionUUID->"c2fba6b9-2e41-4373-ae58-f16d2970f186"],
 
 Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{"{", 
+ RowBox[{"{",
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "\[Rule]", "0"}], ",", 
+    RowBox[{"x", "\[Rule]", "0"}], ",",
     RowBox[{"y", "\[Rule]", "0"}]}], "}"}], "}"}]], "Output",
  CellLabel->"Out[46]=",ExpressionUUID->"a499f903-dc21-44f3-b90e-8edbf9bfa769"]
 }, Open  ]],
@@ -113,20 +113,20 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"{", 
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "==", "0"}], ",", 
-    RowBox[{"y", "==", "0"}]}], "}"}], "//", 
-  RowBox[{"solve", "[", 
+    RowBox[{"x", "==", "0"}], ",",
+    RowBox[{"y", "==", "0"}]}], "}"}], "//",
+  RowBox[{"solve", "[",
    RowBox[{
-    RowBox[{"{", 
+    RowBox[{"{",
      RowBox[{"x", ",", "y"}], "}"}], ",", "1"}], "]"}]}]], "Code",
  CellLabel->"In[47]:=",ExpressionUUID->"b2778bba-42bc-4476-b357-546726d55f49"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{
-   RowBox[{"x", "\[Rule]", "0"}], ",", 
+   RowBox[{"x", "\[Rule]", "0"}], ",",
    RowBox[{"y", "\[Rule]", "0"}]}], "}"}]], "Output",
  CellLabel->"Out[47]=",ExpressionUUID->"8064b352-e797-40d8-803d-480e7d128b22"]
 }, Open  ]],
@@ -135,20 +135,20 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"{", 
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "==", "0"}], ",", 
-    RowBox[{"y", "==", "0"}]}], "}"}], "//", 
-  RowBox[{"solve", "[", 
+    RowBox[{"x", "==", "0"}], ",",
+    RowBox[{"y", "==", "0"}]}], "}"}], "//",
+  RowBox[{"solve", "[",
    RowBox[{
-    RowBox[{"{", 
+    RowBox[{"{",
      RowBox[{"x", ",", "y"}], "}"}], ",", "2"}], "]"}]}]], "Code",
  CellLabel->"In[48]:=",ExpressionUUID->"18b8ade7-6ddd-4fc7-95db-6075e58ac0cb"],
 
 Cell[BoxData[
  TemplateBox[{
-  "solve", "InvalidSolutionChoice", 
-   "\"The choice of the solution is invalid.\"", 2, 48, 6, 
+  "solve", "InvalidSolutionChoice",
+   "\"The choice of the solution is invalid.\"", 2, 48, 6,
    24682715361381411901, "Local", "Yurie`Math`solve"},
   "MessageTemplate2",
   BaseStyle->"MSG"]], "Message",
@@ -157,10 +157,10 @@ Cell[BoxData[
 In[48]:=",ExpressionUUID->"1a1aa6da-b812-4f76-99af-6bd75d71e721"],
 
 Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{"{", 
+ RowBox[{"{",
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "\[Rule]", "0"}], ",", 
+    RowBox[{"x", "\[Rule]", "0"}], ",",
     RowBox[{"y", "\[Rule]", "0"}]}], "}"}], "}"}]], "Output",
  CellLabel->"Out[48]=",ExpressionUUID->"b0829e19-5bb2-4230-a535-181d73fc4579"]
 }, Open  ]],
@@ -169,19 +169,19 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"{", 
+  RowBox[{"{",
    RowBox[{
-    RowBox[{"x", "==", "0"}], ",", 
-    RowBox[{"y", "==", "0"}]}], "}"}], "//", 
-  RowBox[{"solve1", "[", 
-   RowBox[{"{", 
+    RowBox[{"x", "==", "0"}], ",",
+    RowBox[{"y", "==", "0"}]}], "}"}], "//",
+  RowBox[{"solve1", "[",
+   RowBox[{"{",
     RowBox[{"x", ",", "y"}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[49]:=",ExpressionUUID->"5aaa265b-c4c6-4af4-877f-8eca994af950"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{
-   RowBox[{"x", "\[Rule]", "0"}], ",", 
+   RowBox[{"x", "\[Rule]", "0"}], ",",
    RowBox[{"y", "\[Rule]", "0"}]}], "}"}]], "Output",
  CellLabel->"Out[49]=",ExpressionUUID->"43f117ad-550e-44e2-bf84-ec2832e38d6b"]
 }, Open  ]],
@@ -193,17 +193,17 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{
-   SuperscriptBox["x", "2"], "==", "1"}], "//", 
+   SuperscriptBox["x", "2"], "==", "1"}], "//",
   RowBox[{"solve", "[", "x", "]"}]}]], "Code",
  CellLabel->"In[50]:=",ExpressionUUID->"456d4932-fdb1-4a40-84bd-1414d148c0b9"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{
-   RowBox[{"{", 
-    RowBox[{"x", "\[Rule]", 
-     RowBox[{"-", "1"}]}], "}"}], ",", 
-   RowBox[{"{", 
+   RowBox[{"{",
+    RowBox[{"x", "\[Rule]",
+     RowBox[{"-", "1"}]}], "}"}], ",",
+   RowBox[{"{",
     RowBox[{"x", "\[Rule]", "1"}], "}"}]}], "}"}]], "Output",
  CellLabel->"Out[50]=",ExpressionUUID->"29a10129-22f0-4e24-a03c-4ca06d3c5e4d"]
 }, Open  ]],
@@ -213,14 +213,14 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{
-   SuperscriptBox["x", "2"], "==", "1"}], "//", 
-  RowBox[{"solve", "[", 
+   SuperscriptBox["x", "2"], "==", "1"}], "//",
+  RowBox[{"solve", "[",
    RowBox[{"x", ",", "1"}], "]"}]}]], "Code",
  CellLabel->"In[51]:=",ExpressionUUID->"ca03f4ad-74f4-4d7d-8ec9-d8178ceda3eb"],
 
 Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{"x", "\[Rule]", 
+ RowBox[{"{",
+  RowBox[{"x", "\[Rule]",
    RowBox[{"-", "1"}]}], "}"}]], "Output",
  CellLabel->"Out[51]=",ExpressionUUID->"06652258-a66c-4b7b-85fb-2ccb2db4b118"]
 }, Open  ]],
@@ -231,15 +231,15 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"x", "==", "0"}], "//", 
-  RowBox[{"solve1", "[", 
-   RowBox[{"{", 
+  RowBox[{"x", "==", "0"}], "//",
+  RowBox[{"solve1", "[",
+   RowBox[{"{",
     RowBox[{"y", ",", "z"}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[52]:=",ExpressionUUID->"ca99c71d-39b1-4e39-b696-26fafa9aec1a"],
 
 Cell[BoxData[
  TemplateBox[{
-  "solve", "NoSolution", "\"No solution is found.\"", 2, 52, 7, 
+  "solve", "NoSolution", "\"No solution is found.\"", 2, 52, 7,
    24682715361381411901, "Local", "Yurie`Math`solve"},
   "MessageTemplate2",
   BaseStyle->"MSG"]], "Message",
@@ -264,15 +264,15 @@ Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{
-  RowBox[{"m", "=", "n"}], ";"}], "\n", 
- RowBox[{"Table", "[", 
-  RowBox[{"m", ",", 
-   RowBox[{"{", 
+  RowBox[{"m", "=", "n"}], ";"}], "\n",
+ RowBox[{"Table", "[",
+  RowBox[{"m", ",",
+   RowBox[{"{",
     RowBox[{"n", ",", "2"}], "}"}]}], "]"}]}], "Code",
  CellLabel->"In[12]:=",ExpressionUUID->"619c4550-08bd-4ed9-83ed-d2405a661828"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{"1", ",", "2"}], "}"}]], "Output",
  CellLabel->"Out[13]=",ExpressionUUID->"a0a0d309-901d-43bf-a359-0cd2b7b1ef52"]
 }, Open  ]],
@@ -281,14 +281,14 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Table", "[", 
-   RowBox[{"m", ",", 
-    RowBox[{"{", 
+  RowBox[{"Table", "[",
+   RowBox[{"m", ",",
+    RowBox[{"{",
      RowBox[{"n", ",", "2"}], "}"}]}], "]"}], "//", "modularize"}]], "Code",
  CellLabel->"In[14]:=",ExpressionUUID->"c164d87f-bb6e-4337-9883-962dfa1a201e"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{"n", ",", "n"}], "}"}]], "Output",
  CellLabel->"Out[14]=",ExpressionUUID->"22e6a7ea-f2dd-4327-a680-12e5939d0839"]
 }, Open  ]],
@@ -296,17 +296,17 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{
-   RowBox[{"m", "//", 
-    RowBox[{"block", "[", 
-     RowBox[{"{", 
-      RowBox[{"n", "=", "1"}], "}"}], "]"}]}], ",", "m", ",", "n"}], 
+   RowBox[{"m", "//",
+    RowBox[{"block", "[",
+     RowBox[{"{",
+      RowBox[{"n", "=", "1"}], "}"}], "]"}]}], ",", "m", ",", "n"}],
   "}"}]], "Code",
  CellLabel->"In[15]:=",ExpressionUUID->"1264a405-d8ea-4d8e-a3e0-ae5c4b3e5599"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{"1", ",", "n", ",", "n"}], "}"}]], "Output",
  CellLabel->"Out[15]=",ExpressionUUID->"38be8786-b1bd-4db2-8f73-e3cc53195706"]
 }, Open  ]],
@@ -314,17 +314,17 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{
-   RowBox[{"m", "//", 
-    RowBox[{"module", "[", 
-     RowBox[{"{", 
-      RowBox[{"m", "=", "1"}], "}"}], "]"}]}], ",", "m", ",", "n"}], 
+   RowBox[{"m", "//",
+    RowBox[{"module", "[",
+     RowBox[{"{",
+      RowBox[{"m", "=", "1"}], "}"}], "]"}]}], ",", "m", ",", "n"}],
   "}"}]], "Code",
  CellLabel->"In[16]:=",ExpressionUUID->"62ea10ee-2b53-4f41-af8a-3e7eb625aeb5"],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"{",
   RowBox[{"1", ",", "n", ",", "n"}], "}"}]], "Output",
  CellLabel->"Out[16]=",ExpressionUUID->"30ca378d-d091-4109-9f52-f86848df014b"]
 }, Open  ]],
@@ -343,12 +343,12 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"x", "//", 
+  RowBox[{"x", "//",
    RowBox[{
-    RowBox[{"Series", "[", 
-     RowBox[{"#", ",", 
-      RowBox[{"{", 
-       RowBox[{"x", ",", "0", ",", "0"}], "}"}]}], "]"}], "&"}]}], "//", 
+    RowBox[{"Series", "[",
+     RowBox[{"#", ",",
+      RowBox[{"{",
+       RowBox[{"x", ",", "0", ",", "0"}], "}"}]}], "]"}], "&"}]}], "//",
   "Normal"}]], "Code",
  CellLabel->
   "In[320]:=",ExpressionUUID->"21e87eff-63df-4196-941a-66a55fd6d4bf"],
@@ -361,9 +361,9 @@ Cell[BoxData["x"], "Output",
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"series", "[", 
-   RowBox[{"{", 
+ RowBox[{"x", "//",
+  RowBox[{"series", "[",
+   RowBox[{"{",
     RowBox[{"x", ",", "0", ",", "0"}], "}"}], "]"}]}]], "Code",
  CellLabel->
   "In[321]:=",ExpressionUUID->"10c817dd-a2d1-4261-978d-2103e113b71a"],
@@ -381,10 +381,10 @@ Cell["rep", "Subsection",ExpressionUUID->"ffd31210-1e41-4de6-8b2f-76aa45bf3d69"]
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"rep", "[", 
-   RowBox[{"{", 
-    RowBox[{"{", 
+ RowBox[{"x", "//",
+  RowBox[{"rep", "[",
+   RowBox[{"{",
+    RowBox[{"{",
      RowBox[{"x", "->", "y"}], "}"}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[13]:=",ExpressionUUID->"8b1d931d-287e-490c-88bd-a51a582bfd36"],
 
@@ -395,18 +395,18 @@ Cell[BoxData["y"], "Output",
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"repcheck", "[", 
-   RowBox[{"{", 
-    RowBox[{"{", 
+ RowBox[{"x", "//",
+  RowBox[{"repcheck", "[",
+   RowBox[{"{",
+    RowBox[{"{",
      RowBox[{"x", "->", "y"}], "}"}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[14]:=",ExpressionUUID->"ad80e314-78dd-4b40-bf56-c1ab0f22e2a0"],
 
 Cell[BoxData[
  TemplateBox[{
-  "repcheck", "SuspiciousRule", 
+  "repcheck", "SuspiciousRule",
    "\"The rule \\!\\(\\*RowBox[{\\\"x\\\"}]\\) -> \
-\\!\\(\\*RowBox[{\\\"y\\\"}]\\) is suspicious to equal.\"", 2, 14, 1, 
+\\!\\(\\*RowBox[{\\\"y\\\"}]\\) is suspicious to equal.\"", 2, 14, 1,
    34519068441685429567, "Local", "Yurie`Math`repcheck"},
   "MessageTemplate2",
   BaseStyle->"MSG"]], "Message",
@@ -421,18 +421,18 @@ Cell[BoxData["y"], "Output",
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"x", "//", 
-  RowBox[{"repcheck", "[", 
-   RowBox[{"{", 
+ RowBox[{"x", "//",
+  RowBox[{"repcheck", "[",
+   RowBox[{"{",
     RowBox[{
-     RowBox[{"{", 
-      RowBox[{"x", "->", "y"}], "}"}], ",", 
+     RowBox[{"{",
+      RowBox[{"x", "->", "y"}], "}"}], ",",
      RowBox[{"z", ":>", "w"}]}], "}"}], "]"}]}]], "Code",
  CellLabel->"In[16]:=",ExpressionUUID->"b8b1dc13-d718-4eb4-9fc0-304660affdec"],
 
 Cell[BoxData[
  TemplateBox[{
-  "repcheck", "UncheckedRule", 
+  "repcheck", "UncheckedRule",
    "\"There are unchecked rules, possibly due to RuleDelayed or Condition.\"",
     2, 16, 2, 34519068441685429567, "Local", "Yurie`Math`repcheck"},
   "MessageTemplate2",
@@ -443,9 +443,9 @@ In[16]:=",ExpressionUUID->"f919731d-4bfd-43f5-8b29-9d241df76af5"],
 
 Cell[BoxData[
  TemplateBox[{
-  "repcheck", "SuspiciousRule", 
+  "repcheck", "SuspiciousRule",
    "\"The rule \\!\\(\\*RowBox[{\\\"x\\\"}]\\) -> \
-\\!\\(\\*RowBox[{\\\"y\\\"}]\\) is suspicious to equal.\"", 2, 16, 3, 
+\\!\\(\\*RowBox[{\\\"y\\\"}]\\) is suspicious to equal.\"", 2, 16, 3,
    34519068441685429567, "Local", "Yurie`Math`repcheck"},
   "MessageTemplate2",
   BaseStyle->"MSG"]], "Message",
@@ -461,20 +461,20 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"Sin", "[", "x", "]"}], "//", 
-  RowBox[{"repcheck", "[", 
+  RowBox[{"Sin", "[", "x", "]"}], "//",
+  RowBox[{"repcheck", "[",
    RowBox[{
     RowBox[{
-     RowBox[{"Sin", "[", "x", "]"}], "->", 
-     RowBox[{"Sin", "[", 
+     RowBox[{"Sin", "[", "x", "]"}], "->",
+     RowBox[{"Sin", "[",
       RowBox[{
-       RowBox[{"2", " ", "n", " ", "\[Pi]"}], "+", "x"}], "]"}]}], ",", 
-    RowBox[{"SSA", "[", 
+       RowBox[{"2", " ", "n", " ", "\[Pi]"}], "+", "x"}], "]"}]}], ",",
+    RowBox[{"SSA", "[",
      RowBox[{"isN", "[", "n", "]"}], "]"}]}], "]"}]}]], "Code",
  CellLabel->"In[15]:=",ExpressionUUID->"3b60403b-62d3-4300-8076-e5d847893918"],
 
 Cell[BoxData[
- RowBox[{"Sin", "[", 
+ RowBox[{"Sin", "[",
   RowBox[{
    RowBox[{"2", " ", "n", " ", "\[Pi]"}], "+", "x"}], "]"}]], "Output",
  CellLabel->"Out[15]=",ExpressionUUID->"fac0b186-4981-46a1-a756-3a9b6c26d166"]
@@ -485,14 +485,14 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   FractionBox[
-   RowBox[{"Sin", "[", "x", "]"}], "x"], "//", 
-  RowBox[{"rep", "[", 
+   RowBox[{"Sin", "[", "x", "]"}], "x"], "//",
+  RowBox[{"rep", "[",
    RowBox[{"x", "->", "0"}], "]"}]}]], "Code",
  CellLabel->"In[27]:=",ExpressionUUID->"02ff439b-5b33-4b53-9355-219255ba3d6d"],
 
 Cell[BoxData[
  TemplateBox[{
-  "Power", "infy", 
+  "Power", "infy",
    "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \\\"0\\\"]\\) \
 encountered.\"", 2, 27, 6, 34519068441685429567, "Local"},
   "MessageTemplate",
@@ -503,9 +503,9 @@ In[27]:=",ExpressionUUID->"af93f179-5ce0-4f0c-9840-75b440a39fef"],
 
 Cell[BoxData[
  TemplateBox[{
-  "Infinity", "indet", 
+  "Infinity", "indet",
    "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
-\\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 27, 7, 34519068441685429567, 
+\\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 27, 7, 34519068441685429567,
    "Local"},
   "MessageTemplate",
   BaseStyle->"MSG"]], "Message",
@@ -523,10 +523,10 @@ Cell[BoxData[
  RowBox[{
   RowBox[{
    FractionBox[
-    RowBox[{"Sin", "[", "x", "]"}], "x"], "y"}], "//", 
-  RowBox[{"replim", "[", 
+    RowBox[{"Sin", "[", "x", "]"}], "x"], "y"}], "//",
+  RowBox[{"replimit", "[",
    RowBox[{
-    RowBox[{"x", "->", "0"}], ",", 
+    RowBox[{"x", "->", "0"}], ",",
     RowBox[{"y", ":>", "z"}]}], "]"}]}]], "Code",
  CellLabel->"In[28]:=",ExpressionUUID->"2ce80bcd-db98-420d-afba-7adf65404ca5"],
 
@@ -539,8 +539,8 @@ Editable->True,
 WindowSize->{720, 872},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
-StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
-   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko",
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"},
   "Yurie.nb", CharacterEncoding -> "UTF-8"],
 ExpressionUUID->"c8a71917-72c8-4f46-920d-fb674709070c"
 ]

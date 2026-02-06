@@ -321,8 +321,8 @@ repdeep::usage =
 repcheck::usage =
     "repcheck[rules, sametest][expr]: operator form of ReplaceAll with simple rules being checked.";
 
-replim::usage =
-    "replim[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
+replimit::usage =
+    "replimit[rules][expr]: operator form of ReplaceAll with limit being tried for simple rules.";
 
 part::usage =
     "Sketch: Part.";
