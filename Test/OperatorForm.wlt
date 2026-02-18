@@ -112,7 +112,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    m = n;
+    m = n; 
     Table[m, {n, 2}]
     ,
     {1, 2}
@@ -145,7 +145,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    ClearAll[m];
+    ClearAll[m]; 
     ,
     Null
     ,

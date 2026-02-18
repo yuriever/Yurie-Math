@@ -112,7 +112,7 @@ VerificationTest[
 VerificationTest[
     hyperToTaylor[n | m | k, Full][expr]
     ,
-    f[hyper["Taylor", n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(Gamma[a1]*Gamma[b1]*Gamma[1 + n]*Gamma[c1 + n])]] + hyper["Taylor", k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(Gamma[a2]*Gamma[b2]*Gamma[1 + k]*Gamma[c2 + k])]*hyper["Taylor", m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(Gamma[a2]*Gamma[b2]*Gamma[1 + m]*Gamma[c2 + m])]
+    f[hyper["Taylor", n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(n!*Gamma[a1]*Gamma[b1]*Gamma[c1 + n])]] + hyper["Taylor", k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(k!*Gamma[a2]*Gamma[b2]*Gamma[c2 + k])]*hyper["Taylor", m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(m!*Gamma[a2]*Gamma[b2]*Gamma[c2 + m])]
     ,
     TestID->"[13] Hyper.nb"
 ]
@@ -130,7 +130,7 @@ VerificationTest[
 VerificationTest[
     hyperToTaylor[n, Identity][Hypergeometric2F1[a, b, c, z]]
     ,
-    (z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])
+    (z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])
     ,
     TestID->"[15] Hyper.nb"
 ]
@@ -154,7 +154,7 @@ VerificationTest[
 VerificationTest[
     hyperToTaylor[n | m | k | l, Full][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
     ,
-    {hyper["Taylor", n][(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(Gamma[a]*Gamma[b]*Gamma[1 + n]*Gamma[c + n])], hyper["Taylor", m][(x^m*Gamma[b]*Gamma[a + m])/(Gamma[a]*Gamma[1 + m]*Gamma[b + m])], hyper["Taylor", k][(x^k*Gamma[a])/(Gamma[1 + k]*Gamma[a + k])], hyper["Taylor", l][(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
+    {hyper["Taylor", n][(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])], hyper["Taylor", m][(x^m*Gamma[b]*Gamma[a + m])/(m!*Gamma[a]*Gamma[b + m])], hyper["Taylor", k][(x^k*Gamma[a])/(k!*Gamma[a + k])], hyper["Taylor", l][(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
     ,
     TestID->"[18] Hyper.nb"
 ]
