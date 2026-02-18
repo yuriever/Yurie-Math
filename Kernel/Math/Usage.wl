@@ -155,13 +155,13 @@ hyperRegularize::usage =
     "hyperRegularize[expr]: convert hypergeometric function to the regularized one.";
 
 hyperToTaylor::usage =
-    StringJoin["hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ.", "\n", "Default[indicator]: SUM."];
+    StringJoin["hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ.", "\n", "Default[indicator]: SUM."];
 
 hyperToEuler::usage =
-    StringJoin["hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU.", "\n", "Default[indicator]: INT."];
 
 hyperToMellinBarnes::usage =
-    StringJoin["hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU, BesselJ.", "\n", "Default[indicator]: INT."];
 
 hyperFromAppellF1::usage =
     StringJoin["hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "Hint: AppellF1.", "\n", "Default[indicator]: SUM."];
@@ -170,7 +170,7 @@ hyperToEuler2::usage =
     StringJoin["hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.", "\n", "Hint: Hypergeometric2F1.", "\n", "Default[indicator]: INT."];
 
 hyperToMellinBarnes2::usage =
-    StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1|HypergeometricU.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1, HypergeometricU.", "\n", "Default[indicator]: INT."];
 
 hyperFrom::usage =
     "hyperFrom[pattern][expr]: convert to hypergeometric function.";
@@ -486,7 +486,7 @@ powerExponentCollect::usage =
     StringJoin["powerExponentCollect[exponents..., Inactive][expr]: collect and combine power factors with common exponents.", "\n", "Info[Inactive]: avoid auto-expansion of power factors with integer base.", "\n", "Hint: if no exponent is specified, try to collect all power factors."];
 
 phase::usage =
-    "phase[expr]: phase factor.";
+    "phase[z]: \[ExponentialE]^(I π z).";
 
 phaseIgnore::usage =
     "phaseIgnore[expr]: ignore the phase factor in the product.";

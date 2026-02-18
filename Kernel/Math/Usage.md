@@ -158,19 +158,19 @@
 
 * `#!wl hyperToTaylor` - hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.
 
-    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ.
+    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ.
 
     * Default[indicator]: SUM.
 
 * `#!wl hyperToEuler` - hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.
 
-    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.
+    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU.
 
     * Default[indicator]: INT.
 
-* `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral.
+* `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers.
 
-    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.
+    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU, BesselJ.
 
     * Default[indicator]: INT.
 
@@ -188,7 +188,7 @@
 
 * `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.
 
-    * Hint: Hypergeometric2F1|HypergeometricU.
+    * Hint: Hypergeometric2F1, HypergeometricU.
 
     * Default[indicator]: INT.
 
@@ -520,7 +520,7 @@
 
     * Hint: if no exponent is specified, try to collect all power factors.
 
-* `#!wl phase` - phase[expr]: phase factor.
+* `#!wl phase` - phase[z]: ^(I π z).
 
 * `#!wl phaseIgnore` - phaseIgnore[expr]: ignore the phase factor in the product.
 
