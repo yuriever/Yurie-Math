@@ -196,7 +196,7 @@ hyperConvert[which_][expr0_,head_,symbols_] :=
             positionList,numberOfHyper,numberOfSymbol,hyperList,convertedHyperList,result
         },
         pattern =
-            which[];
+            hyperValidPattern[which];
         symbolList =
             getSymbolList[symbols];
         expr =
@@ -232,25 +232,51 @@ hyperConvert[which_][expr0_,head_,symbols_] :=
 (*Kernel*)
 
 
-hyperToTaylorRule[] =
-    _Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ;
+hyperValidPattern[hyperToTaylorRule] =
+    _HypergeometricPFQ|
+    _Hypergeometric2F1|
+    _Hypergeometric1F1|
+    _Hypergeometric0F1;
 
-hyperToEulerRule[] =
-    _Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ|_HypergeometricU;
+hyperValidPattern[hyperToEulerRule] =
+    _Hypergeometric2F1|
+    _Hypergeometric1F1|
+    _HypergeometricU;
 
-hyperToMellinBarnesRule[] =
-    _Hypergeometric2F1|_Hypergeometric1F1|_Hypergeometric0F1|_HypergeometricPFQ|_HypergeometricU;
+hyperValidPattern[hyperToMellinBarnesRule] =
+    _HypergeometricPFQ|
+    _Hypergeometric2F1|
+    _Hypergeometric1F1|
+    _Hypergeometric0F1|
+    _HypergeometricU|
+    _BesselJ|
+    _BesselI;
 
-hyperFromAppellF1Rule[] =
+hyperValidPattern[hyperFromAppellF1Rule] =
     _AppellF1;
 
 
-hyperToEuler2Rule[] =
+hyperValidPattern[hyperToEuler2Rule] =
     _Hypergeometric2F1;
 
-hyperToMellinBarnes2Rule[] =
-    _Hypergeometric2F1|_HypergeometricU;
+hyperValidPattern[hyperToMellinBarnes2Rule] =
+    _Hypergeometric2F1|
+    _HypergeometricU|
+    _BesselK|
+    _BesselY|
+    _HankelH1|
+    _HankelH2;
 
+
+hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    With[{
+            num = Times@@Map[Pochhammer[#,n]&,as],
+            denom = Times@@Map[Pochhammer[#,n]&,bs]
+        },
+        hyper["Taylor",n][
+            gammaFrom[num/denom]*z^n/n!
+        ]
+    ];
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["Taylor",n][
@@ -265,16 +291,6 @@ hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
 hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
     hyper["Taylor",n][
         multiGammaS[{a},{a+n}]*z^n/n!
-    ];
-
-hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    With[{
-            num = Times@@Map[Pochhammer[#,n]&,as],
-            denom = Times@@Map[Pochhammer[#,n]&,bs]
-        },
-        hyper["Taylor",n][
-            gammaFrom[num/denom]*z^n/n!
-        ]
     ];
 
 
@@ -294,6 +310,16 @@ hyperToEulerRule[t_,HypergeometricU[a_,b_,z_]] :=
     ];
 
 
+hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
+    With[{
+            num = Times@@Map[Pochhammer[#,s]&,as],
+            denom = Times@@Map[Pochhammer[#,s]&,bs]
+        },
+        hyper["MellinBarnes",s][
+            gammaFrom[num/denom]*(-z)^s*Gamma[-s]
+        ]
+    ];
+
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["MellinBarnes",s][
         multiGammaS[{c,a+s,b+s,-s},{a,b,c+s}]*(-z)^s
@@ -309,19 +335,19 @@ hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
         multiGammaS[{a,-s},{a+s}]*(-z)^s
     ];
 
-hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    With[{
-            num = Times@@Map[Pochhammer[#,s]&,as],
-            denom = Times@@Map[Pochhammer[#,s]&,bs]
-        },
-        hyper["MellinBarnes",s][
-            gammaFrom[num/denom]*(-z)^s*Gamma[-s]
-        ]
-    ];
-
 hyperToMellinBarnesRule[s_,HypergeometricU[a_,b_,z_]] :=
     hyper["MellinBarnes",s][
         multiGammaS[{a+s,1+a-b+s,-s},{a,1+a-b}]*z^(-a-s)
+    ];
+
+hyperToMellinBarnesRule[s_,BesselJ[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{-s},{1+a+s}]*2^(-a-2*s)*z^(a+2*s)
+    ];
+
+hyperToMellinBarnesRule[s_,BesselI[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{-s},{1+a+s}]*2^(-a-2*s)*z^(a+2*s)*Exp[I*Pi*s]
     ];
 
 
@@ -350,6 +376,29 @@ hyperToMellinBarnes2Rule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
 hyperToMellinBarnes2Rule[s_,HypergeometricU[a_,b_,z_]] :=
     hyper["MellinBarnes",s][
         multiGammaS[{b-1+s,s},{a+s}]*z^(1-b-s)*Exp[z]
+    ];
+
+hyperToMellinBarnes2Rule[s_,BesselK[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{s,a+s},{}]*2^(-1+a+2*s)*z^(-a-2*s)
+    ];
+
+hyperToMellinBarnes2Rule[s_,BesselY[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{s,a+s},{1/2-s,1/2+s}]*
+        (-1)*2^(a+2*s)*z^(-a-2*s)
+    ];
+
+hyperToMellinBarnes2Rule[s_,HankelH1[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{s,a+s},{}]*
+        (-I/π)*2^(a+2*s)*z^(-a-2*s)*Exp[I*π*s]
+    ];
+
+hyperToMellinBarnes2Rule[s_,HankelH2[a_,z_]] :=
+    hyper["MellinBarnes",s][
+        multiGammaS[{s,a+s},{}]*
+        (I/π)*2^(a+2*s)*z^(-a-2*s)*Exp[-I*π*s]
     ];
 
 
