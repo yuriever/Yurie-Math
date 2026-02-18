@@ -44,7 +44,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    expr = {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z]}; 
+    expr = {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z], BesselJ[a, z], BesselI[a, z]}; 
     ,
     Null
     ,
@@ -54,7 +54,7 @@ VerificationTest[
 VerificationTest[
     (Map[hyperToTaylor[n, Full]])[expr]
     ,
-    {hyper["Taylor", n][(z^n*Gamma[d]*Gamma[e]*Gamma[a + n]*Gamma[b + n]*Gamma[c + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c]*Gamma[d + n]*Gamma[e + n])], hyper["Taylor", n][(z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])], hyper["Taylor", n][(z^n*Gamma[b]*Gamma[a + n])/(n!*Gamma[a]*Gamma[b + n])], hyper["Taylor", n][(z^n*Gamma[a])/(n!*Gamma[a + n])]}
+    {hyper["Taylor", n][(z^n*Gamma[d]*Gamma[e]*Gamma[a + n]*Gamma[b + n]*Gamma[c + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c]*Gamma[d + n]*Gamma[e + n])], hyper["Taylor", n][(z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])], hyper["Taylor", n][(z^n*Gamma[b]*Gamma[a + n])/(n!*Gamma[a]*Gamma[b + n])], hyper["Taylor", n][(z^n*Gamma[a])/(n!*Gamma[a + n])], hyper["Taylor", n][((-1)^n*2^(-a - 2*n)*z^(a + 2*n))/(n!*Gamma[1 + a + n])], hyper["Taylor", n][(2^(-a - 2*n)*z^(a + 2*n))/(n!*Gamma[1 + a + n])]}
     ,
     TestID->"[6] Hyper.nb"
 ]
@@ -71,7 +71,7 @@ VerificationTest[
 VerificationTest[
     SSA[isN[n]][res1/res2]
     ,
-    {1, 1, 1, 1}
+    {1, 1, 1, 1, 1, 1}
     ,
     TestID->"[8] Hyper.nb"
 ]
