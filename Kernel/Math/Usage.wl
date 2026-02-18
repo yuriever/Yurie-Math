@@ -5,20 +5,6 @@
 
 
 (* ::Subsubsection:: *)
-(*Deprecation.wl*)
-
-
-label2::usage =
-    "label2[var, lab]: variant of label with Symbol as head.";
-
-labelRange::usage =
-    StringJoin["labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head.", "\n", "Default[head]: Function.", "\n", "Example: labelRange[x, 3] gives x[1], x[2], x[3]."];
-
-labelRange2::usage =
-    "labelRange2[var, range]: variant of labelRange with Symbol as head.";
-
-
-(* ::Subsubsection:: *)
 (*Diff.wl*)
 
 

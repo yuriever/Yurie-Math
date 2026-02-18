@@ -1,17 +1,5 @@
 # Usage
 
-## Deprecation.wl
-
-* `#!wl label2` - label2[var, lab]: variant of label with Symbol as head.
-
-* `#!wl labelRange` - labelRange[var, range, head]: join the variable(s) and labels in the range using the specified head.
-
-    * Default[head]: Function.
-
-    * Example: labelRange[x, 3] gives x[1], x[2], x[3].
-
-* `#!wl labelRange2` - labelRange2[var, range]: variant of labelRange with Symbol as head.
-
 ## Diff.wl
 
 * `#!wl PD` - PD[vars]: head of partial derivative.
