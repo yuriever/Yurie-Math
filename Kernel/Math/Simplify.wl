@@ -138,7 +138,7 @@ powerExponentCollect::usage =
 
 
 phase::usage =
-    "phase[expr]: phase factor."
+    "phase[z]: \[ExponentialE]^(I π z)."
 
 phaseIgnore::usage =
     "phaseIgnore[expr]: ignore the phase factor in the product.";
