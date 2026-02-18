@@ -9,7 +9,7 @@ BeginPackage["Yurie`Math`DLMF`"];
 
 Needs["Yurie`Math`"];
 
-Needs["Yurie`Math`Constant`"];
+Needs["Yurie`Math`DLMFData`"];
 
 
 (* ::Section:: *)

@@ -13,7 +13,7 @@ Needs["Yurie`MathForm`"];
 
 Needs["Yurie`Math`Info`"]//Quiet;
 
-Needs["Yurie`Math`Constant`"];
+Needs["Yurie`Math`DLMFData`"];
 
 
 (* ::Section:: *)
@@ -59,10 +59,10 @@ $DLMFDataExceptionList = {
 
 
 $privateConversionList = {
-    Yurie`Math`Constant`Private`a->a,
-    Yurie`Math`Constant`Private`b->b,
-    Yurie`Math`Constant`Private`c->c,
-    Yurie`Math`Constant`Private`z->z
+    Yurie`Math`DLMFData`Private`a->a,
+    Yurie`Math`DLMFData`Private`b->b,
+    Yurie`Math`DLMFData`Private`c->c,
+    Yurie`Math`DLMFData`Private`z->z
 };
 
 

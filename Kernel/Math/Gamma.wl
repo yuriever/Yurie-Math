@@ -9,8 +9,6 @@ BeginPackage["Yurie`Math`Gamma`"];
 
 Needs["Yurie`Math`"];
 
-Needs["Yurie`Math`Constant`"];
-
 
 (* ::Section:: *)
 (*Public*)
@@ -177,7 +175,69 @@ gammaFrom[expr_,OptionsPattern[]] :=
 
 
 (* ::Subsubsection:: *)
+(*Kernel*)
+
+
+gamma::usage =
+    "internal head of Gamma.";
+
+
+gammaData = <|
+    "Trig"->{
+        Sin[x_]:>
+            π/(gamma[x/π] gamma[1-x/π]),
+        Cos[x_]:>
+            (*Sin[x+π/2]*)
+            π/(gamma[1/2-x/π] gamma[1/2+x/π]),
+        Tan[x_]:>
+            (*Sin[x]/Sin[x+π/2]*)
+            (gamma[1/2-x/π] gamma[1/2+x/π])/(gamma[x/π] gamma[1-x/π]),
+        Cot[x_]:>
+            (*Sin[x+π/2]/Sin[x]*)
+            (gamma[x/π] gamma[1-x/π])/(gamma[1/2-x/π] gamma[1/2+x/π]),
+        Csc[x_]:>
+            (*1/Sin[x]*)
+            (gamma[x/π] gamma[1-x/π])/π,
+        Sec[x_]:>
+            (*1/Sin[x+π/2]*)
+            (gamma[1/2-x/π] gamma[1/2+x/π])/π
+    },
+    "Factorial"->{
+        Factorial[x_]:>gamma[x+1]
+    },
+    "Binomial"->{
+        Binomial[a_,n_]:>
+            gamma[a+1]/(gamma[n+1]*gamma[a-n+1])
+    },
+    "Beta"->{
+        Beta[a_,b_]:>
+            (gamma[a]*gamma[b])/gamma[a+b]
+    },
+    "Pochhammer"->{
+        Pochhammer[a_,n_]:>
+            gamma[a+n]/gamma[a]
+    },
+    "FactorialPower"->{
+        FactorialPower[a_,n_]:>
+            gamma[a+1]/gamma[a-n+1]
+    },
+    "MultiGamma"->{
+        HoldPattern[multiGamma[num_List,denom_List]]:>
+            (Times@@Map[gamma,num])/(Times@@Map[gamma,denom])
+    }
+|>;
+
+
+(* ::Subsubsection:: *)
 (*Helper*)
+
+
+gammaDataKeyList =
+    gammaData//Keys;
+
+
+gammaDataValueList =
+    gammaData//Values//Flatten;
 
 
 gammaActivateHead[True][expr_] :=
