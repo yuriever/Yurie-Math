@@ -43,21 +43,21 @@ hyperRegularize::usage =
 hyperToTaylor::usage =
     "hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series."<>
     "\n"<>
-    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ."<>
+    "Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1."<>
     "\n"<>
     "Default[indicator]: SUM.";
 
 hyperToEuler::usage =
     "hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral."<>
     "\n"<>
-    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU."<>
+    "Hint: Hypergeometric2F1, Hypergeometric1F1, HypergeometricU."<>
     "\n"<>
     "Default[indicator]: INT.";
 
 hyperToMellinBarnes::usage =
-    "hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral."<>
+    "hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers."<>
     "\n"<>
-    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU."<>
+    "Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricU, BesselJ, BesselI."<>
     "\n"<>
     "Default[indicator]: INT.";
 
@@ -79,7 +79,7 @@ hyperToEuler2::usage =
 hyperToMellinBarnes2::usage =
     "hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes."<>
     "\n"<>
-    "Hint: Hypergeometric2F1|HypergeometricU."<>
+    "Hint: Hypergeometric2F1, HypergeometricU, BesselK, BesselY, HankelH1, HankelH2."<>
     "\n"<>
     "Default[indicator]: INT.";
 
