@@ -49,37 +49,37 @@ hyperRegularize::usage =
 
 
 hyperToTaylor::usage =
-    "hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series."<>
+    "hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series."<>
     "\n"<>
-    "hyperToTaylor[symbols, indicator][expr]: indicate the summation."<>
+    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ."<>
     "\n"<>
     "Default[indicator]: SUM.";
 
 hyperToEuler::usage =
-    "hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral."<>
+    "hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral."<>
     "\n"<>
-    "hyperToEuler[symbols, indicator][expr]: indicate the integration."<>
+    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ."<>
     "\n"<>
     "Default[indicator]: INT.";
 
 hyperToMellinBarnes::usage =
-    "hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral."<>
+    "hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral."<>
     "\n"<>
-    "hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration."<>
+    "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ."<>
     "\n"<>
     "Default[indicator]: INT.";
 
 hyperToMellinBarnes2::usage =
-    "hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z)."<>
+    "hyperToMellinBarnes2[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z)."<>
     "\n"<>
-    "hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration."<>
+    "Hint: Hypergeometric2F1."<>
     "\n"<>
     "Default[indicator]: INT.";
 
 hyperFromAppellF1::usage =
-    "hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation."<>
+    "hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation."<>
     "\n"<>
-    "hyperFromAppellF1[symbols, indicator][expr]: indicate the summation."<>
+    "Hint: AppellF1."<>
     "\n"<>
     "Default[indicator]: SUM.";
 
@@ -286,22 +286,27 @@ hyperConvert[which_][expr0_,head_,pattern_,symbolList_List] :=
 
 hyperToTaylorRule[n_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["Taylor",n][
-        (z^n Gamma[c] Gamma[a+n] Gamma[b+n])/(Gamma[1+n] Gamma[a] Gamma[b] Gamma[c+n])
+        (Gamma[c]*Gamma[a+n]*Gamma[b+n])/(Gamma[a]*Gamma[b]*Gamma[c+n])*z^n/n!
     ];
 
 hyperToTaylorRule[n_,Hypergeometric1F1[a_,b_,z_]] :=
     hyper["Taylor",n][
-        (z^n Gamma[b] Gamma[a+n])/(Gamma[a] Gamma[1+n] Gamma[b+n])
+        (Gamma[b]*Gamma[a+n])/(Gamma[a]*Gamma[b+n])*z^n/n!
     ];
 
 hyperToTaylorRule[n_,Hypergeometric0F1[a_,z_]] :=
     hyper["Taylor",n][
-        (z^n Gamma[a])/(Gamma[1+n] Gamma[a+n])
+        Gamma[a]/Gamma[a+n]*z^n/n!
     ];
 
 hyperToTaylorRule[n_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyper["Taylor",n][
-        Times@@Map[Pochhammer[#,n]&,as]/Times@@Map[Pochhammer[#,n]&,bs] z^n/n!//gammaFrom
+    With[{
+            num = Times@@Map[Pochhammer[#,n]&,as],
+            denom = Times@@Map[Pochhammer[#,n]&,bs]
+        },
+        hyper["Taylor",n][
+            num/denom*z^n/n!//gammaFrom
+        ]
     ];
 
 
@@ -320,39 +325,41 @@ hyperToEulerRule[u_,HypergeometricPFQ[as_List,bs_List,z_]] :=
 
 hyperToMellinBarnesRule[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["MellinBarnes",s][
-        ((-z)^s Gamma[-s] Gamma[c] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[c+s])
+        (Gamma[c]*Gamma[a+s]*Gamma[b+s])/(Gamma[a]*Gamma[b]*Gamma[c+s])*(-z)^s*Gamma[-s]
     ];
 
 hyperToMellinBarnesRule[s_,Hypergeometric1F1[a_,b_,z_]] :=
     hyper["MellinBarnes",s][
-        ((-z)^s Gamma[-s] Gamma[b] Gamma[a+s])/(Gamma[a] Gamma[b+s])
+        (Gamma[b]*Gamma[a+s])/(Gamma[a]*Gamma[b+s])*(-z)^s*Gamma[-s]
     ];
 
 hyperToMellinBarnesRule[s_,Hypergeometric0F1[a_,z_]] :=
     hyper["MellinBarnes",s][
-        ((-z)^s Gamma[-s] Gamma[a])/(Gamma[a+s])
+        Gamma[a]/Gamma[a+s]*(-z)^s*Gamma[-s]
     ];
 
 hyperToMellinBarnesRule[s_,HypergeometricPFQ[as_List,bs_List,z_]] :=
-    hyper["MellinBarnes",s][
-        Times@@Map[Pochhammer[#,s]&,as]/Times@@Map[Pochhammer[#,s]&,bs] (-z)^s Gamma[-s]//gammaFrom
+    With[{
+            num = Times@@Map[Pochhammer[#,s]&,as],
+            denom = Times@@Map[Pochhammer[#,s]&,bs]
+        },
+        hyper["MellinBarnes",s][
+            num/denom*(-z)^s*Gamma[-s]//gammaFrom
+        ]
     ];
 
 
 hyperToMellinBarnesRule2[s_,Hypergeometric2F1[a_,b_,c_,z_]] :=
     hyper["MellinBarnes",s][
-        ((1-z)^s Gamma[c] Gamma[-a-b+c-s] Gamma[-s] Gamma[a+s] Gamma[b+s])/(Gamma[a] Gamma[b] Gamma[-a+c] Gamma[-b+c])
+        (Gamma[c]*Gamma[-s]*Gamma[-a-b+c-s]*Gamma[a+s]*Gamma[b+s])/(Gamma[a]*Gamma[b]*Gamma[-a+c]*Gamma[-b+c])*(1-z)^s
     ];
 
 
 hyperFromAppellF1Rule[n_,AppellF1[a_,b1_,b2_,c_,x_,y_]] :=
     hyper["AppellF1",n][
-        (
-            (Pochhammer[a,n] Pochhammer[b1,n] Pochhammer[b2,n] Pochhammer[c-a,n])/
-            (n! Pochhammer[c+n-1,n] Pochhammer[c,2 n])
-        )*x^n*y^n*
-        Hypergeometric2F1[a+n,b1+n,c+2 n,x]*
-        Hypergeometric2F1[a+n,b2+n,c+2 n,y]
+        (Pochhammer[a,n]*Pochhammer[b1,n]*Pochhammer[b2,n]*Pochhammer[c-a,n])/(n!*Pochhammer[c+n-1,n]*Pochhammer[c,2 n])*
+        x^n*Hypergeometric2F1[a+n,b1+n,c+2 n,x]*
+        y^n*Hypergeometric2F1[a+n,b2+n,c+2 n,y]//gammaFrom
     ];
 
 
