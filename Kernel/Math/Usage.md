@@ -162,77 +162,49 @@
 
 * `#!wl hyper` - hyper[type, var][expr]: head used by hypergeometric conversion functions.
 
-* `#!wl JacobiPhi` - JacobiPhi[a, b, c, z]: Jacobi Phi function.
-
-* `#!wl WilsonPolynomial` - WilsonPolynomial[a, b, c, d, n, x]: Wilson polynomial.
-
 * `#!wl hyperSeparate` - hyperSeparate[expr]: separate a product into hypergeometric functions and the rest.
 
 * `#!wl hyperUnregularize` - hyperUnregularize[expr]: convert regularized hypergeometric function to the normal one.
 
 * `#!wl hyperRegularize` - hyperRegularize[expr]: convert hypergeometric function to the regularized one.
 
-* `#!wl hyperToTaylor` - hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series.
+* `#!wl hyperToTaylor` - hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.
 
-    * hyperToTaylor[symbols, indicator][expr]: indicate the summation.
-
-    * Default[indicator]: SUM.
-
-* `#!wl hyperToEuler` - hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral.
-
-    * hyperToEuler[symbols, indicator][expr]: indicate the integration.
-
-    * Default[indicator]: INT.
-
-* `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral.
-
-    * hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration.
-
-    * Default[indicator]: INT.
-
-* `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).
-
-    * hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration.
-
-    * Default[indicator]: INT.
-
-* `#!wl hyperFromAppellF1` - hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation.
-
-    * hyperFromAppellF1[symbols, indicator][expr]: indicate the summation.
+    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ.
 
     * Default[indicator]: SUM.
 
-* `#!wl JacobiPhiToHyper` - JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1.
+* `#!wl hyperToEuler` - hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.
 
-    * Default[head]: Identity.
+    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.
 
-* `#!wl JacobiPhiFromHyper` - JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function.
+    * Default[indicator]: INT.
 
-    * Default[head]: Identity.
+* `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral.
 
-* `#!wl WilsonPolynomialToHyper` - WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3.
+    * Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.
 
-    * Default[head]: Identity.
+    * Default[indicator]: INT.
 
-* `#!wl WilsonPolynomialFromHyper` - WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.
+* `#!wl hyperFromAppellF1` - hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.
 
-    * Default[head]: Identity.
+    * Hint: AppellF1.
 
-* `#!wl hyperFromIntegral` - hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function.
+    * Default[indicator]: SUM.
 
-    * Info[var]: integration variable to match.
+* `#!wl hyperToEuler2` - hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.
 
-    * Default[var]: All.
+    * Hint: Hypergeometric2F1.
 
-    * Default[head]: Identity.
+    * Default[indicator]: INT.
 
-* `#!wl AppellF1FromIntegral` - AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.
+* `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.
 
-    * Info[var]: integration variable to match.
+    * Hint: Hypergeometric2F1|HypergeometricU.
 
-    * Default[var]: All.
+    * Default[indicator]: INT.
 
-    * Default[head]: Identity.
+* `#!wl hyperFrom` - hyperFrom[pattern][expr]: convert to hypergeometric function.
 
 ## Label.wl
 

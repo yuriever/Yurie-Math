@@ -20,67 +20,172 @@ VerificationTest[
 ]
 
 VerificationTest[
-    hyperUnregularize[hyperRegularize[HypergeometricPFQ[{a1, b1, c1}, {d1, e1}, z]]]
+    expr = {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z]}; 
     ,
-    HypergeometricPFQ[{a1, b1, c1}, {d1, e1}, z]
+    Null
     ,
     TestID->"[2] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperUnregularize[hyperRegularize[Hypergeometric2F1[a1, b1, c1, z]]]
+    res = hyperUnregularize[hyperRegularize[expr]]
     ,
-    Hypergeometric2F1[a1, b1, c1, z]
+    {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z]}
     ,
     TestID->"[3] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperUnregularize[hyperRegularize[Hypergeometric1F1[a1, b1, z]]]
+    res === expr
     ,
-    Hypergeometric1F1[a1, b1, z]
+    True
     ,
     TestID->"[4] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperUnregularize[hyperRegularize[Hypergeometric0F1[a1, z]]]
+    expr = {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z]}; 
     ,
-    Hypergeometric0F1[a1, z]
+    Null
     ,
     TestID->"[5] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperRegularize[hyperUnregularize[HypergeometricPFQRegularized[{a1, b1, c1}, {d1, e1}, z]]]
+    (Map[hyperToTaylor[n, Full]])[expr]
     ,
-    HypergeometricPFQRegularized[{a1, b1, c1}, {d1, e1}, z]
+    {hyper["Taylor", n][(z^n*Gamma[d]*Gamma[e]*Gamma[a + n]*Gamma[b + n]*Gamma[c + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c]*Gamma[d + n]*Gamma[e + n])], hyper["Taylor", n][(z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])], hyper["Taylor", n][(z^n*Gamma[b]*Gamma[a + n])/(n!*Gamma[a]*Gamma[b + n])], hyper["Taylor", n][(z^n*Gamma[a])/(n!*Gamma[a + n])]}
     ,
     TestID->"[6] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperRegularize[hyperUnregularize[Hypergeometric2F1Regularized[a1, b1, c1, z]]]
+    res1 = gammaTakeResidue[s, n, -s, -1, "ShowPole" -> False][(Map[hyperToMellinBarnes[s, Identity]])[expr]]; 
+    (res2 = (Map[hyperToTaylor[n, Identity]])[expr]; )
     ,
-    Hypergeometric2F1Regularized[a1, b1, c1, z]
+    Null
     ,
     TestID->"[7] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperRegularize[hyperUnregularize[Hypergeometric1F1Regularized[a1, b1, z]]]
+    SSA[isN[n]][res1/res2]
     ,
-    Hypergeometric1F1Regularized[a1, b1, z]
+    {1, 1, 1, 1}
     ,
     TestID->"[8] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperRegularize[hyperUnregularize[Hypergeometric0F1Regularized[a1, z]]]
+    expr = {Hypergeometric2F1[a, b, c, z]*HeavisideTheta[1 - t], Hypergeometric1F1[a, b, z]*HeavisideTheta[1 - t], HypergeometricU[a, b, z]}; 
     ,
-    Hypergeometric0F1Regularized[a1, z]
+    Null
     ,
     TestID->"[9] Hyper.nb"
+]
+
+VerificationTest[
+    (Map[hyperToEuler[t, Full]])[expr]
+    ,
+    {HeavisideTheta[1 - t]*hyper["Euler", t][((1 - t)^(-1 - b + c)*t^(-1 + b)*Gamma[c])/((1 - t*z)^a*(Gamma[b]*Gamma[-b + c]))], HeavisideTheta[1 - t]*hyper["Euler", t][(E^(t*z)*(1 - t)^(-1 - a + b)*t^(-1 + a)*Gamma[b])/(Gamma[a]*Gamma[-a + b])], hyper["Euler", t][(t^(-1 + a)*(1 + t)^(-1 - a + b))/(E^(t*z)*Gamma[a])]}
+    ,
+    TestID->"[10] Hyper.nb"
+]
+
+VerificationTest[
+    res = integration[{t, 0, Infinity}][(Map[hyperToEuler[t, Identity]])[expr]]
+    ,
+    {Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], HypergeometricU[a, b, z]}
+    ,
+    TestID->"[11] Hyper.nb"
+]
+
+VerificationTest[
+    (expr /. _HeavisideTheta -> 1) === res
+    ,
+    True
+    ,
+    TestID->"[12] Hyper.nb"
+]
+
+VerificationTest[
+    expr = {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z], HypergeometricU[a, b, z]}; 
+    ,
+    Null
+    ,
+    TestID->"[13] Hyper.nb"
+]
+
+VerificationTest[
+    (Map[hyperToMellinBarnes[s, Full]])[expr]
+    ,
+    {hyper["MellinBarnes", s][((-z)^s*Gamma[d]*Gamma[e]*Gamma[-s]*Gamma[a + s]*Gamma[b + s]*Gamma[c + s])/(Gamma[a]*Gamma[b]*Gamma[c]*Gamma[d + s]*Gamma[e + s])], hyper["MellinBarnes", s][((-z)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])], hyper["MellinBarnes", s][((-z)^s*Gamma[b]*Gamma[-s]*Gamma[a + s])/(Gamma[a]*Gamma[b + s])], hyper["MellinBarnes", s][((-z)^s*Gamma[a]*Gamma[-s])/Gamma[a + s]], hyper["MellinBarnes", s][(z^(-a - s)*Gamma[-s]*Gamma[a + s]*Gamma[1 + a - b + s])/(Gamma[a]*Gamma[1 + a - b])]}
+    ,
+    TestID->"[14] Hyper.nb"
+]
+
+VerificationTest[
+    res = summation[{n, 0, Infinity}, Regularization -> "Borel"][gammaTakeResidue[s, n, -s, -1, "ShowPole" -> False][(Map[hyperToMellinBarnes[s, Identity]])[expr]]]
+    ,
+    {HypergeometricPFQ[{a, b, c}, {d, e}, z], Hypergeometric2F1[a, b, c, z], Hypergeometric1F1[a, b, z], Hypergeometric0F1[a, z], HypergeometricU[a, b, z]}
+    ,
+    TestID->"[15] Hyper.nb"
+]
+
+VerificationTest[
+    res === expr
+    ,
+    True
+    ,
+    TestID->"[16] Hyper.nb"
+]
+
+VerificationTest[
+    expr = Hypergeometric2F1[a, b, c, z]
+    ,
+    Hypergeometric2F1[a, b, c, z]
+    ,
+    TestID->"[17] Hyper.nb"
+]
+
+VerificationTest[
+    hyperToEuler2[t, Full][expr]
+    ,
+    hyper["Euler", t][(t^(-1 + b)*(1 + t)^(a - c)*Gamma[c])/((1 + t - t*z)^a*(Gamma[b]*Gamma[-b + c]))]
+    ,
+    TestID->"[18] Hyper.nb"
+]
+
+VerificationTest[
+    res = FES[gammaFrom[DLMF["15.8.4"][integration[{t, 0, Infinity}][hyperToEuler2[t, Identity][expr]]]]]
+    ,
+    Hypergeometric2F1[a, b, c, z]
+    ,
+    TestID->"[19] Hyper.nb"
+]
+
+VerificationTest[
+    Null
+    ,
+    Null
+    ,
+    TestID->"[20] Hyper.nb"
+]
+
+VerificationTest[
+    expr = AppellF1[a, b1, b2, c, x, y]; 
+    ,
+    Null
+    ,
+    TestID->"[21] Hyper.nb"
+]
+
+VerificationTest[
+    hyperFromAppellF1[n, Full][expr]
+    ,
+    hyper["AppellF1", n][(x^n*y^n*Gamma[c]*Gamma[a + n]*Gamma[b1 + n]*Gamma[b2 + n]*Gamma[-1 + c + n]*Gamma[-a + c + n]*Hypergeometric2F1[a + n, b1 + n, c + 2*n, x]*Hypergeometric2F1[a + n, b2 + n, c + 2*n, y])/(n!*Gamma[a]*Gamma[b1]*Gamma[b2]*Gamma[-a + c]*Gamma[-1 + c + 2*n]*Gamma[c + 2*n])]
+    ,
+    TestID->"[22] Hyper.nb"
 ]
 
 VerificationTest[
@@ -88,15 +193,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[10] Hyper.nb"
-]
-
-VerificationTest[
-    hyperToMellinBarnes[s | t | u, Full][expr]
-    ,
-    f[hyper["MellinBarnes", s][((-z1)^s*Gamma[c1]*Gamma[-s]*Gamma[a1 + s]*Gamma[b1 + s])/(Gamma[a1]*Gamma[b1]*Gamma[c1 + s])]] + hyper["MellinBarnes", t][((-z2)^t*Gamma[c2]*Gamma[-t]*Gamma[a2 + t]*Gamma[b2 + t])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + t])]*hyper["MellinBarnes", u][((-z2)^u*Gamma[c2]*Gamma[-u]*Gamma[a2 + u]*Gamma[b2 + u])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + u])]
-    ,
-    TestID->"[11] Hyper.nb"
+    TestID->"[23] Hyper.nb"
 ]
 
 VerificationTest[
@@ -106,15 +203,15 @@ VerificationTest[
     ,
     {Yurie`Math`hyper::SymbolNotEnough}
     ,
-    TestID->"[12] Hyper.nb"
+    TestID->"[24] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperToTaylor[n | m | k, Full][expr]
+    hyperToMellinBarnes[s | t | u, Full][expr]
     ,
-    f[hyper["Taylor", n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(n!*Gamma[a1]*Gamma[b1]*Gamma[c1 + n])]] + hyper["Taylor", k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(k!*Gamma[a2]*Gamma[b2]*Gamma[c2 + k])]*hyper["Taylor", m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(m!*Gamma[a2]*Gamma[b2]*Gamma[c2 + m])]
+    f[hyper["MellinBarnes", s][((-z1)^s*Gamma[c1]*Gamma[-s]*Gamma[a1 + s]*Gamma[b1 + s])/(Gamma[a1]*Gamma[b1]*Gamma[c1 + s])]] + hyper["MellinBarnes", t][((-z2)^t*Gamma[c2]*Gamma[-t]*Gamma[a2 + t]*Gamma[b2 + t])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + t])]*hyper["MellinBarnes", u][((-z2)^u*Gamma[c2]*Gamma[-u]*Gamma[a2 + u]*Gamma[b2 + u])/(Gamma[a2]*Gamma[b2]*Gamma[c2 + u])]
     ,
-    TestID->"[13] Hyper.nb"
+    TestID->"[25] Hyper.nb"
 ]
 
 VerificationTest[
@@ -124,64 +221,15 @@ VerificationTest[
     ,
     {Yurie`Math`hyper::SymbolNotEnough}
     ,
-    TestID->"[14] Hyper.nb"
+    TestID->"[26] Hyper.nb"
 ]
 
 VerificationTest[
-    hyperToTaylor[n, Identity][Hypergeometric2F1[a, b, c, z]]
+    hyperToTaylor[n | m | k, Full][expr]
     ,
-    (z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])
+    f[hyper["Taylor", n][(z1^n*Gamma[c1]*Gamma[a1 + n]*Gamma[b1 + n])/(n!*Gamma[a1]*Gamma[b1]*Gamma[c1 + n])]] + hyper["Taylor", k][(z2^k*Gamma[c2]*Gamma[a2 + k]*Gamma[b2 + k])/(k!*Gamma[a2]*Gamma[b2]*Gamma[c2 + k])]*hyper["Taylor", m][(z2^m*Gamma[c2]*Gamma[a2 + m]*Gamma[b2 + m])/(m!*Gamma[a2]*Gamma[b2]*Gamma[c2 + m])]
     ,
-    TestID->"[15] Hyper.nb"
-]
-
-VerificationTest[
-    SSA[isN[n] && z > 0][gammaTakeResidue[s, n, -s, "ShowPole" -> False][hyperToMellinBarnes[s, Identity][Hypergeometric2F1[a, b, c, z]]]]
-    ,
-    -((z^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n]))
-    ,
-    TestID->"[16] Hyper.nb"
-]
-
-VerificationTest[
-    hyperToMellinBarnes2[s, Identity][Hypergeometric2F1[a, b, c, z]]
-    ,
-    ((1 - z)^s*Gamma[c]*Gamma[-a - b + c - s]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[-a + c]*Gamma[-b + c])
-    ,
-    TestID->"[17] Hyper.nb"
-]
-
-VerificationTest[
-    hyperToTaylor[n | m | k | l, Full][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
-    ,
-    {hyper["Taylor", n][(x^n*Gamma[c]*Gamma[a + n]*Gamma[b + n])/(n!*Gamma[a]*Gamma[b]*Gamma[c + n])], hyper["Taylor", m][(x^m*Gamma[b]*Gamma[a + m])/(m!*Gamma[a]*Gamma[b + m])], hyper["Taylor", k][(x^k*Gamma[a])/(k!*Gamma[a + k])], hyper["Taylor", l][(x^l*Gamma[c]*Gamma[a + l]*Gamma[b + l])/(Gamma[a]*Gamma[b]*Gamma[1 + l]*Gamma[c + l])]}
-    ,
-    TestID->"[18] Hyper.nb"
-]
-
-VerificationTest[
-    hyperToMellinBarnes[s | t | u | v, Full][{Hypergeometric2F1[a, b, c, x], Hypergeometric1F1[a, b, x], Hypergeometric0F1[a, x], HypergeometricPFQ[{a, b}, {c}, x]}]
-    ,
-    {hyper["MellinBarnes", s][((-x)^s*Gamma[c]*Gamma[-s]*Gamma[a + s]*Gamma[b + s])/(Gamma[a]*Gamma[b]*Gamma[c + s])], hyper["MellinBarnes", t][((-x)^t*Gamma[b]*Gamma[-t]*Gamma[a + t])/(Gamma[a]*Gamma[b + t])], hyper["MellinBarnes", u][((-x)^u*Gamma[a]*Gamma[-u])/Gamma[a + u]], hyper["MellinBarnes", v][((-x)^v*Gamma[c]*Gamma[-v]*Gamma[a + v]*Gamma[b + v])/(Gamma[a]*Gamma[b]*Gamma[c + v])]}
-    ,
-    TestID->"[19] Hyper.nb"
-]
-
-VerificationTest[
-    expr = (1 - u)^b*u^a*(1 - v)^e*v^d*(v + u*(1 - χ)*(1 - χb) + χ*χb)^c; 
-    ,
-    Null
-    ,
-    TestID->"[20] Hyper.nb"
-]
-
-VerificationTest[
-    res = Comap[{integration[{u, 0, 1}], hyperFromIntegral[All], hyperFromIntegral[u]}][expr]; 
-    FES[{res[[1]]/res[[2]], res[[1]]/res[[3]]}]
-    ,
-    {1, 1}
-    ,
-    TestID->"[21] Hyper.nb"
+    TestID->"[27] Hyper.nb"
 ]
 
 VerificationTest[

@@ -159,12 +159,6 @@ multiGammaReduceByBarnesLemma::usage =
 hyper::usage =
     "hyper[type, var][expr]: head used by hypergeometric conversion functions.";
 
-JacobiPhi::usage =
-    "JacobiPhi[a, b, c, z]: Jacobi Phi function.";
-
-WilsonPolynomial::usage =
-    "WilsonPolynomial[a, b, c, d, n, x]: Wilson polynomial.";
-
 hyperSeparate::usage =
     "hyperSeparate[expr]: separate a product into hypergeometric functions and the rest.";
 
@@ -175,37 +169,25 @@ hyperRegularize::usage =
     "hyperRegularize[expr]: convert hypergeometric function to the regularized one.";
 
 hyperToTaylor::usage =
-    StringJoin["hyperToTaylor[symbols][expr]: convert hypergeometric function to Taylor series.", "\n", "hyperToTaylor[symbols, indicator][expr]: indicate the summation.", "\n", "Default[indicator]: SUM."];
+    StringJoin["hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ.", "\n", "Default[indicator]: SUM."];
 
 hyperToEuler::usage =
-    StringJoin["hyperToEuler[symbols][expr]: convert hypergeometric function to Euler integral.", "\n", "hyperToEuler[symbols, indicator][expr]: indicate the integration.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.", "\n", "Default[indicator]: INT."];
 
 hyperToMellinBarnes::usage =
-    StringJoin["hyperToMellinBarnes[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral.", "\n", "hyperToMellinBarnes[symbols, indicator][expr]: indicate the integration.", "\n", "Default[indicator]: INT."];
-
-hyperToMellinBarnes2::usage =
-    StringJoin["hyperToMellinBarnes2[symbols][expr]: convert hypergeometric function to Mellin-Barnes integral in terms of (1-z).", "\n", "hyperToMellinBarnes2[symbols, indicator][expr]: indicate the integration.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral.", "\n", "Hint: Hypergeometric2F1|Hypergeometric1F1|Hypergeometric0F1|HypergeometricPFQ|HypergeometricU.", "\n", "Default[indicator]: INT."];
 
 hyperFromAppellF1::usage =
-    StringJoin["hyperFromAppellF1[symbols][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "hyperFromAppellF1[symbols, indicator][expr]: indicate the summation.", "\n", "Default[indicator]: SUM."];
+    StringJoin["hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "Hint: AppellF1.", "\n", "Default[indicator]: SUM."];
 
-JacobiPhiToHyper::usage =
-    StringJoin["JacobiPhiToHyper[head][expr]: convert Jacobi Phi function to Hypergeometric2F1.", "\n", "Default[head]: Identity."];
+hyperToEuler2::usage =
+    StringJoin["hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.", "\n", "Hint: Hypergeometric2F1.", "\n", "Default[indicator]: INT."];
 
-JacobiPhiFromHyper::usage =
-    StringJoin["JacobiPhiFromHyper[head][expr]: convert Hypergeometric2F1 to Jacobi Phi function.", "\n", "Default[head]: Identity."];
+hyperToMellinBarnes2::usage =
+    StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1|HypergeometricU.", "\n", "Default[indicator]: INT."];
 
-WilsonPolynomialToHyper::usage =
-    StringJoin["WilsonPolynomialToHyper[head][expr]: convert Wilson polynomial to Hypergeometric4F3.", "\n", "Default[head]: Identity."];
-
-WilsonPolynomialFromHyper::usage =
-    StringJoin["WilsonPolynomialFromHyper[head][expr]: convert Hypergeometric4F3 to Wilson polynomial.", "\n", "Default[head]: Identity."];
-
-hyperFromIntegral::usage =
-    StringJoin["hyperFromIntegral[var, head][expr]: convert integral to hypergeometric function.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
-
-AppellF1FromIntegral::usage =
-    StringJoin["AppellF1FromIntegral[var, head][expr]: convert integral to Appell F1.", "\n", "Info[var]: integration variable to match.", "\n", "Default[var]: All.", "\n", "Default[head]: Identity."];
+hyperFrom::usage =
+    "hyperFrom[pattern][expr]: convert to hypergeometric function.";
 
 
 (* ::Subsubsection:: *)
