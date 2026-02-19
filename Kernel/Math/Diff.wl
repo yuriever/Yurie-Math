@@ -817,10 +817,10 @@ diffCheckLinearity[False][expr_,fun_] :=
 
 
 diffCollect[fun:Except[_List],args___][expr_] :=
-    Collect[expr,Derivative[__][fun][__]|fun[__],args];
+    Collect[expr,HoldPattern[Derivative[__][fun][__]|fun[__]],args];
 
 diffCollect[funList_List,args___][expr_] :=
-    Collect[expr,Map[(Derivative[__][#][__]|#[__])&,funList],args];
+    Collect[expr,Map[HoldPattern[Derivative[__][#][__]|#[__]]&,funList],args];
 
 
 (* ::Subsubsection:: *)
