@@ -158,23 +158,23 @@ hyper::SymbolNotEnough =
 (*Main*)
 
 
-hyperToTaylor[symbols_,head_:SUM][expr_] :=
+hyperToTaylor[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperToTaylorRule][expr,head,symbols];
 
-hyperToEuler[symbols_,head_:INT][expr_] :=
+hyperToEuler[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperToEulerRule][expr,head,symbols];
 
-hyperToMellinBarnes[symbols_,head_:INT][expr_] :=
+hyperToMellinBarnes[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperToMellinBarnesRule][expr,head,symbols];
 
-hyperFromAppellF1[symbols_,head_:SUM][expr_] :=
+hyperFromAppellF1[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperFromAppellF1Rule][expr,head,symbols];
 
 
-hyperToEuler2[symbols_,head_:INT][expr_] :=
+hyperToEuler2[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperToEuler2Rule][expr,head,symbols];
 
-hyperToMellinBarnes2[symbols_,head_:INT][expr_] :=
+hyperToMellinBarnes2[symbols_,head_:Identity][expr_] :=
     hyperConvert[hyperToMellinBarnes2Rule][expr,head,symbols];
 
 
@@ -465,17 +465,17 @@ activateTimesFromPower[expr_] :=
     Activate[ReleaseHold[expr],Times];
 
 
+handleHyperHead[INT][expr_] :=
+    expr//ReplaceAll[hyper["Euler"|"Euler2"|"MellinBarnes"|"MellinBarnes2",var_][term_]:>INT[var]*term];
+
+handleHyperHead[SUM][expr_] :=
+    expr//ReplaceAll[hyper["Taylor"|"AppellF1",var_][term_]:>SUM[var]*term];
+
 handleHyperHead[Full][expr_] :=
     expr;
 
 handleHyperHead[head_][expr_] :=
-    expr//ReplaceAll[hyper[__]->head];
-
-handleHyperHead[INT][expr_] :=
-    expr//ReplaceAll[hyper["MellinBarnes"|"Euler",var_][term_]:>INT[var]*term];
-
-handleHyperHead[SUM][expr_] :=
-    expr//ReplaceAll[hyper["Taylor"|"AppellF1",var_][term_]:>SUM[var]*term];
+    expr//ReplaceAll[hyper[_,_][term_]:>head[term]];
 
 
 (* ::Subsection:: *)
