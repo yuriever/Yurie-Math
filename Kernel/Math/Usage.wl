@@ -155,22 +155,22 @@ hyperRegularize::usage =
     "hyperRegularize[expr]: convert hypergeometric function to the regularized one.";
 
 hyperToTaylor::usage =
-    StringJoin["hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ.", "\n", "Default[indicator]: SUM."];
+    StringJoin["hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.", "\n", "Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, BesselJ, BesselI."];
 
 hyperToEuler::usage =
-    StringJoin["hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, HypergeometricU."];
 
 hyperToMellinBarnes::usage =
-    StringJoin["hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers.", "\n", "Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU, BesselJ.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers.", "\n", "Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricU, BesselJ, BesselI."];
 
 hyperFromAppellF1::usage =
-    StringJoin["hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "Hint: AppellF1.", "\n", "Default[indicator]: SUM."];
+    StringJoin["hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.", "\n", "Hint: AppellF1."];
 
 hyperToEuler2::usage =
-    StringJoin["hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.", "\n", "Hint: Hypergeometric2F1.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.", "\n", "Hint: Hypergeometric2F1."];
 
 hyperToMellinBarnes2::usage =
-    StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1, HypergeometricU.", "\n", "Default[indicator]: INT."];
+    StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1, HypergeometricU, BesselK, BesselY, HankelH1, HankelH2."];
 
 hyperFrom::usage =
     "hyperFrom[pattern][expr]: convert to hypergeometric function.";

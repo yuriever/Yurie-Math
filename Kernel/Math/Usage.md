@@ -158,39 +158,27 @@
 
 * `#!wl hyperToTaylor` - hyperToTaylor[symbols, indicator][expr]: convert hypergeometric function to Taylor series.
 
-    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ.
-
-    * Default[indicator]: SUM.
+    * Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, BesselJ, BesselI.
 
 * `#!wl hyperToEuler` - hyperToEuler[symbols, indicator][expr]: convert hypergeometric function to Euler integral.
 
-    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU.
-
-    * Default[indicator]: INT.
+    * Hint: Hypergeometric2F1, Hypergeometric1F1, HypergeometricU.
 
 * `#!wl hyperToMellinBarnes` - hyperToMellinBarnes[symbols, indicator][expr]: convert hypergeometric function to Mellin-Barnes integral with poles at natural numbers.
 
-    * Hint: Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricPFQ, HypergeometricU, BesselJ.
-
-    * Default[indicator]: INT.
+    * Hint: HypergeometricPFQ, Hypergeometric2F1, Hypergeometric1F1, Hypergeometric0F1, HypergeometricU, BesselJ, BesselI.
 
 * `#!wl hyperFromAppellF1` - hyperFromAppellF1[symbols, indicator][expr]: convert Appell F1 function to hypergeometric summation.
 
     * Hint: AppellF1.
 
-    * Default[indicator]: SUM.
-
 * `#!wl hyperToEuler2` - hyperToEuler2[symbols, indicator][expr]: variant of hyperToEuler.
 
     * Hint: Hypergeometric2F1.
 
-    * Default[indicator]: INT.
-
 * `#!wl hyperToMellinBarnes2` - hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.
 
-    * Hint: Hypergeometric2F1, HypergeometricU.
-
-    * Default[indicator]: INT.
+    * Hint: Hypergeometric2F1, HypergeometricU, BesselK, BesselY, HankelH1, HankelH2.
 
 * `#!wl hyperFrom` - hyperFrom[pattern][expr]: convert to hypergeometric function.
 
