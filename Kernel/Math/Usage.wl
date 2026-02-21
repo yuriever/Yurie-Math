@@ -500,6 +500,12 @@ trigPhaseReduce::usage =
 trigFromExp::usage =
     "trigFromExp[expr]: variant of ExpToTrig that only affects Exp.";
 
+deltaApart::usage =
+    "deltaApart[expr]: take apart the Dirac delta function of several variables.";
+
+deltaTogether::usage =
+    "deltaTogether[expr]: take together the Dirac delta function of several variables.";
+
 deltaReduce::usage =
     "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 

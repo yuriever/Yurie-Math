@@ -522,6 +522,10 @@
 
 * `#!wl trigFromExp` - trigFromExp[expr]: variant of ExpToTrig that only affects Exp.
 
+* `#!wl deltaApart` - deltaApart[expr]: take apart the Dirac delta function of several variables.
+
+* `#!wl deltaTogether` - deltaTogether[expr]: take together the Dirac delta function of several variables.
+
 * `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
 * `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression.
