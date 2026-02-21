@@ -488,12 +488,57 @@ handleHyperHead[head_][expr_] :=
 (*Message*)
 
 
+hyper::InvalidType =
+    "Invalid type: ``. The valid types include: \"Bessel\".";
+
+
 (* ::Subsubsection:: *)
 (*Main*)
 
 
-hyperFrom[pattern_][expr_] :=
-    Pass;
+hyperFrom[types__][expr_] :=
+    Fold[hyperFromKernel,expr,{types}]//Catch;
+
+
+hyperFromKernel[expr_,"Bessel"] :=
+    expr//ReplaceAll[{
+        BesselJ[a_,z_]:>
+            2^-a*z^a*1/Gamma[1+a]*Hypergeometric0F1[a+1,-z^2/4],
+        BesselI[a_,z_]:>
+            2^-a*z^a*1/Gamma[1+a]*Hypergeometric0F1[a+1,z^2/4],
+        BesselY[a_,z_]:>
+            -1/π*2^-a*z^a*Cos[a*π]*Gamma[-a]*Hypergeometric0F1[1+a,-z^2/4]+
+            -1/π*2^a*z^-a*Gamma[a]*Hypergeometric0F1[1-a,-z^2/4],
+        BesselK[a_,z_]:>
+            2^(-1-a)*z^a*Gamma[-a]*Hypergeometric0F1[1+a,z^2/4]+
+            2^(-1+a)*z^-a*Gamma[a]*Hypergeometric0F1[1-a,z^2/4],
+        HankelH1[a_,z_]:>
+            -I/π*2^-a*Exp[-I*a*π]*z^a*Gamma[-a]*Hypergeometric0F1[1+a,-z^2/4]+
+            -I/π*2^a*z^-a*Gamma[a]*Hypergeometric0F1[1-a,-z^2/4],
+        HankelH2[a_,z_]:>
+            I/π*2^-a*Exp[I*a*π]*z^a*Gamma[-a]*Hypergeometric0F1[1+a,-z^2/4]+
+            I/π*2^a*z^-a*Gamma[a]*Hypergeometric0F1[1-a,-z^2/4]
+    }];
+
+hyperFromKernel[expr_,type_] :=
+    (
+        Message[hyper::InvalidType,type];
+        Throw[expr]
+    );
+
+
+besselToIJ[expr_] :=
+    expr//ReplaceAll[{
+        HankelH1[a_,z_]:>
+            BesselJ[a,z]+I*BesselY[a,z],
+        HankelH2[a_,z_]:>
+            BesselJ[a,z]-I*BesselY[a,z]
+    }]//ReplaceAll[{
+        BesselY[a_,z_]:>
+            BesselJ[a,z]*Cot[Pi*a]-BesselJ[-a,z]*Csc[Pi*a],
+        BesselK[a_,z_]:>
+            π/2*Csc[Pi*a]*(BesselI[-a,z]-BesselI[a,z])
+    }];
 
 
 (* ::Subsubsection:: *)

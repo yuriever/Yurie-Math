@@ -431,6 +431,40 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = {BesselJ[a, z], BesselI[a, z], BesselK[a, z], BesselY[a, z], HankelH1[a, z], HankelH2[a, z]}
+    ,
+    {BesselJ[a, z], BesselI[a, z], BesselK[a, z], BesselY[a, z], HankelH1[a, z], HankelH2[a, z]}
+    ,
+    TestID->"[52] Hyper.nb"
+]
+
+VerificationTest[
+    res = hyperFrom["Bessel"][expr]
+    ,
+    {(z^a*Hypergeometric0F1[1 + a, -(z^2/4)])/(2^a*Gamma[1 + a]), (z^a*Hypergeometric0F1[1 + a, z^2/4])/(2^a*Gamma[1 + a]), (2^(-1 + a)*Gamma[a]*Hypergeometric0F1[1 - a, z^2/4])/z^a + 2^(-1 - a)*z^a*Gamma[-a]*Hypergeometric0F1[1 + a, z^2/4], -((2^a*Gamma[a]*Hypergeometric0F1[1 - a, -(z^2/4)])/(z^a*Pi)) - (z^a*Cos[a*Pi]*Gamma[-a]*Hypergeometric0F1[1 + a, -(z^2/4)])/(2^a*Pi), -((I*2^a*Gamma[a]*Hypergeometric0F1[1 - a, -(z^2/4)])/(z^a*Pi)) - (I*z^a*Gamma[-a]*Hypergeometric0F1[1 + a, -(z^2/4)])/(2^a*E^(I*a*Pi)*Pi), (I*2^a*Gamma[a]*Hypergeometric0F1[1 - a, -(z^2/4)])/(z^a*Pi) + (I*E^(I*a*Pi)*z^a*Gamma[-a]*Hypergeometric0F1[1 + a, -(z^2/4)])/(2^a*Pi)}
+    ,
+    TestID->"[53] Hyper.nb"
+]
+
+VerificationTest[
+    FS[divide[expr][res]]
+    ,
+    {1, 1, 1, 1, 1, 1}
+    ,
+    TestID->"[54] Hyper.nb"
+]
+
+VerificationTest[
+    hyperFrom["InvalidType"][f[x]]
+    ,
+    Quiet[f[x]]
+    ,
+    {Yurie`Math`hyper::InvalidType}
+    ,
+    TestID->"[55] Hyper.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
