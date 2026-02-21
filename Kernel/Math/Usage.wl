@@ -173,7 +173,7 @@ hyperToMellinBarnes2::usage =
     StringJoin["hyperToMellinBarnes2[symbols, indicator][expr]: variant of hyperToMellinBarnes.", "\n", "Hint: Hypergeometric2F1, HypergeometricU, BesselK, BesselY, HankelH1, HankelH2."];
 
 hyperFrom::usage =
-    "hyperFrom[pattern][expr]: convert to hypergeometric function.";
+    StringJoin["hyperFrom[type][expr]: convert to hypergeometric function.", "\n", "Value[type]: \"Bessel\"."];
 
 
 (* ::Subsubsection:: *)

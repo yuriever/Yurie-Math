@@ -73,7 +73,9 @@ hyperToMellinBarnes2::usage =
 
 
 hyperFrom::usage =
-    "hyperFrom[pattern][expr]: convert to hypergeometric function.";
+    "hyperFrom[type][expr]: convert to hypergeometric function."<>
+    "\n"<>
+    "Value[type]: \"Bessel\".";
 
 
 (* ::Section:: *)

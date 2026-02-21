@@ -180,7 +180,9 @@
 
     * Hint: Hypergeometric2F1, HypergeometricU, BesselK, BesselY, HankelH1, HankelH2.
 
-* `#!wl hyperFrom` - hyperFrom[pattern][expr]: convert to hypergeometric function.
+* `#!wl hyperFrom` - hyperFrom[type][expr]: convert to hypergeometric function.
+
+    * Value[type]: "Bessel".
 
 ## Label.wl
 
