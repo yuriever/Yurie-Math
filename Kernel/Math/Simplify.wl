@@ -808,7 +808,11 @@ deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
 
 
 deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
-    expr//deltaApartKernel//ReplaceRepeated[deltaReduceRule[varP]]//deltaTogetherKernel[ifMergeDelta];
+    expr//
+        deltaApartKernel//
+        deltaExpandRelevant//
+        ReplaceRepeated[deltaReduceRule[varP]]//
+        deltaTogetherKernel[ifMergeDelta];
 
 
 deltaApartKernel[expr_] :=
@@ -842,18 +846,28 @@ deltaTogetherKernel[False][expr_] :=
 
 deltaReduceRule[p_] :=
     {
-        Power[x:p,n_.]*DiracDelta[x:p]/;Simplify[n>=1]:>
+        Power[x:p,n_.]*DiracDelta[x:p]*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
             0,
-        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]/;Simplify[n>=1&&m>=1]:>
+        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
                 (* Then *)
-                (-1)^n*gammaSimplify[m!/(m-n)!]*Derivative[m-n][DiracDelta][x],
+                (-1)^n*gammaSimplify[m!/(m-n)!]*Derivative[m-n][DiracDelta][x]*rest,
                 (* Else *)
                 0,
                 (* Final *)
-                -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]
+                -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]*rest
             ]
     };
+
+
+deltaExpandRelevant[expr_] :=
+    With[{
+            varP =
+                Cases[expr,Derivative[__]DiracDelta[vars__]|DiracDelta[vars__]:>{vars},Infinity]//
+                Flatten//DeleteDuplicates//Apply[Alternatives]
+        },
+        Expand[expr,varP]
+    ];
 
 
 (* ::Subsection:: *)

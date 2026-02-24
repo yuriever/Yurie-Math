@@ -101,6 +101,46 @@ VerificationTest[
 ]
 
 VerificationTest[
+    expr = (x + y)^2*DiracDelta[x] + (y + 1)^2*DiracDelta[x]; 
+    ,
+    Null
+    ,
+    TestID->"[12] Simplify-delta-function.nb"
+]
+
+VerificationTest[
+    deltaReduce[][Expand[expr]]
+    ,
+    DiracDelta[x] + 2*y*DiracDelta[x] + 2*y^2*DiracDelta[x]
+    ,
+    TestID->"[13] Simplify-delta-function.nb"
+]
+
+VerificationTest[
+    deltaReduce[][expr]
+    ,
+    y^2*DiracDelta[x] + (1 + y)^2*DiracDelta[x]
+    ,
+    TestID->"[14] Simplify-delta-function.nb"
+]
+
+VerificationTest[
+    expr = f[x]*x*DiracDelta[x] + f[x]*x^2*DiracDelta[x]; 
+    ,
+    Null
+    ,
+    TestID->"[15] Simplify-delta-function.nb"
+]
+
+VerificationTest[
+    deltaReduce[][expr]
+    ,
+    x*DiracDelta[x]*f[x] + x^2*DiracDelta[x]*f[x]
+    ,
+    TestID->"[16] Simplify-delta-function.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
