@@ -67,6 +67,35 @@ SUMCancel::usage =
 
 
 (* ::Subsubsection:: *)
+(*Distribution.wl*)
+
+
+deltaD::usage =
+    "Dirac delta function.";
+
+deltaC::usage =
+    "complex delta function.";
+
+deltaK::usage =
+    "Kronecker delta function.";
+
+spower::usage =
+    StringJoin["spower[type][z, λ]: z^λ - signed power.", "\n", "spower[type][z, λ, n]: z^λ log^n(z) - signed power + log.", "\n", "Value[type]: Complex, PlusMinus, Abs; Log.", "\n", "Hint: spower[Log][z, n] has logarithmic behavior."];
+
+rpower::usage =
+    "head: regularized power.";
+
+spowerReduce::usage =
+    "spowerReduce[expr]: reduce spower expressions.";
+
+spowerNormal::usage =
+    "spowerNormal[expr]: convert spower expressions to normal power expressions.";
+
+spowerConvert::usage =
+    StringJoin["spowerConvert[type1 -> type2]: convert between different types of power-type distributions with head spower.", "\n", "Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.", "\n", "Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.", "\n", "Hint: the tag Reverse is to reverse the parity."];
+
+
+(* ::Subsubsection:: *)
 (*DLMF.wl*)
 
 

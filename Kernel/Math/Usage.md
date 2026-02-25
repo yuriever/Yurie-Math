@@ -68,6 +68,36 @@
 
 * `#!wl SUMCancel` - SUMCancel[vars][expr]: cancel the possible SUM head in the expression.
 
+## Distribution.wl
+
+* `#!wl deltaD` - Dirac delta function.
+
+* `#!wl deltaC` - complex delta function.
+
+* `#!wl deltaK` - Kronecker delta function.
+
+* `#!wl spower` - spower[type][z, λ]: z^λ - signed power.
+
+    * spower[type][z, λ, n]: z^λ log^n(z) - signed power + log.
+
+    * Value[type]: Complex, PlusMinus, Abs; Log.
+
+    * Hint: spower[Log][z, n] has logarithmic behavior.
+
+* `#!wl rpower` - head: regularized power.
+
+* `#!wl spowerReduce` - spowerReduce[expr]: reduce spower expressions.
+
+* `#!wl spowerNormal` - spowerNormal[expr]: convert spower expressions to normal power expressions.
+
+* `#!wl spowerConvert` - spowerConvert[type1 -> type2]: convert between different types of power-type distributions with head spower.
+
+    * Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.
+
+    * Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.
+
+    * Hint: the tag Reverse is to reverse the parity.
+
 ## DLMF.wl
 
 * `#!wl DLMF` - DLMF[rules, opts][expr]: simplify the expression by the DLMF rules.
