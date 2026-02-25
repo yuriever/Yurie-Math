@@ -31,6 +31,8 @@ Get["Yurie`Math`Relation`"];
 
 Get["Yurie`Math`Matrix`"];
 
+Get["Yurie`Math`Distribution`"];
+
 
 Get["Yurie`Math`Label`"];
 

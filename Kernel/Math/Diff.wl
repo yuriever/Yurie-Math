@@ -17,7 +17,7 @@ Needs["Yurie`Math`Simplify`"];
 
 
 (* ::Subsection:: *)
-(*Atomic head*)
+(*Head*)
 
 
 PD::usage =
@@ -166,7 +166,7 @@ argumentD[varList_List,orderList_List] :=
 
 
 (* ::Subsection:: *)
-(*Atomic head*)
+(*Head*)
 
 
 (* ::Subsubsection:: *)
