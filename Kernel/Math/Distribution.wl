@@ -20,27 +20,27 @@ Needs["Yurie`Math`"];
 
 
 deltaD::usage =
-    "Dirac delta function.";
+    "deltaD[z, n]: δ^n(z) - Dirac delta function.";
 
 deltaC::usage =
-    "complex delta function.";
+    "deltaC[z]: complex delta function.";
 
 deltaK::usage =
-    "Kronecker delta function.";
+    "deltaK[z]: Kronecker delta function.";
 
 
 spower::usage =
-    "spower[type][z, λ]: z^λ - signed power."<>
+    "spower[s][z, λ]: z_s^λ - signed power of degree λ."<>
     "\n"<>
-    "spower[type][z, λ, n]: z^λ log^n(z) - signed power + log."<>
+    "spower[s][z, λ, n]: z_s^λ log^n z - signed power + log of degree λ."<>
     "\n"<>
-    "Value[type]: Complex, PlusMinus, Abs; Log."<>
+    "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1); Log (\"L+\", \"L-\", \"L0\", \"L1\")."<>
     "\n"<>
-    "Hint: spower[Log][z, n] has logarithmic behavior.";
+    "Hint: spower[\"L\"][z, n] is defined for negative integer n and has logarithmic behavior.";
 
 
 rpower::usage =
-    "head: regularized power.";
+    "rpower[s][z, λ]: λ-holomorphic signed power.";
 
 
 (* ::Subsection:: *)
@@ -48,13 +48,13 @@ rpower::usage =
 
 
 spowerReduce::usage =
-    "spowerReduce[expr]: reduce spower expressions.";
+    "spowerReduce[expr]: reduce spower distributions.";
 
 spowerNormal::usage =
-    "spowerNormal[expr]: convert spower expressions to normal power expressions.";
+    "spowerNormal[expr]: convert spower distributions to the associated function.";
 
 spowerConvert::usage =
-    "spowerConvert[type1 -> type2]: convert between different types of power-type distributions with head spower."<>
+    "spowerConvert[type1 -> type2]: convert between different types of spower distributions."<>
     "\n"<>
     "Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs."<>
     "\n"<>
@@ -75,14 +75,24 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*spower*)
+(*Symbol*)
 
 
-spower[s_][base_,a_,0] :=
-    spower[s][base,a];
+spower[s_][z_,λ_,0] :=
+    spower[s][z,λ];
 
-spower[s_][base_,0] :=
+spower[s_][z_,0] :=
     1;
+
+
+spower[I|-I][z_,n_Integer?NonNegative] :=
+    Power[z,n];
+
+spower[0][z_,n_Integer?NonNegative]/;EvenQ[n] :=
+    Power[z,n];
+
+spower[1][z_,n_Integer?NonNegative]/;OddQ[n] :=
+    Power[z,n];
 
 
 Derivative[n_,0][spower["+"]][z_,λ_] :=
@@ -101,17 +111,16 @@ Derivative[n_,0][spower[s:0|1]][z_,λ_] :=
 Derivative[0,n_][spower[s:"+"|"-"]][z_,λ_] :=
     spower[s][z,λ,n];
 
-Derivative[1,0][spower[Log]][z_,λ_] :=
-    With[{n = -λ},
-        -n*spower[Log][z,-n-1]+(-1)^n/n!*deltaD[z,n]
-    ];
+Derivative[0,n_,0][spower[s:"+"|"-"]][z_,λ_,m_] :=
+    spower[s][z,λ,n+m];
 
 
-(* ::Subsection:: *)
-(*rpower*)
 
+Derivative[1,0][spower["L"]][z_,λ_] :=
+    λ*spower["L"][z,λ-1]+(-1)^λ/(-λ)!*deltaD[z,-λ];
 
-(*  *)
+Derivative[1,0][deltaD][z_,λ_] :=
+    deltaD[z,λ+1];
 
 
 (* ::Subsection:: *)
@@ -120,27 +129,24 @@ Derivative[1,0][spower[Log]][z_,λ_] :=
 
 spowerReduce[expr_] :=
     expr//ReplaceRepeated[{
-        spower[s_][base_,n1_]*spower[s_][base_,n2_]:>
-            spower[s][base,n1+n2],
-        Power[spower[s_][base_,n1_],n2_]:>
-            spower[s][base,n1*n2],
-        (*  *)
-        spower[s1:0|1][base_,n1_]*spower[s2:0|1][base_,n2_]/;s1==s2:>
-            spower[0][base,n1+n2],
-        spower[s1:0|1][base_,n1_]*spower[s2:0|1][base_,n2_]/;s1+s2==1:>
-            spower[1][base,n1+n2],
-        (*  *)
-        spower[0|1][base_,n1_]*spower["+"][base_,n2_]:>
-            spower["+"][base,n1+n2],
-        spower[s:0|1][base_,n1_]*spower["-"][base_,n2_]:>
-            (-1)^s*spower["-"][base,n1+n2],
-        (*  *)
-        spower[s1:"+"|"-"][base_,n1_]*spower[s2:"+"|"-"][base_,n2_]/;s1==s2:>
-            spower[s1][base,n1+n2],
-        spower[s1:"+"|"-"][base_,n1_]*spower[s2:"+"|"-"][base_,n2_]/;s1!=s2:>
-            0
-    }]//ReplaceAll[{
-        spower[_.*I|_.*-I][base_,n_Integer?NonNegative]:>Power[base,n]
+        (* Abs x Abs *)
+        spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1==s2:>
+            spower[0][z,λ1+λ2],
+        spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1+s2==1:>
+            spower[1][z,λ1+λ2],
+        (* Abs x PlusMinus *)
+        spower[0|1][z_,λ1_]*spower["+"][z_,λ2_]:>
+            spower["+"][z,λ1+λ2],
+        spower[s:0|1][z_,λ1_]*spower["-"][z_,λ2_]:>
+            (-1)^s*spower["-"][z,λ1+λ2],
+        (* PlusMinus x PlusMinus *)
+        spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1==s2:>
+            spower[s1][z,λ1+λ2],
+        spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1!=s2:>
+            0,
+        (* Complex x Complex *)
+        spower[s:_.*I|_.*-I][z_,λ1_]*spower[s_][z_,λ2_]:>
+            spower[s][z,λ1+λ2]
     }];
 
 
@@ -150,12 +156,24 @@ spowerReduce[expr_] :=
 
 spowerNormal[expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            Power[base,a],
-        spower["+"][base_,a_]:>
-            Power[base,a],
-        spower["-"][base_,a_]:>
-            Power[-base,a]
+        (* Complex *)
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Power[z,λ],
+        (* PlusMinus *)
+        spower["+"][z_,λ_]:>
+            Power[z,λ],
+        spower["-"][z_,λ_]:>
+            Power[-z,λ],
+        (* Abs *)
+        spower[0][z_,λ_]:>
+            Power[Abs[z],λ],
+        spower[1][z_,λ_]:>
+            Power[Abs[z],λ]*Sign[z],
+        (* Log *)
+        spower["L"][z_,n_Integer?Negative]/;EvenQ[n]:>
+            Power[Abs[z],n]*Sign[z];
+        spower["L"][z_,n_Integer?Negative]/;OddQ[n]:>
+            Power[Abs[z],n];
     }];
 
 
@@ -192,23 +210,23 @@ spowerConvertCore[type_,type_][expr_] :=
 
 spowerConvertCore[Abs,Complex][expr_] :=
     expr//ReplaceAll[{
-        spower[0][base_,a_]:>
-            1/2*Exp[-I/2*π*a]*Sec[π/2*a]*spower[I][base,a]+
-            1/2*Exp[I/2*π*a]*Sec[π/2*a]*spower[-I][base,a],
-        spower[1][base_,a_]:>
-            I/2*Exp[-I/2*π*a]*Csc[π/2*a]*spower[I][base,a]+
-            -I/2*Exp[I/2*π*a]*Csc[π/2*a]*spower[-I][base,a]
+        spower[0][z_,λ_]:>
+            1/2*Exp[-I/2*π*λ]*Sec[π/2*λ]*spower[I][z,λ]+
+            1/2*Exp[I/2*π*λ]*Sec[π/2*λ]*spower[-I][z,λ],
+        spower[1][z_,λ_]:>
+            I/2*Exp[-I/2*π*λ]*Csc[π/2*λ]*spower[I][z,λ]+
+            -I/2*Exp[I/2*π*λ]*Csc[π/2*λ]*spower[-I][z,λ]
     }];
 
 
 spowerConvertCore[PlusMinus,Complex][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][base_,a_]:>
-            -I/2*Exp[I*π*a]*Csc[π*a]*spower[-I][base,a]+
-            I/2*Exp[-I*π*a]*Csc[π*a]*spower[I][base,a],
-        spower["-"][base_,a_]:>
-            I/2*Csc[π*a]*spower[-I][base,a]+
-            -I/2*Csc[π*a]*spower[I][base,a]
+        spower["+"][z_,λ_]:>
+            -I/2*Exp[I*π*λ]*Csc[π*λ]*spower[-I][z,λ]+
+            I/2*Exp[-I*π*λ]*Csc[π*λ]*spower[I][z,λ],
+        spower["-"][z_,λ_]:>
+            I/2*Csc[π*λ]*spower[-I][z,λ]+
+            -I/2*Csc[π*λ]*spower[I][z,λ]
     }];
 
 
@@ -218,17 +236,17 @@ spowerConvertCore[PlusMinus,Complex][expr_] :=
 
 spowerConvertCore[Abs,PlusMinus][expr_] :=
     expr//ReplaceAll[{
-        spower[0][base_,a_]:>
-            spower["+"][base,a]+spower["-"][base,a],
-        spower[1][base_,a_]:>
-            spower["+"][base,a]-spower["-"][base,a]
+        spower[0][z_,λ_]:>
+            spower["+"][z,λ]+spower["-"][z,λ],
+        spower[1][z_,λ_]:>
+            spower["+"][z,λ]-spower["-"][z,λ]
     }];
 
 
 spowerConvertCore[Complex,PlusMinus][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            spower["+"][base,a]+Exp[s*π*a]*spower["-"][base,a]
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            spower["+"][z,λ]+Exp[s*π*λ]*spower["-"][z,λ]
     }];
 
 
@@ -238,18 +256,18 @@ spowerConvertCore[Complex,PlusMinus][expr_] :=
 
 spowerConvertCore[PlusMinus,Abs][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][base_,a_]:>
-            1/2*spower[0][base,a]+1/2*spower[1][base,a],
-        spower["-"][base_,a_]:>
-            1/2*spower[0][base,a]-1/2*spower[1][base,a]
+        spower["+"][z_,λ_]:>
+            1/2*spower[0][z,λ]+1/2*spower[1][z,λ],
+        spower["-"][z_,λ_]:>
+            1/2*spower[0][z,λ]-1/2*spower[1][z,λ]
     }];
 
 
 spowerConvertCore[Complex,Abs][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            Exp[s/2*π*a]*Cos[-I/2*s*π*a]*spower[0][base,a]+
-            -I*Exp[s/2*π*a]*Sin[-I/2*s*π*a]*spower[1][base,a]
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Exp[s/2*π*λ]*Cos[-I/2*s*π*λ]*spower[0][z,λ]+
+            -I*Exp[s/2*π*λ]*Sin[-I/2*s*π*λ]*spower[1][z,λ]
     }];
 
 
@@ -262,26 +280,26 @@ spowerConvertCore[Complex,Abs][expr_] :=
 
 spowerConvertCore[Complex,{Complex,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            Exp[s*π*a]*spower[-s][-base,a]
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Exp[s*π*λ]*spower[-s][-z,λ]
     }];
 
 
 spowerConvertCore[PlusMinus,{PlusMinus,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][base_,a_]:>
-            spower["-"][-base,a],
-        spower["-"][base_,a_]:>
-            spower["+"][-base,a]
+        spower["+"][z_,λ_]:>
+            spower["-"][-z,λ],
+        spower["-"][z_,λ_]:>
+            spower["+"][-z,λ]
     }];
 
 
 spowerConvertCore[Abs,{Abs,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[0][base_,a_]:>
-            spower[0][-base,a],
-        spower[1][base_,a_]:>
-            -spower[1][-base,a]
+        spower[0][z_,λ_]:>
+            spower[0][-z,λ],
+        spower[1][z_,λ_]:>
+            -spower[1][-z,λ]
     }];
 
 
@@ -295,15 +313,15 @@ spowerConvertCore[type1:Complex|PlusMinus|Abs,{type2:Complex|PlusMinus|Abs,Rever
 
 spowerConvertCore[Complex,{Complex,ε:Except[Reverse]}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            Power[base+s*ε,a]
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Power[z+s*ε,λ]
     }];
 
 
 spowerConvertCore[Complex,{Complex,ε:Except[Reverse],Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][base_,a_]:>
-            Power[I*ε+s/I*base,a]*Exp[1/2*I*π*a*(-1-I*s)]
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Power[I*ε+s/I*z,λ]*Exp[1/2*I*π*λ*(-1-I*s)]
     }];
 
 
@@ -317,10 +335,10 @@ spowerConvertCore[type:PlusMinus|Abs,{Complex,ε:Except[Reverse],reverse___}][ex
 
 spowerConvertCore[PlusMinus,HeavisideTheta][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][base_,a_]:>
-            Power[base,a]*HeavisideTheta[base],
-        spower["-"][base_,a_]:>
-            Power[-base,a]*HeavisideTheta[-base]
+        spower["+"][z_,λ_]:>
+            Power[z,λ]*HeavisideTheta[z],
+        spower["-"][z_,λ_]:>
+            Power[-z,λ]*HeavisideTheta[-z]
     }];
 
 
@@ -334,10 +352,10 @@ spowerConvertCore[type:Complex|Abs,HeavisideTheta][expr_] :=
 
 spowerConvertCore[Abs,RealAbs][expr_] :=
     expr//ReplaceAll[{
-        spower[0][base_,a_]:>
-            Power[Abs[base],a],
-        spower[1][base_,a_]:>
-            Power[Abs[base],a]*Sign[base]
+        spower[0][z_,λ_]:>
+            Power[Abs[z],λ],
+        spower[1][z_,λ_]:>
+            Power[Abs[z],λ]*Sign[z]
     }];
 
 

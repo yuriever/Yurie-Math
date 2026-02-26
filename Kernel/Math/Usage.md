@@ -70,21 +70,21 @@
 
 ## Distribution.wl
 
-* `#!wl deltaD` - Dirac delta function.
+* `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
 
-* `#!wl deltaC` - complex delta function.
+* `#!wl deltaC` - deltaC[z]: complex delta function.
 
-* `#!wl deltaK` - Kronecker delta function.
+* `#!wl deltaK` - deltaK[z]: Kronecker delta function.
 
-* `#!wl spower` - spower[type][z, λ]: z^λ - signed power.
+* `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power of degree λ.
 
-    * spower[type][z, λ, n]: z^λ log^n(z) - signed power + log.
+    * spower[s][z, λ, n]: z\_s^λ log^n z - signed power + log of degree λ.
 
-    * Value[type]: Complex, PlusMinus, Abs; Log.
+    * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1); Log ("L"), DiracDelta ("D").
 
-    * Hint: spower[Log][z, n] has logarithmic behavior.
+    * Hint: spower["L"][z, n] is defined for negative integer n and has logarithmic behavior.
 
-* `#!wl rpower` - head: regularized power.
+* `#!wl rpower` - rpower[s][z, λ]: λ-holomorphic signed power.
 
 * `#!wl spowerReduce` - spowerReduce[expr]: reduce spower expressions.
 

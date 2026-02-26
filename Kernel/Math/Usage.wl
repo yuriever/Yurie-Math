@@ -71,19 +71,19 @@ SUMCancel::usage =
 
 
 deltaD::usage =
-    "Dirac delta function.";
+    "deltaD[z, n]: δ^n(z) - Dirac delta function.";
 
 deltaC::usage =
-    "complex delta function.";
+    "deltaC[z]: complex delta function.";
 
 deltaK::usage =
-    "Kronecker delta function.";
+    "deltaK[z]: Kronecker delta function.";
 
 spower::usage =
-    StringJoin["spower[type][z, λ]: z^λ - signed power.", "\n", "spower[type][z, λ, n]: z^λ log^n(z) - signed power + log.", "\n", "Value[type]: Complex, PlusMinus, Abs; Log.", "\n", "Hint: spower[Log][z, n] has logarithmic behavior."];
+    StringJoin["spower[s][z, λ]: z_s^λ - signed power of degree λ.", "\n", "spower[s][z, λ, n]: z_s^λ log^n z - signed power + log of degree λ.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1); Log (\"L\"), DiracDelta (\"D\").", "\n", "Hint: spower[\"L\"][z, n] is defined for negative integer n and has logarithmic behavior."];
 
 rpower::usage =
-    "head: regularized power.";
+    "rpower[s][z, λ]: λ-holomorphic signed power.";
 
 spowerReduce::usage =
     "spowerReduce[expr]: reduce spower expressions.";
