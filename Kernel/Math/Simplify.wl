@@ -851,7 +851,7 @@ deltaReduceRule[p_] :=
         Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
                 (* Then *)
-                (-1)^n*gammaSimplify[m!/(m-n)!]*Derivative[m-n][DiracDelta][x]*rest,
+                (-1)^n*FactorialPower[m,n]*Derivative[m-n][DiracDelta][x]*rest,
                 (* Else *)
                 0,
                 (* Final *)

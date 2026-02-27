@@ -171,9 +171,9 @@ spowerNormal[expr_] :=
             Power[Abs[z],λ]*Sign[z],
         (* Log *)
         spower["L"][z_,n_Integer?Negative]/;EvenQ[n]:>
-            Power[Abs[z],n]*Sign[z];
+            Power[Abs[z],n]*Sign[z],
         spower["L"][z_,n_Integer?Negative]/;OddQ[n]:>
-            Power[Abs[z],n];
+            Power[Abs[z],n]
     }];
 
 
