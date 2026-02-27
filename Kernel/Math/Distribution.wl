@@ -30,13 +30,16 @@ deltaK::usage =
 
 
 spower::usage =
-    "spower[s][z, λ]: z_s^λ - signed power of degree λ."<>
+    "spower[s][z, λ]: z_s^λ - signed power."<>
     "\n"<>
-    "spower[s][z, λ, n]: z_s^λ log^n z - signed power + log of degree λ."<>
+    "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).";
+
+spowerlog::usage =
+    "spowerlog[s][z, λ, n]: z_s^λ log^n z - signed power + log."<>
     "\n"<>
-    "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1); Log (\"L+\", \"L-\", \"L0\", \"L1\")."<>
+    "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."<>
     "\n"<>
-    "Hint: spower[\"L\"][z, n] is defined for negative integer n and has logarithmic behavior.";
+    "Hint: for negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ].";
 
 
 rpower::usage =
@@ -78,21 +81,14 @@ Begin["`Private`"];
 (*Symbol*)
 
 
-spower[s_][z_,λ_,0] :=
-    spower[s][z,λ];
-
 spower[s_][z_,0] :=
     1;
 
+deltaD[z_] :=
+    deltaD[z,0];
 
-spower[I|-I][z_,n_Integer?NonNegative] :=
-    Power[z,n];
-
-spower[0][z_,n_Integer?NonNegative]/;EvenQ[n] :=
-    Power[z,n];
-
-spower[1][z_,n_Integer?NonNegative]/;OddQ[n] :=
-    Power[z,n];
+deltaC[z_] :=
+    deltaC[z,0];
 
 
 Derivative[n_,0][spower["+"]][z_,λ_] :=
@@ -101,26 +97,38 @@ Derivative[n_,0][spower["+"]][z_,λ_] :=
 Derivative[n_,0][spower["-"]][z_,λ_] :=
     (-1)^n*FactorialPower[λ,n]*spower["-"][z,λ-n];
 
-Derivative[n_,0][spower[s:I|-I]][z_,λ_] :=
-    FactorialPower[λ,n]*spower[s][z,λ-n];
-
 Derivative[n_,0][spower[s:0|1]][z_,λ_] :=
     FactorialPower[λ,n]*spower[Mod[s+n,2]][z,λ-n];
 
+Derivative[n_,0][spower[s:I|-I]][z_,λ_] :=
+    FactorialPower[λ,n]*spower[s][z,λ-n];
+
 
 Derivative[0,n_][spower[s:"+"|"-"]][z_,λ_] :=
-    spower[s][z,λ,n];
+    spowerlog[s][z,λ,n];
 
-Derivative[0,n_,0][spower[s:"+"|"-"]][z_,λ_,m_] :=
-    spower[s][z,λ,n+m];
+Derivative[0,n_,0][spowerlog[s:"+"|"-"]][z_,λ_,m_] :=
+    spowerlog[s][z,λ,n+m];
 
 
+Derivative[1,0][spowerlog["+"]][z_,λ_,0] :=
+    λ*spowerlog["+"][z,λ-1,0]+(-1)^λ/(-λ)!*deltaD[z,-λ];
 
-Derivative[1,0][spower["L"]][z_,λ_] :=
-    λ*spower["L"][z,λ-1]+(-1)^λ/(-λ)!*deltaD[z,-λ];
+Derivative[1,0][spowerlog["-"]][z_,λ_,0] :=
+    -λ*spowerlog["-"][z,λ-1,0]-1/(-λ)!*deltaD[z,-λ];
 
-Derivative[1,0][deltaD][z_,λ_] :=
-    deltaD[z,λ+1];
+Derivative[1,0][spowerlog[0]][z_,λ_,0] :=
+    Pass;
+
+Derivative[1,0][spowerlog[1]][z_,λ_,0] :=
+    Pass;
+
+
+Derivative[n_,0][deltaD][z_,λ_] :=
+    deltaD[z,λ+n];
+
+Derivative[n_,0][deltaC][z_,λ_] :=
+    deltaC[z,λ+n];
 
 
 (* ::Subsection:: *)
@@ -128,25 +136,51 @@ Derivative[1,0][deltaD][z_,λ_] :=
 
 
 spowerReduce[expr_] :=
+    expr//
+        spowerReduceProduct//
+        spowerReduceSpecialValue;
+
+
+spowerReduceProduct[expr_] :=
     expr//ReplaceRepeated[{
         (* Abs x Abs *)
         spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1==s2:>
             spower[0][z,λ1+λ2],
         spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1+s2==1:>
             spower[1][z,λ1+λ2],
+
         (* Abs x PlusMinus *)
         spower[0|1][z_,λ1_]*spower["+"][z_,λ2_]:>
             spower["+"][z,λ1+λ2],
         spower[s:0|1][z_,λ1_]*spower["-"][z_,λ2_]:>
             (-1)^s*spower["-"][z,λ1+λ2],
+
         (* PlusMinus x PlusMinus *)
         spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1==s2:>
             spower[s1][z,λ1+λ2],
         spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1!=s2:>
             0,
+
         (* Complex x Complex *)
         spower[s:_.*I|_.*-I][z_,λ1_]*spower[s_][z_,λ2_]:>
             spower[s][z,λ1+λ2]
+    }];
+
+spowerReduceSpecialValue[expr_] :=
+    expr//ReplaceAll[{
+        spower[s:I|-I][z_,n_Integer?NonNegative]:>
+            Power[z,n],
+        spower[0][z_,n_Integer?NonNegative]/;EvenQ[n]:>
+            Power[z,n],
+        spower[1][z_,n_Integer?NonNegative]/;OddQ[n]:>
+            Power[z,n],
+
+        spowerlog[s:I|-I][z_,λ_,0]:>
+            spower[s][z,λ],
+        spowerlog[0][z_,λ_Integer?Negative,0]/;EvenQ[λ]:>
+            spower[0][z,λ],
+        spowerlog[1][z_,λ_Integer?Negative,0]/;OddQ[λ]:>
+            spower[1][z,λ]
     }];
 
 
@@ -154,26 +188,42 @@ spowerReduce[expr_] :=
 (*spowerNormal*)
 
 
+(* TODO *)
+(* spowerStrip is better. *)
+
 spowerNormal[expr_] :=
     expr//ReplaceAll[{
-        (* Complex *)
-        spower[s:_.*I|_.*-I][z_,λ_]:>
-            Power[z,λ],
         (* PlusMinus *)
         spower["+"][z_,λ_]:>
             Power[z,λ],
         spower["-"][z_,λ_]:>
             Power[-z,λ],
+
         (* Abs *)
         spower[0][z_,λ_]:>
             Power[Abs[z],λ],
         spower[1][z_,λ_]:>
             Power[Abs[z],λ]*Sign[z],
-        (* Log *)
-        spower["L"][z_,n_Integer?Negative]/;EvenQ[n]:>
-            Power[Abs[z],n]*Sign[z],
-        spower["L"][z_,n_Integer?Negative]/;OddQ[n]:>
-            Power[Abs[z],n]
+
+        (* Complex *)
+        spower[s:_.*I|_.*-I][z_,λ_]:>
+            Power[z,λ],
+
+        (* Log, PlusMinus *)
+        spowerlog["+"][z_,λ_,n_]:>
+            Power[z,λ]*Log[z]^n,
+        spowerlog["-"][z_,λ_,n_]:>
+            Power[-z,λ]*Log[-z]^n,
+
+        (* Log, Abs *)
+        spowerlog[0][z_,λ_,n_]:>
+            Power[Abs[z],λ]*Log[z]^n,
+        spowerlog[1][z_,λ_,n_]:>
+            Power[Abs[z],λ]*Log[z]^n*Sign[z],
+
+        (* Log, Complex *)
+        spowerlog[s:_.*I|_.*-I][z_,λ_,n_]:>
+            Power[z,λ]*Log[z]^n
     }];
 
 
