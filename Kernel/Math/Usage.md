@@ -422,6 +422,8 @@
 
 * `#!wl patternFreeQ` - patternFreeQ[expr]: test whether no pattern construction occurs in the expression.
 
+* `#!wl patternEqualQ` - patternEqualQ[patt1, patt2]: test whether the two patterns are equivalent.
+
 ## Random.wl
 
 * `#!wl randomize` - randomize[domain, range][expr]: randomize the expression by replacing variables with random numbers.

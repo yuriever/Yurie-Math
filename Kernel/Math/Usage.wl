@@ -440,6 +440,9 @@ patternPresentQ::usage =
 patternFreeQ::usage =
     "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
+patternEqualQ::usage =
+    "patternEqualQ[patt1, patt2]: test whether the two patterns are equivalent.";
+
 
 (* ::Subsubsection:: *)
 (*Random.wl*)

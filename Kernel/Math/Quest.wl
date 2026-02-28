@@ -84,6 +84,9 @@ patternPresentQ::usage =
 patternFreeQ::usage =
     "patternFreeQ[expr]: test whether no pattern construction occurs in the expression.";
 
+patternEqualQ::usage =
+    "patternEqualQ[patt1, patt2]: test whether the two patterns are equivalent.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -244,22 +247,25 @@ presentQ[form_][expr_] :=
     Not@FreeQ[expr,form];
 
 
-linearQ :=
-    Internal`LinearQ;
+linearQ[expr_,var_] :=
+    Internal`LinearQ[expr,var];
 
 
-plusQ :=
-    Not@*Internal`SyntacticNegativeQ;
+plusQ[expr_] :=
+    Not@Internal`SyntacticNegativeQ[expr];
 
-minusQ :=
-    Internal`SyntacticNegativeQ;
+minusQ[expr_] :=
+    Internal`SyntacticNegativeQ[expr];
 
 
-patternPresentQ :=
-    Internal`PatternPresentQ;
+patternPresentQ[expr_] :=
+    Internal`PatternPresentQ[expr];
 
-patternFreeQ :=
-    Internal`PatternFreeQ;
+patternFreeQ[expr_] :=
+    Internal`PatternFreeQ[expr];
+
+patternEqualQ[patt1_,patt2_] :=
+    MatchQ[Internal`ComparePatterns[patt1,patt2],"Equivalent"|"Identical"];
 
 
 (* ::Subsection:: *)
