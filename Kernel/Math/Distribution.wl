@@ -20,7 +20,9 @@ Needs["Yurie`Math`"];
 
 
 deltaD::usage =
-    "deltaD[z, n]: δ^n(z) - Dirac delta function.";
+    "deltaD[z, n]: δ^n(z) - Dirac delta function."<>
+    "\n"<>
+    "deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - product of Dirac delta functions.";
 
 deltaC::usage =
     "deltaC[z]: complex delta function.";
@@ -102,14 +104,30 @@ Begin["`Private`"];
 (*Symbol*)
 
 
+(* ::Subsubsection:: *)
+(*Message*)
+
+
+(*  *)
+
+
+(* ::Subsubsection:: *)
+(*Main*)
+
+
 spower[s_][z_,0] :=
     1;
 
-deltaD[z_] :=
-    deltaD[z,0];
 
-deltaC[z_] :=
-    deltaC[z,0];
+deltaD[z_,0] :=
+    deltaD[z];
+
+deltaD[z_List,{(0)..}] :=
+    deltaD[z];
+
+
+deltaC[z_,0] :=
+    deltaC[z];
 
 
 Derivative[n_,0][spower["+"]][z_,λ_] :=
@@ -145,11 +163,11 @@ Derivative[1,0][spowerlog[1]][z_,λ_,0] :=
     Pass;
 
 
-Derivative[n_,0][deltaD][z_,λ_] :=
-    deltaD[z,λ+n];
+Derivative[n_][deltaD][z_] :=
+    deltaD[z,n];
 
-Derivative[n_,0][deltaC][z_,λ_] :=
-    deltaC[z,λ+n];
+Derivative[n_,_][deltaD][z_,λ_] :=
+    deltaD[z,λ+n];
 
 
 (* ::Subsection:: *)
@@ -241,11 +259,7 @@ spowerStrip[expr_] :=
 
         (* Log, Complex *)
         spowerlog[s:_.*I|_.*-I][z_,λ_,n_]:>
-            Power[z,λ]*Log[z]^n,
-
-        (* Delta *)
-        deltaD[z_,n_]:>
-            Derivative[n][DiracDelta][z]
+            Power[z,λ]*Log[z]^n
     }];
 
 
@@ -449,16 +463,30 @@ rpowerFrom[pattern_][expr_] :=
 
 deltaFromDirac[expr_] :=
     expr//ReplaceAll[{
-        Derivative[n_][DiracDelta][z_]:>deltaD[z,n],
-        DiracDelta[z_]:>deltaD[z,0]
+        DiracDelta[z_]:>
+            deltaD[z],
+        Derivative[n_][DiracDelta][z_]:>
+            deltaD[z,n]
+    }]//ReplaceAll[{
+        DiracDelta[zs__]:>
+            deltaD[{zs}],
+        Derivative[ns__][DiracDelta][zs__]:>
+            deltaD[{zs},{ns}]
     }];
 
 
 deltaToDirac[expr_] :=
     expr//ReplaceAll[{
-        deltaD[z_,0]:>DiracDelta[z],
-        deltaD[z_,n_]:>Derivative[n][DiracDelta][z]
-    }];
+        deltaD[{zs__}]:>
+            DiracDelta[zs],
+        deltaD[{zs__},{ns__}]:>
+            Derivative[ns][DiracDelta][{zs}]
+    }]//ReplaceAll[{
+        deltaD[z_]:>
+            DiracDelta[z],
+        deltaD[z_,n_]:>
+            Derivative[n][DiracDelta][z]
+    }]
 
 
 (* ::Subsection:: *)
@@ -492,7 +520,7 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
 
 deltaReduceRule[p_] :=
     {
-        Power[x:p,n_.]*(DiracDelta[x:p]|deltaD[x:p,0])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*(DiracDelta[x:p]|deltaD[x:p])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
             0,
         Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
@@ -518,7 +546,12 @@ deltaReduceRule[p_] :=
 deltaExpandRelevant[expr_] :=
     With[{
             varP =
-                Cases[expr,Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaD[var_,_]:>{vars,var},Infinity]//
+                Cases[
+                    expr,
+                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaD[{vars__},___]|deltaD[var:Except[_List],___]:>
+                        {vars,var},
+                    Infinity
+                ]//
                 Flatten//DeleteDuplicates//Apply[Alternatives]
         },
         Expand[expr,varP]
@@ -538,7 +571,12 @@ deltaApartKernel[expr_] :=
         DiracDelta[args__]:>
             Times@@Map[DiracDelta,{args}],
         Derivative[orders__][DiracDelta][args__]:>
-            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}]
+            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
+
+        deltaD[{vars__}]:>
+            Times@@Map[deltaD,{vars}],
+        deltaD[{vars__},{orders__}]:>
+            Times@@MapThread[deltaD[#1,#2]&,{{vars},{orders}}]
     }];
 
 
