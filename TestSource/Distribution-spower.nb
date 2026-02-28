@@ -1,0 +1,243 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      7376,        235]
+NotebookOptionsPosition[      6075,        203]
+NotebookOutlinePosition[      6637,        222]
+CellTagsIndexPosition[      6594,        219]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"<<", "Yurie`Base`"}], "\n",
+ RowBox[{"<<", "Yurie`Math`"}]}], "Code",
+ CellLabel->
+  "In[225]:=",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
+
+Cell[CellGroupData[{
+
+Cell["Basic", "Subsection",ExpressionUUID->"4564578c-4ae4-44e4-9e9a-54ce5eae3dd4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"expr", "=",
+  RowBox[{"Map", "[",
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"spower", "[", "#", "]"}], "[",
+      RowBox[{"z", ",", "\[Lambda]"}], "]"}], "&"}], ",",
+    RowBox[{"{",
+     RowBox[{"\"\<+\>\"", ",", "\"\<-\>\"", ",", "\[ImaginaryI]", ",",
+      RowBox[{"-", "\[ImaginaryI]"}], ",", "0", ",", "1"}], "}"}]}],
+   "]"}]}]], "Code",
+ CellLabel->
+  "In[227]:=",ExpressionUUID->"bd0d1f0c-6313-4d00-9b48-eea17b623b91"],
+
+Cell[BoxData[
+ RowBox[{"{",
+  RowBox[{
+   RowBox[{
+    RowBox[{"spower", "[", "\<\"+\"\>", "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}], ",",
+   RowBox[{
+    RowBox[{"spower", "[", "\<\"-\"\>", "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}], ",",
+   RowBox[{
+    RowBox[{"spower", "[", "\[ImaginaryI]", "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}], ",",
+   RowBox[{
+    RowBox[{"spower", "[",
+     RowBox[{"-", "\[ImaginaryI]"}], "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}], ",",
+   RowBox[{
+    RowBox[{"spower", "[", "0", "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}], ",",
+   RowBox[{
+    RowBox[{"spower", "[", "1", "]"}], "[",
+    RowBox[{"z", ",", "\[Lambda]"}], "]"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[227]=",ExpressionUUID->"21571f43-001a-4bfb-83ef-25149a4a1fac"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"D", "[",
+  RowBox[{"expr", ",",
+   RowBox[{"{",
+    RowBox[{"z", ",", "1"}], "}"}]}], "]"}]], "Code",
+ CellLabel->
+  "In[228]:=",ExpressionUUID->"e361e4ca-758d-415b-a748-d24c9bef58cc"],
+
+Cell[BoxData[
+ RowBox[{"{",
+  RowBox[{
+   RowBox[{"\[Lambda]", " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\<\"+\"\>", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    RowBox[{"-", "\[Lambda]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\<\"-\"\>", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{"\[Lambda]", " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\[ImaginaryI]", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{"\[Lambda]", " ",
+    RowBox[{
+     RowBox[{"spower", "[",
+      RowBox[{"-", "\[ImaginaryI]"}], "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{"\[Lambda]", " ",
+    RowBox[{
+     RowBox[{"spower", "[", "1", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{"\[Lambda]", " ",
+    RowBox[{
+     RowBox[{"spower", "[", "0", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "\[Lambda]"}]}], "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[228]=",ExpressionUUID->"fed7063e-3508-4ee0-b50a-95a52fade310"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"D", "[",
+  RowBox[{"expr", ",",
+   RowBox[{"{",
+    RowBox[{"z", ",", "n"}], "}"}]}], "]"}]], "Code",
+ CellLabel->
+  "In[229]:=",ExpressionUUID->"03fbb624-cd22-4128-a330-2305c2609012"],
+
+Cell[BoxData[
+ RowBox[{"{",
+  RowBox[{
+   RowBox[{
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\<\"+\"\>", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(",
+      RowBox[{"-", "1"}], ")"}], "n"], " ",
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\<\"-\"\>", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[", "\[ImaginaryI]", "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[",
+      RowBox[{"-", "\[ImaginaryI]"}], "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[",
+      RowBox[{"Mod", "[",
+       RowBox[{"n", ",", "2"}], "]"}], "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}], ",",
+   RowBox[{
+    RowBox[{"FactorialPower", "[",
+     RowBox[{"\[Lambda]", ",", "n"}], "]"}], " ",
+    RowBox[{
+     RowBox[{"spower", "[",
+      RowBox[{"Mod", "[",
+       RowBox[{
+        RowBox[{"1", "+", "n"}], ",", "2"}], "]"}], "]"}], "[",
+     RowBox[{"z", ",",
+      RowBox[{
+       RowBox[{"-", "n"}], "+", "\[Lambda]"}]}], "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[229]=",ExpressionUUID->"ab1f1786-1905-423e-a2f3-95ae69644ff4"]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+WindowSize->{1280, 1382},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko",
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"},
+  "Yurie.nb", CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"61fa34a5-7d45-4325-a0a0-ed5462759a0b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 178, 4, 89, "Code",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
+Cell[CellGroupData[{
+Cell[757, 28, 82, 0, 66, "Subsection",ExpressionUUID->"4564578c-4ae4-44e4-9e9a-54ce5eae3dd4"],
+Cell[CellGroupData[{
+Cell[864, 32, 468, 13, 65, "Code",ExpressionUUID->"bd0d1f0c-6313-4d00-9b48-eea17b623b91"],
+Cell[1335, 47, 839, 23, 41, "Output",ExpressionUUID->"21571f43-001a-4bfb-83ef-25149a4a1fac"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2211, 75, 211, 6, 65, "Code",ExpressionUUID->"e361e4ca-758d-415b-a748-d24c9bef58cc"],
+Cell[2425, 83, 1370, 42, 67, "Output",ExpressionUUID->"fed7063e-3508-4ee0-b50a-95a52fade310"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3832, 130, 211, 6, 65, "Code",ExpressionUUID->"03fbb624-cd22-4128-a330-2305c2609012"],
+Cell[4046, 138, 2001, 61, 92, "Output",ExpressionUUID->"ab1f1786-1905-423e-a2f3-95ae69644ff4"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
