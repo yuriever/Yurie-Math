@@ -72,6 +72,10 @@
 
 * `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
 
+    * deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function.
+
+    * deltaD[z, n, tag]: Dirac delta function with tag.
+
 * `#!wl deltaC` - deltaC[z]: complex delta function.
 
 * `#!wl deltaK` - deltaK[z]: Kronecker delta function.

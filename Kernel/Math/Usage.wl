@@ -71,7 +71,7 @@ SUMCancel::usage =
 
 
 deltaD::usage =
-    "deltaD[z, n]: δ^n(z) - Dirac delta function.";
+    StringJoin["deltaD[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function.", "\n", "deltaD[z, n, tag]: Dirac delta function with tag."];
 
 deltaC::usage =
     "deltaC[z]: complex delta function.";
