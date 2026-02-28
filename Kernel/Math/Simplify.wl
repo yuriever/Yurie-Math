@@ -168,20 +168,6 @@ trigFromExp::usage =
 
 
 (* ::Subsection:: *)
-(*DiracDelta*)
-
-
-deltaApart::usage =
-    "deltaApart[expr]: take apart the Dirac delta function of several variables.";
-
-deltaTogether::usage =
-    "deltaTogether[expr]: take together the Dirac delta function of several variables.";
-
-deltaReduce::usage =
-    "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
-
-
-(* ::Subsection:: *)
 (*Misc*)
 
 
@@ -781,93 +767,6 @@ trigFromExpRule[p_] :=
     {
         Power[E,exponent:p]:>Cos@Cancel[exponent/I]+I*Sin@Cancel[exponent/I]
     };
-
-
-(* ::Subsection:: *)
-(*DiracDelta*)
-
-
-deltaReduce//Options = {
-    "MergeDelta"->True
-};
-
-
-deltaApart[][expr_] :=
-    expr//deltaApartKernel;
-
-
-deltaTogether[][expr_] :=
-    expr//deltaTogetherKernel[True];
-
-
-deltaReduce[All|PatternSequence[]|Verbatim[Blank[]],opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[_,OptionValue["MergeDelta"]];
-
-deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[varP,OptionValue["MergeDelta"]];
-
-
-deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
-    expr//
-        deltaApartKernel//
-        deltaExpandRelevant//
-        ReplaceRepeated[deltaReduceRule[varP]]//
-        deltaTogetherKernel[ifMergeDelta];
-
-
-deltaApartKernel[expr_] :=
-    expr//ReplaceAll[{
-        DiracDelta[args__]:>
-            Times@@Map[DiracDelta,{args}],
-        Derivative[orders__][DiracDelta][args__]:>
-            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}]
-    }];
-
-
-deltaTogetherKernel[True][expr_] :=
-    expr//ReplaceAll[{
-        Verbatim[Times][factors__]/;!FreeQ[{factors},DiracDelta]:>
-            With[{
-                    deltaList = Cases[{factors},DiracDelta[vars__]:>{Table[0,Length[{vars}]],{vars}}],
-                    deltaDList = Cases[{factors},Derivative[orders__][DiracDelta][vars__]:>{{orders},{vars}}],
-                    rest = Times@@DeleteCases[{factors},DiracDelta[__]|Derivative[__][DiracDelta][__]]
-                },
-                {
-                    vars = Sequence@@Flatten[{deltaList[[All,2]],deltaDList[[All,2]]},2],
-                    orders = Sequence@@Flatten[{deltaList[[All,1]],deltaDList[[All,1]]},2]
-                },
-                Derivative[orders][DiracDelta][vars]*rest
-            ]
-    }];
-
-deltaTogetherKernel[False][expr_] :=
-    expr;
-
-
-deltaReduceRule[p_] :=
-    {
-        Power[x:p,n_.]*DiracDelta[x:p]*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
-            0,
-        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
-            If[Simplify[n<=m],
-                (* Then *)
-                (-1)^n*FactorialPower[m,n]*Derivative[m-n][DiracDelta][x]*rest,
-                (* Else *)
-                0,
-                (* Final *)
-                -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]*rest
-            ]
-    };
-
-
-deltaExpandRelevant[expr_] :=
-    With[{
-            varP =
-                Cases[expr,Derivative[__]DiracDelta[vars__]|DiracDelta[vars__]:>{vars},Infinity]//
-                Flatten//DeleteDuplicates//Apply[Alternatives]
-        },
-        Expand[expr,varP]
-    ];
 
 
 (* ::Subsection:: *)

@@ -39,7 +39,7 @@ spowerlog::usage =
     "\n"<>
     "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."<>
     "\n"<>
-    "Hint: for negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ].";
+    "Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ].";
 
 
 rpower::usage =
@@ -53,8 +53,8 @@ rpower::usage =
 spowerReduce::usage =
     "spowerReduce[expr]: reduce spower distributions.";
 
-spowerNormal::usage =
-    "spowerNormal[expr]: convert spower distributions to the associated function.";
+spowerStrip::usage =
+    "spowerStrip[expr]: convert spower distributions to the associated function.";
 
 spowerConvert::usage =
     "spowerConvert[type1 -> type2]: convert between different types of spower distributions."<>
@@ -64,6 +64,27 @@ spowerConvert::usage =
     "Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not."<>
     "\n"<>
     "Hint: the tag Reverse is to reverse the parity.";
+
+
+rpowerFrom::usage =
+    "rpowerFrom[pattern]: convert to rpower distribution with the specified base.";
+
+
+deltaFromDirac::usage =
+    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";
+
+deltaToDirac::usage =
+    "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
+
+
+deltaReduce::usage =
+    "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
+
+(* deltaApart::usage =
+    "deltaApart[expr]: take apart the Dirac delta distributions of several variables."; *)
+
+(* deltaTogether::usage =
+    "deltaTogether[expr]: take together the Dirac delta distributions of several variables."; *)
 
 
 (* ::Section:: *)
@@ -185,13 +206,10 @@ spowerReduceSpecialValue[expr_] :=
 
 
 (* ::Subsection:: *)
-(*spowerNormal*)
+(*spowerStrip*)
 
 
-(* TODO *)
-(* spowerStrip is better. *)
-
-spowerNormal[expr_] :=
+spowerStrip[expr_] :=
     expr//ReplaceAll[{
         (* PlusMinus *)
         spower["+"][z_,λ_]:>
@@ -223,7 +241,11 @@ spowerNormal[expr_] :=
 
         (* Log, Complex *)
         spowerlog[s:_.*I|_.*-I][z_,λ_,n_]:>
-            Power[z,λ]*Log[z]^n
+            Power[z,λ]*Log[z]^n,
+
+        (* Delta *)
+        deltaD[z_,n_]:>
+            Derivative[n][DiracDelta][z]
     }];
 
 
@@ -411,6 +433,138 @@ spowerConvertCore[Abs,RealAbs][expr_] :=
 
 spowerConvertCore[type:Complex|PlusMinus,RealAbs][expr_] :=
     expr//spowerConvertCore[type,Abs]//spowerConvertCore[Abs,RealAbs];
+
+
+(* ::Subsection:: *)
+(*rpowerFrom*)
+
+
+rpowerFrom[pattern_][expr_] :=
+    Pass;
+
+
+(* ::Subsection:: *)
+(*deltaFromDirac|deltaToDirac*)
+
+
+deltaFromDirac[expr_] :=
+    expr//ReplaceAll[{
+        Derivative[n_][DiracDelta][z_]:>deltaD[z,n],
+        DiracDelta[z_]:>deltaD[z,0]
+    }];
+
+
+deltaToDirac[expr_] :=
+    expr//ReplaceAll[{
+        deltaD[z_,0]:>DiracDelta[z],
+        deltaD[z_,n_]:>Derivative[n][DiracDelta][z]
+    }];
+
+
+(* ::Subsection:: *)
+(*deltaReduce*)
+
+
+deltaReduce//Options = {
+    "MergeDelta"->True
+};
+
+
+deltaReduce[All|PatternSequence[]|Verbatim[Blank[]],opts:OptionsPattern[]][expr_] :=
+    expr//deltaReduceKernel[_,OptionValue["MergeDelta"]];
+
+deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
+    expr//deltaReduceKernel[varP,OptionValue["MergeDelta"]];
+
+
+deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
+    expr//
+        deltaApartKernel//
+        deltaExpandRelevant//
+        ReplaceRepeated[deltaReduceRule[varP]]//
+        If[ifMergeDelta,
+            (* Then *)
+            deltaTogetherKernel,
+            (* Else *)
+            Identity
+        ];
+
+
+deltaReduceRule[p_] :=
+    {
+        Power[x:p,n_.]*(DiracDelta[x:p]|deltaD[x:p,0])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
+            0,
+        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
+            If[Simplify[n<=m],
+                (* Then *)
+                (-1)^n*FactorialPower[m,n]*Derivative[m-n][DiracDelta][x]*rest,
+                (* Else *)
+                0,
+                (* Final *)
+                -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]*rest
+            ],
+        Power[x:p,n_.]*deltaD[x:p,m_]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
+            If[Simplify[n<=m],
+                (* Then *)
+                (-1)^n*FactorialPower[m,n]*deltaD[x,m-n]*rest,
+                (* Else *)
+                0,
+                (* Final *)
+                -m*Power[x,n-1]*deltaD[x,m-1]*rest
+            ]
+    };
+
+
+deltaExpandRelevant[expr_] :=
+    With[{
+            varP =
+                Cases[expr,Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaD[var_,_]:>{vars,var},Infinity]//
+                Flatten//DeleteDuplicates//Apply[Alternatives]
+        },
+        Expand[expr,varP]
+    ];
+
+
+(* ::Subsection:: *)
+(*deltaApart*)
+
+
+deltaApart[][expr_] :=
+    expr//deltaApartKernel;
+
+
+deltaApartKernel[expr_] :=
+    expr//ReplaceAll[{
+        DiracDelta[args__]:>
+            Times@@Map[DiracDelta,{args}],
+        Derivative[orders__][DiracDelta][args__]:>
+            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}]
+    }];
+
+
+(* ::Subsection:: *)
+(*deltaTogether*)
+
+
+deltaTogether[][expr_] :=
+    expr//deltaTogetherKernel;
+
+
+deltaTogetherKernel[expr_] :=
+    expr//ReplaceAll[{
+        Verbatim[Times][factors__]/;!FreeQ[{factors},DiracDelta]:>
+            With[{
+                    deltaList = Cases[{factors},DiracDelta[vars__]:>{Table[0,Length[{vars}]],{vars}}],
+                    deltaDList = Cases[{factors},Derivative[orders__][DiracDelta][vars__]:>{{orders},{vars}}],
+                    rest = Times@@DeleteCases[{factors},DiracDelta[__]|Derivative[__][DiracDelta][__]]
+                },
+                {
+                    vars = Sequence@@Flatten[{deltaList[[All,2]],deltaDList[[All,2]]},2],
+                    orders = Sequence@@Flatten[{deltaList[[All,1]],deltaDList[[All,1]]},2]
+                },
+                Derivative[orders][DiracDelta][vars]*rest
+            ]
+    }];
 
 
 (* ::Subsection:: *)

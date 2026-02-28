@@ -1,6 +1,6 @@
 
 
-(* Simplify-delta-function.nb *)
+(* Distribution-deltaReduce.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] Simplify-delta-function.nb"
+    TestID->"[0] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[1] Simplify-delta-function.nb"
+    TestID->"[1] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[2] Simplify-delta-function.nb"
+    TestID->"[2] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
     ,
     {0, 12*Derivative[2][DiracDelta][x], x*Derivative[m][DiracDelta][x], x^n*DiracDelta[x], x^n*Derivative[m][DiracDelta][x]}
     ,
-    TestID->"[3] Simplify-delta-function.nb"
+    TestID->"[3] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
     ,
     {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-m)*x^(-1 + n)*Derivative[-1 + m][DiracDelta][x]}
     ,
-    TestID->"[4] Simplify-delta-function.nb"
+    TestID->"[4] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -49,15 +49,15 @@ VerificationTest[
     ,
     {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, -((1 - m)*m*x^(-2 + n)*Derivative[-2 + m][DiracDelta][x])}
     ,
-    TestID->"[5] Simplify-delta-function.nb"
+    TestID->"[5] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
     AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]
     ,
-    {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, ((-1)^n*m!*Derivative[m - n][DiracDelta][x])/(m - n)!}
+    {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-1)^n*FactorialPower[m, n]*Derivative[m - n][DiracDelta][x]}
     ,
-    TestID->"[6] Simplify-delta-function.nb"
+    TestID->"[6] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -65,7 +65,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[7] Simplify-delta-function.nb"
+    TestID->"[7] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -73,7 +73,7 @@ VerificationTest[
     ,
     {0, 12*Derivative[2, 2][DiracDelta][x, y], x*Derivative[k, m][DiracDelta][y, x], x^n*DiracDelta[x, y], x^n*Derivative[k, m][DiracDelta][y, x]}
     ,
-    TestID->"[8] Simplify-delta-function.nb"
+    TestID->"[8] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -81,7 +81,7 @@ VerificationTest[
     ,
     {0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, (-m)*x^(-1 + n)*Derivative[k, -1 + m][DiracDelta][y, x]}
     ,
-    TestID->"[9] Simplify-delta-function.nb"
+    TestID->"[9] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -89,15 +89,55 @@ VerificationTest[
     ,
     {0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, -((1 - m)*m*x^(-2 + n)*Derivative[k, -2 + m][DiracDelta][y, x])}
     ,
-    TestID->"[10] Simplify-delta-function.nb"
+    TestID->"[10] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
     AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]
     ,
-    {0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, ((-1)^n*m!*Derivative[k, m - n][DiracDelta][y, x])/(m - n)!}
+    {0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, (-1)^n*FactorialPower[m, n]*Derivative[k, m - n][DiracDelta][y, x]}
     ,
-    TestID->"[11] Simplify-delta-function.nb"
+    TestID->"[11] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    expr = {x*deltaD[x], x^2*deltaD[x, 4], x*deltaD[x, m], x^n*deltaD[x], x^n*deltaD[x, m]}; 
+    ,
+    Null
+    ,
+    TestID->"[12] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    spowerStrip[deltaReduce[][expr]]
+    ,
+    {0, 12*Derivative[2][DiracDelta][x], x*Derivative[m][DiracDelta][x], x^n*DiracDelta[x], x^n*Derivative[m][DiracDelta][x]}
+    ,
+    TestID->"[13] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    spowerStrip[AS[n >= 1 && m >= 2][deltaReduce[][expr]]]
+    ,
+    {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-m)*x^(-1 + n)*Derivative[-1 + m][DiracDelta][x]}
+    ,
+    TestID->"[14] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    spowerStrip[AS[n >= 2 && m >= 2][deltaReduce[][expr]]]
+    ,
+    {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, -((1 - m)*m*x^(-2 + n)*Derivative[-2 + m][DiracDelta][x])}
+    ,
+    TestID->"[15] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    spowerStrip[AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]]
+    ,
+    {0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-1)^n*FactorialPower[m, n]*Derivative[m - n][DiracDelta][x]}
+    ,
+    TestID->"[16] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -105,7 +145,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[12] Simplify-delta-function.nb"
+    TestID->"[17] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -113,7 +153,7 @@ VerificationTest[
     ,
     DiracDelta[x] + 2*y*DiracDelta[x] + 2*y^2*DiracDelta[x]
     ,
-    TestID->"[13] Simplify-delta-function.nb"
+    TestID->"[18] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -121,7 +161,7 @@ VerificationTest[
     ,
     y^2*DiracDelta[x] + (1 + y)^2*DiracDelta[x]
     ,
-    TestID->"[14] Simplify-delta-function.nb"
+    TestID->"[19] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -129,7 +169,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[15] Simplify-delta-function.nb"
+    TestID->"[20] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -137,7 +177,7 @@ VerificationTest[
     ,
     x*DiracDelta[x]*f[x] + x^2*DiracDelta[x]*f[x]
     ,
-    TestID->"[16] Simplify-delta-function.nb"
+    TestID->"[21] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
@@ -146,5 +186,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] Simplify-delta-function.nb"
+    TestID->"[∞] Distribution-deltaReduce.nb"
 ]

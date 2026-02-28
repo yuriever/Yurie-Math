@@ -76,27 +76,37 @@
 
 * `#!wl deltaK` - deltaK[z]: Kronecker delta function.
 
-* `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power of degree λ.
+* `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power.
 
-    * spower[s][z, λ, n]: z\_s^λ log^n z - signed power + log of degree λ.
+    * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1).
 
-    * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1); Log ("L"), DiracDelta ("D").
+* `#!wl spowerlog` - spowerlog[s][z, λ, n]: z\_s^λ log^n z - signed power + log.
 
-    * Hint: spower["L"][z, n] is defined for negative integer n and has logarithmic behavior.
+    * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1).
+
+    * Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ].
 
 * `#!wl rpower` - rpower[s][z, λ]: λ-holomorphic signed power.
 
-* `#!wl spowerReduce` - spowerReduce[expr]: reduce spower expressions.
+* `#!wl spowerReduce` - spowerReduce[expr]: reduce spower distributions.
 
-* `#!wl spowerNormal` - spowerNormal[expr]: convert spower expressions to normal power expressions.
+* `#!wl spowerStrip` - spowerStrip[expr]: convert spower distributions to the associated function.
 
-* `#!wl spowerConvert` - spowerConvert[type1 -> type2]: convert between different types of power-type distributions with head spower.
+* `#!wl spowerConvert` - spowerConvert[type1 -> type2]: convert between different types of spower distributions.
 
     * Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.
 
     * Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.
 
     * Hint: the tag Reverse is to reverse the parity.
+
+* `#!wl rpowerFrom` - rpowerFrom[pattern]: convert to rpower distribution with the specified base.
+
+* `#!wl deltaFromDirac` - deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.
+
+* `#!wl deltaToDirac` - deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.
+
+* `#!wl deltaReduce` - deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.
 
 ## DLMF.wl
 
@@ -553,12 +563,6 @@
     * Info[vars]: integer variables.
 
 * `#!wl trigFromExp` - trigFromExp[expr]: variant of ExpToTrig that only affects Exp.
-
-* `#!wl deltaApart` - deltaApart[expr]: take apart the Dirac delta function of several variables.
-
-* `#!wl deltaTogether` - deltaTogether[expr]: take together the Dirac delta function of several variables.
-
-* `#!wl deltaReduce` - deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.
 
 * `#!wl swap` - swap[a, b][expr]: swap the two symbols in the expression.
 

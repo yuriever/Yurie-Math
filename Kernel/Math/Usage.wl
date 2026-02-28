@@ -80,19 +80,34 @@ deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
 
 spower::usage =
-    StringJoin["spower[s][z, λ]: z_s^λ - signed power of degree λ.", "\n", "spower[s][z, λ, n]: z_s^λ log^n z - signed power + log of degree λ.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1); Log (\"L\"), DiracDelta (\"D\").", "\n", "Hint: spower[\"L\"][z, n] is defined for negative integer n and has logarithmic behavior."];
+    StringJoin["spower[s][z, λ]: z_s^λ - signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
+
+spowerlog::usage =
+    StringJoin["spowerlog[s][z, λ, n]: z_s^λ log^n z - signed power + log.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).", "\n", "Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ]."];
 
 rpower::usage =
     "rpower[s][z, λ]: λ-holomorphic signed power.";
 
 spowerReduce::usage =
-    "spowerReduce[expr]: reduce spower expressions.";
+    "spowerReduce[expr]: reduce spower distributions.";
 
-spowerNormal::usage =
-    "spowerNormal[expr]: convert spower expressions to normal power expressions.";
+spowerStrip::usage =
+    "spowerStrip[expr]: convert spower distributions to the associated function.";
 
 spowerConvert::usage =
-    StringJoin["spowerConvert[type1 -> type2]: convert between different types of power-type distributions with head spower.", "\n", "Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.", "\n", "Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.", "\n", "Hint: the tag Reverse is to reverse the parity."];
+    StringJoin["spowerConvert[type1 -> type2]: convert between different types of spower distributions.", "\n", "Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.", "\n", "Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.", "\n", "Hint: the tag Reverse is to reverse the parity."];
+
+rpowerFrom::usage =
+    "rpowerFrom[pattern]: convert to rpower distribution with the specified base.";
+
+deltaFromDirac::usage =
+    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";
+
+deltaToDirac::usage =
+    "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
+
+deltaReduce::usage =
+    "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
 
 
 (* ::Subsubsection:: *)
@@ -528,15 +543,6 @@ trigPhaseReduce::usage =
 
 trigFromExp::usage =
     "trigFromExp[expr]: variant of ExpToTrig that only affects Exp.";
-
-deltaApart::usage =
-    "deltaApart[expr]: take apart the Dirac delta function of several variables.";
-
-deltaTogether::usage =
-    "deltaTogether[expr]: take together the Dirac delta function of several variables.";
-
-deltaReduce::usage =
-    "deltaReduce[expr]: reduce the Dirac delta function and its derivatives in the expression.";
 
 swap::usage =
     StringJoin["swap[a, b][expr]: swap the two symbols in the expression.", "\n", "swap[{a, b}..][expr]: swap the pairs simultaneously."];
