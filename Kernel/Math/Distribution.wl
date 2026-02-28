@@ -22,7 +22,9 @@ Needs["Yurie`Math`"];
 deltaD::usage =
     "deltaD[z, n]: δ^n(z) - Dirac delta function."<>
     "\n"<>
-    "deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - product of Dirac delta functions.";
+    "deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function."<>
+    "\n"<>
+    "deltaD[z, n, tag]: Dirac delta function with tag.";
 
 deltaC::usage =
     "deltaC[z]: complex delta function.";
@@ -111,6 +113,14 @@ Begin["`Private`"];
 (*  *)
 
 
+
+Needs["Yurie`Base`"];
+
+ClearAll[deltaD,deltaC,deltaK,spower,spowerlog,rpower];
+
+
+
+
 (* ::Subsubsection:: *)
 (*Main*)
 
@@ -119,15 +129,14 @@ spower[s_][z_,0] :=
     1;
 
 
-deltaD[z_,0] :=
-    deltaD[z];
+deltaD[z_] :=
+    deltaD[z,0];
 
-deltaD[z_List,{(0)..}] :=
-    deltaD[z];
+deltaD[z_List] :=
+    deltaD[z,Table[0,Length[z]]];
 
-
-deltaC[z_,0] :=
-    deltaC[z];
+deltaD[{z_},{n_}] :=
+    deltaD[z,n];
 
 
 Derivative[n_,0][spower["+"]][z_,λ_] :=
@@ -162,9 +171,6 @@ Derivative[1,0][spowerlog[0]][z_,λ_,0] :=
 Derivative[1,0][spowerlog[1]][z_,λ_,0] :=
     Pass;
 
-
-Derivative[n_][deltaD][z_] :=
-    deltaD[z,n];
 
 Derivative[n_,_][deltaD][z_,λ_] :=
     deltaD[z,λ+n];
@@ -463,11 +469,6 @@ rpowerFrom[pattern_][expr_] :=
 
 deltaFromDirac[expr_] :=
     expr//ReplaceAll[{
-        DiracDelta[z_]:>
-            deltaD[z],
-        Derivative[n_][DiracDelta][z_]:>
-            deltaD[z,n]
-    }]//ReplaceAll[{
         DiracDelta[zs__]:>
             deltaD[{zs}],
         Derivative[ns__][DiracDelta][zs__]:>
@@ -477,13 +478,9 @@ deltaFromDirac[expr_] :=
 
 deltaToDirac[expr_] :=
     expr//ReplaceAll[{
-        deltaD[{zs__}]:>
-            DiracDelta[zs],
-        deltaD[{zs__},{ns__}]:>
-            Derivative[ns][DiracDelta][{zs}]
+        HoldPattern[deltaD[{zs__},{ns__}]]:>
+            Derivative[ns][DiracDelta][zs]
     }]//ReplaceAll[{
-        deltaD[z_]:>
-            DiracDelta[z],
         deltaD[z_,n_]:>
             Derivative[n][DiracDelta][z]
     }]
@@ -520,7 +517,7 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
 
 deltaReduceRule[p_] :=
     {
-        Power[x:p,n_.]*(DiracDelta[x:p]|deltaD[x:p])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*(DiracDelta[x:p]|deltaD[x:p,0])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
             0,
         Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
@@ -548,7 +545,7 @@ deltaExpandRelevant[expr_] :=
             varP =
                 Cases[
                     expr,
-                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaD[{vars__},___]|deltaD[var:Except[_List],___]:>
+                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaD[{vars__},__]|deltaD[var:Except[_List],__]:>
                         {vars,var},
                     Infinity
                 ]//
@@ -562,7 +559,7 @@ deltaExpandRelevant[expr_] :=
 (*deltaApart*)
 
 
-deltaApart[][expr_] :=
+deltaApart[expr_] :=
     expr//deltaApartKernel;
 
 
@@ -573,10 +570,8 @@ deltaApartKernel[expr_] :=
         Derivative[orders__][DiracDelta][args__]:>
             Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
 
-        deltaD[{vars__}]:>
-            Times@@Map[deltaD,{vars}],
-        deltaD[{vars__},{orders__}]:>
-            Times@@MapThread[deltaD[#1,#2]&,{{vars},{orders}}]
+        deltaD[varList_List,orderList_List]:>
+            Times@@MapThread[deltaD[#1,#2]&,{varList,orderList}]
     }];
 
 
@@ -584,7 +579,7 @@ deltaApartKernel[expr_] :=
 (*deltaTogether*)
 
 
-deltaTogether[][expr_] :=
+deltaTogether[expr_] :=
     expr//deltaTogetherKernel;
 
 
@@ -602,7 +597,20 @@ deltaTogetherKernel[expr_] :=
                 },
                 Derivative[orders][DiracDelta][vars]*rest
             ]
-    }];
+    }]//ReplaceAll[{
+        Verbatim[Times][factors__]/;!FreeQ[{factors},deltaD]:>
+            With[{
+                    deltaDList = Cases[{factors},deltaD[var:Except[_List],order:Except[_List]]:>{{order},{var}}],
+                    deltaDList2 = Cases[{factors},deltaD[varList_List,orderList_List]:>{orderList,varList}],
+                    rest = Times@@DeleteCases[{factors},deltaD[Except[_List],Except[_List]]|deltaD[_List,_List]]
+                },
+                {
+                    varList = Flatten[{deltaDList[[All,2]],deltaDList2[[All,2]]},2],
+                    orderList = Flatten[{deltaDList[[All,1]],deltaDList2[[All,1]]},2]
+                },
+                deltaD[varList,orderList]*rest
+            ]
+    }]
 
 
 (* ::Subsection:: *)
