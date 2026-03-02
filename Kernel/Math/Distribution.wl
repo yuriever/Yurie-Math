@@ -159,17 +159,17 @@ Derivative[0,n_,0][spowerlog[s:"+"|"-"]][z_,λ_,m_] :=
     spowerlog[s][z,λ,n+m];
 
 
-Derivative[1,0][spowerlog["+"]][z_,λ_,0] :=
+Derivative[1,0,0][spowerlog["+"]][z_,λ_,0] :=
     λ*spowerlog["+"][z,λ-1,0]+(-1)^λ/(-λ)!*deltaD[z,-λ];
 
-Derivative[1,0][spowerlog["-"]][z_,λ_,0] :=
+Derivative[1,0,0][spowerlog["-"]][z_,λ_,0] :=
     -λ*spowerlog["-"][z,λ-1,0]-1/(-λ)!*deltaD[z,-λ];
 
-Derivative[1,0][spowerlog[0]][z_,λ_,0] :=
-    Pass;
+Derivative[1,0,0][spowerlog[0]][z_,λ_,0] :=
+    λ*spowerlog[1][z,λ-1,0]+((-1)^λ-1)/(-λ)!*deltaD[z,-λ];
 
-Derivative[1,0][spowerlog[1]][z_,λ_,0] :=
-    Pass;
+Derivative[1,0,0][spowerlog[1]][z_,λ_,0] :=
+    λ*spowerlog[0][z,λ-1,0]+((-1)^λ+1)/(-λ)!*deltaD[z,-λ];
 
 
 Derivative[n_,_][deltaD][z_,λ_] :=
