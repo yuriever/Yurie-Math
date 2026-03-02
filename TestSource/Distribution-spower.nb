@@ -22,7 +22,7 @@ Cell[BoxData[{
  RowBox[{"<<", "Yurie`Base`"}], "\n", 
  RowBox[{"<<", "Yurie`Math`"}]}], "Code",
  CellLabel->
-  "In[166]:=",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
+  "In[174]:=",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
 
 Cell[CellGroupData[{
 
@@ -42,14 +42,14 @@ Cell[BoxData[
      RowBox[{"-", "\[ImaginaryI]"}], ",", "0", ",", "1"}], "}"}]}], 
   "]"}]], "Code",
  CellLabel->
-  "In[168]:=",ExpressionUUID->"5ac40dd9-62f3-466a-b756-abc2a9dbb0bb"],
+  "In[176]:=",ExpressionUUID->"5ac40dd9-62f3-466a-b756-abc2a9dbb0bb"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
   "}"}]], "Output",
  CellLabel->
-  "Out[168]=",ExpressionUUID->"d9a9dadc-30d4-45df-9bd2-3a361341dd04"]
+  "Out[176]=",ExpressionUUID->"a51fc959-ad18-4abf-bdb6-18e303088982"]
 }, Open  ]],
 
 Cell["Special value.", "Text",ExpressionUUID->"db9f198e-69fc-42fb-b985-c93fbb37d8d0"],
@@ -73,7 +73,7 @@ Cell[BoxData[
       RowBox[{"-", "4"}], ",", "2"}], "}"}]}], "\n", "]"}], "//", 
   "TableForm"}]], "Code",
  CellLabel->
-  "In[169]:=",ExpressionUUID->"91d4767d-0001-4a7b-ba1b-91bb82e31841"],
+  "In[177]:=",ExpressionUUID->"91d4767d-0001-4a7b-ba1b-91bb82e31841"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -181,8 +181,8 @@ Cell[BoxData[
   Function[BoxForm`e$, 
    TableForm[BoxForm`e$]]]], "Output",
  CellLabel->
-  "Out[169]//TableForm=",ExpressionUUID->"6606ca4f-701d-45c0-8cf5-\
-6bb510c22b57"]
+  "Out[177]//TableForm=",ExpressionUUID->"6e93bebc-9bf1-45d6-bcbf-\
+fa1ce3e4067e"]
 }, Open  ]]
 }, Open  ]],
 
@@ -404,8 +404,8 @@ Cell[BoxData[
    TemplateBox[<|
     "InUUID" -> "dada1afc-caaf-4ced-b2eb-e40a4a2c6351", "OutUUID" -> 
      "9ae30957-008b-49d1-afa3-344e1a05957e", "InUUIDOffset" -> 0, 
-     "KernelEvalInfoKey" -> {"Global`", 7305}, "OutNumber" -> 113, "Status" -> 
-     "PercentReferenceExists_KernelY_InN_OutN", "DisplayCache" -> 
+     "KernelEvalInfoKey" -> {"Global`", 8346}, "OutNumber" -> 113, "Status" -> 
+     "PercentReferenceExists_KernelN_InN_OutN", "DisplayCache" -> 
      TemplateBox[{}, "SmartPercent_List"]|>,
     "PercentRef"], ",", 
    RowBox[{"{", 
@@ -470,12 +470,12 @@ Cell[CellGroupData[{
 Cell[757, 28, 82, 0, 66, "Subsection",ExpressionUUID->"4564578c-4ae4-44e4-9e9a-54ce5eae3dd4"],
 Cell[CellGroupData[{
 Cell[864, 32, 425, 12, 65, "Code",ExpressionUUID->"5ac40dd9-62f3-466a-b756-abc2a9dbb0bb"],
-Cell[1292, 46, 199, 5, 41, "Output",ExpressionUUID->"d9a9dadc-30d4-45df-9bd2-3a361341dd04"]
+Cell[1292, 46, 199, 5, 41, "Output",ExpressionUUID->"a51fc959-ad18-4abf-bdb6-18e303088982"]
 }, Open  ]],
 Cell[1506, 54, 85, 0, 60, "Text",ExpressionUUID->"db9f198e-69fc-42fb-b985-c93fbb37d8d0"],
 Cell[CellGroupData[{
 Cell[1616, 58, 575, 17, 136, "Code",ExpressionUUID->"91d4767d-0001-4a7b-ba1b-91bb82e31841"],
-Cell[2194, 77, 3561, 107, 101, "Output",ExpressionUUID->"6606ca4f-701d-45c0-8cf5-6bb510c22b57"]
+Cell[2194, 77, 3561, 107, 101, "Output",ExpressionUUID->"6e93bebc-9bf1-45d6-bcbf-fa1ce3e4067e"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
