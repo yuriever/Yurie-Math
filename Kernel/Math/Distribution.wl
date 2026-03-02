@@ -15,7 +15,7 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Symbol*)
 
 
@@ -50,7 +50,7 @@ rpower::usage =
     "rpower[s][z, λ]: λ-holomorphic signed power.";
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Function*)
 
 
@@ -102,23 +102,21 @@ deltaReduce::usage =
 Begin["`Private`"];
 
 
+Needs["Yurie`Base`"];
+
+ClearAll[deltaD,deltaC,deltaK,spower,spowerlog,rpower,Derivative];
+
+
 (* ::Subsection:: *)
-(*Symbol*)
+(*spower|spowerlog*)
 
 
 (* ::Subsubsection:: *)
 (*Message*)
 
 
-(*  *)
-
-
-
-Needs["Yurie`Base`"];
-
-ClearAll[deltaD,deltaC,deltaK,spower,spowerlog,rpower];
-
-
+spowerlog::InvalidExponent =
+    "For spowerlog of rank 0, the exponent `1` should be an integer.";
 
 
 (* ::Subsubsection:: *)
@@ -129,14 +127,27 @@ spower[s_][z_,0] :=
     1;
 
 
-deltaD[z_] :=
-    deltaD[z,0];
+spowerlog[s:I|-I][z_,λ_,0] :=
+    spower[s][z,λ];
 
-deltaD[z_List] :=
-    deltaD[z,Table[0,Length[z]]];
+spowerlog[0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
+    spower[0][z,λ];
 
-deltaD[{z_},{n_}] :=
-    deltaD[z,n];
+spowerlog[1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
+    spower[1][z,λ];
+
+spowerlog[s:"+"|"-"|0|1][z_,λ_Integer?NonNegative,0] :=
+    spower[s][z,λ];
+
+spowerlog[s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ] :=
+    (
+        Message[spowerlog::InvalidExponent,λ];
+        HoldComplete[spowerlog[s][z,λ,0]]
+    );
+
+
+(* ::Subsubsection:: *)
+(*Derivative*)
 
 
 Derivative[n_,0][spower["+"]][z_,λ_] :=
@@ -172,11 +183,33 @@ Derivative[1,0,0][spowerlog[1]][z_,λ_,0] :=
     λ*spowerlog[0][z,λ-1,0]+((-1)^λ+1)/(-λ)!*deltaD[z,-λ];
 
 
-Derivative[n_,_][deltaD][z_,λ_] :=
-    deltaD[z,λ+n];
-
-
 (* ::Subsection:: *)
+(*deltaD*)
+
+
+(* ::Subsubsection:: *)
+(*Main*)
+
+
+deltaD[z_] :=
+    deltaD[z,0];
+
+deltaD[z_List] :=
+    deltaD[z,Table[0,Length[z]]];
+
+deltaD[{z_},{n_}] :=
+    deltaD[z,n];
+
+
+(* ::Subsubsection:: *)
+(*Derivative*)
+
+
+Derivative[n_,_][deltaD][z_,λ_] :=
+    deltaD[z,plusSafe[λ,n]];
+
+
+(* ::Subsection::Closed:: *)
 (*spowerReduce*)
 
 
@@ -218,18 +251,11 @@ spowerReduceSpecialValue[expr_] :=
         spower[0][z_,n_Integer?NonNegative]/;EvenQ[n]:>
             Power[z,n],
         spower[1][z_,n_Integer?NonNegative]/;OddQ[n]:>
-            Power[z,n],
-
-        spowerlog[s:I|-I][z_,λ_,0]:>
-            spower[s][z,λ],
-        spowerlog[0][z_,λ_Integer?Negative,0]/;EvenQ[λ]:>
-            spower[0][z,λ],
-        spowerlog[1][z_,λ_Integer?Negative,0]/;OddQ[λ]:>
-            spower[1][z,λ]
+            Power[z,n]
     }];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*spowerStrip*)
 
 
@@ -269,11 +295,11 @@ spowerStrip[expr_] :=
     }];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*spowerConvert*)
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Main*)
 
 
@@ -288,7 +314,7 @@ spowerConvert[rules__Rule][expr_] :=
     ];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Default behavior*)
 
 
@@ -296,7 +322,7 @@ spowerConvertCore[type_,type_][expr_] :=
     expr;
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Complex*)
 
 
@@ -322,7 +348,7 @@ spowerConvertCore[PlusMinus,Complex][expr_] :=
     }];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*PlusMinus*)
 
 
@@ -342,7 +368,7 @@ spowerConvertCore[Complex,PlusMinus][expr_] :=
     }];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Abs*)
 
 
@@ -363,7 +389,7 @@ spowerConvertCore[Complex,Abs][expr_] :=
     }];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Type reverse*)
 
 
@@ -399,7 +425,7 @@ spowerConvertCore[type1:Complex|PlusMinus|Abs,{type2:Complex|PlusMinus|Abs,Rever
     expr//spowerConvertCore[type1,type2]//spowerConvertCore[type2,{type2,Reverse}];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*iε prescription*)
 
 
@@ -421,7 +447,7 @@ spowerConvertCore[type:PlusMinus|Abs,{Complex,ε:Except[Reverse],reverse___}][ex
     expr//spowerConvertCore[type,Complex]//spowerConvertCore[Complex,{Complex,ε,reverse}];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Step function*)
 
 
@@ -438,7 +464,7 @@ spowerConvertCore[type:Complex|Abs,HeavisideTheta][expr_] :=
     expr//spowerConvertCore[type,PlusMinus]//spowerConvertCore[PlusMinus,HeavisideTheta];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Abs function*)
 
 
@@ -455,7 +481,7 @@ spowerConvertCore[type:Complex|PlusMinus,RealAbs][expr_] :=
     expr//spowerConvertCore[type,Abs]//spowerConvertCore[Abs,RealAbs];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*rpowerFrom*)
 
 
@@ -463,7 +489,7 @@ rpowerFrom[pattern_][expr_] :=
     Pass;
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*deltaFromDirac|deltaToDirac*)
 
 
@@ -486,7 +512,7 @@ deltaToDirac[expr_] :=
     }]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*deltaReduce*)
 
 
@@ -555,7 +581,7 @@ deltaExpandRelevant[expr_] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*deltaApart*)
 
 
@@ -575,7 +601,7 @@ deltaApartKernel[expr_] :=
     }];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*deltaTogether*)
 
 
@@ -613,7 +639,7 @@ deltaTogetherKernel[expr_] :=
     }]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*End*)
 
 

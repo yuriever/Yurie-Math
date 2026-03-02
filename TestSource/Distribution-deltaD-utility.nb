@@ -1,0 +1,367 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     11106,        359]
+NotebookOptionsPosition[      8828,        310]
+NotebookOutlinePosition[      9390,        329]
+CellTagsIndexPosition[      9347,        326]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"<<", "Yurie`Base`"}], "\n", 
+ RowBox[{"<<", "Yurie`Math`"}]}], "Code",
+ CellLabel->
+  "In[559]:=",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
+
+Cell[CellGroupData[{
+
+Cell["deltaFromDirac|deltaToDirac", "Subsection",ExpressionUUID->"b8366b34-0c36-4aca-86d1-bd4379935323"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"expr", "=", 
+   RowBox[{"{", "\n", "\t", 
+    RowBox[{
+     RowBox[{"DiracDelta", "[", "z", "]"}], ",", "\n", "\t", 
+     RowBox[{"DiracDelta", "[", 
+      RowBox[{"z", ",", "zb"}], "]"}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Derivative", "[", "n", "]"}], "[", "DiracDelta", "]"}], "[", 
+      "z", "]"}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Derivative", "[", 
+        RowBox[{"n", ",", "nb"}], "]"}], "[", "DiracDelta", "]"}], "[", 
+      RowBox[{"z", ",", "zb"}], "]"}]}], "\n", "}"}]}], ";"}]], "Code",
+ CellLabel->
+  "In[572]:=",ExpressionUUID->"738fd621-46b5-437f-8d2a-d855152f3162"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"expr", "//", "deltaFromDirac"}]], "Code",
+ CellLabel->
+  "In[573]:=",ExpressionUUID->"ad061a8a-af60-4e66-9584-621b2c78dec4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"deltaD", "[", 
+    RowBox[{"z", ",", "0"}], "]"}], ",", 
+   RowBox[{"deltaD", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", "zb"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "]"}], ",", 
+   RowBox[{"deltaD", "[", 
+    RowBox[{"z", ",", "n"}], "]"}], ",", 
+   RowBox[{"deltaD", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", "zb"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "nb"}], "}"}]}], "]"}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[573]=",ExpressionUUID->"08c9151e-76d5-44d7-a1b3-244c699948ac"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"expr", "//", "deltaFromDirac"}], "//", "deltaToDirac"}], "//", 
+  RowBox[{"minus", "[", "expr", "]"}]}]], "Code",
+ CellLabel->
+  "In[574]:=",ExpressionUUID->"84b9efb3-6bee-4a5f-b792-bd25ebf38e64"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellLabel->
+  "Out[574]=",ExpressionUUID->"2881541a-ca55-4fa9-8194-e85a83425a8c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["deltaApart|deltaTogether", "Subsection",ExpressionUUID->"c0312b9a-0d41-4186-a13c-0916daff701a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"expr", "=", 
+   RowBox[{"{", "\n", "\t", 
+    RowBox[{
+     RowBox[{"DiracDelta", "[", 
+      RowBox[{"z", ",", "zb"}], "]"}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Derivative", "[", 
+        RowBox[{"n", ",", "nb"}], "]"}], "[", "DiracDelta", "]"}], "[", 
+      RowBox[{"z", ",", "zb"}], "]"}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "+", "b"}], ")"}], "*", 
+      RowBox[{"DiracDelta", "[", 
+       RowBox[{"z", ",", "zb"}], "]"}]}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "+", "b"}], ")"}], "*", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Derivative", "[", 
+         RowBox[{"n", ",", "nb"}], "]"}], "[", "DiracDelta", "]"}], "[", 
+       RowBox[{"z", ",", "zb"}], "]"}]}]}], "\n", "}"}]}], ";"}]], "Code",
+ CellLabel->
+  "In[575]:=",ExpressionUUID->"80f86f19-782b-440f-89aa-ac2f965d7358"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"res", "=", 
+  RowBox[{
+  "expr", "//", "Yurie`Math`Distribution`Private`deltaApart"}]}]], "Code",
+ CellLabel->
+  "In[576]:=",ExpressionUUID->"5a0018a3-ca35-46fa-a4cf-1b8815be80b8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"DiracDelta", "[", "z", "]"}], " ", 
+    RowBox[{"DiracDelta", "[", "zb", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["DiracDelta", 
+      TagBox[
+       RowBox[{"(", "n", ")"}],
+       Derivative],
+      MultilineFunction->None], "[", "z", "]"}], " ", 
+    RowBox[{
+     SuperscriptBox["DiracDelta", 
+      TagBox[
+       RowBox[{"(", "nb", ")"}],
+       Derivative],
+      MultilineFunction->None], "[", "zb", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"DiracDelta", "[", "z", "]"}], " ", 
+    RowBox[{"DiracDelta", "[", "zb", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{
+     SuperscriptBox["DiracDelta", 
+      TagBox[
+       RowBox[{"(", "n", ")"}],
+       Derivative],
+      MultilineFunction->None], "[", "z", "]"}], " ", 
+    RowBox[{
+     SuperscriptBox["DiracDelta", 
+      TagBox[
+       RowBox[{"(", "nb", ")"}],
+       Derivative],
+      MultilineFunction->None], "[", "zb", "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[576]=",ExpressionUUID->"95b800f3-6832-4298-a1bc-cefb32beeb58"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"res", "//", 
+  "Yurie`Math`Distribution`Private`deltaTogether"}]], "Code",
+ CellLabel->
+  "In[577]:=",ExpressionUUID->"cfb0fa01-369d-4e88-92d1-20bf9a6950b3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"DiracDelta", "[", 
+    RowBox[{"z", ",", "zb"}], "]"}], ",", 
+   RowBox[{
+    SuperscriptBox["DiracDelta", 
+     TagBox[
+      RowBox[{"(", 
+       RowBox[{"n", ",", "nb"}], ")"}],
+      Derivative],
+     MultilineFunction->None], "[", 
+    RowBox[{"z", ",", "zb"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"DiracDelta", "[", 
+     RowBox[{"z", ",", "zb"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{
+     SuperscriptBox["DiracDelta", 
+      TagBox[
+       RowBox[{"(", 
+        RowBox[{"n", ",", "nb"}], ")"}],
+       Derivative],
+      MultilineFunction->None], "[", 
+     RowBox[{"z", ",", "zb"}], "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[577]=",ExpressionUUID->"eb7b4cc9-06c5-4a7a-aade-d944a3ce37ff"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"res", "=", 
+  RowBox[{
+   RowBox[{"expr", "//", "deltaFromDirac"}], "//", 
+   "Yurie`Math`Distribution`Private`deltaApart"}]}]], "Code",
+ CellLabel->
+  "In[578]:=",ExpressionUUID->"1929dd63-da86-4995-833b-429696eb7a55"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"deltaD", "[", 
+     RowBox[{"z", ",", "0"}], "]"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"zb", ",", "0"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"deltaD", "[", 
+     RowBox[{"z", ",", "n"}], "]"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"zb", ",", "nb"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"z", ",", "0"}], "]"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"zb", ",", "0"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"z", ",", "n"}], "]"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{"zb", ",", "nb"}], "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[578]=",ExpressionUUID->"697c1a6f-3076-45f6-a589-ce7fd6b10f3b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"res", "//", 
+  "Yurie`Math`Distribution`Private`deltaTogether"}]], "Code",
+ CellLabel->
+  "In[579]:=",ExpressionUUID->"c3662633-1382-42ee-9341-67ea7c538034"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"deltaD", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", "zb"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "]"}], ",", 
+   RowBox[{"deltaD", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", "zb"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "nb"}], "}"}]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"z", ",", "zb"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b"}], ")"}], " ", 
+    RowBox[{"deltaD", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"z", ",", "zb"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "nb"}], "}"}]}], "]"}]}]}], "}"}]], "Output",
+ CellLabel->
+  "Out[579]=",ExpressionUUID->"c8cfcd51-f29b-49b1-920f-3af7fddce17a"]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+WindowSize->{1280, 1382},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+  "Yurie.nb", CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"61fa34a5-7d45-4325-a0a0-ed5462759a0b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 178, 4, 89, "Code",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
+Cell[CellGroupData[{
+Cell[757, 28, 104, 0, 66, "Subsection",ExpressionUUID->"b8366b34-0c36-4aca-86d1-bd4379935323"],
+Cell[864, 30, 676, 18, 183, "Code",ExpressionUUID->"738fd621-46b5-437f-8d2a-d855152f3162"],
+Cell[CellGroupData[{
+Cell[1565, 52, 148, 3, 65, "Code",ExpressionUUID->"ad061a8a-af60-4e66-9584-621b2c78dec4"],
+Cell[1716, 57, 627, 20, 41, "Output",ExpressionUUID->"08c9151e-76d5-44d7-a1b3-244c699948ac"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2380, 82, 243, 6, 65, "Code",ExpressionUUID->"84b9efb3-6bee-4a5f-b792-bd25ebf38e64"],
+Cell[2626, 90, 176, 4, 41, "Output",ExpressionUUID->"2881541a-ca55-4fa9-8194-e85a83425a8c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2851, 100, 101, 0, 66, "Subsection",ExpressionUUID->"c0312b9a-0d41-4186-a13c-0916daff701a"],
+Cell[2955, 102, 924, 26, 183, "Code",ExpressionUUID->"80f86f19-782b-440f-89aa-ac2f965d7358"],
+Cell[CellGroupData[{
+Cell[3904, 132, 204, 5, 65, "Code",ExpressionUUID->"5a0018a3-ca35-46fa-a4cf-1b8815be80b8"],
+Cell[4111, 139, 1192, 40, 72, "Output",ExpressionUUID->"95b800f3-6832-4298-a1bc-cefb32beeb58"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5340, 184, 181, 4, 65, "Code",ExpressionUUID->"cfb0fa01-369d-4e88-92d1-20bf9a6950b3"],
+Cell[5524, 190, 880, 30, 44, "Output",ExpressionUUID->"eb7b4cc9-06c5-4a7a-aade-d944a3ce37ff"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6441, 225, 243, 6, 65, "Code",ExpressionUUID->"1929dd63-da86-4995-833b-429696eb7a55"],
+Cell[6687, 233, 888, 28, 67, "Output",ExpressionUUID->"697c1a6f-3076-45f6-a589-ce7fd6b10f3b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7612, 266, 181, 4, 65, "Code",ExpressionUUID->"c3662633-1382-42ee-9341-67ea7c538034"],
+Cell[7796, 272, 1004, 34, 41, "Output",ExpressionUUID->"c8cfcd51-f29b-49b1-920f-3af7fddce17a"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

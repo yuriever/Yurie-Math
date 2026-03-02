@@ -118,6 +118,13 @@ divideOverPlus::usage =
     "divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.";
 
 
+plusSafe::usage =
+    "plusSafe[args]: non-threadable Plus.";
+
+timesSafe::usage =
+    "timesSafe[args]: non-threadable Times.";
+
+
 (* ::Subsection:: *)
 (*Series|Limit*)
 
@@ -415,6 +422,20 @@ divideOverPlus[args__][expr_Plus] :=
 
 divideOverPlus[args__][expr_] :=
     Divide[expr,Times[args]];
+
+
+plusSafe[args:Except[_List]...] :=
+    Plus[args];
+
+plusSafe[args__List]/;SameQ@@Map[Length,{args}] :=
+    Thread[Unevaluated@plusSafe[args],List];
+
+
+timesSafe[args:Except[_List]...] :=
+    Times[args];
+
+timesSafe[args__List]/;SameQ@@Map[Length,{args}] :=
+    Thread[Unevaluated@timesSafe[args],List];
 
 
 (* ::Subsection:: *)

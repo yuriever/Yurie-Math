@@ -357,6 +357,12 @@ timesOverPlus::usage =
 divideOverPlus::usage =
     "divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.";
 
+plusSafe::usage =
+    "plusSafe[args]: non-threadable Plus.";
+
+timesSafe::usage =
+    "timesSafe[args]: non-threadable Times.";
+
 series::usage =
     "Sketch: Series + Normal.";
 

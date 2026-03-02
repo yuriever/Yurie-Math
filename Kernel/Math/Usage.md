@@ -366,6 +366,10 @@
 
 * `#!wl divideOverPlus` - divideOverPlus[args][expr]: operator form of Divide that automatically threads over Plus.
 
+* `#!wl plusSafe` - plusSafe[args]: non-threadable Plus.
+
+* `#!wl timesSafe` - timesSafe[args]: non-threadable Times.
+
 * `#!wl series` - Sketch: Series + Normal.
 
 * `#!wl seriesc` - Sketch: SeriesCoefficient.
