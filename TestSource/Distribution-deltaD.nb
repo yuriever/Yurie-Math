@@ -19,7 +19,7 @@ WindowFrame->Normal*)
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[{
- RowBox[{"<<", "Yurie`Base`"}], "\n", 
+ RowBox[{"<<", "Yurie`Base`"}], "\n",
  RowBox[{"<<", "Yurie`Math`"}]}], "Code",
  CellLabel->
   "In[221]:=",ExpressionUUID->"ee3d773e-5fa8-4413-a958-f548b1bc6228"],
@@ -31,12 +31,12 @@ Cell["Basic", "Subsection",ExpressionUUID->"4564578c-4ae4-44e4-9e9a-54ce5eae3dd4
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", "z", "]"}]], "Code",
+ RowBox[{"deltaOld", "[", "z", "]"}]], "Code",
  CellLabel->
   "In[223]:=",ExpressionUUID->"9c7d9027-378f-4826-a4a9-c954c2b6d8e0"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{"z", ",", "0"}], "]"}]], "Output",
  CellLabel->
   "Out[223]=",ExpressionUUID->"514b3d7b-e9c0-4cd9-ba4c-d764ce05f2ee"]
@@ -45,13 +45,13 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{"{", "z", "}"}], "]"}]], "Code",
  CellLabel->
   "In[224]:=",ExpressionUUID->"b1e26ae1-f378-4ab8-bc0c-a12043134627"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{"z", ",", "0"}], "]"}]], "Output",
  CellLabel->
   "Out[224]=",ExpressionUUID->"910dae96-35a9-4c54-834e-ac77f9127249"]
@@ -60,18 +60,18 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
-  RowBox[{"{", 
+ RowBox[{"deltaOld", "[",
+  RowBox[{"{",
    RowBox[{"z", ",", "zb"}], "}"}], "]"}]], "Code",
  CellLabel->
   "In[225]:=",ExpressionUUID->"af8712c5-3ee7-4f80-a903-c58a662481fa"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{
-   RowBox[{"{", 
-    RowBox[{"z", ",", "zb"}], "}"}], ",", 
-   RowBox[{"{", 
+   RowBox[{"{",
+    RowBox[{"z", ",", "zb"}], "}"}], ",",
+   RowBox[{"{",
     RowBox[{"0", ",", "0"}], "}"}]}], "]"}]], "Output",
  CellLabel->
   "Out[225]=",ExpressionUUID->"119aeba5-c2e0-47ab-baf9-a0ea08a7eef0"]
@@ -80,15 +80,15 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{
-   RowBox[{"{", "z", "}"}], ",", 
+   RowBox[{"{", "z", "}"}], ",",
    RowBox[{"{", "n", "}"}]}], "]"}]], "Code",
  CellLabel->
   "In[226]:=",ExpressionUUID->"160988fa-e4fa-4492-a4eb-63dfddcfb2fa"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{"z", ",", "n"}], "]"}]], "Output",
  CellLabel->
   "Out[226]=",ExpressionUUID->"5ad79363-da2a-4bb5-8812-f363290cf286"]
@@ -97,11 +97,11 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"ValueQ", "[", 
+ RowBox[{"ValueQ", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
+   RowBox[{"deltaOld", "[",
     RowBox[{
-     RowBox[{"{", "z", "}"}], ",", "n"}], "]"}], ",", 
+     RowBox[{"{", "z", "}"}], ",", "n"}], "]"}], ",",
    RowBox[{"Method", "->", "\"\<TrialEvaluation\>\""}]}], "]"}]], "Code",
  CellLabel->
   "In[227]:=",ExpressionUUID->"50a8c497-7f7e-44e4-95f7-8779c5742436"],
@@ -114,11 +114,11 @@ Cell[BoxData["False"], "Output",
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"ValueQ", "[", 
+ RowBox[{"ValueQ", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
-    RowBox[{"z", ",", 
-     RowBox[{"{", "n", "}"}]}], "]"}], ",", 
+   RowBox[{"deltaOld", "[",
+    RowBox[{"z", ",",
+     RowBox[{"{", "n", "}"}]}], "]"}], ",",
    RowBox[{"Method", "->", "\"\<TrialEvaluation\>\""}]}], "]"}]], "Code",
  CellLabel->
   "In[228]:=",ExpressionUUID->"e1d1107f-2933-4da2-b75c-6a5a405aa61f"],
@@ -136,16 +136,16 @@ Cell["Derivative", "Subsection",ExpressionUUID->"d58f0061-7e65-4ee8-a3e2-350b68f
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"D", "[", 
+ RowBox[{"D", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", "z", "]"}], ",", 
-   RowBox[{"{", 
+   RowBox[{"deltaOld", "[", "z", "]"}], ",",
+   RowBox[{"{",
     RowBox[{"z", ",", "n"}], "}"}]}], "]"}]], "Code",
  CellLabel->
   "In[229]:=",ExpressionUUID->"8d9c7b62-ecce-4839-9a42-2e8648b47a38"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{"z", ",", "n"}], "]"}]], "Output",
  CellLabel->
   "Out[229]=",ExpressionUUID->"0dfb6b24-4585-4716-bd50-c93693bf1a19"]
@@ -154,16 +154,16 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"D", "[", 
+ RowBox[{"D", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
+   RowBox[{"deltaOld", "[",
     RowBox[{"z", ",", "n"}], "]"}], ",", "z"}], "]"}]], "Code",
  CellLabel->
   "In[230]:=",ExpressionUUID->"b1165385-a5a9-4408-9b65-57d2d9627c8a"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
-  RowBox[{"z", ",", 
+ RowBox[{"deltaOld", "[",
+  RowBox[{"z", ",",
    RowBox[{"1", "+", "n"}]}], "]"}]], "Output",
  CellLabel->
   "Out[230]=",ExpressionUUID->"fd007484-e47e-4336-8dca-2aaa62efb164"]
@@ -172,26 +172,26 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"D", "[", 
+ RowBox[{"D", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
+   RowBox[{"deltaOld", "[",
     RowBox[{
-     RowBox[{"{", 
-      RowBox[{"z", ",", "zb"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"n", ",", "nb"}], "}"}]}], "]"}], ",", "z", ",", "zb"}], 
+     RowBox[{"{",
+      RowBox[{"z", ",", "zb"}], "}"}], ",",
+     RowBox[{"{",
+      RowBox[{"n", ",", "nb"}], "}"}]}], "]"}], ",", "z", ",", "zb"}],
   "]"}]], "Code",
  CellLabel->
   "In[231]:=",ExpressionUUID->"da9c4259-856c-485e-96be-14bffc7ac305"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{
-   RowBox[{"{", 
-    RowBox[{"z", ",", "zb"}], "}"}], ",", 
-   RowBox[{"{", 
+   RowBox[{"{",
+    RowBox[{"z", ",", "zb"}], "}"}], ",",
+   RowBox[{"{",
     RowBox[{
-     RowBox[{"1", "+", "n"}], ",", 
+     RowBox[{"1", "+", "n"}], ",",
      RowBox[{"1", "+", "nb"}]}], "}"}]}], "]"}]], "Output",
  CellLabel->
   "Out[231]=",ExpressionUUID->"2e9b2db3-5591-4df3-9f3d-90c79c586fc1"]
@@ -202,24 +202,24 @@ Cell["The following is unsafe.", "Text",ExpressionUUID->"b828578e-d25f-47c5-b750
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"D", "[", 
+ RowBox[{"D", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
+   RowBox[{"deltaOld", "[",
     RowBox[{
-     RowBox[{"{", 
-      RowBox[{"z", ",", "zb"}], "}"}], ",", "n"}], "]"}], ",", "z"}], 
+     RowBox[{"{",
+      RowBox[{"z", ",", "zb"}], "}"}], ",", "n"}], "]"}], ",", "z"}],
   "]"}]], "Code",
  CellLabel->
   "In[232]:=",ExpressionUUID->"19ca1b72-3fc4-4805-a531-9692b3596250"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
+ RowBox[{"deltaOld", "[",
   RowBox[{
-   RowBox[{"{", 
-    RowBox[{"z", ",", "zb"}], "}"}], ",", 
-   RowBox[{"Yurie`Math`Distribution`Private`deltaDPlus", "[", 
-    RowBox[{"n", ",", 
-     RowBox[{"{", 
+   RowBox[{"{",
+    RowBox[{"z", ",", "zb"}], "}"}], ",",
+   RowBox[{"Yurie`Math`Distribution`Private`deltaDPlus", "[",
+    RowBox[{"n", ",",
+     RowBox[{"{",
       RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "]"}]], "Output",
  CellLabel->
   "Out[232]=",ExpressionUUID->"172869c9-bb13-4b2e-a430-1592a03ab2b2"]
@@ -228,21 +228,21 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"D", "[", 
+ RowBox[{"D", "[",
   RowBox[{
-   RowBox[{"deltaD", "[", 
-    RowBox[{"z", ",", 
-     RowBox[{"{", 
+   RowBox[{"deltaOld", "[",
+    RowBox[{"z", ",",
+     RowBox[{"{",
       RowBox[{"n", ",", "nb"}], "}"}]}], "]"}], ",", "z"}], "]"}]], "Code",
  CellLabel->
   "In[233]:=",ExpressionUUID->"e1d43357-0fc0-455b-9f90-398bd6dd0c37"],
 
 Cell[BoxData[
- RowBox[{"deltaD", "[", 
-  RowBox[{"z", ",", 
-   RowBox[{"Yurie`Math`Distribution`Private`deltaDPlus", "[", 
+ RowBox[{"deltaOld", "[",
+  RowBox[{"z", ",",
+   RowBox[{"Yurie`Math`Distribution`Private`deltaDPlus", "[",
     RowBox[{
-     RowBox[{"{", 
+     RowBox[{"{",
       RowBox[{"n", ",", "nb"}], "}"}], ",", "1"}], "]"}]}], "]"}]], "Output",
  CellLabel->
   "Out[233]=",ExpressionUUID->"a0170083-3836-4b0d-bdaf-77d550c246cb"]
@@ -253,8 +253,8 @@ Editable->True,
 WindowSize->{1280, 1382},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
-StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
-   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko",
+   "Library", "Wolfram", "SystemFiles", "FrontEnd", "StyleSheets"},
   "Yurie.nb", CharacterEncoding -> "UTF-8"],
 ExpressionUUID->"61fa34a5-7d45-4325-a0a0-ed5462759a0b"
 ]

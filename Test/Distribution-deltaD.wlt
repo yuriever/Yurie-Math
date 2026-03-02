@@ -1,6 +1,6 @@
 
 
-(* Distribution-deltaD.nb *)
+(* Distribution-deltaOld.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,120 +8,120 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] Distribution-deltaD.nb"
+    TestID->"[0] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    Get["Yurie`Base`"]; 
+    Get["Yurie`Base`"];
     Get["Yurie`Math`"]
     ,
     Null
     ,
-    TestID->"[1] Distribution-deltaD.nb"
+    TestID->"[1] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    deltaD[z]
+    deltaOld[z]
     ,
-    deltaD[z, 0]
+    deltaOld[z, 0]
     ,
-    TestID->"[2] Distribution-deltaD.nb"
+    TestID->"[2] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    deltaD[{z}]
+    deltaOld[{z}]
     ,
-    deltaD[z, 0]
+    deltaOld[z, 0]
     ,
-    TestID->"[3] Distribution-deltaD.nb"
+    TestID->"[3] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    deltaD[{z, zb}]
+    deltaOld[{z, zb}]
     ,
-    deltaD[{z, zb}, {0, 0}]
+    deltaOld[{z, zb}, {0, 0}]
     ,
-    TestID->"[4] Distribution-deltaD.nb"
+    TestID->"[4] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    deltaD[{z}, {n}]
+    deltaOld[{z}, {n}]
     ,
-    deltaD[z, n]
+    deltaOld[z, n]
     ,
-    TestID->"[5] Distribution-deltaD.nb"
+    TestID->"[5] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    ValueQ[deltaD[{z}, n], Method -> "TrialEvaluation"]
+    ValueQ[deltaOld[{z}, n], Method -> "TrialEvaluation"]
     ,
     False
     ,
-    TestID->"[6] Distribution-deltaD.nb"
+    TestID->"[6] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    ValueQ[deltaD[z, {n}], Method -> "TrialEvaluation"]
+    ValueQ[deltaOld[z, {n}], Method -> "TrialEvaluation"]
     ,
     False
     ,
-    TestID->"[7] Distribution-deltaD.nb"
+    TestID->"[7] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    D[deltaD[z], {z, n}]
+    D[deltaOld[z], {z, n}]
     ,
-    deltaD[z, n]
+    deltaOld[z, n]
     ,
-    TestID->"[8] Distribution-deltaD.nb"
+    TestID->"[8] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    D[deltaD[z, n], z]
+    D[deltaOld[z, n], z]
     ,
-    deltaD[z, 1 + n]
+    deltaOld[z, 1 + n]
     ,
-    TestID->"[9] Distribution-deltaD.nb"
+    TestID->"[9] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    D[deltaD[{z, zb}, {n, nb}], z, zb]
+    D[deltaOld[{z, zb}, {n, nb}], z, zb]
     ,
-    deltaD[{z, zb}, {1 + n, 1 + nb}]
+    deltaOld[{z, zb}, {1 + n, 1 + nb}]
     ,
-    TestID->"[10] Distribution-deltaD.nb"
+    TestID->"[10] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    D[deltaD[{z, zb}, n], z]
+    D[deltaOld[{z, zb}, n], z]
     ,
-    deltaD[{z, zb}, {1 + n, n}]
+    deltaOld[{z, zb}, {1 + n, n}]
     ,
-    TestID->"[11] Distribution-deltaD.nb"
+    TestID->"[11] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    D[deltaD[z, {n, nb}], z]
+    D[deltaOld[z, {n, nb}], z]
     ,
-    deltaD[z, {1 + n, 1 + nb}]
+    deltaOld[z, {1 + n, 1 + nb}]
     ,
-    TestID->"[12] Distribution-deltaD.nb"
+    TestID->"[12] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    expr = {DiracDelta[z], DiracDelta[z, zb], Derivative[n][DiracDelta][z], Derivative[n, nb][DiracDelta][z, zb]}; 
+    expr = {DiracDelta[z], DiracDelta[z, zb], Derivative[n][DiracDelta][z], Derivative[n, nb][DiracDelta][z, zb]};
     ,
     Null
     ,
-    TestID->"[13] Distribution-deltaD.nb"
+    TestID->"[13] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
     deltaFromDirac[expr]
     ,
-    {deltaD[z, 0], deltaD[{z, zb}, {0, 0}], deltaD[z, n], deltaD[{z, zb}, {n, nb}]}
+    {deltaOld[z, 0], deltaOld[{z, zb}, {0, 0}], deltaOld[z, n], deltaOld[{z, zb}, {n, nb}]}
     ,
-    TestID->"[14] Distribution-deltaD.nb"
+    TestID->"[14] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
@@ -129,15 +129,15 @@ VerificationTest[
     ,
     {0, 0, 0, 0}
     ,
-    TestID->"[15] Distribution-deltaD.nb"
+    TestID->"[15] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
-    expr = {DiracDelta[z, zb], Derivative[n, nb][DiracDelta][z, zb], (a + b)*DiracDelta[z, zb], (a + b)*Derivative[n, nb][DiracDelta][z, zb]}; 
+    expr = {DiracDelta[z, zb], Derivative[n, nb][DiracDelta][z, zb], (a + b)*DiracDelta[z, zb], (a + b)*Derivative[n, nb][DiracDelta][z, zb]};
     ,
     Null
     ,
-    TestID->"[16] Distribution-deltaD.nb"
+    TestID->"[16] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
@@ -145,7 +145,7 @@ VerificationTest[
     ,
     {DiracDelta[z]*DiracDelta[zb], Derivative[n][DiracDelta][z]*Derivative[nb][DiracDelta][zb], (a + b)*DiracDelta[z]*DiracDelta[zb], (a + b)*Derivative[n][DiracDelta][z]*Derivative[nb][DiracDelta][zb]}
     ,
-    TestID->"[17] Distribution-deltaD.nb"
+    TestID->"[17] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
@@ -153,23 +153,23 @@ VerificationTest[
     ,
     {DiracDelta[z, zb], Derivative[n, nb][DiracDelta][z, zb], (a + b)*DiracDelta[z, zb], (a + b)*Derivative[n, nb][DiracDelta][z, zb]}
     ,
-    TestID->"[18] Distribution-deltaD.nb"
+    TestID->"[18] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
     res = Yurie`Math`Distribution`Private`deltaApart[deltaFromDirac[expr]]
     ,
-    {deltaD[z, 0]*deltaD[zb, 0], deltaD[z, n]*deltaD[zb, nb], (a + b)*deltaD[z, 0]*deltaD[zb, 0], (a + b)*deltaD[z, n]*deltaD[zb, nb]}
+    {deltaOld[z, 0]*deltaOld[zb, 0], deltaOld[z, n]*deltaOld[zb, nb], (a + b)*deltaOld[z, 0]*deltaOld[zb, 0], (a + b)*deltaOld[z, n]*deltaOld[zb, nb]}
     ,
-    TestID->"[19] Distribution-deltaD.nb"
+    TestID->"[19] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
     Yurie`Math`Distribution`Private`deltaTogether[res]
     ,
-    {deltaD[{z, zb}, {0, 0}], deltaD[{z, zb}, {n, nb}], (a + b)*deltaD[{z, zb}, {0, 0}], (a + b)*deltaD[{z, zb}, {n, nb}]}
+    {deltaOld[{z, zb}, {0, 0}], deltaOld[{z, zb}, {n, nb}], (a + b)*deltaOld[{z, zb}, {0, 0}], (a + b)*deltaOld[{z, zb}, {n, nb}]}
     ,
-    TestID->"[20] Distribution-deltaD.nb"
+    TestID->"[20] Distribution-deltaOld.nb"
 ]
 
 VerificationTest[
@@ -178,5 +178,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] Distribution-deltaD.nb"
+    TestID->"[∞] Distribution-deltaOld.nb"
 ]

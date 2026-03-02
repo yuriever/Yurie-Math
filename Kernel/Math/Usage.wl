@@ -70,8 +70,8 @@ SUMCancel::usage =
 (*Distribution.wl*)
 
 
-deltaD::usage =
-    StringJoin["deltaD[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function.", "\n", "deltaD[z, n, tag]: Dirac delta function with tag."];
+deltaOld::usage =
+    StringJoin["deltaOld[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaOld[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function.", "\n", "deltaOld[z, n, tag]: Dirac delta function with tag."];
 
 deltaC::usage =
     "deltaC[z]: complex delta function.";
@@ -101,10 +101,10 @@ rpowerFrom::usage =
     "rpowerFrom[pattern]: convert to rpower distribution with the specified base.";
 
 deltaFromDirac::usage =
-    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";
+    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaOld.";
 
 deltaToDirac::usage =
-    "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
+    "deltaToDirac[expr]: convert deltaOld to the built-in Dirac delta distributions.";
 
 deltaReduce::usage =
     "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
