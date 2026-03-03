@@ -70,6 +70,10 @@
 
 ## Distribution.wl
 
+* `#!wl dist` - dist[type, data][var]: internal representation of distributions/generalized functions.
+
+    * Value[type]: "DeltaD", "DeltaC", "DeltaK", "PowerS", "PowerLogS", "PowerR".
+
 * `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
 
     * deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.
@@ -79,10 +83,6 @@
 * `#!wl deltaC` - deltaC[z]: complex delta function.
 
 * `#!wl deltaK` - deltaK[z]: Kronecker delta function.
-
-* `#!wl deltaFun` - delta[type, order, tag][var]: internal representation of delta distributions.
-
-    * Value[type]: D (Dirac delta), C (complex delta), K (Kronecker delta).
 
 * `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power.
 

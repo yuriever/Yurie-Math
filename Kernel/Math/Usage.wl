@@ -70,6 +70,9 @@ SUMCancel::usage =
 (*Distribution.wl*)
 
 
+dist::usage =
+    StringJoin["dist[type, data][var]: internal representation of distributions/generalized functions.", "\n", "Value[type]: \"DeltaD\", \"DeltaC\", \"DeltaK\", \"PowerS\", \"PowerLogS\", \"PowerR\"."];
+
 deltaD::usage =
     StringJoin["deltaD[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag."];
 
@@ -78,9 +81,6 @@ deltaC::usage =
 
 deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
-
-deltaFun::usage =
-    StringJoin["delta[type, order, tag][var]: internal representation of delta distributions.", "\n", "Value[type]: D (Dirac delta), C (complex delta), K (Kronecker delta)."];
 
 spower::usage =
     StringJoin["spower[s][z, λ]: z_s^λ - signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];

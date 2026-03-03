@@ -19,6 +19,12 @@ Needs["Yurie`Math`"];
 (*Symbol*)
 
 
+dist::usage =
+    "dist[type, data][var]: internal representation of distributions/generalized functions."<>
+    "\n"<>
+    "Value[type]: \"DeltaD\", \"DeltaC\", \"DeltaK\", \"PowerS\", \"PowerLogS\", \"PowerR\".";
+
+
 deltaD::usage =
     "deltaD[z, n]: δ^n(z) - Dirac delta function."<>
     "\n"<>
@@ -31,12 +37,6 @@ deltaC::usage =
 
 deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
-
-
-deltaFun::usage =
-    "delta[type, order, tag][var]: internal representation of delta distributions."<>
-    "\n"<>
-    "Value[type]: D (Dirac delta), C (complex delta), K (Kronecker delta).";
 
 
 spower::usage =
@@ -109,11 +109,11 @@ Begin["`Private`"];
 
 Needs["Yurie`Base`"];
 
-ClearAll[deltaFun,deltaD,deltaC,deltaK,spower,spowerlog,rpower,Derivative];
+ClearAll[dist,deltaD,deltaC,deltaK,spower,spowerlog,rpower,Derivative];
 
 
 (* ::Subsection:: *)
-(*spower|spowerlog*)
+(*dist*)
 
 
 (* ::Subsubsection:: *)
@@ -125,29 +125,63 @@ spowerlog::InvalidExponent =
 
 
 (* ::Subsubsection:: *)
+(*Interface*)
+
+
+spower[s_][z_,λ_] :=
+    dist["PowerS",s][z,λ];
+
+spowerlog[s_][z_,λ_,n_] :=
+    dist["PowerLogS",s][z,λ,n];
+
+
+deltaD[z:Except[_List]] :=
+    dist["DeltaD",{0}][z];
+
+deltaD[z:Except[_List],λ:Except[_List]] :=
+    dist["DeltaD",{λ}][z];
+
+deltaD[{z__}] :=
+    dist["DeltaD",ConstantArray[0,Length[{z}]]][z];
+
+deltaD[{z__},{λ__}] :=
+    dist["DeltaD",{λ}][z];
+
+deltaD[{z__},{λ__},tag_] :=
+    dist["DeltaD",{λ},tag][z];
+
+
+deltaC[z:Except[_List]] :=
+    dist["DeltaC",{0}][z];
+
+deltaK[z:Except[_List]] :=
+    dist["DeltaK",{0}][z];
+
+
+(* ::Subsubsection:: *)
 (*Main*)
 
 
-spower[s_][z_,0] :=
+dist["PowerS",s_][z_,0] :=
     1;
 
 
-spowerlog[s:_.*I|_.*-I][z_,λ_,0] :=
-    spower[s][z,λ];
+dist["PowerLogS",s:_.*I|_.*-I][z_,λ_,0] :=
+    dist["PowerS",s][z,λ];
 
-spowerlog[0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
-    spower[0][z,λ];
+dist["PowerLogS",0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
+    dist["PowerS",0][z,λ];
 
-spowerlog[1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
-    spower[1][z,λ];
+dist["PowerLogS",1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
+    dist["PowerS",1][z,λ];
 
-spowerlog[s:"+"|"-"|0|1][z_,λ_Integer?NonNegative,0] :=
-    spower[s][z,λ];
+dist["PowerLogS",s:"+"|"-"|0|1][z_,λ_Integer?NonNegative,0] :=
+    dist["PowerS",s][z,λ];
 
-spowerlog[s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ] :=
+dist["PowerLogS",s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ] :=
     (
         Message[spowerlog::InvalidExponent,λ];
-        HoldComplete[spowerlog[s][z,λ,0]]
+        HoldComplete[dist["PowerLogS",s][z,λ,0]]
     );
 
 
@@ -155,80 +189,41 @@ spowerlog[s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ] :=
 (*Derivative*)
 
 
-Derivative[n_,0][spower["+"]][z_,λ_] :=
-    FactorialPower[λ,n]*spower["+"][z,λ-n];
+Derivative[n_,0][dist["PowerS","+"]][z_,λ_] :=
+    FactorialPower[λ,n]*dist["PowerS","+"][z,λ-n];
 
-Derivative[n_,0][spower["-"]][z_,λ_] :=
-    (-1)^n*FactorialPower[λ,n]*spower["-"][z,λ-n];
+Derivative[n_,0][dist["PowerS","-"]][z_,λ_] :=
+    (-1)^n*FactorialPower[λ,n]*dist["PowerS","-"][z,λ-n];
 
-Derivative[n_,0][spower[s:0|1]][z_,λ_] :=
-    FactorialPower[λ,n]*spower[Mod[s+n,2]][z,λ-n];
+Derivative[n_,0][dist["PowerS",s:0|1]][z_,λ_] :=
+    FactorialPower[λ,n]*dist["PowerS",Mod[s+n,2]][z,λ-n];
 
-Derivative[n_,0][spower[s:_.*I|_.*-I]][z_,λ_] :=
-    FactorialPower[λ,n]*spower[s][z,λ-n];
-
-
-Derivative[0,n_][spower[s:"+"|"-"]][z_,λ_] :=
-    spowerlog[s][z,λ,n];
-
-Derivative[0,n_,0][spowerlog[s:"+"|"-"]][z_,λ_,m_] :=
-    spowerlog[s][z,λ,n+m];
+Derivative[n_,0][dist["PowerS",s:_.*I|_.*-I]][z_,λ_] :=
+    FactorialPower[λ,n]*dist["PowerS",s][z,λ-n];
 
 
-Derivative[1,0,0][spowerlog["+"]][z_,λ_,0] :=
-    λ*spowerlog["+"][z,λ-1,0]+(-1)^λ/(-λ)!*deltaD[z,-λ];
+Derivative[0,n_][dist["PowerS",s:"+"|"-"]][z_,λ_] :=
+    dist["PowerLogS",s][z,λ,n];
 
-Derivative[1,0,0][spowerlog["-"]][z_,λ_,0] :=
-    -λ*spowerlog["-"][z,λ-1,0]-1/(-λ)!*deltaD[z,-λ];
-
-Derivative[1,0,0][spowerlog[0]][z_,λ_,0] :=
-    λ*spowerlog[1][z,λ-1,0]+((-1)^λ-1)/(-λ)!*deltaD[z,-λ];
-
-Derivative[1,0,0][spowerlog[1]][z_,λ_,0] :=
-    λ*spowerlog[0][z,λ-1,0]+((-1)^λ+1)/(-λ)!*deltaD[z,-λ];
+Derivative[0,n_,0][dist["PowerLogS",s:"+"|"-"]][z_,λ_,m_] :=
+    dist["PowerLogS",s][z,λ,n+m];
 
 
-(* ::Subsection:: *)
-(*deltaFun*)
+Derivative[1,0,0][dist["PowerLogS","+"]][z_,λ_,0] :=
+    λ*dist["PowerLogS","+"][z,λ-1,0]+(-1)^λ/(-λ)!*dist["DeltaD",{-λ}][z];
+
+Derivative[1,0,0][dist["PowerLogS","-"]][z_,λ_,0] :=
+    -λ*dist["PowerLogS","-"][z,λ-1,0]-1/(-λ)!*dist["DeltaD",{-λ}][z];
+
+Derivative[1,0,0][dist["PowerLogS",0]][z_,λ_,0] :=
+    λ*dist["PowerLogS",1][z,λ-1,0]+((-1)^λ-1)/(-λ)!*dist["DeltaD",{-λ}][z];
+
+Derivative[1,0,0][dist["PowerLogS",1]][z_,λ_,0] :=
+    λ*dist["PowerLogS",0][z,λ-1,0]+((-1)^λ+1)/(-λ)!*dist["DeltaD",{-λ}][z];
 
 
-(* ::Subsubsection:: *)
-(*Interface*)
-
-
-deltaD[z:Except[_List]] :=
-    deltaFun["D",{0}][z];
-
-deltaD[z:Except[_List],λ:Except[_List]] :=
-    deltaFun["D",{λ}][z];
-
-deltaD[{z__}] :=
-    deltaFun["D",ConstantArray[0,Length[{z}]]][z];
-
-deltaD[{z__},{λ__}] :=
-    deltaFun["D",{λ}][z];
-
-deltaD[{z__},{λ__},tag_] :=
-    deltaFun["D",{λ},tag][z];
-
-
-(* ::Subsubsection:: *)
-(*Main*)
-
-
-deltaFun[type_][z__] :=
-    deltaFun[type,ConstantArray[0,Length[{z}]]][z];
-
-
-(* ::Subsubsection:: *)
-(*Derivative*)
-
-
-Derivative[n__][deltaFun[type_,λ_List]][z__] :=
-    deltaFun[type,plusSafe[λ,{n}]][z];
-
-Derivative[n__][deltaFun[type_,λ_List],tag_][z__] :=
-    deltaFun[type,plusSafe[λ,{n}],tag][z];
+Derivative[n__][dist["DeltaD",λ_List]][z__] :=
+    dist["DeltaD",plusSafe[λ,{n}]][z];
 
 
 (* ::Subsection:: *)
@@ -244,35 +239,35 @@ spowerReduce[expr_] :=
 spowerReduceProduct[expr_] :=
     expr//ReplaceRepeated[{
         (* Abs x Abs *)
-        spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1==s2:>
-            spower[0][z,λ1+λ2],
-        spower[s1:0|1][z_,λ1_]*spower[s2:0|1][z_,λ2_]/;s1+s2==1:>
-            spower[1][z,λ1+λ2],
+        dist["PowerS",s1:0|1][z_,λ1_]*dist["PowerS",s2:0|1][z_,λ2_]/;s1==s2:>
+            dist["PowerS",0][z,λ1+λ2],
+        dist["PowerS",s1:0|1][z_,λ1_]*dist["PowerS",s2:0|1][z_,λ2_]/;s1+s2==1:>
+            dist["PowerS",1][z,λ1+λ2],
 
         (* Abs x PlusMinus *)
-        spower[0|1][z_,λ1_]*spower["+"][z_,λ2_]:>
-            spower["+"][z,λ1+λ2],
-        spower[s:0|1][z_,λ1_]*spower["-"][z_,λ2_]:>
-            (-1)^s*spower["-"][z,λ1+λ2],
+        dist["PowerS",0|1][z_,λ1_]*dist["PowerS","+"][z_,λ2_]:>
+            dist["PowerS","+"][z,λ1+λ2],
+        dist["PowerS",s:0|1][z_,λ1_]*dist["PowerS","-"][z_,λ2_]:>
+            (-1)^s*dist["PowerS","-"][z,λ1+λ2],
 
         (* PlusMinus x PlusMinus *)
-        spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1==s2:>
-            spower[s1][z,λ1+λ2],
-        spower[s1:"+"|"-"][z_,λ1_]*spower[s2:"+"|"-"][z_,λ2_]/;s1!=s2:>
+        dist["PowerS",s1:"+"|"-"][z_,λ1_]*dist["PowerS",s2:"+"|"-"][z_,λ2_]/;s1==s2:>
+            dist["PowerS",s1][z,λ1+λ2],
+        dist["PowerS",s1:"+"|"-"][z_,λ1_]*dist["PowerS",s2:"+"|"-"][z_,λ2_]/;s1!=s2:>
             0,
 
         (* Complex x Complex *)
-        spower[s:_.*I|_.*-I][z_,λ1_]*spower[s_][z_,λ2_]:>
-            spower[s][z,λ1+λ2]
+        dist["PowerS",s:_.*I|_.*-I][z_,λ1_]*dist["PowerS",s_][z_,λ2_]:>
+            dist["PowerS",s][z,λ1+λ2]
     }];
 
 spowerReduceSpecialValue[expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,n_Integer?NonNegative]:>
+        dist["PowerS",s:_.*I|_.*-I][z_,n_Integer?NonNegative]:>
             Power[z,n],
-        spower[0][z_,n_Integer?NonNegative]/;EvenQ[n]:>
+        dist["PowerS",0][z_,n_Integer?NonNegative]/;EvenQ[n]:>
             Power[z,n],
-        spower[1][z_,n_Integer?NonNegative]/;OddQ[n]:>
+        dist["PowerS",1][z_,n_Integer?NonNegative]/;OddQ[n]:>
             Power[z,n]
     }];
 
@@ -284,35 +279,35 @@ spowerReduceSpecialValue[expr_] :=
 spowerStrip[expr_] :=
     expr//ReplaceAll[{
         (* PlusMinus *)
-        spower["+"][z_,λ_]:>
+        dist["PowerS","+"][z_,λ_]:>
             Power[z,λ],
-        spower["-"][z_,λ_]:>
+        dist["PowerS","-"][z_,λ_]:>
             Power[-z,λ],
 
         (* Abs *)
-        spower[0][z_,λ_]:>
+        dist["PowerS",0][z_,λ_]:>
             Power[Abs[z],λ],
-        spower[1][z_,λ_]:>
+        dist["PowerS",1][z_,λ_]:>
             Power[Abs[z],λ]*Sign[z],
 
         (* Complex *)
-        spower[s:_.*I|_.*-I][z_,λ_]:>
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
             Power[z,λ],
 
         (* Log, PlusMinus *)
-        spowerlog["+"][z_,λ_,n_]:>
+        dist["PowerLogS","+"][z_,λ_,n_]:>
             Power[z,λ]*Log[z]^n,
-        spowerlog["-"][z_,λ_,n_]:>
+        dist["PowerLogS","-"][z_,λ_,n_]:>
             Power[-z,λ]*Log[-z]^n,
 
         (* Log, Abs *)
-        spowerlog[0][z_,λ_,n_]:>
+        dist["PowerLogS",0][z_,λ_,n_]:>
             Power[Abs[z],λ]*Log[z]^n,
-        spowerlog[1][z_,λ_,n_]:>
+        dist["PowerLogS",1][z_,λ_,n_]:>
             Power[Abs[z],λ]*Log[z]^n*Sign[z],
 
         (* Log, Complex *)
-        spowerlog[s:_.*I|_.*-I][z_,λ_,n_]:>
+        dist["PowerLogS",s:_.*I|_.*-I][z_,λ_,n_]:>
             Power[z,λ]*Log[z]^n
     }];
 
@@ -350,23 +345,23 @@ spowerConvertCore[type_,type_][expr_] :=
 
 spowerConvertCore[Abs,Complex][expr_] :=
     expr//ReplaceAll[{
-        spower[0][z_,λ_]:>
-            1/2*Exp[-I/2*π*λ]*Sec[π/2*λ]*spower[I][z,λ]+
-            1/2*Exp[I/2*π*λ]*Sec[π/2*λ]*spower[-I][z,λ],
-        spower[1][z_,λ_]:>
-            I/2*Exp[-I/2*π*λ]*Csc[π/2*λ]*spower[I][z,λ]+
-            -I/2*Exp[I/2*π*λ]*Csc[π/2*λ]*spower[-I][z,λ]
+        dist["PowerS",0][z_,λ_]:>
+            1/2*Exp[-I/2*π*λ]*Sec[π/2*λ]*dist["PowerS",I][z,λ]+
+            1/2*Exp[I/2*π*λ]*Sec[π/2*λ]*dist["PowerS",-I][z,λ],
+        dist["PowerS",1][z_,λ_]:>
+            I/2*Exp[-I/2*π*λ]*Csc[π/2*λ]*dist["PowerS",I][z,λ]+
+            -I/2*Exp[I/2*π*λ]*Csc[π/2*λ]*dist["PowerS",-I][z,λ]
     }];
 
 
 spowerConvertCore[PlusMinus,Complex][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][z_,λ_]:>
-            -I/2*Exp[I*π*λ]*Csc[π*λ]*spower[-I][z,λ]+
-            I/2*Exp[-I*π*λ]*Csc[π*λ]*spower[I][z,λ],
-        spower["-"][z_,λ_]:>
-            I/2*Csc[π*λ]*spower[-I][z,λ]+
-            -I/2*Csc[π*λ]*spower[I][z,λ]
+        dist["PowerS","+"][z_,λ_]:>
+            -I/2*Exp[I*π*λ]*Csc[π*λ]*dist["PowerS",-I][z,λ]+
+            I/2*Exp[-I*π*λ]*Csc[π*λ]*dist["PowerS",I][z,λ],
+        dist["PowerS","-"][z_,λ_]:>
+            I/2*Csc[π*λ]*dist["PowerS",-I][z,λ]+
+            -I/2*Csc[π*λ]*dist["PowerS",I][z,λ]
     }];
 
 
@@ -376,17 +371,17 @@ spowerConvertCore[PlusMinus,Complex][expr_] :=
 
 spowerConvertCore[Abs,PlusMinus][expr_] :=
     expr//ReplaceAll[{
-        spower[0][z_,λ_]:>
-            spower["+"][z,λ]+spower["-"][z,λ],
-        spower[1][z_,λ_]:>
-            spower["+"][z,λ]-spower["-"][z,λ]
+        dist["PowerS",0][z_,λ_]:>
+            dist["PowerS","+"][z,λ]+dist["PowerS","-"][z,λ],
+        dist["PowerS",1][z_,λ_]:>
+            dist["PowerS","+"][z,λ]-dist["PowerS","-"][z,λ]
     }];
 
 
 spowerConvertCore[Complex,PlusMinus][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,λ_]:>
-            spower["+"][z,λ]+Exp[s*π*λ]*spower["-"][z,λ]
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
+            dist["PowerS","+"][z,λ]+Exp[s*π*λ]*dist["PowerS","-"][z,λ]
     }];
 
 
@@ -396,18 +391,18 @@ spowerConvertCore[Complex,PlusMinus][expr_] :=
 
 spowerConvertCore[PlusMinus,Abs][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][z_,λ_]:>
-            1/2*spower[0][z,λ]+1/2*spower[1][z,λ],
-        spower["-"][z_,λ_]:>
-            1/2*spower[0][z,λ]-1/2*spower[1][z,λ]
+        dist["PowerS","+"][z_,λ_]:>
+            1/2*dist["PowerS",0][z,λ]+1/2*dist["PowerS",1][z,λ],
+        dist["PowerS","-"][z_,λ_]:>
+            1/2*dist["PowerS",0][z,λ]-1/2*dist["PowerS",1][z,λ]
     }];
 
 
 spowerConvertCore[Complex,Abs][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,λ_]:>
-            Exp[s/2*π*λ]*Cos[-I/2*s*π*λ]*spower[0][z,λ]+
-            -I*Exp[s/2*π*λ]*Sin[-I/2*s*π*λ]*spower[1][z,λ]
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
+            Exp[s/2*π*λ]*Cos[-I/2*s*π*λ]*dist["PowerS",0][z,λ]+
+            -I*Exp[s/2*π*λ]*Sin[-I/2*s*π*λ]*dist["PowerS",1][z,λ]
     }];
 
 
@@ -420,26 +415,26 @@ spowerConvertCore[Complex,Abs][expr_] :=
 
 spowerConvertCore[Complex,{Complex,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,λ_]:>
-            Exp[s*π*λ]*spower[-s][-z,λ]
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
+            Exp[s*π*λ]*dist["PowerS",-s][-z,λ]
     }];
 
 
 spowerConvertCore[PlusMinus,{PlusMinus,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][z_,λ_]:>
-            spower["-"][-z,λ],
-        spower["-"][z_,λ_]:>
-            spower["+"][-z,λ]
+        dist["PowerS","+"][z_,λ_]:>
+            dist["PowerS","-"][-z,λ],
+        dist["PowerS","-"][z_,λ_]:>
+            dist["PowerS","+"][-z,λ]
     }];
 
 
 spowerConvertCore[Abs,{Abs,Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[0][z_,λ_]:>
-            spower[0][-z,λ],
-        spower[1][z_,λ_]:>
-            -spower[1][-z,λ]
+        dist["PowerS",0][z_,λ_]:>
+            dist["PowerS",0][-z,λ],
+        dist["PowerS",1][z_,λ_]:>
+            -dist["PowerS",1][-z,λ]
     }];
 
 
@@ -453,14 +448,14 @@ spowerConvertCore[type1:Complex|PlusMinus|Abs,{type2:Complex|PlusMinus|Abs,Rever
 
 spowerConvertCore[Complex,{Complex,ε:Except[Reverse]}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,λ_]:>
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
             Power[z+s*ε,λ]
     }];
 
 
 spowerConvertCore[Complex,{Complex,ε:Except[Reverse],Reverse}][expr_] :=
     expr//ReplaceAll[{
-        spower[s:_.*I|_.*-I][z_,λ_]:>
+        dist["PowerS",s:_.*I|_.*-I][z_,λ_]:>
             Power[I*ε+s/I*z,λ]*Exp[1/2*I*π*λ*(-1-I*s)]
     }];
 
@@ -475,9 +470,9 @@ spowerConvertCore[type:PlusMinus|Abs,{Complex,ε:Except[Reverse],reverse___}][ex
 
 spowerConvertCore[PlusMinus,HeavisideTheta][expr_] :=
     expr//ReplaceAll[{
-        spower["+"][z_,λ_]:>
+        dist["PowerS","+"][z_,λ_]:>
             Power[z,λ]*HeavisideTheta[z],
-        spower["-"][z_,λ_]:>
+        dist["PowerS","-"][z_,λ_]:>
             Power[-z,λ]*HeavisideTheta[-z]
     }];
 
@@ -492,9 +487,9 @@ spowerConvertCore[type:Complex|Abs,HeavisideTheta][expr_] :=
 
 spowerConvertCore[Abs,RealAbs][expr_] :=
     expr//ReplaceAll[{
-        spower[0][z_,λ_]:>
+        dist["PowerS",0][z_,λ_]:>
             Power[Abs[z],λ],
-        spower[1][z_,λ_]:>
+        dist["PowerS",1][z_,λ_]:>
             Power[Abs[z],λ]*Sign[z]
     }];
 
@@ -518,15 +513,15 @@ rpowerFrom[pattern_][expr_] :=
 deltaFromDirac[expr_] :=
     expr//ReplaceAll[{
         DiracDelta[z__]:>
-            deltaFun["D"][z],
+            dist["DeltaD",ConstantArray[0,Length[{z}]]][z],
         Derivative[λ__][DiracDelta][z__]:>
-            deltaFun["D",{λ}][z]
+            dist["DeltaD",{λ}][z]
     }];
 
 
 deltaToDirac[expr_] :=
     expr//ReplaceAll[{
-        deltaFun["D",{λ__}][z__]:>
+        dist["DeltaD",{λ__}][z__]:>
             Derivative[λ][DiracDelta][z]
     }];
 
@@ -562,7 +557,7 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
 
 deltaReduceRule[p_] :=
     {
-        Power[x:p,n_.]*(DiracDelta[x:p]|deltaFun["D",{0}][x:p])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*(DiracDelta[x:p]|dist["DeltaD",{0}][x:p])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
             0,
         Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
@@ -573,14 +568,14 @@ deltaReduceRule[p_] :=
                 (* Final *)
                 -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]*rest
             ],
-        Power[x:p,n_.]*deltaFun["D",{m_}][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*dist["DeltaD",{m_}][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
             If[Simplify[n<=m],
                 (* Then *)
-                (-1)^n*FactorialPower[m,n]*deltaFun["D",{m-n}][x]*rest,
+                (-1)^n*FactorialPower[m,n]*dist["DeltaD",{m-n}][x]*rest,
                 (* Else *)
                 0,
                 (* Final *)
-                -m*Power[x,n-1]*deltaFun["D",{m-1}][x]*rest
+                -m*Power[x,n-1]*dist["DeltaD",{m-1}][x]*rest
             ]
     };
 
@@ -590,7 +585,7 @@ deltaExpandRelevant[expr_] :=
             varP =
                 Cases[
                     expr,
-                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|deltaFun["D",_List][vars__]:>
+                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|dist["DeltaD",_List][vars__]:>
                         {vars},
                     Infinity
                 ]//
@@ -615,8 +610,8 @@ deltaApartKernel[expr_] :=
         Derivative[orders__][DiracDelta][args__]:>
             Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
 
-        deltaFun["D",{orders__}][vars__]:>
-            Times@@MapThread[deltaFun["D",{#1}][#2]&,{{orders},{vars}}]
+        dist["DeltaD",{orders__}][vars__]:>
+            Times@@MapThread[dist["DeltaD",{#1}][#2]&,{{orders},{vars}}]
     }];
 
 
@@ -643,16 +638,16 @@ deltaTogetherKernel[expr_] :=
                 Derivative[orders][DiracDelta][vars]*rest
             ]
     }]//ReplaceAll[{
-        Verbatim[Times][factors__]/;!FreeQ[{factors},deltaFun["D",_List]]:>
+        Verbatim[Times][factors__]/;!FreeQ[{factors},dist["DeltaD",_List]]:>
             With[{
-                    deltaDList = Cases[{factors},deltaFun["D",{orders__}][vars__]:>{{orders},{vars}}],
-                    rest = Times@@DeleteCases[{factors},deltaFun["D",_List][__]]
+                    deltaDList = Cases[{factors},dist["DeltaD",{orders__}][vars__]:>{{orders},{vars}}],
+                    rest = Times@@DeleteCases[{factors},dist["DeltaD",_List][__]]
                 },
                 {
                     vars = Sequence@@Flatten[{deltaDList[[All,2]]},2],
                     orderList = Flatten[{deltaDList[[All,1]]},2]
                 },
-                deltaFun["D",orderList][vars]*rest
+                dist["DeltaD",orderList][vars]*rest
             ]
     }];
 
