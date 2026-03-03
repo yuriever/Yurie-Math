@@ -31,7 +31,7 @@ VerificationTest[
 VerificationTest[
     TableForm[Table[spowerlog[s][z, n, 0], {s, {"+", "-", 0, 1}}, {n, -4, -1}]]
     ,
-    TableForm[{{dist["PowerLogS", "+"][z, -4, 0], dist["PowerLogS", "+"][z, -3, 0], dist["PowerLogS", "+"][z, -2, 0], dist["PowerLogS", "+"][z, -1, 0]}, {dist["PowerLogS", "-"][z, -4, 0], dist["PowerLogS", "-"][z, -3, 0], dist["PowerLogS", "-"][z, -2, 0], dist["PowerLogS", "-"][z, -1, 0]}, {dist["PowerS", 0][z, -4], dist["PowerLogS", 0][z, -3, 0], dist["PowerS", 0][z, -2], dist["PowerLogS", 0][z, -1, 0]}, {dist["PowerLogS", 1][z, -4, 0], dist["PowerS", 1][z, -3], dist["PowerLogS", 1][z, -2, 0], dist["PowerS", 1][z, -1]}}]
+    TableForm[{{dist[spowerlog, "+"][z, -4, 0], dist[spowerlog, "+"][z, -3, 0], dist[spowerlog, "+"][z, -2, 0], dist[spowerlog, "+"][z, -1, 0]}, {dist[spowerlog, "-"][z, -4, 0], dist[spowerlog, "-"][z, -3, 0], dist[spowerlog, "-"][z, -2, 0], dist[spowerlog, "-"][z, -1, 0]}, {dist[spower, 0][z, -4], dist[spowerlog, 0][z, -3, 0], dist[spower, 0][z, -2], dist[spowerlog, 0][z, -1, 0]}, {dist[spowerlog, 1][z, -4, 0], dist[spower, 1][z, -3], dist[spowerlog, 1][z, -2, 0], dist[spower, 1][z, -1]}}]
     ,
     TestID->"[3] Distribution-spower.nb"
 ]
@@ -47,7 +47,7 @@ VerificationTest[
 VerificationTest[
     TableForm[D[expr, {z, 1}]]
     ,
-    TableForm[{λ*dist["PowerS", "+"][z, -1 + λ], (-λ)*dist["PowerS", "-"][z, -1 + λ], λ*dist["PowerS", I][z, -1 + λ], λ*dist["PowerS", -I][z, -1 + λ], λ*dist["PowerS", 1][z, -1 + λ], λ*dist["PowerS", 0][z, -1 + λ]}]
+    TableForm[{λ*dist[spower, "+"][z, -1 + λ], (-λ)*dist[spower, "-"][z, -1 + λ], λ*dist[spower, I][z, -1 + λ], λ*dist[spower, -I][z, -1 + λ], λ*dist[spower, 1][z, -1 + λ], λ*dist[spower, 0][z, -1 + λ]}]
     ,
     TestID->"[5] Distribution-spower.nb"
 ]
@@ -55,7 +55,7 @@ VerificationTest[
 VerificationTest[
     TableForm[D[expr, {z, n}]]
     ,
-    TableForm[{FactorialPower[λ, n]*dist["PowerS", "+"][z, -n + λ], (-1)^n*FactorialPower[λ, n]*dist["PowerS", "-"][z, -n + λ], FactorialPower[λ, n]*dist["PowerS", I][z, -n + λ], FactorialPower[λ, n]*dist["PowerS", -I][z, -n + λ], FactorialPower[λ, n]*dist["PowerS", Mod[n, 2]][z, -n + λ], FactorialPower[λ, n]*dist["PowerS", Mod[1 + n, 2]][z, -n + λ]}]
+    TableForm[{FactorialPower[λ, n]*dist[spower, "+"][z, -n + λ], (-1)^n*FactorialPower[λ, n]*dist[spower, "-"][z, -n + λ], FactorialPower[λ, n]*dist[spower, I][z, -n + λ], FactorialPower[λ, n]*dist[spower, -I][z, -n + λ], FactorialPower[λ, n]*dist[spower, Mod[n, 2]][z, -n + λ], FactorialPower[λ, n]*dist[spower, Mod[1 + n, 2]][z, -n + λ]}]
     ,
     TestID->"[6] Distribution-spower.nb"
 ]
@@ -72,7 +72,7 @@ VerificationTest[
     res1 = D[expr, z]; 
     TableForm[res1]
     ,
-    TableForm[{((-1)^n*dist["DeltaD", {-n}][z])/(-n)! + n*dist["PowerLogS", "+"][z, -1 + n, 0], -(dist["DeltaD", {-n}][z]/(-n)!) - n*dist["PowerLogS", "-"][z, -1 + n, 0], ((-1 + (-1)^n)*dist["DeltaD", {-n}][z])/(-n)! + n*dist["PowerLogS", 1][z, -1 + n, 0], ((1 + (-1)^n)*dist["DeltaD", {-n}][z])/(-n)! + n*dist["PowerLogS", 0][z, -1 + n, 0]}]
+    TableForm[{((-1)^n*dist[deltaD, {-n}][z])/(-n)! + n*dist[spowerlog, "+"][z, -1 + n, 0], -(dist[deltaD, {-n}][z]/(-n)!) - n*dist[spowerlog, "-"][z, -1 + n, 0], ((-1 + (-1)^n)*dist[deltaD, {-n}][z])/(-n)! + n*dist[spowerlog, 1][z, -1 + n, 0], ((1 + (-1)^n)*dist[deltaD, {-n}][z])/(-n)! + n*dist[spowerlog, 0][z, -1 + n, 0]}]
     ,
     TestID->"[8] Distribution-spower.nb"
 ]
@@ -81,7 +81,7 @@ VerificationTest[
     res2 = Table[D[spowerlog[s][z, n, 0], z], {s, {"+", "-", 0, 1}}, {n, -4, -1}]; 
     TableForm[res2]
     ,
-    TableForm[{{(1/24)*dist["DeltaD", {4}][z] - 4*dist["PowerLogS", "+"][z, -5, 0], (-(1/6))*dist["DeltaD", {3}][z] - 3*dist["PowerLogS", "+"][z, -4, 0], (1/2)*dist["DeltaD", {2}][z] - 2*dist["PowerLogS", "+"][z, -3, 0], -dist["DeltaD", {1}][z] - dist["PowerLogS", "+"][z, -2, 0]}, {(-(1/24))*dist["DeltaD", {4}][z] + 4*dist["PowerLogS", "-"][z, -5, 0], (-(1/6))*dist["DeltaD", {3}][z] + 3*dist["PowerLogS", "-"][z, -4, 0], (-(1/2))*dist["DeltaD", {2}][z] + 2*dist["PowerLogS", "-"][z, -3, 0], -dist["DeltaD", {1}][z] + dist["PowerLogS", "-"][z, -2, 0]}, {-4*dist["PowerS", 1][z, -5], (-(1/3))*dist["DeltaD", {3}][z] - 3*dist["PowerLogS", 1][z, -4, 0], -2*dist["PowerS", 1][z, -3], -2*dist["DeltaD", {1}][z] - dist["PowerLogS", 1][z, -2, 0]}, {(1/12)*dist["DeltaD", {4}][z] - 4*dist["PowerLogS", 0][z, -5, 0], -3*dist["PowerS", 0][z, -4], dist["DeltaD", {2}][z] - 2*dist["PowerLogS", 0][z, -3, 0], -dist["PowerS", 0][z, -2]}}]
+    TableForm[{{(1/24)*dist[deltaD, {4}][z] - 4*dist[spowerlog, "+"][z, -5, 0], (-(1/6))*dist[deltaD, {3}][z] - 3*dist[spowerlog, "+"][z, -4, 0], (1/2)*dist[deltaD, {2}][z] - 2*dist[spowerlog, "+"][z, -3, 0], -dist[deltaD, {1}][z] - dist[spowerlog, "+"][z, -2, 0]}, {(-(1/24))*dist[deltaD, {4}][z] + 4*dist[spowerlog, "-"][z, -5, 0], (-(1/6))*dist[deltaD, {3}][z] + 3*dist[spowerlog, "-"][z, -4, 0], (-(1/2))*dist[deltaD, {2}][z] + 2*dist[spowerlog, "-"][z, -3, 0], -dist[deltaD, {1}][z] + dist[spowerlog, "-"][z, -2, 0]}, {-4*dist[spower, 1][z, -5], (-(1/3))*dist[deltaD, {3}][z] - 3*dist[spowerlog, 1][z, -4, 0], -2*dist[spower, 1][z, -3], -2*dist[deltaD, {1}][z] - dist[spowerlog, 1][z, -2, 0]}, {(1/12)*dist[deltaD, {4}][z] - 4*dist[spowerlog, 0][z, -5, 0], -3*dist[spower, 0][z, -4], dist[deltaD, {2}][z] - 2*dist[spowerlog, 0][z, -3, 0], -dist[spower, 0][z, -2]}}]
     ,
     TestID->"[9] Distribution-spower.nb"
 ]

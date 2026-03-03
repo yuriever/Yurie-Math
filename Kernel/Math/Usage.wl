@@ -71,7 +71,7 @@ SUMCancel::usage =
 
 
 dist::usage =
-    StringJoin["dist[type, data][var]: internal representation of distributions/generalized functions.", "\n", "Value[type]: \"DeltaD\", \"DeltaC\", \"DeltaK\", \"PowerS\", \"PowerLogS\", \"PowerR\"."];
+    StringJoin["dist[type, data][var]: internal representation of distributions/generalized functions.", "\n", "Value[type]: deltaD, deltaC, deltaK; spower, spowerlog, rpower."];
 
 deltaD::usage =
     StringJoin["deltaD[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag."];

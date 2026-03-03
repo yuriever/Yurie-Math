@@ -72,7 +72,7 @@
 
 * `#!wl dist` - dist[type, data][var]: internal representation of distributions/generalized functions.
 
-    * Value[type]: "DeltaD", "DeltaC", "DeltaK", "PowerS", "PowerLogS", "PowerR".
+    * Value[type]: deltaD, deltaC, deltaK; spower, spowerlog, rpower.
 
 * `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
 

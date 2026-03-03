@@ -23,7 +23,7 @@ VerificationTest[
 VerificationTest[
     deltaD[z]
     ,
-    dist["DeltaD", {0}][z]
+    dist[deltaD, {0}][z]
     ,
     TestID->"[2] Distribution-deltaD-basic.nb"
 ]
@@ -31,7 +31,7 @@ VerificationTest[
 VerificationTest[
     deltaD[{z}]
     ,
-    dist["DeltaD", {0}][z]
+    dist[deltaD, {0}][z]
     ,
     TestID->"[3] Distribution-deltaD-basic.nb"
 ]
@@ -39,7 +39,7 @@ VerificationTest[
 VerificationTest[
     deltaD[{z, zb}]
     ,
-    dist["DeltaD", {0, 0}][z, zb]
+    dist[deltaD, {0, 0}][z, zb]
     ,
     TestID->"[4] Distribution-deltaD-basic.nb"
 ]
@@ -47,7 +47,7 @@ VerificationTest[
 VerificationTest[
     deltaD[{z}, {n}]
     ,
-    dist["DeltaD", {n}][z]
+    dist[deltaD, {n}][z]
     ,
     TestID->"[5] Distribution-deltaD-basic.nb"
 ]
@@ -71,7 +71,7 @@ VerificationTest[
 VerificationTest[
     D[deltaD[z], {z, n}]
     ,
-    dist["DeltaD", {n}][z]
+    dist[deltaD, {n}][z]
     ,
     TestID->"[8] Distribution-deltaD-basic.nb"
 ]
@@ -79,7 +79,7 @@ VerificationTest[
 VerificationTest[
     D[deltaD[z, n], z]
     ,
-    dist["DeltaD", {1 + n}][z]
+    dist[deltaD, {1 + n}][z]
     ,
     TestID->"[9] Distribution-deltaD-basic.nb"
 ]
@@ -87,7 +87,7 @@ VerificationTest[
 VerificationTest[
     D[deltaD[{z, zb}, {n, nb}], z, zb]
     ,
-    dist["DeltaD", {1 + n, 1 + nb}][z, zb]
+    dist[deltaD, {1 + n, 1 + nb}][z, zb]
     ,
     TestID->"[10] Distribution-deltaD-basic.nb"
 ]

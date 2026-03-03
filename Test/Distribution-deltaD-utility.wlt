@@ -31,7 +31,7 @@ VerificationTest[
 VerificationTest[
     TableForm[deltaFromDirac[expr]]
     ,
-    TableForm[{dist["DeltaD", {0}][z], dist["DeltaD", {0, 0}][z, zb], dist["DeltaD", {n}][z], dist["DeltaD", {n, nb}][z, zb]}]
+    TableForm[{dist[deltaD, {0}][z], dist[deltaD, {0, 0}][z, zb], dist[deltaD, {n}][z], dist[deltaD, {n, nb}][z, zb]}]
     ,
     TestID->"[3] Distribution-deltaD-utility.nb"
 ]
@@ -71,7 +71,7 @@ VerificationTest[
 VerificationTest[
     res = TableForm[deltaApart[deltaFromDirac[expr]]]
     ,
-    TableForm[{dist["DeltaD", {0}][z]*dist["DeltaD", {0}][zb], dist["DeltaD", {n}][z]*dist["DeltaD", {nb}][zb], (a + b)*dist["DeltaD", {0}][z]*dist["DeltaD", {0}][zb], (a + b)*dist["DeltaD", {n}][z]*dist["DeltaD", {nb}][zb]}]
+    TableForm[{dist[deltaD, {0}][z]*dist[deltaD, {0}][zb], dist[deltaD, {n}][z]*dist[deltaD, {nb}][zb], (a + b)*dist[deltaD, {0}][z]*dist[deltaD, {0}][zb], (a + b)*dist[deltaD, {n}][z]*dist[deltaD, {nb}][zb]}]
     ,
     TestID->"[8] Distribution-deltaD-utility.nb"
 ]
@@ -79,7 +79,7 @@ VerificationTest[
 VerificationTest[
     TableForm[deltaTogether[res]]
     ,
-    TableForm[TableForm[{dist["DeltaD", {0, 0}][z, zb], dist["DeltaD", {n, nb}][z, zb], (a + b)*dist["DeltaD", {0, 0}][z, zb], (a + b)*dist["DeltaD", {n, nb}][z, zb]}]]
+    TableForm[TableForm[{dist[deltaD, {0, 0}][z, zb], dist[deltaD, {n, nb}][z, zb], (a + b)*dist[deltaD, {0, 0}][z, zb], (a + b)*dist[deltaD, {n, nb}][z, zb]}]]
     ,
     TestID->"[9] Distribution-deltaD-utility.nb"
 ]
