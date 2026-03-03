@@ -86,14 +86,14 @@ deltaFromDirac::usage =
 deltaToDirac::usage =
     "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
 
+deltaApart::usage =
+    "deltaApart[expr]: take apart the Dirac delta distributions of several variables.";
+
+deltaTogether::usage =
+    "deltaTogether[expr]: take together the Dirac delta distributions of several variables.";
+
 deltaReduce::usage =
     "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
-
-(* deltaApart::usage =
-    "deltaApart[expr]: take apart the Dirac delta distributions of several variables."; *)
-
-(* deltaTogether::usage =
-    "deltaTogether[expr]: take together the Dirac delta distributions of several variables."; *)
 
 
 (* ::Section:: *)
@@ -121,7 +121,7 @@ ClearAll[dist,deltaD,deltaC,deltaK,spower,spowerlog,rpower,Derivative];
 
 
 spowerlog::InvalidExponent =
-    "For spowerlog of rank 0, the exponent `1` should be an integer.";
+    "For spowerlog of rank 0, the exponent `1` should be a negative integer.";
 
 
 (* ::Subsubsection:: *)
@@ -175,10 +175,7 @@ dist["PowerLogS",0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
 dist["PowerLogS",1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
     dist["PowerS",1][z,λ];
 
-dist["PowerLogS",s:"+"|"-"|0|1][z_,λ_Integer?NonNegative,0] :=
-    dist["PowerS",s][z,λ];
-
-dist["PowerLogS",s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ] :=
+dist["PowerLogS",s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ]||NonNegative[λ] :=
     (
         Message[spowerlog::InvalidExponent,λ];
         HoldComplete[dist["PowerLogS",s][z,λ,0]]
@@ -527,6 +524,63 @@ deltaToDirac[expr_] :=
 
 
 (* ::Subsection:: *)
+(*deltaApart*)
+
+
+deltaApart[expr_] :=
+    expr//deltaApartKernel;
+
+
+deltaApartKernel[expr_] :=
+    expr//ReplaceAll[{
+        DiracDelta[args__]:>
+            Times@@Map[DiracDelta,{args}],
+        Derivative[orders__][DiracDelta][args__]:>
+            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
+
+        dist["DeltaD",{orders__}][vars__]:>
+            Times@@MapThread[dist["DeltaD",{#1}][#2]&,{{orders},{vars}}]
+    }];
+
+
+(* ::Subsection:: *)
+(*deltaTogether*)
+
+
+deltaTogether[expr_] :=
+    expr//deltaTogetherKernel;
+
+
+deltaTogetherKernel[expr_] :=
+    expr//ReplaceAll[{
+        Verbatim[Times][factors__]/;!FreeQ[{factors},DiracDelta]:>
+            With[{
+                    deltaList = Cases[{factors},DiracDelta[vars__]:>{Table[0,Length[{vars}]],{vars}}],
+                    deltaDList = Cases[{factors},Derivative[orders__][DiracDelta][vars__]:>{{orders},{vars}}],
+                    rest = Times@@DeleteCases[{factors},DiracDelta[__]|Derivative[__][DiracDelta][__]]
+                },
+                {
+                    vars = Sequence@@Flatten[{deltaList[[All,2]],deltaDList[[All,2]]},2],
+                    orders = Sequence@@Flatten[{deltaList[[All,1]],deltaDList[[All,1]]},2]
+                },
+                Derivative[orders][DiracDelta][vars]*rest
+            ]
+    }]//ReplaceAll[{
+        Verbatim[Times][factors__]/;!FreeQ[{factors},dist["DeltaD",_List]]:>
+            With[{
+                    deltaDList = Cases[{factors},dist["DeltaD",{orders__}][vars__]:>{{orders},{vars}}],
+                    rest = Times@@DeleteCases[{factors},dist["DeltaD",_List][__]]
+                },
+                {
+                    vars = Sequence@@Flatten[{deltaDList[[All,2]]},2],
+                    orderList = Flatten[{deltaDList[[All,1]]},2]
+                },
+                dist["DeltaD",orderList][vars]*rest
+            ]
+    }];
+
+
+(* ::Subsection:: *)
 (*deltaReduce*)
 
 
@@ -593,63 +647,6 @@ deltaExpandRelevant[expr_] :=
         },
         Expand[expr,varP]
     ];
-
-
-(* ::Subsection:: *)
-(*deltaApart*)
-
-
-deltaApart[expr_] :=
-    expr//deltaApartKernel;
-
-
-deltaApartKernel[expr_] :=
-    expr//ReplaceAll[{
-        DiracDelta[args__]:>
-            Times@@Map[DiracDelta,{args}],
-        Derivative[orders__][DiracDelta][args__]:>
-            Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
-
-        dist["DeltaD",{orders__}][vars__]:>
-            Times@@MapThread[dist["DeltaD",{#1}][#2]&,{{orders},{vars}}]
-    }];
-
-
-(* ::Subsection:: *)
-(*deltaTogether*)
-
-
-deltaTogether[expr_] :=
-    expr//deltaTogetherKernel;
-
-
-deltaTogetherKernel[expr_] :=
-    expr//ReplaceAll[{
-        Verbatim[Times][factors__]/;!FreeQ[{factors},DiracDelta]:>
-            With[{
-                    deltaList = Cases[{factors},DiracDelta[vars__]:>{Table[0,Length[{vars}]],{vars}}],
-                    deltaDList = Cases[{factors},Derivative[orders__][DiracDelta][vars__]:>{{orders},{vars}}],
-                    rest = Times@@DeleteCases[{factors},DiracDelta[__]|Derivative[__][DiracDelta][__]]
-                },
-                {
-                    vars = Sequence@@Flatten[{deltaList[[All,2]],deltaDList[[All,2]]},2],
-                    orders = Sequence@@Flatten[{deltaList[[All,1]],deltaDList[[All,1]]},2]
-                },
-                Derivative[orders][DiracDelta][vars]*rest
-            ]
-    }]//ReplaceAll[{
-        Verbatim[Times][factors__]/;!FreeQ[{factors},dist["DeltaD",_List]]:>
-            With[{
-                    deltaDList = Cases[{factors},dist["DeltaD",{orders__}][vars__]:>{{orders},{vars}}],
-                    rest = Times@@DeleteCases[{factors},dist["DeltaD",_List][__]]
-                },
-                {
-                    vars = Sequence@@Flatten[{deltaDList[[All,2]]},2],
-                    orderList = Flatten[{deltaDList[[All,1]]},2]
-                },
-                dist["DeltaD",orderList][vars]*rest
-            ]
-    }];
 
 
 (* ::Subsection:: *)
