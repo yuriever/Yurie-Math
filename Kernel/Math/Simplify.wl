@@ -182,7 +182,9 @@ separate::usage =
 
 
 separateLongest::usage =
-    "separateLongest[crit][expr_]: separate the longest term in the sum/product.";
+    "separateLongest[n, crit][expr_]: separate the longest term in the sum/product/list by the criteria crit, up to n terms."<>
+    "\n"<>
+    "Default[crit]: LeafCount.";
 
 
 stripPattern::usage =
@@ -819,10 +821,10 @@ separateLongestKernel[n_,crit_][(head:Plus|Times|List)[terms___]] :=
         longestIndex =
             PositionLargest[lengthList,n]//Flatten//Map[List];
 
-        If[!MatchQ[longestIndex,{___Integer}],
+        (* If[!MatchQ[longestIndex,{___Integer}],
             Message[separateLongest::BadIndex,longestIndex];
             Throw[head[terms]];
-        ];
+        ]; *)
 
         {
             head@@Extract[termList,longestIndex],

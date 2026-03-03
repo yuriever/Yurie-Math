@@ -569,7 +569,7 @@ separate::usage =
     "separate[crit][expr_]: separate the elements based on whether they satisfy the crit.";
 
 separateLongest::usage =
-    "separateLongest[crit][expr_]: separate the longest term in the sum/product.";
+    StringJoin["separateLongest[n, crit][expr_]: separate the longest term in the sum/product/list by the criteria crit, up to n terms.", "\n", "Default[crit]: LeafCount."];
 
 stripPattern::usage =
     StringJoin["stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.", "\n", "Default[head]: Identity."];

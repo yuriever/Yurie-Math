@@ -588,7 +588,9 @@
 
 * `#!wl separate` - separate[crit][expr\_]: separate the elements based on whether they satisfy the crit.
 
-* `#!wl separateLongest` - separateLongest[crit][expr\_]: separate the longest term in the sum/product.
+* `#!wl separateLongest` - separateLongest[n, crit][expr\_]: separate the longest term in the sum/product/list by the criteria crit, up to n terms.
+
+    * Default[crit]: LeafCount.
 
 * `#!wl stripPattern` - stripPattern[expr, head]: strip off pattern-related functions from the expression and wrap it with head.
 
