@@ -111,7 +111,7 @@ VerificationTest[
 VerificationTest[
     deltaReduce[][expr]
     ,
-    {0, 12*deltaFun["D", {2}][x], x*deltaFun["D", {m}][x], x^n*deltaFun["D", {0}][x], x^n*deltaFun["D", {m}][x]}
+    {0, 12*dist["DeltaD", {2}][x], x*dist["DeltaD", {m}][x], x^n*dist["DeltaD", {0}][x], x^n*dist["DeltaD", {m}][x]}
     ,
     TestID->"[13] Distribution-deltaReduce.nb"
 ]
@@ -119,7 +119,7 @@ VerificationTest[
 VerificationTest[
     AS[n >= 1 && m >= 2][deltaReduce[][expr]]
     ,
-    {0, 12*deltaFun["D", {2}][x], (-m)*deltaFun["D", {-1 + m}][x], 0, (-m)*x^(-1 + n)*deltaFun["D", {-1 + m}][x]}
+    {0, 12*dist["DeltaD", {2}][x], (-m)*dist["DeltaD", {-1 + m}][x], 0, (-m)*x^(-1 + n)*dist["DeltaD", {-1 + m}][x]}
     ,
     TestID->"[14] Distribution-deltaReduce.nb"
 ]
@@ -127,7 +127,7 @@ VerificationTest[
 VerificationTest[
     AS[n >= 2 && m >= 2][deltaReduce[][expr]]
     ,
-    {0, 12*deltaFun["D", {2}][x], (-m)*deltaFun["D", {-1 + m}][x], 0, -((1 - m)*m*x^(-2 + n)*deltaFun["D", {-2 + m}][x])}
+    {0, 12*dist["DeltaD", {2}][x], (-m)*dist["DeltaD", {-1 + m}][x], 0, -((1 - m)*m*x^(-2 + n)*dist["DeltaD", {-2 + m}][x])}
     ,
     TestID->"[15] Distribution-deltaReduce.nb"
 ]
@@ -135,7 +135,7 @@ VerificationTest[
 VerificationTest[
     AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]
     ,
-    {0, 12*deltaFun["D", {2}][x], (-m)*deltaFun["D", {-1 + m}][x], 0, (-1)^n*FactorialPower[m, n]*deltaFun["D", {m - n}][x]}
+    {0, 12*dist["DeltaD", {2}][x], (-m)*dist["DeltaD", {-1 + m}][x], 0, (-1)^n*FactorialPower[m, n]*dist["DeltaD", {m - n}][x]}
     ,
     TestID->"[16] Distribution-deltaReduce.nb"
 ]
@@ -167,7 +167,7 @@ VerificationTest[
 VerificationTest[
     deltaReduce[][deltaFromDirac[expr]]
     ,
-    y^2*deltaFun["D", {0}][x] + (1 + y)^2*deltaFun["D", {0}][x]
+    y^2*dist["DeltaD", {0}][x] + (1 + y)^2*dist["DeltaD", {0}][x]
     ,
     TestID->"[20] Distribution-deltaReduce.nb"
 ]
@@ -191,7 +191,7 @@ VerificationTest[
 VerificationTest[
     deltaReduce[][deltaFromDirac[expr]]
     ,
-    x*f[x]*deltaFun["D", {0}][x] + x^2*f[x]*deltaFun["D", {0}][x]
+    x*f[x]*dist["DeltaD", {0}][x] + x^2*f[x]*dist["DeltaD", {0}][x]
     ,
     TestID->"[23] Distribution-deltaReduce.nb"
 ]

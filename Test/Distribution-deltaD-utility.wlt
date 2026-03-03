@@ -29,9 +29,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-    deltaFromDirac[expr]
+    TableForm[deltaFromDirac[expr]]
     ,
-    {deltaFun["D", {0}][z], deltaFun["D", {0, 0}][z, zb], deltaFun["D", {n}][z], deltaFun["D", {n, nb}][z, zb]}
+    TableForm[{dist["DeltaD", {0}][z], dist["DeltaD", {0, 0}][z, zb], dist["DeltaD", {n}][z], dist["DeltaD", {n, nb}][z, zb]}]
     ,
     TestID->"[3] Distribution-deltaD-utility.nb"
 ]
@@ -53,7 +53,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    res = TableForm[Yurie`Math`Distribution`Private`deltaApart[expr]]
+    res = TableForm[deltaApart[expr]]
     ,
     TableForm[{DiracDelta[z]*DiracDelta[zb], Derivative[n][DiracDelta][z]*Derivative[nb][DiracDelta][zb], (a + b)*DiracDelta[z]*DiracDelta[zb], (a + b)*Derivative[n][DiracDelta][z]*Derivative[nb][DiracDelta][zb]}]
     ,
@@ -61,7 +61,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-    TableForm[Yurie`Math`Distribution`Private`deltaTogether[res]]
+    TableForm[deltaTogether[res]]
     ,
     TableForm[TableForm[{DiracDelta[z, zb], Derivative[n, nb][DiracDelta][z, zb], (a + b)*DiracDelta[z, zb], (a + b)*Derivative[n, nb][DiracDelta][z, zb]}]]
     ,
@@ -69,17 +69,17 @@ VerificationTest[
 ]
 
 VerificationTest[
-    res = TableForm[Yurie`Math`Distribution`Private`deltaApart[deltaFromDirac[expr]]]
+    res = TableForm[deltaApart[deltaFromDirac[expr]]]
     ,
-    TableForm[{deltaFun["D", {0}][z]*deltaFun["D", {0}][zb], deltaFun["D", {n}][z]*deltaFun["D", {nb}][zb], (a + b)*deltaFun["D", {0}][z]*deltaFun["D", {0}][zb], (a + b)*deltaFun["D", {n}][z]*deltaFun["D", {nb}][zb]}]
+    TableForm[{dist["DeltaD", {0}][z]*dist["DeltaD", {0}][zb], dist["DeltaD", {n}][z]*dist["DeltaD", {nb}][zb], (a + b)*dist["DeltaD", {0}][z]*dist["DeltaD", {0}][zb], (a + b)*dist["DeltaD", {n}][z]*dist["DeltaD", {nb}][zb]}]
     ,
     TestID->"[8] Distribution-deltaD-utility.nb"
 ]
 
 VerificationTest[
-    TableForm[Yurie`Math`Distribution`Private`deltaTogether[res]]
+    TableForm[deltaTogether[res]]
     ,
-    TableForm[TableForm[{deltaFun["D", {0, 0}][z, zb], deltaFun["D", {n, nb}][z, zb], (a + b)*deltaFun["D", {0, 0}][z, zb], (a + b)*deltaFun["D", {n, nb}][z, zb]}]]
+    TableForm[TableForm[{dist["DeltaD", {0, 0}][z, zb], dist["DeltaD", {n, nb}][z, zb], (a + b)*dist["DeltaD", {0, 0}][z, zb], (a + b)*dist["DeltaD", {n, nb}][z, zb]}]]
     ,
     TestID->"[9] Distribution-deltaD-utility.nb"
 ]

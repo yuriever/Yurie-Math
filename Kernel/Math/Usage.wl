@@ -109,6 +109,12 @@ deltaFromDirac::usage =
 deltaToDirac::usage =
     "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
 
+deltaApart::usage =
+    "deltaApart[expr]: take apart the Dirac delta distributions of several variables.";
+
+deltaTogether::usage =
+    "deltaTogether[expr]: take together the Dirac delta distributions of several variables.";
+
 deltaReduce::usage =
     "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
 

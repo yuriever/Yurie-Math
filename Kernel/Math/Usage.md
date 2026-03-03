@@ -114,6 +114,10 @@
 
 * `#!wl deltaToDirac` - deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.
 
+* `#!wl deltaApart` - deltaApart[expr]: take apart the Dirac delta distributions of several variables.
+
+* `#!wl deltaTogether` - deltaTogether[expr]: take together the Dirac delta distributions of several variables.
+
 * `#!wl deltaReduce` - deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.
 
 ## DLMF.wl
