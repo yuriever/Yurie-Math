@@ -821,10 +821,10 @@ separateLongestKernel[n_,crit_][(head:Plus|Times|List)[terms___]] :=
         longestIndex =
             PositionLargest[lengthList,n]//Flatten//Map[List];
 
-        (* If[!MatchQ[longestIndex,{___Integer}],
+        If[!MatchQ[longestIndex,{{_Integer}...}],
             Message[separateLongest::BadIndex,longestIndex];
             Throw[head[terms]];
-        ]; *)
+        ];
 
         {
             head@@Extract[termList,longestIndex],
