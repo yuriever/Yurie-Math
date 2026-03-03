@@ -141,6 +141,10 @@ deltaD[z:Except[_List]] :=
 deltaD[z:Except[_List],λ:Except[_List]] :=
     dist["DeltaD",{λ}][z];
 
+deltaD[z:Except[_List],λ:Except[_List],tag_] :=
+    dist["DeltaD",{λ},tag][z];
+
+
 deltaD[{z__}] :=
     dist["DeltaD",ConstantArray[0,Length[{z}]]][z];
 
