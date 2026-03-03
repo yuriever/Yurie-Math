@@ -14,14 +14,6 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
-deltaOld::usage =
-    "deltaOld[z, n]: \[Delta]^n(z) - Dirac delta function."<>
-    "\n"<>
-    "deltaOld[{z, ...}, {n, ...}]: \[Delta]^n(z) ... - multi-variable Dirac delta function."<>
-    "\n"<>
-    "deltaOld[z, n, tag]: Dirac delta function with tag.";
-
-
 (* ::Section:: *)
 (*Private*)
 
@@ -35,9 +27,6 @@ Begin["`Private`"];
 
 (* ::Subsection:: *)
 (*Main*)
-
-
-deltaOld;
 
 
 (* ::Subsection:: *)

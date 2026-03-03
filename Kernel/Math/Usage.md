@@ -70,15 +70,19 @@
 
 ## Distribution.wl
 
-* `#!wl deltaOld` - deltaOld[z, n]: δ^n(z) - Dirac delta function.
+* `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
 
-    * deltaOld[{z, ...}, {n, ...}]: δ^n(z) ... - multi-variable Dirac delta function.
+    * deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.
 
-    * deltaOld[z, n, tag]: Dirac delta function with tag.
+    * deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag.
 
 * `#!wl deltaC` - deltaC[z]: complex delta function.
 
 * `#!wl deltaK` - deltaK[z]: Kronecker delta function.
+
+* `#!wl deltaFun` - delta[type, order, tag][var]: internal representation of delta distributions.
+
+    * Value[type]: D (Dirac delta), C (complex delta), K (Kronecker delta).
 
 * `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power.
 
@@ -106,9 +110,9 @@
 
 * `#!wl rpowerFrom` - rpowerFrom[pattern]: convert to rpower distribution with the specified base.
 
-* `#!wl deltaFromDirac` - deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaOld.
+* `#!wl deltaFromDirac` - deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.
 
-* `#!wl deltaToDirac` - deltaToDirac[expr]: convert deltaOld to the built-in Dirac delta distributions.
+* `#!wl deltaToDirac` - deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.
 
 * `#!wl deltaReduce` - deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.
 

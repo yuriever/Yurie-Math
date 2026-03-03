@@ -52,11 +52,99 @@ VerificationTest[
 ]
 
 VerificationTest[
+    times[][x]
+    ,
+    x
+    ,
+    TestID->"[6] OperatorForm.nb"
+]
+
+VerificationTest[
+    divide[][x]
+    ,
+    x
+    ,
+    TestID->"[7] OperatorForm.nb"
+]
+
+VerificationTest[
+    plus[][x]
+    ,
+    x
+    ,
+    TestID->"[8] OperatorForm.nb"
+]
+
+VerificationTest[
+    minus[][x]
+    ,
+    x
+    ,
+    TestID->"[9] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[a, b]]]
+    ,
+    Hold[a + b]
+    ,
+    TestID->"[10] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[{a, b}, {c, d}]]]
+    ,
+    Hold[{a + c, b + d}]
+    ,
+    TestID->"[11] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[{a, {b, c}}, {d, {e, f}}]]]
+    ,
+    Hold[{a + d, {b + e, c + f}}]
+    ,
+    TestID->"[12] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[a, {b, c}]]]
+    ,
+    Hold[plusSafe[a, {b, c}]]
+    ,
+    TestID->"[13] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[{a, b}, {c, d, e}]]]
+    ,
+    Hold[plusSafe[{a, b}, {c, d, e}]]
+    ,
+    TestID->"[14] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[{a, b}, {c, {d, e}}]]]
+    ,
+    Hold[{a + c, plusSafe[b, {d, e}]}]
+    ,
+    TestID->"[15] OperatorForm.nb"
+]
+
+VerificationTest[
+    Hold[Evaluate[plusSafe[{a, {b, c}}, {d, {e, f, g}}]]]
+    ,
+    Hold[{a + d, plusSafe[{b, c}, {e, f, g}]}]
+    ,
+    TestID->"[16] OperatorForm.nb"
+]
+
+VerificationTest[
     solve[{x, y}][{x == 0, y == 0}]
     ,
     {{x -> 0, y -> 0}}
     ,
-    TestID->"[6] OperatorForm.nb"
+    TestID->"[17] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -64,7 +152,7 @@ VerificationTest[
     ,
     {x -> 0, y -> 0}
     ,
-    TestID->"[7] OperatorForm.nb"
+    TestID->"[18] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -74,7 +162,7 @@ VerificationTest[
     ,
     {Yurie`Math`solve::InvalidSolutionChoice}
     ,
-    TestID->"[8] OperatorForm.nb"
+    TestID->"[19] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -82,7 +170,7 @@ VerificationTest[
     ,
     {x -> 0, y -> 0}
     ,
-    TestID->"[9] OperatorForm.nb"
+    TestID->"[20] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -90,7 +178,7 @@ VerificationTest[
     ,
     {{x -> -1}, {x -> 1}}
     ,
-    TestID->"[10] OperatorForm.nb"
+    TestID->"[21] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -98,7 +186,7 @@ VerificationTest[
     ,
     {x -> -1}
     ,
-    TestID->"[11] OperatorForm.nb"
+    TestID->"[22] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -108,7 +196,7 @@ VerificationTest[
     ,
     {Yurie`Math`solve::NoSolution}
     ,
-    TestID->"[12] OperatorForm.nb"
+    TestID->"[23] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -117,7 +205,7 @@ VerificationTest[
     ,
     {1, 2}
     ,
-    TestID->"[13] OperatorForm.nb"
+    TestID->"[24] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -125,7 +213,7 @@ VerificationTest[
     ,
     {n, n}
     ,
-    TestID->"[14] OperatorForm.nb"
+    TestID->"[25] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -133,7 +221,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"[15] OperatorForm.nb"
+    TestID->"[26] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -141,7 +229,7 @@ VerificationTest[
     ,
     {1, n, n}
     ,
-    TestID->"[16] OperatorForm.nb"
+    TestID->"[27] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -149,7 +237,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[17] OperatorForm.nb"
+    TestID->"[28] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -157,7 +245,7 @@ VerificationTest[
     ,
     x
     ,
-    TestID->"[18] OperatorForm.nb"
+    TestID->"[29] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -165,7 +253,7 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"[19] OperatorForm.nb"
+    TestID->"[30] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -173,7 +261,7 @@ VerificationTest[
     ,
     y
     ,
-    TestID->"[20] OperatorForm.nb"
+    TestID->"[31] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -183,7 +271,7 @@ VerificationTest[
     ,
     {Yurie`Math`repcheck::SuspiciousRule}
     ,
-    TestID->"[21] OperatorForm.nb"
+    TestID->"[32] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -193,7 +281,7 @@ VerificationTest[
     ,
     {Yurie`Math`repcheck::UncheckedRule,Yurie`Math`repcheck::SuspiciousRule}
     ,
-    TestID->"[22] OperatorForm.nb"
+    TestID->"[33] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -201,7 +289,7 @@ VerificationTest[
     ,
     Sin[2*n*Pi + x]
     ,
-    TestID->"[23] OperatorForm.nb"
+    TestID->"[34] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -211,7 +299,7 @@ VerificationTest[
     ,
     {Power::infy,Infinity::indet}
     ,
-    TestID->"[24] OperatorForm.nb"
+    TestID->"[35] OperatorForm.nb"
 ]
 
 VerificationTest[
@@ -219,7 +307,7 @@ VerificationTest[
     ,
     z
     ,
-    TestID->"[25] OperatorForm.nb"
+    TestID->"[36] OperatorForm.nb"
 ]
 
 VerificationTest[
