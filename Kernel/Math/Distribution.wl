@@ -508,6 +508,18 @@ spowerConvertCore[type:Complex|PlusMinus,RealAbs][expr_] :=
 
 
 (* ::Subsubsection:: *)
+(*Helper*)
+
+
+rpowerTypeP =
+    Abs|PlusMinus|Complex;
+
+
+gammaS[arg_] :=
+    Gamma@Simplify@arg;
+
+
+(* ::Subsubsection:: *)
 (*Main*)
 
 
@@ -517,7 +529,10 @@ rpowerFrom[][expr_] :=
         rpowerFromKernel[PlusMinus]//
         rpowerFromKernel[Complex];
 
-rpowerFrom[typeList_List][expr_] :=
+rpowerFrom[type:rpowerTypeP][expr_] :=
+    expr//rpowerFromKernel[type];
+
+rpowerFrom[typeList:{rpowerTypeP..}][expr_] :=
     Fold[
         rpowerFromKernel[#2][#1]&,
         expr,
@@ -526,25 +541,24 @@ rpowerFrom[typeList_List][expr_] :=
 
 
 rpowerTo[assume_:True][expr_] :=
-    Block[{$Assumptions = assume},
-        expr//
-            rpowerToKernel[Abs]//
-            rpowerToKernel[PlusMinus]//
-            rpowerToKernel[Complex]
-    ];
+    expr//
+        rpowerToKernel[Abs,assume]//
+        rpowerToKernel[PlusMinus,assume]//
+        rpowerToKernel[Complex,assume];
 
-rpowerTo[typeList_List,assume_:True][expr_] :=
-    Block[{$Assumptions = assume},
-        Fold[
-            rpowerToKernel[#2][#1]&,
-            expr,
-            typeList
-        ]
+rpowerTo[type:rpowerTypeP,assume_:True][expr_] :=
+    expr//rpowerToKernel[type,assume];
+
+rpowerTo[typeList:{rpowerTypeP..},assume_:True][expr_] :=
+    Fold[
+        rpowerToKernel[#2,assume][#1]&,
+        expr,
+        typeList
     ];
 
 
 (* ::Subsubsection:: *)
-(*Helper*)
+(*Kernel*)
 
 
 rpowerFromKernel[Abs][expr_] :=
@@ -555,11 +569,11 @@ rpowerFromKernel[Abs][expr_] :=
             gammaS[(a+2)/2]*rpower[1][base,a]
     }];
 
-rpowerToKernel[Abs][expr_] :=
+rpowerToKernel[Abs,assume_][expr_] :=
     expr//ReplaceAll[{
         rpower[0][base_,a_]:>
-            With[{n = Simplify[-(a+1)/2]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-(a+1)/2,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     (-1)^n*n!/(2*n)!*deltaD[base,2*n],
                     (* Else *)
@@ -567,8 +581,8 @@ rpowerToKernel[Abs][expr_] :=
                 ]
             ],
         rpower[1][base_,a_]:>
-            With[{n = Simplify[-(a+2)/2]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-(a+2)/2,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     (-1)^(n+1)*n!/(2*n+1)!*deltaD[base,2*n+1],
                     (* Else *)
@@ -584,11 +598,11 @@ rpowerFromKernel[PlusMinus][expr_] :=
             gammaS[a+1]*rpower[s][base,a]
     }];
 
-rpowerToKernel[PlusMinus][expr_] :=
+rpowerToKernel[PlusMinus,assume_][expr_] :=
     expr//ReplaceAll[{
         rpower["+"][base_,a_]:>
-            With[{n = Simplify[-a-1]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-a-1,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     deltaD[base,n],
                     (* Else *)
@@ -596,8 +610,8 @@ rpowerToKernel[PlusMinus][expr_] :=
                 ]
             ],
         rpower["-"][base_,a_]:>
-            With[{n = Simplify[-a-1]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-a-1,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     (-1)^n*deltaD[base,n],
                     (* Else *)
@@ -613,11 +627,11 @@ rpowerFromKernel[Complex][expr_] :=
             rpower[s][base,a]
     }];
 
-rpowerToKernel[Complex][expr_] :=
+rpowerToKernel[Complex,assume_][expr_] :=
     expr//ReplaceAll[{
         rpower[I][base_,a_]:>
-            With[{n = Simplify[-a-1]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-a-1,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     base^(-n-1)-I*π*(-1)^n/n!*deltaD[base,n],
                     (* Else *)
@@ -625,8 +639,8 @@ rpowerToKernel[Complex][expr_] :=
                 ]
             ],
         rpower[-I][base_,a_]:>
-            With[{n = Simplify[-a-1]},
-                If[Simplify[n>=0&&Element[n,Integers]]===True,
+            With[{n = Simplify[-a-1,assume]},
+                If[Simplify[n>=0&&Element[n,Integers],assume]===True,
                     (* Then *)
                     base^(-n-1)+I*π*(-1)^n/n!*deltaD[base,n],
                     (* Else *)
@@ -634,10 +648,6 @@ rpowerToKernel[Complex][expr_] :=
                 ]
             ]
     }];
-
-
-gammaS[arg_] :=
-    Gamma@Simplify@arg;
 
 
 (* ::Subsection:: *)
