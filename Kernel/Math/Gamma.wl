@@ -122,6 +122,9 @@ gammaTakeResidue::GammaNotInExpr =
 gammaTakeResidue::InvalidSign =
     "The sign `` should be either 1|Left or -1|Right.";
 
+gammaTakeResidue::UnknownOptionValue =
+    "Unknown option value for ``.";
+
 
 multiGammaReduceByBarnesLemma::NotMatch =
     "The multi-Gamma symbol cannot be reduced by the Barnes lemmas."
@@ -297,11 +300,14 @@ gammaTakeResidue[args__,opts:OptionsPattern[]][expr_List] :=
     Map[gammaTakeResidue[args,opts],expr];
 
 gammaTakeResidue[args__,opts:OptionsPattern[]][expr_Plus] :=
-    If[OptionValue["PlusListable"]===True,
+    If[OptionValue["PlusListable"],
         (* Then *)
         Map[gammaTakeResidueKernel[args,opts],expr],
         (* Else *)
         Message[gammaTakeResidue::PlusListable];
+        expr,
+        (* Final *)
+        Message[gammaTakeResidue::UnknownOptionValue,"PlusListable"];
         expr
     ];
 
@@ -350,11 +356,15 @@ gammaTakeResidueKernel[var_,ind_,gm_,sign_,OptionsPattern[gammaTakeResidue]][exp
         solution =
             Part[Solve[gm==-ind1,{var}],1,1];
         residue =
-            If[OptionValue["SimplePole"]===True,
+            If[OptionValue["SimplePole"],
+                (* Then *)
                 Residue[Gamma[gm],{var,solution[[2]]},Assumptions->ind1>=0&&Element[ind1,Integers]]*
                     ReplaceAll[expr1/Gamma[gm],solution],
                 (* Else *)
-                Residue[expr1,{var,solution[[2]]},Assumptions->ind1>=0&&Element[ind1,Integers]]
+                Residue[expr1,{var,solution[[2]]},Assumptions->ind1>=0&&Element[ind1,Integers]],
+                (* Final *)
+                Message[gammaTakeResidue::UnknownOptionValue,"SimplePole"];
+                expr
             ];
         gammaTakeResidueShowPoleData[OptionValue["ShowPole"]][solution,var,ind1,expr1];
         residueSign[sign]*residue//

@@ -560,6 +560,7 @@ rpowerToKernel[Abs][expr_] :=
         rpower[0][base_,a_]:>
             With[{n = Simplify[-(a+1)/2]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     (-1)^n*n!/(2*n)!*deltaD[base,2*n],
                     (* Else *)
                     1/gammaS[(a+1)/2]*spower[0][base,a]
@@ -568,6 +569,7 @@ rpowerToKernel[Abs][expr_] :=
         rpower[1][base_,a_]:>
             With[{n = Simplify[-(a+2)/2]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     (-1)^(n+1)*n!/(2*n+1)!*deltaD[base,2*n+1],
                     (* Else *)
                     1/gammaS[(a+2)/2]*spower[1][base,a]
@@ -587,6 +589,7 @@ rpowerToKernel[PlusMinus][expr_] :=
         rpower["+"][base_,a_]:>
             With[{n = Simplify[-a-1]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     deltaD[base,n],
                     (* Else *)
                     1/gammaS[a+1]*spower["+"][base,a]
@@ -595,6 +598,7 @@ rpowerToKernel[PlusMinus][expr_] :=
         rpower["-"][base_,a_]:>
             With[{n = Simplify[-a-1]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     (-1)^n*deltaD[base,n],
                     (* Else *)
                     1/gammaS[a+1]*spower["-"][base,a]
@@ -614,6 +618,7 @@ rpowerToKernel[Complex][expr_] :=
         rpower[I][base_,a_]:>
             With[{n = Simplify[-a-1]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     base^(-n-1)-I*π*(-1)^n/n!*deltaD[base,n],
                     (* Else *)
                     spower[I][base,a]
@@ -622,6 +627,7 @@ rpowerToKernel[Complex][expr_] :=
         rpower[-I][base_,a_]:>
             With[{n = Simplify[-a-1]},
                 If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (* Then *)
                     base^(-n-1)+I*π*(-1)^n/n!*deltaD[base,n],
                     (* Else *)
                     spower[-I][base,a]
