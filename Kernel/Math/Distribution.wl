@@ -53,7 +53,9 @@ spowerlog::usage =
 
 
 rpower::usage =
-    "rpower[s][z, λ]: λ-holomorphic signed power.";
+    "rpower[s][z, λ]: λ-holomorphic signed power."<>
+    "\n"<>
+    "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).";
 
 
 (* ::Subsection:: *)
@@ -77,7 +79,10 @@ spowerConvert::usage =
 
 
 rpowerFrom::usage =
-    "rpowerFrom[pattern]: convert to rpower distribution with the specified base.";
+    "rpowerFrom[type]: convert to rpower distributions.";
+
+rpowerTo::usage =
+    "rpowerTo[type, assume]: convert from rpower distributions under the assumption.";
 
 
 deltaFromDirac::usage =
@@ -128,6 +133,10 @@ spower[s_][z_,λ_] :=
 
 spowerlog[s_][z_,λ_,n_] :=
     dist[spowerlog,s][z,λ,n];
+
+
+rpower[s_][z_,λ_] :=
+    dist[rpower,s][z,λ];
 
 
 deltaD[z:Except[_List]] :=
@@ -495,11 +504,134 @@ spowerConvertCore[type:Complex|PlusMinus,RealAbs][expr_] :=
 
 
 (* ::Subsection:: *)
-(*rpowerFrom*)
+(*rpowerFrom|rpowerTo*)
 
 
-rpowerFrom[pattern_][expr_] :=
-    Pass;
+(* ::Subsubsection:: *)
+(*Main*)
+
+
+rpowerFrom[][expr_] :=
+    expr//
+        rpowerFromKernel[Abs]//
+        rpowerFromKernel[PlusMinus]//
+        rpowerFromKernel[Complex];
+
+rpowerFrom[typeList_List][expr_] :=
+    Fold[
+        rpowerFromKernel[#2][#1]&,
+        expr,
+        typeList
+    ];
+
+
+rpowerTo[assume_:True][expr_] :=
+    Block[{$Assumptions = assume},
+        expr//
+            rpowerToKernel[Abs]//
+            rpowerToKernel[PlusMinus]//
+            rpowerToKernel[Complex]
+    ];
+
+rpowerTo[typeList_List,assume_:True][expr_] :=
+    Block[{$Assumptions = assume},
+        Fold[
+            rpowerToKernel[#2][#1]&,
+            expr,
+            typeList
+        ]
+    ];
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+rpowerFromKernel[Abs][expr_] :=
+    expr//ReplaceAll[{
+        spower[0][base_,a_]:>
+            gammaS[(a+1)/2]*rpower[0][base,a],
+        spower[1][base_,a_]:>
+            gammaS[(a+2)/2]*rpower[1][base,a]
+    }];
+
+rpowerToKernel[Abs][expr_] :=
+    expr//ReplaceAll[{
+        rpower[0][base_,a_]:>
+            With[{n = Simplify[-(a+1)/2]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (-1)^n*n!/(2*n)!*deltaD[base,2*n],
+                    (* Else *)
+                    1/gammaS[(a+1)/2]*spower[0][base,a]
+                ]
+            ],
+        rpower[1][base_,a_]:>
+            With[{n = Simplify[-(a+2)/2]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (-1)^(n+1)*n!/(2*n+1)!*deltaD[base,2*n+1],
+                    (* Else *)
+                    1/gammaS[(a+2)/2]*spower[1][base,a]
+                ]
+            ]
+    }];
+
+
+rpowerFromKernel[PlusMinus][expr_] :=
+    expr//ReplaceAll[{
+        spower[s:"+"|"-"][base_,a_]:>
+            gammaS[a+1]*rpower[s][base,a]
+    }];
+
+rpowerToKernel[PlusMinus][expr_] :=
+    expr//ReplaceAll[{
+        rpower["+"][base_,a_]:>
+            With[{n = Simplify[-a-1]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    deltaD[base,n],
+                    (* Else *)
+                    1/gammaS[a+1]*spower["+"][base,a]
+                ]
+            ],
+        rpower["-"][base_,a_]:>
+            With[{n = Simplify[-a-1]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    (-1)^n*deltaD[base,n],
+                    (* Else *)
+                    1/gammaS[a+1]*spower["-"][base,a]
+                ]
+            ]
+    }];
+
+
+rpowerFromKernel[Complex][expr_] :=
+    expr//ReplaceAll[{
+        spower[s:_.*I|_.*-I][base_,a_]:>
+            rpower[s][base,a]
+    }];
+
+rpowerToKernel[Complex][expr_] :=
+    expr//ReplaceAll[{
+        rpower[I][base_,a_]:>
+            With[{n = Simplify[-a-1]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    base^(-n-1)-I*π*(-1)^n/n!*deltaD[base,n],
+                    (* Else *)
+                    spower[I][base,a]
+                ]
+            ],
+        rpower[-I][base_,a_]:>
+            With[{n = Simplify[-a-1]},
+                If[Simplify[n>=0&&Element[n,Integers]]===True,
+                    base^(-n-1)+I*π*(-1)^n/n!*deltaD[base,n],
+                    (* Else *)
+                    spower[-I][base,a]
+                ]
+            ]
+    }];
+
+
+gammaS[arg_] :=
+    Gamma@Simplify@arg;
 
 
 (* ::Subsection:: *)

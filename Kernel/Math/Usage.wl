@@ -89,7 +89,7 @@ spowerlog::usage =
     StringJoin["spowerlog[s][z, λ, n]: z_s^λ log^n z - signed power + log.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).", "\n", "Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ]."];
 
 rpower::usage =
-    "rpower[s][z, λ]: λ-holomorphic signed power.";
+    StringJoin["rpower[s][z, λ]: λ-holomorphic signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
 
 spowerReduce::usage =
     "spowerReduce[expr]: reduce spower distributions.";
@@ -101,7 +101,10 @@ spowerConvert::usage =
     StringJoin["spowerConvert[type1 -> type2]: convert between different types of spower distributions.", "\n", "Value[type]: Complex, PlusMinus, Abs; {Complex, ε}, HeavisideTheta, RealAbs.", "\n", "Hint: the types {Complex, PlusMinus, Abs} are invertible, while the others are not.", "\n", "Hint: the tag Reverse is to reverse the parity."];
 
 rpowerFrom::usage =
-    "rpowerFrom[pattern]: convert to rpower distribution with the specified base.";
+    "rpowerFrom[type]: convert to rpower distributions.";
+
+rpowerTo::usage =
+    "rpowerTo[type, assume]: convert from rpower distributions under the assumption.";
 
 deltaFromDirac::usage =
     "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";

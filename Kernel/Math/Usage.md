@@ -96,6 +96,8 @@
 
 * `#!wl rpower` - rpower[s][z, λ]: λ-holomorphic signed power.
 
+    * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1).
+
 * `#!wl spowerReduce` - spowerReduce[expr]: reduce spower distributions.
 
 * `#!wl spowerStrip` - spowerStrip[expr]: convert spower distributions to the associated function.
@@ -108,7 +110,9 @@
 
     * Hint: the tag Reverse is to reverse the parity.
 
-* `#!wl rpowerFrom` - rpowerFrom[pattern]: convert to rpower distribution with the specified base.
+* `#!wl rpowerFrom` - rpowerFrom[type]: convert to rpower distributions.
+
+* `#!wl rpowerTo` - rpowerTo[type, assume]: convert from rpower distributions under the assumption.
 
 * `#!wl deltaFromDirac` - deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.
 
