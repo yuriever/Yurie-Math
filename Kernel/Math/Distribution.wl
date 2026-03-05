@@ -732,22 +732,32 @@ deltaTogetherKernel[expr_] :=
 
 
 deltaReduce//Options = {
-    "MergeDelta"->True
+    "MergeDelta"->True,
+    "RegularTestFunction"->False
 };
 
 
 deltaReduce[All|PatternSequence[]|Verbatim[Blank[]],opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[_,OptionValue["MergeDelta"]];
+    expr//deltaReduceKernel[_,OptionValue["MergeDelta"],OptionValue["RegularTestFunction"]];
 
 deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[varP,OptionValue["MergeDelta"]];
+    expr//deltaReduceKernel[varP,OptionValue["MergeDelta"],OptionValue["RegularTestFunction"]];
 
 
-deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
+
+
+Needs["Yurie`Base`"];
+
+ClearAll[deltaReduceKernel,deltaReduceRule,isTestRegular,deltaRescale,deltaExpandRelevant,deltaGetVarListInDelta];
+
+
+
+deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :=
     expr//
         deltaApartKernel//
-        deltaExpandRelevant//
-        ReplaceRepeated[deltaReduceRule[varP]]//
+        deltaRescale[varP]//
+        deltaExpandRelevant[varP]//
+        ReplaceRepeated[deltaReduceRule[varP,ifTestRegular]]//
         If[ifMergeDelta,
             (* Then *)
             deltaTogetherKernel,
@@ -756,11 +766,12 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ][expr_] :=
         ];
 
 
-deltaReduceRule[p_] :=
+deltaReduceRule[p_,ifTestRegular_] :=
+    deltaReduceRule[p,ifTestRegular] =
     {
-        Power[x:p,n_.]*(DiracDelta[x:p]|dist[deltaD,{0}][x:p])*rest_./;Simplify[n>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*(DiracDelta[x:p]|dist[deltaD,{0}][x:p])*rest_./;Simplify[n>=1]&&isTestRegular[ifTestRegular][rest,x]:>
             0,
-        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*Derivative[m_][DiracDelta][x:p]*rest_./;Simplify[n>=1&&m>=1]&&isTestRegular[ifTestRegular][rest,x]:>
             If[Simplify[n<=m],
                 (* Then *)
                 (-1)^n*FactorialPower[m,n]*Derivative[m-n][DiracDelta][x]*rest,
@@ -769,7 +780,7 @@ deltaReduceRule[p_] :=
                 (* Final *)
                 -m*Power[x,n-1]*Derivative[m-1][DiracDelta][x]*rest
             ],
-        Power[x:p,n_.]*dist[deltaD,{m_}][x:p]*rest_./;Simplify[n>=1&&m>=1]&&FreeQ[rest,x]:>
+        Power[x:p,n_.]*dist[deltaD,{m_}][x:p]*rest_./;Simplify[n>=1&&m>=1]&&isTestRegular[ifTestRegular][rest,x]:>
             If[Simplify[n<=m],
                 (* Then *)
                 (-1)^n*FactorialPower[m,n]*dist[deltaD,{m-n}][x]*rest,
@@ -781,19 +792,50 @@ deltaReduceRule[p_] :=
     };
 
 
-deltaExpandRelevant[expr_] :=
+isTestRegular[True][expr_,var_] :=
+    True;
+
+isTestRegular[False][expr_,var_] :=
+    FreeQ[expr,var];
+
+
+
+deltaRescale[p_][expr_] :=
+    expr//ReplaceAll[{
+        DiracDelta[a_.*x:p]:>
+            Sign[a]*a^(-1)*DiracDelta[x],
+        Derivative[n_][DiracDelta][a_.*x:p]:>
+            Sign[a]*a^(-n-1)*Derivative[n][DiracDelta][x],
+        dist[deltaD,{n_}][a_.*x:p]:>
+            Sign[a]*a^(-n-1)*dist[deltaD,{n}][x]
+    }];
+
+
+
+deltaExpandRelevant[varP_][expr_] :=
+    With[
+        {
+            varP1 = Alternatives@@Cases[deltaGetVarListInDelta[expr],varP,{1}]
+        },
+        Expand[expr,varP1]
+    ];
+
+
+deltaExpandRelevant[Verbatim[Blank][]][expr_] :=
     With[{
-            varP =
-                Cases[
-                    expr,
-                    Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|dist[deltaD,_List][vars__]:>
-                        {vars},
-                    Infinity
-                ]//
-                Flatten//DeleteDuplicates//Apply[Alternatives]
+            varP = Alternatives@@deltaGetVarListInDelta[expr]
         },
         Expand[expr,varP]
     ];
+
+
+deltaGetVarListInDelta[expr_] :=
+    Cases[
+        expr,
+        Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|dist[deltaD,_List][vars__]:>
+            {vars},
+        All
+    ]//Flatten//DeleteDuplicates;
 
 
 (* ::Subsection:: *)
