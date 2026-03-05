@@ -767,7 +767,6 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :
 
 
 deltaReduceRule[p_,ifTestRegular_] :=
-    deltaReduceRule[p,ifTestRegular] =
     {
         Power[x:p,n_.]*(DiracDelta[x:p]|dist[deltaD,{0}][x:p])*rest_./;Simplify[n>=1]&&isTestRegular[ifTestRegular][rest,x]:>
             0,
@@ -790,6 +789,9 @@ deltaReduceRule[p_,ifTestRegular_] :=
                 -m*Power[x,n-1]*dist[deltaD,{m-1}][x]*rest
             ]
     };
+
+
+(* TODO: add the test for this option. *)
 
 
 isTestRegular[True][expr_,var_] :=
