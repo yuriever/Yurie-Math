@@ -27,7 +27,7 @@ dyeBy::usage =
     "\n"<>
     "dyeBy[color, pattern, level, opts][expr]: specify the color."<>
     "\n"<>
-    "Default[level]: {0, Infinity}, inherited from Position.";
+    "Default[level]: All.";
 
 dyeAt::usage =
     "dyeAt[positions][expr]: color the subexpressions at the specified positions."<>
@@ -65,25 +65,25 @@ dye[expr_] :=
     dyeAtPosition[expr,Position[expr,_,{1},Heads->False]];
 
 
-dyeIn[levelspec_][expr_]/;!ColorQ[levelspec] :=
-    dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False]];
+dyeIn[level_?levelQ][expr_] :=
+    dyeAtPosition[expr,Position[expr,_,level,Heads->False]];
 
-dyeIn[color_,levelspec_][expr_]/;ColorQ[color]&&!ColorQ[levelspec] :=
-    dyeAtPosition[expr,Position[expr,_,levelspec,Heads->False],color];
+dyeIn[color_?ColorQ,level_?levelQ][expr_] :=
+    dyeAtPosition[expr,Position[expr,_,level,Heads->False],color];
 
 
 dyeBy[pattern_,args___,opts:OptionsPattern[]][expr_]/;!ColorQ[pattern] :=
     dyeAtPosition[expr,Position[expr,pattern,args,FilterRules[{opts,Options@dyeBy},Options@Position]]];
 
-dyeBy[color_,pattern_,args___,opts:OptionsPattern[]][expr_]/;ColorQ[color]&&!ColorQ[pattern] :=
+dyeBy[color_?ColorQ,pattern_,args___,opts:OptionsPattern[]][expr_]/;!ColorQ[pattern] :=
     dyeAtPosition[expr,Position[expr,pattern,args,FilterRules[{opts,Options@dyeBy},Options@Position]],color];
 
 
-dyeAt[positionList_][expr_]/;!ColorQ[positionList] :=
-    dyeAtPosition[expr,positionList];
+dyeAt[posList_List][expr_] :=
+    dyeAtPosition[expr,posList];
 
-dyeAt[color_,positionList_][expr_]/;ColorQ[color]&&!ColorQ[positionList] :=
-    dyeAtPosition[expr,positionList,color];
+dyeAt[color_?ColorQ,posList_List][expr_] :=
+    dyeAtPosition[expr,posList,color];
 
 
 dyeOff[expr_] :=
@@ -94,38 +94,38 @@ dyeOff[expr_] :=
 (*Helper*)
 
 
-dyeAtPosition[expr_,positionList_] :=
-    dyeAtPositionByColorFunction[expr,positionList,rainbow];
+dyeAtPosition[expr_,posList_] :=
+    dyeAtPositionByColorFunction[expr,posList,rainbow];
 
-dyeAtPosition[expr_,positionList_,color_] :=
-    dyeAtPositionByColorFunction[expr,positionList,singleColor[color]];
+dyeAtPosition[expr_,posList_,color_] :=
+    dyeAtPositionByColorFunction[expr,posList,singleColor[color]];
 
 
-dyeAtPositionByColorFunction[expr_,positionList_,colorFunction_] :=
-    With[{subexprList = Extract[expr,positionList],colorList = colorFunction[positionList]},
+dyeAtPositionByColorFunction[expr_,posList_,colorFunction_] :=
+    With[{subexprList = Extract[expr,posList],colorList = colorFunction[posList]},
         ReplacePart[
             expr,
-            MapThread[#1->dyed[#2,#3]&,{positionList,subexprList,colorList}]
+            MapThread[#1->dyed[#2,#3]&,{posList,subexprList,colorList}]
         ]
     ];
 
 
-singleColor[color_][positionList_] :=
+singleColor[color_][posList_] :=
     Module[{hue,saturationList,brightness},
         {hue,brightness} =
             Extract[ColorConvert[color,"HSB"],{{1},{3}}];
         saturationList =
-            Map[Length,positionList]//(#-Min[#])&//(#*1/20+1/5)&;
+            Map[Length,posList]//(#-Min[#])&//(#*1/20+1/5)&;
         Map[Hue[hue,#,brightness]&,saturationList]
     ];
 
 
-rainbow[positionList_] :=
+rainbow[posList_] :=
     Module[{HSBList,opacityList},
         HSBList =
-            Range[0,Length[positionList]-1]/(Length[positionList]+1/10);
+            Range[0,Length[posList]-1]/(Length[posList]+1/10);
         opacityList =
-            Map[Length,positionList]/5+1/10;
+            Map[Length,posList]/5+1/10;
         MapThread[Hue[#1,0.5,1,#2]&,{HSBList,opacityList}]
     ];
 

@@ -27,7 +27,7 @@ freeze::usage =
     "\n"<>
     "Default[operation]: Simplify."<>
     "\n"<>
-    "Default[level]: Infinity.";
+    "Default[level]: All.";
 
 
 freezeNegative::usage =
@@ -245,7 +245,7 @@ freeze//Options = {
 freeze[
     patternOrItsList_,
     operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
-    level:_?levelQ:Infinity,
+    level:_?levelQ:All,
     opts:OptionsPattern[]
 ][expr_] :=
     Catch[
@@ -258,7 +258,7 @@ freeze[
 freezeNegative[
     patternOrItsList_,
     operation:_Symbol|_Symbol[___]|_Function|_Composition|_RightComposition:Simplify,
-    level:_?levelQ:Infinity
+    level:_?levelQ:All
 ][expr_] :=
     Catch[
         freezeKernel[patternOrItsList,operation,{-#&,-#&},level,expr],
