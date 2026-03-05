@@ -42,7 +42,16 @@ Get["Yurie`Math`Dye`"];
 Get["Yurie`Math`Random`"];
 
 
+Get["Yurie`Math`Compatibility`"];
+
 Get["Yurie`Math`Deprecation`"];
+
+
+(* ::Subsection:: *)
+(*Option*)
+
+
+SetOptions[{FourierTransform,InverseFourierTransform},FourierParameters->{1,-1}];
 
 
 (* ::Section:: *)

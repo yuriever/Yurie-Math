@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`Math`Unstable`"];
+BeginPackage["Yurie`Math`Compatibility`"];
 
 
 Needs["Yurie`Math`"];
