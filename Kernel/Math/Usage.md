@@ -116,15 +116,15 @@
 
 * `#!wl rpowerTo` - rpowerTo[type, assume]: convert from rpower distributions under the assumption.
 
-* `#!wl deltaFromDirac` - deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.
+* `#!wl distFromSys` - distFromSys[expr]: convert the built-in Dirac delta distributions to deltaD.
 
-* `#!wl deltaToDirac` - deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.
+* `#!wl distToSys` - distToSys[expr]: convert deltaD to the built-in Dirac delta distributions.
 
-* `#!wl deltaApart` - deltaApart[expr]: take apart the Dirac delta distributions of several variables.
+* `#!wl distApart` - distApart[expr]: take apart the Dirac delta distributions of several variables.
 
-* `#!wl deltaTogether` - deltaTogether[expr]: take together the Dirac delta distributions of several variables.
+* `#!wl distTogether` - distTogether[expr]: take together the Dirac delta distributions of several variables.
 
-* `#!wl deltaReduce` - deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.
+* `#!wl distReduce` - distReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.
 
 ## DLMF.wl
 

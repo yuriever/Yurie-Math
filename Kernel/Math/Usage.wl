@@ -109,20 +109,20 @@ rpowerFrom::usage =
 rpowerTo::usage =
     "rpowerTo[type, assume]: convert from rpower distributions under the assumption.";
 
-deltaFromDirac::usage =
-    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";
+distFromSys::usage =
+    "distFromSys[expr]: convert the built-in Dirac delta distributions to deltaD.";
 
-deltaToDirac::usage =
-    "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
+distToSys::usage =
+    "distToSys[expr]: convert deltaD to the built-in Dirac delta distributions.";
 
-deltaApart::usage =
-    "deltaApart[expr]: take apart the Dirac delta distributions of several variables.";
+distApart::usage =
+    "distApart[expr]: take apart the Dirac delta distributions of several variables.";
 
-deltaTogether::usage =
-    "deltaTogether[expr]: take together the Dirac delta distributions of several variables.";
+distTogether::usage =
+    "distTogether[expr]: take together the Dirac delta distributions of several variables.";
 
-deltaReduce::usage =
-    "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
+distReduce::usage =
+    "distReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
 
 
 (* ::Subsubsection:: *)

@@ -88,20 +88,20 @@ rpowerTo::usage =
     "rpowerTo[type, assume]: convert from rpower distributions under the assumption.";
 
 
-deltaFromDirac::usage =
-    "deltaFromDirac[expr]: convert the built-in Dirac delta distributions to deltaD.";
+distFromSys::usage =
+    "distFromSys[expr]: convert the built-in Dirac delta distributions to deltaD.";
 
-deltaToDirac::usage =
-    "deltaToDirac[expr]: convert deltaD to the built-in Dirac delta distributions.";
+distToSys::usage =
+    "distToSys[expr]: convert deltaD to the built-in Dirac delta distributions.";
 
-deltaApart::usage =
-    "deltaApart[expr]: take apart the Dirac delta distributions of several variables.";
+distApart::usage =
+    "distApart[expr]: take apart the Dirac delta distributions of several variables.";
 
-deltaTogether::usage =
-    "deltaTogether[expr]: take together the Dirac delta distributions of several variables.";
+distTogether::usage =
+    "distTogether[expr]: take together the Dirac delta distributions of several variables.";
 
-deltaReduce::usage =
-    "deltaReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
+distReduce::usage =
+    "distReduce[pattern][expr]: reduce the Dirac delta distributions in the expression.";
 
 
 (* ::Section:: *)
@@ -170,7 +170,10 @@ deltaK[z_] :=
     dist[deltaK][z];
 
 
-step[z_] :=
+step[z:Except[_List]] :=
+    dist[step][z];
+
+step[{z__}] :=
     dist[step][z];
 
 
@@ -663,56 +666,66 @@ rpowerToKernel[Complex,assume_][expr_] :=
 
 
 (* ::Subsection:: *)
-(*deltaFromDirac|deltaToDirac*)
+(*distFromSys|distToSys*)
 
 
-deltaFromDirac[expr_] :=
+distFromSys[expr_] :=
     expr//ReplaceAll[{
         DiracDelta[z__]:>
             dist[deltaD,ConstantArray[0,Length[{z}]]][z],
         Derivative[λ__][DiracDelta][z__]:>
             dist[deltaD,{λ}][z],
-        HeavisideTheta[z_]:>
+        HeavisideTheta[z__]:>
             dist[step][z]
     }];
 
 
-deltaToDirac[expr_] :=
+distToSys[expr_] :=
     expr//ReplaceAll[{
         dist[deltaD,{λ__}][z__]:>
-            Derivative[λ][DiracDelta][z]
+            Derivative[λ][DiracDelta][z],
+        dist[step][z__]:>
+            HeavisideTheta[z]
     }];
 
 
 (* ::Subsection:: *)
-(*deltaApart*)
+(*distApart*)
 
 
-deltaApart[expr_] :=
-    expr//deltaApartKernel;
+distApart[expr_] :=
+    expr//distApartKernel;
 
 
-deltaApartKernel[expr_] :=
+distApartKernel[expr_] :=
     expr//ReplaceAll[{
         DiracDelta[args__]:>
             Times@@Map[DiracDelta,{args}],
         Derivative[orders__][DiracDelta][args__]:>
             Times@@MapThread[Derivative[#1][DiracDelta][#2]&,{{orders},{args}}],
+        HeavisideTheta[args__]:>
+            Times@@Map[HeavisideTheta,{args}],
 
         dist[deltaD,{orders__}][vars__]:>
-            Times@@MapThread[dist[deltaD,{#1}][#2]&,{{orders},{vars}}]
+            Times@@MapThread[dist[deltaD,{#1}][#2]&,{{orders},{vars}}],
+        dist[step][args__]:>
+            Times@@Map[dist[step],{args}]
     }];
 
 
 (* ::Subsection:: *)
-(*deltaTogether*)
+(*distTogether*)
 
 
-deltaTogether[expr_] :=
-    expr//deltaTogetherKernel;
+distTogether[expr_] :=
+    expr//
+        distTogetherKernel[DiracDelta]//
+        distTogetherKernel[deltaD]//
+        distTogetherKernel[HeavisideTheta]//
+        distTogetherKernel[dist[step]];
 
 
-deltaTogetherKernel[expr_] :=
+distTogetherKernel[DiracDelta][expr_] :=
     expr//ReplaceAll[{
         Verbatim[Times][factors__]/;!FreeQ[{factors},DiracDelta]:>
             With[{
@@ -726,7 +739,10 @@ deltaTogetherKernel[expr_] :=
                 },
                 Derivative[orders][DiracDelta][vars]*rest
             ]
-    }]//ReplaceAll[{
+    }];
+
+distTogetherKernel[deltaD][expr_] :=
+    expr//ReplaceAll[{
         Verbatim[Times][factors__]/;!FreeQ[{factors},dist[deltaD,_List]]:>
             With[{
                     deltaDList = Cases[{factors},dist[deltaD,{orders__}][vars__]:>{{orders},{vars}}],
@@ -740,31 +756,96 @@ deltaTogetherKernel[expr_] :=
             ]
     }];
 
+distTogetherKernel[funP_][expr_] :=
+    expr//ReplaceAll[{
+        Verbatim[Times][factors__]/;!FreeQ[{factors},funP]:>
+            With[{
+                    stepList = Cases[{factors},funP[vars__]:>{vars}],
+                    rest = Times@@DeleteCases[{factors},funP[__]]
+                },
+                {
+                    vars = Sequence@@Flatten[stepList,2]
+                },
+                funP[vars]*rest
+            ]
+    }];
+
 
 (* ::Subsection:: *)
-(*deltaReduce*)
+(*distReduce*)
 
 
-deltaReduce//Options = {
-    "MergeDelta"->True,
+distReduce//Options = {
+    "DistTogether"->True,
     "RegularTestFunction"->False
 };
 
 
-deltaReduce[All|PatternSequence[]|Verbatim[Blank[]],opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[_,OptionValue["MergeDelta"],OptionValue["RegularTestFunction"]];
+distReduce[All|PatternSequence[]|Verbatim[Blank[]],opts:OptionsPattern[]][expr_] :=
+    expr//distReduceKernel[_,OptionValue["DistTogether"],OptionValue["RegularTestFunction"]];
 
-deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
-    expr//deltaReduceKernel[varP,OptionValue["MergeDelta"],OptionValue["RegularTestFunction"]];
+distReduce[varP_,opts:OptionsPattern[]][expr_] :=
+    expr//distReduceKernel[varP,OptionValue["DistTogether"],OptionValue["RegularTestFunction"]];
 
 
-deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :=
+distReduceKernel[varP_,ifMergeDist_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :=
     expr//
-        deltaApartKernel//
+        distApart//
+        deltaReduceKernel[varP,ifTestRegular]//
+        distIfTogether[ifMergeDist];
+
+
+distIfTogether[True][expr_] :=
+    distTogether[expr];
+
+distIfTogether[False][expr_] :=
+    expr;
+
+
+(* ::Subsubsection:: *)
+(*deltaReduce*)
+
+
+deltaReduceKernel[varP_,ifTestRegular_][expr_] :=
+    expr//
         deltaRescale[varP]//
         deltaExpandRelevant[varP]//
-        ReplaceRepeated[deltaReduceRule[varP,ifTestRegular]]//
-        deltaIfTogether[ifMergeDelta];
+        ReplaceRepeated[deltaReduceRule[varP,ifTestRegular]];
+
+
+deltaRescale[p_][expr_] :=
+    expr//ReplaceAll[{
+        DiracDelta[a_.*x:p]:>
+            Sign[a]*a^(-1)*DiracDelta[x],
+        Derivative[n_][DiracDelta][a_.*x:p]:>
+            Sign[a]*a^(-n-1)*Derivative[n][DiracDelta][x],
+        dist[deltaD,{n_}][a_.*x:p]:>
+            Sign[a]*a^(-n-1)*dist[deltaD,{n}][x]
+    }];
+
+
+deltaExpandRelevant[varP_][expr_] :=
+    With[
+        {
+            varP1 = Alternatives@@Cases[deltaGetVarListInDelta[expr],varP,{1}]
+        },
+        Expand[expr,varP1]
+    ];
+
+deltaExpandRelevant[Verbatim[Blank][]][expr_] :=
+    With[{
+            varP = Alternatives@@deltaGetVarListInDelta[expr]
+        },
+        Expand[expr,varP]
+    ];
+
+deltaGetVarListInDelta[expr_] :=
+    Cases[
+        expr,
+        Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|dist[deltaD,_List][vars__]:>
+            {vars},
+        All
+    ]//Flatten//DeleteDuplicates;
 
 
 deltaReduceRule[p_,ifTestRegular_] :=
@@ -798,49 +879,6 @@ isTestRegular[True][expr_,var_] :=
 
 isTestRegular[False][expr_,var_] :=
     FreeQ[expr,var];
-
-
-deltaRescale[p_][expr_] :=
-    expr//ReplaceAll[{
-        DiracDelta[a_.*x:p]:>
-            Sign[a]*a^(-1)*DiracDelta[x],
-        Derivative[n_][DiracDelta][a_.*x:p]:>
-            Sign[a]*a^(-n-1)*Derivative[n][DiracDelta][x],
-        dist[deltaD,{n_}][a_.*x:p]:>
-            Sign[a]*a^(-n-1)*dist[deltaD,{n}][x]
-    }];
-
-
-deltaExpandRelevant[varP_][expr_] :=
-    With[
-        {
-            varP1 = Alternatives@@Cases[deltaGetVarListInDelta[expr],varP,{1}]
-        },
-        Expand[expr,varP1]
-    ];
-
-deltaExpandRelevant[Verbatim[Blank][]][expr_] :=
-    With[{
-            varP = Alternatives@@deltaGetVarListInDelta[expr]
-        },
-        Expand[expr,varP]
-    ];
-
-
-deltaGetVarListInDelta[expr_] :=
-    Cases[
-        expr,
-        Derivative[__][DiracDelta][vars__]|DiracDelta[vars__]|dist[deltaD,_List][vars__]:>
-            {vars},
-        All
-    ]//Flatten//DeleteDuplicates;
-
-
-deltaIfTogether[True][expr_] :=
-    deltaTogetherKernel[expr];
-
-deltaIfTogether[False][expr_] :=
-    expr;
 
 
 (* ::Subsection:: *)

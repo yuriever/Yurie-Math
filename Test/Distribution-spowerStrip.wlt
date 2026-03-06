@@ -44,6 +44,30 @@ VerificationTest[
 ]
 
 VerificationTest[
+    spowerStrip[{spowerlog[I][z, n, m], spowerlog[-I][z, n, m]}]
+    ,
+    {z^n*Log[z]^m, z^n*Log[z]^m}
+    ,
+    TestID->"[5] Distribution-spowerStrip.nb"
+]
+
+VerificationTest[
+    spowerStrip[{spowerlog["+"][z, n, m], spowerlog["-"][z, n, m]}]
+    ,
+    {z^n*Log[z]^m, (-z)^n*Log[-z]^m}
+    ,
+    TestID->"[6] Distribution-spowerStrip.nb"
+]
+
+VerificationTest[
+    spowerStrip[{spowerlog[0][z, n, m], spowerlog[1][z, n, m]}]
+    ,
+    {Abs[z]^n*Log[z]^m, Abs[z]^n*Log[z]^m*Sign[z]}
+    ,
+    TestID->"[7] Distribution-spowerStrip.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,

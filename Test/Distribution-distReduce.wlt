@@ -1,6 +1,6 @@
 
 
-(* Distribution-deltaReduce.nb *)
+(* Distribution-distReduce.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] Distribution-deltaReduce.nb"
+    TestID->"[0] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[1] Distribution-deltaReduce.nb"
+    TestID->"[1] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -24,39 +24,39 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[2] Distribution-deltaReduce.nb"
+    TestID->"[2] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[deltaReduce[][expr]]
+    TableForm[distReduce[][expr]]
     ,
     TableForm[{0, 12*Derivative[2][DiracDelta][x], x*Derivative[m][DiracDelta][x], x^n*DiracDelta[x], x^n*Derivative[m][DiracDelta][x]}]
     ,
-    TestID->"[3] Distribution-deltaReduce.nb"
+    TestID->"[3] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-m)*x^(-1 + n)*Derivative[-1 + m][DiracDelta][x]}]
     ,
-    TestID->"[4] Distribution-deltaReduce.nb"
+    TestID->"[4] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 2 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 2 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, -((1 - m)*m*x^(-2 + n)*Derivative[-2 + m][DiracDelta][x])}]
     ,
-    TestID->"[5] Distribution-deltaReduce.nb"
+    TestID->"[5] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 1 && n <= m][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2][DiracDelta][x], (-m)*Derivative[-1 + m][DiracDelta][x], 0, (-1)^n*FactorialPower[m, n]*Derivative[m - n][DiracDelta][x]}]
     ,
-    TestID->"[6] Distribution-deltaReduce.nb"
+    TestID->"[6] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -64,39 +64,56 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[7] Distribution-deltaReduce.nb"
+    TestID->"[7] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[deltaReduce[][expr]]
+    TableForm[distReduce[][expr]]
     ,
     TableForm[{0, 12*Derivative[2, 2][DiracDelta][x, y], x*Derivative[k, m][DiracDelta][y, x], x^n*DiracDelta[x, y], x^n*Derivative[k, m][DiracDelta][y, x]}]
     ,
-    TestID->"[8] Distribution-deltaReduce.nb"
+    TestID->"[8] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, (-m)*x^(-1 + n)*Derivative[k, -1 + m][DiracDelta][y, x]}]
     ,
-    TestID->"[9] Distribution-deltaReduce.nb"
+    TestID->"[9] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 2 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 2 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, -((1 - m)*m*x^(-2 + n)*Derivative[k, -2 + m][DiracDelta][y, x])}]
     ,
-    TestID->"[10] Distribution-deltaReduce.nb"
+    TestID->"[10] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 1 && n <= m][distReduce[][expr]]]
     ,
     TableForm[{0, 12*Derivative[2, 2][DiracDelta][x, y], (-m)*Derivative[k, -1 + m][DiracDelta][y, x], 0, (-1)^n*FactorialPower[m, n]*Derivative[k, m - n][DiracDelta][y, x]}]
     ,
-    TestID->"[11] Distribution-deltaReduce.nb"
+    TestID->"[11] Distribution-distReduce.nb"
+]
+
+VerificationTest[
+    res1 = distReduce[][expr]; 
+    res2 = distReduce["DistTogether" -> False][expr]
+    ,
+    {0, 12*Derivative[2][DiracDelta][x]*Derivative[2][DiracDelta][y], x*Derivative[k][DiracDelta][y]*Derivative[m][DiracDelta][x], x^n*DiracDelta[x]*DiracDelta[y], x^n*Derivative[k][DiracDelta][y]*Derivative[m][DiracDelta][x]}
+    ,
+    TestID->"[12] Distribution-distReduce.nb"
+]
+
+VerificationTest[
+    distApart[res1 - res2]
+    ,
+    {0, 0, 0, 0, 0}
+    ,
+    TestID->"[13] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -104,39 +121,39 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[12] Distribution-deltaReduce.nb"
+    TestID->"[14] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[deltaReduce[][expr]]
+    TableForm[distReduce[][expr]]
     ,
     TableForm[{0, 12*dist[deltaD, {2}][x], x*dist[deltaD, {m}][x], x^n*dist[deltaD, {0}][x], x^n*dist[deltaD, {m}][x]}]
     ,
-    TestID->"[13] Distribution-deltaReduce.nb"
+    TestID->"[15] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*dist[deltaD, {2}][x], (-m)*dist[deltaD, {-1 + m}][x], 0, (-m)*x^(-1 + n)*dist[deltaD, {-1 + m}][x]}]
     ,
-    TestID->"[14] Distribution-deltaReduce.nb"
+    TestID->"[16] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 2 && m >= 2][deltaReduce[][expr]]]
+    TableForm[AS[n >= 2 && m >= 2][distReduce[][expr]]]
     ,
     TableForm[{0, 12*dist[deltaD, {2}][x], (-m)*dist[deltaD, {-1 + m}][x], 0, -((1 - m)*m*x^(-2 + n)*dist[deltaD, {-2 + m}][x])}]
     ,
-    TestID->"[15] Distribution-deltaReduce.nb"
+    TestID->"[17] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[AS[n >= 1 && m >= 1 && n <= m][deltaReduce[][expr]]]
+    TableForm[AS[n >= 1 && m >= 1 && n <= m][distReduce[][expr]]]
     ,
     TableForm[{0, 12*dist[deltaD, {2}][x], (-m)*dist[deltaD, {-1 + m}][x], 0, (-1)^n*FactorialPower[m, n]*dist[deltaD, {m - n}][x]}]
     ,
-    TestID->"[16] Distribution-deltaReduce.nb"
+    TestID->"[18] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -144,15 +161,15 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[17] Distribution-deltaReduce.nb"
+    TestID->"[19] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    TableForm[deltaReduce[][expr]]
+    TableForm[distReduce[][expr]]
     ,
     TableForm[{dist[deltaD, {0}][x], -dist[deltaD, {1}][x], (-(-1)^(-1 - n))*dist[deltaD, {n}][x], (1/2)*dist[deltaD, {0}][x], (-(1/4))*dist[deltaD, {1}][x], (-(-2)^(-1 - n))*dist[deltaD, {n}][x]}]
     ,
-    TestID->"[18] Distribution-deltaReduce.nb"
+    TestID->"[20] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -160,23 +177,23 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[19] Distribution-deltaReduce.nb"
+    TestID->"[21] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    res1 = deltaReduce[][Expand[expr]]
+    res1 = distReduce[][Expand[expr]]
     ,
     z^2*dist[deltaD, {0}][x] + x^2*dist[deltaD, {0}][z] + dist[deltaD, {z}][x] + 2*y*dist[deltaD, {z}][x] + y^2*dist[deltaD, {z}][x]
     ,
-    TestID->"[20] Distribution-deltaReduce.nb"
+    TestID->"[22] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    res2 = deltaReduce[][expr]
+    res2 = distReduce[][expr]
     ,
     z^2*dist[deltaD, {0}][x] + x^2*dist[deltaD, {0}][z] + (1 + y)^2*dist[deltaD, {z}][x]
     ,
-    TestID->"[21] Distribution-deltaReduce.nb"
+    TestID->"[23] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -184,15 +201,15 @@ VerificationTest[
     ,
     0
     ,
-    TestID->"[22] Distribution-deltaReduce.nb"
+    TestID->"[24] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    res = deltaReduce[x][expr]
+    res = distReduce[x][expr]
     ,
     z^2*dist[deltaD, {0}][x] + x^2*dist[deltaD, {0}][z] + 2*x*z*dist[deltaD, {0}][z] + z^2*dist[deltaD, {0}][z] + (1 + y)^2*dist[deltaD, {z}][x]
     ,
-    TestID->"[23] Distribution-deltaReduce.nb"
+    TestID->"[25] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -200,7 +217,7 @@ VerificationTest[
     ,
     z^2*dist[deltaD, {0}][x] + (x + z)^2*dist[deltaD, {0}][z] + (1 + y)^2*dist[deltaD, {z}][x]
     ,
-    TestID->"[24] Distribution-deltaReduce.nb"
+    TestID->"[26] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -208,31 +225,31 @@ VerificationTest[
     ,
     {f[x]*dist[deltaD, {1}][x], x*f[x]*dist[deltaD, {2}][x], x^2*f[x]*dist[deltaD, {3}][x]}
     ,
-    TestID->"[25] Distribution-deltaReduce.nb"
+    TestID->"[27] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    deltaReduce[][expr]
+    distReduce[][expr]
     ,
     {f[x]*dist[deltaD, {1}][x], x*f[x]*dist[deltaD, {2}][x], x^2*f[x]*dist[deltaD, {3}][x]}
     ,
-    TestID->"[26] Distribution-deltaReduce.nb"
+    TestID->"[28] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    res1 = freeze[_f, deltaReduce[]][expr]
+    res1 = freeze[_f, distReduce[]][expr]
     ,
     {f[x]*dist[deltaD, {1}][x], -2*f[x]*dist[deltaD, {1}][x], 6*f[x]*dist[deltaD, {1}][x]}
     ,
-    TestID->"[27] Distribution-deltaReduce.nb"
+    TestID->"[29] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
-    res2 = deltaReduce["RegularTestFunction" -> True][expr]
+    res2 = distReduce["RegularTestFunction" -> True][expr]
     ,
     {f[x]*dist[deltaD, {1}][x], -2*f[x]*dist[deltaD, {1}][x], 6*f[x]*dist[deltaD, {1}][x]}
     ,
-    TestID->"[28] Distribution-deltaReduce.nb"
+    TestID->"[30] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -240,7 +257,7 @@ VerificationTest[
     ,
     {0, 0, 0}
     ,
-    TestID->"[29] Distribution-deltaReduce.nb"
+    TestID->"[31] Distribution-distReduce.nb"
 ]
 
 VerificationTest[
@@ -249,5 +266,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] Distribution-deltaReduce.nb"
+    TestID->"[∞] Distribution-distReduce.nb"
 ]

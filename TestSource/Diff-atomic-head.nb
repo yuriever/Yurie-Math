@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     25777,        795]
+NotebookDataLength[     25779,        795]
 NotebookOptionsPosition[     18424,        654]
-NotebookOutlinePosition[     18984,        673]
-CellTagsIndexPosition[     18941,        670]
+NotebookOutlinePosition[     18986,        673]
+CellTagsIndexPosition[     18943,        670]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -653,7 +653,7 @@ Cell[BoxData[
 }, Open  ]]
 },
 Editable->True,
-WindowSize->{720, 872},
+WindowSize->{1280, 1382},
 WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
 StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "Reiko", 
