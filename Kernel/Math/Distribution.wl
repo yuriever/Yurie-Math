@@ -511,7 +511,7 @@ spowerConvertCore[type:Complex|PlusMinus,RealAbs][expr_] :=
 (*Helper*)
 
 
-rpowerTypeP =
+$rpowerTypeP =
     Abs|PlusMinus|Complex;
 
 
@@ -529,10 +529,10 @@ rpowerFrom[][expr_] :=
         rpowerFromKernel[PlusMinus]//
         rpowerFromKernel[Complex];
 
-rpowerFrom[type:rpowerTypeP][expr_] :=
+rpowerFrom[type:$rpowerTypeP][expr_] :=
     expr//rpowerFromKernel[type];
 
-rpowerFrom[typeList:{rpowerTypeP..}][expr_] :=
+rpowerFrom[typeList:{$rpowerTypeP..}][expr_] :=
     Fold[
         rpowerFromKernel[#2][#1]&,
         expr,
@@ -546,10 +546,10 @@ rpowerTo[assume_:True][expr_] :=
         rpowerToKernel[PlusMinus,assume]//
         rpowerToKernel[Complex,assume];
 
-rpowerTo[type:rpowerTypeP,assume_:True][expr_] :=
+rpowerTo[type:$rpowerTypeP,assume_:True][expr_] :=
     expr//rpowerToKernel[type,assume];
 
-rpowerTo[typeList:{rpowerTypeP..},assume_:True][expr_] :=
+rpowerTo[typeList:{$rpowerTypeP..},assume_:True][expr_] :=
     Fold[
         rpowerToKernel[#2,assume][#1]&,
         expr,
@@ -744,14 +744,6 @@ deltaReduce[varP_,opts:OptionsPattern[]][expr_] :=
     expr//deltaReduceKernel[varP,OptionValue["MergeDelta"],OptionValue["RegularTestFunction"]];
 
 
-
-
-Needs["Yurie`Base`"];
-
-ClearAll[deltaReduceKernel,deltaReduceRule,isTestRegular,deltaRescale,deltaExpandRelevant,deltaGetVarListInDelta];
-
-
-
 deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :=
     expr//
         deltaApartKernel//
@@ -767,6 +759,7 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :
 
 
 deltaReduceRule[p_,ifTestRegular_] :=
+    deltaReduceRule[Verbatim[p],ifTestRegular] =
     {
         Power[x:p,n_.]*(DiracDelta[x:p]|dist[deltaD,{0}][x:p])*rest_./;Simplify[n>=1]&&isTestRegular[ifTestRegular][rest,x]:>
             0,

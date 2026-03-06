@@ -152,7 +152,7 @@
 
     * dyeBy[color, pattern, level, opts][expr]: specify the color.
 
-    * Default[level]: {0, Infinity}, inherited from Position.
+    * Default[level]: All.
 
 * `#!wl dyeAt` - dyeAt[positions][expr]: color the subexpressions at the specified positions.
 
@@ -496,7 +496,7 @@
 
     * Default[operation]: Simplify.
 
-    * Default[level]: Infinity.
+    * Default[level]: All.
 
 * `#!wl freezeNegative` - freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.
 

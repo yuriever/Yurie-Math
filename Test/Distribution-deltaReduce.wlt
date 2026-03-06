@@ -12,7 +12,6 @@ VerificationTest[
 ]
 
 VerificationTest[
-    Get["Yurie`Base`"]; 
     Get["Yurie`Math`"]
     ,
     Null
@@ -205,27 +204,43 @@ VerificationTest[
 ]
 
 VerificationTest[
-    Null
+    expr = Table[f[x]*x^n*deltaD[x, n + 1], {n, 0, 2}]
     ,
-    Null
+    {f[x]*dist[deltaD, {1}][x], x*f[x]*dist[deltaD, {2}][x], x^2*f[x]*dist[deltaD, {3}][x]}
     ,
     TestID->"[25] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
-    Null
+    deltaReduce[][expr]
     ,
-    Null
+    {f[x]*dist[deltaD, {1}][x], x*f[x]*dist[deltaD, {2}][x], x^2*f[x]*dist[deltaD, {3}][x]}
     ,
     TestID->"[26] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[
-    Null
+    res1 = freeze[_f, deltaReduce[]][expr]
     ,
-    0
+    {f[x]*dist[deltaD, {1}][x], -2*f[x]*dist[deltaD, {1}][x], 6*f[x]*dist[deltaD, {1}][x]}
     ,
     TestID->"[27] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    res2 = deltaReduce["RegularTestFunction" -> True][expr]
+    ,
+    {f[x]*dist[deltaD, {1}][x], -2*f[x]*dist[deltaD, {1}][x], 6*f[x]*dist[deltaD, {1}][x]}
+    ,
+    TestID->"[28] Distribution-deltaReduce.nb"
+]
+
+VerificationTest[
+    res1 - res2
+    ,
+    {0, 0, 0}
+    ,
+    TestID->"[29] Distribution-deltaReduce.nb"
 ]
 
 VerificationTest[

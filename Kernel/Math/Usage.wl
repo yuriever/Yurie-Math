@@ -153,7 +153,7 @@ dyeIn::usage =
     StringJoin["dyeIn[level][expr]: color the subexpressions at the specified level.", "\n", "dyeIn[color, level][expr]: specify the color."];
 
 dyeBy::usage =
-    StringJoin["dyeBy[pattern, level, opts][expr]: color the subexpressions matching the pattern.", "\n", "dyeBy[color, pattern, level, opts][expr]: specify the color.", "\n", "Default[level]: {0, Infinity}, inherited from Position."];
+    StringJoin["dyeBy[pattern, level, opts][expr]: color the subexpressions matching the pattern.", "\n", "dyeBy[color, pattern, level, opts][expr]: specify the color.", "\n", "Default[level]: All."];
 
 dyeAt::usage =
     StringJoin["dyeAt[positions][expr]: color the subexpressions at the specified positions.", "\n", "dyeAt[color, positions][expr]: specify the color."];
@@ -509,7 +509,7 @@ unsafeExprSimplify::usage =
 
 
 freeze::usage =
-    StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\n", "freeze[pattern->transform, operation, level][expr]: additionally perform the transform to the frozen subexpressions.", "\n", "Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}.", "\n", "Default[operation]: Simplify.", "\n", "Default[level]: Infinity."];
+    StringJoin["freeze[pattern, operation, level][expr]: freeze subexpressions matching the pattern, then perform the operation and unfreeze.", "\n", "freeze[pattern->transform, operation, level][expr]: additionally perform the transform to the frozen subexpressions.", "\n", "Value[pattern->transform]: _->Positive, _->Negative, _->{_,_}.", "\n", "Default[operation]: Simplify.", "\n", "Default[level]: All."];
 
 freezeNegative::usage =
     "freezeNegative[pattern, operation, level][expr]: variant of freeze with Negative as the default transformation.";
