@@ -750,12 +750,7 @@ deltaReduceKernel[varP_,ifMergeDelta_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :
         deltaRescale[varP]//
         deltaExpandRelevant[varP]//
         ReplaceRepeated[deltaReduceRule[varP,ifTestRegular]]//
-        If[ifMergeDelta,
-            (* Then *)
-            deltaTogetherKernel,
-            (* Else *)
-            Identity
-        ];
+        deltaIfTogether[ifMergeDelta];
 
 
 deltaReduceRule[p_,ifTestRegular_] :=
@@ -784,15 +779,11 @@ deltaReduceRule[p_,ifTestRegular_] :=
     };
 
 
-(* TODO: add the test for this option. *)
-
-
 isTestRegular[True][expr_,var_] :=
     True;
 
 isTestRegular[False][expr_,var_] :=
     FreeQ[expr,var];
-
 
 
 deltaRescale[p_][expr_] :=
@@ -806,7 +797,6 @@ deltaRescale[p_][expr_] :=
     }];
 
 
-
 deltaExpandRelevant[varP_][expr_] :=
     With[
         {
@@ -814,7 +804,6 @@ deltaExpandRelevant[varP_][expr_] :=
         },
         Expand[expr,varP1]
     ];
-
 
 deltaExpandRelevant[Verbatim[Blank][]][expr_] :=
     With[{
@@ -831,6 +820,13 @@ deltaGetVarListInDelta[expr_] :=
             {vars},
         All
     ]//Flatten//DeleteDuplicates;
+
+
+deltaIfTogether[True][expr_] :=
+    deltaTogetherKernel[expr];
+
+deltaIfTogether[False][expr_] :=
+    expr;
 
 
 (* ::Subsection:: *)
