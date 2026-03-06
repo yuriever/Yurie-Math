@@ -58,7 +58,7 @@ deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
 
 step::usage =
-    "step[z]: step function.";
+    "step[z]: Heaviside step function.";
 
 
 (* ::Subsection:: *)

@@ -98,7 +98,7 @@
 
 * `#!wl deltaK` - deltaK[z]: Kronecker delta function.
 
-* `#!wl step` - step[z]: step function.
+* `#!wl step` - step[z]: Heaviside step function.
 
 * `#!wl spowerReduce` - spowerReduce[expr]: reduce spower distributions.
 

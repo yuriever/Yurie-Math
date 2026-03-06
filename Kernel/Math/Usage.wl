@@ -92,7 +92,7 @@ deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
 
 step::usage =
-    "step[z]: step function.";
+    "step[z]: Heaviside step function.";
 
 spowerReduce::usage =
     "spowerReduce[expr]: reduce spower distributions.";
