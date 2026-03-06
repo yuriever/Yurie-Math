@@ -73,6 +73,15 @@ SUMCancel::usage =
 dist::usage =
     StringJoin["dist[type, data][var]: internal representation of distributions/generalized functions.", "\n", "Value[type]: deltaD, deltaC, deltaK; spower, spowerlog, rpower."];
 
+spower::usage =
+    StringJoin["spower[s][z, λ]: z_s^λ - signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
+
+spowerlog::usage =
+    StringJoin["spowerlog[s][z, λ, n]: z_s^λ log^n z - signed power + log.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).", "\n", "Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ]."];
+
+rpower::usage =
+    StringJoin["rpower[s][z, λ]: λ-holomorphic signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
+
 deltaD::usage =
     StringJoin["deltaD[z, n]: δ^n(z) - Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.", "\n", "deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag."];
 
@@ -82,14 +91,8 @@ deltaC::usage =
 deltaK::usage =
     "deltaK[z]: Kronecker delta function.";
 
-spower::usage =
-    StringJoin["spower[s][z, λ]: z_s^λ - signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
-
-spowerlog::usage =
-    StringJoin["spowerlog[s][z, λ, n]: z_s^λ log^n z - signed power + log.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).", "\n", "Hint: for specific negative integer λ, spowerlog[s][z, λ, 0] is not spower[s][z, λ]."];
-
-rpower::usage =
-    StringJoin["rpower[s][z, λ]: λ-holomorphic signed power.", "\n", "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1)."];
+step::usage =
+    "step[z]: step function.";
 
 spowerReduce::usage =
     "spowerReduce[expr]: reduce spower distributions.";

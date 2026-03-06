@@ -25,20 +25,6 @@ dist::usage =
     "Value[type]: deltaD, deltaC, deltaK; spower, spowerlog, rpower.";
 
 
-deltaD::usage =
-    "deltaD[z, n]: δ^n(z) - Dirac delta function."<>
-    "\n"<>
-    "deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function."<>
-    "\n"<>
-    "deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag.";
-
-deltaC::usage =
-    "deltaC[z]: complex delta function.";
-
-deltaK::usage =
-    "deltaK[z]: Kronecker delta function.";
-
-
 spower::usage =
     "spower[s][z, λ]: z_s^λ - signed power."<>
     "\n"<>
@@ -56,6 +42,23 @@ rpower::usage =
     "rpower[s][z, λ]: λ-holomorphic signed power."<>
     "\n"<>
     "Value[s]: Complex (I, -I), PlusMinus (\"+\", \"-\"), Abs (0, 1).";
+
+
+deltaD::usage =
+    "deltaD[z, n]: δ^n(z) - Dirac delta function."<>
+    "\n"<>
+    "deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function."<>
+    "\n"<>
+    "deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag.";
+
+deltaC::usage =
+    "deltaC[z]: complex delta function.";
+
+deltaK::usage =
+    "deltaK[z]: Kronecker delta function.";
+
+step::usage =
+    "step[z]: step function.";
 
 
 (* ::Subsection:: *)
@@ -131,6 +134,7 @@ spowerlog::InvalidExponent =
 spower[s_][z_,λ_] :=
     dist[spower,s][z,λ];
 
+
 spowerlog[s_][z_,λ_,n_] :=
     dist[spowerlog,s][z,λ,n];
 
@@ -148,7 +152,6 @@ deltaD[z:Except[_List],λ:Except[_List]] :=
 deltaD[z:Except[_List],λ:Except[_List],tag_] :=
     dist[deltaD,{λ},tag][z];
 
-
 deltaD[{z__}] :=
     dist[deltaD,ConstantArray[0,Length[{z}]]][z];
 
@@ -162,8 +165,13 @@ deltaD[{z__},{λ__},tag_] :=
 deltaC[z_] :=
     dist[deltaC][z];
 
+
 deltaK[z_] :=
     dist[deltaK][z];
+
+
+step[z_] :=
+    dist[step][z];
 
 
 (* ::Subsubsection:: *)
@@ -229,6 +237,10 @@ Derivative[1,0,0][dist[spowerlog,1]][z_,λ_,0] :=
 
 Derivative[n__][dist[deltaD,λ_List]][z__] :=
     dist[deltaD,plusSafe[λ,{n}]][z];
+
+
+Derivative[1][dist[step]][z_] :=
+    dist[deltaD,{0}][z];
 
 
 (* ::Subsection:: *)
@@ -659,7 +671,9 @@ deltaFromDirac[expr_] :=
         DiracDelta[z__]:>
             dist[deltaD,ConstantArray[0,Length[{z}]]][z],
         Derivative[λ__][DiracDelta][z__]:>
-            dist[deltaD,{λ}][z]
+            dist[deltaD,{λ}][z],
+        HeavisideTheta[z_]:>
+            dist[step][z]
     }];
 
 

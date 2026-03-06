@@ -74,16 +74,6 @@
 
     * Value[type]: deltaD, deltaC, deltaK; spower, spowerlog, rpower.
 
-* `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
-
-    * deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.
-
-    * deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag.
-
-* `#!wl deltaC` - deltaC[z]: complex delta function.
-
-* `#!wl deltaK` - deltaK[z]: Kronecker delta function.
-
 * `#!wl spower` - spower[s][z, λ]: z\_s^λ - signed power.
 
     * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1).
@@ -97,6 +87,18 @@
 * `#!wl rpower` - rpower[s][z, λ]: λ-holomorphic signed power.
 
     * Value[s]: Complex (I, -I), PlusMinus ("+", "-"), Abs (0, 1).
+
+* `#!wl deltaD` - deltaD[z, n]: δ^n(z) - Dirac delta function.
+
+    * deltaD[{z, ...}, {n, ...}]: multi-variable Dirac delta function.
+
+    * deltaD[{z, ...}, {n, ...}, tag]: Dirac delta function with tag.
+
+* `#!wl deltaC` - deltaC[z]: complex delta function.
+
+* `#!wl deltaK` - deltaK[z]: Kronecker delta function.
+
+* `#!wl step` - step[z]: step function.
 
 * `#!wl spowerReduce` - spowerReduce[expr]: reduce spower distributions.
 
