@@ -36,9 +36,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-    spowerStrip[{spower[0][z, n], spower[1][z, n]}]
+    Hold[Evaluate[spowerStrip[{spower[0][z, n], spower[1][z, n]}]]]
     ,
-    {Abs[z]^n, Abs[z]^n*Sign[z]}
+    Hold[{dist[spower, 0][z, n], dist[spower, 1][z, n]}]
     ,
     TestID->"[4] Distribution-spowerStrip.nb"
 ]
@@ -60,9 +60,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-    spowerStrip[{spowerlog[0][z, n, m], spowerlog[1][z, n, m]}]
+    Hold[Evaluate[spowerStrip[{spowerlog[0][z, n, m], spowerlog[1][z, n, m]}]]]
     ,
-    {Abs[z]^n*Log[z]^m, Abs[z]^n*Log[z]^m*Sign[z]}
+    Hold[{dist[spowerlog, 0][z, n, m], dist[spowerlog, 1][z, n, m]}]
     ,
     TestID->"[7] Distribution-spowerStrip.nb"
 ]

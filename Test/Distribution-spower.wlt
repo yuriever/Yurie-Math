@@ -20,9 +20,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-    (spower[#1][z, 0] & ) /@ {"+", "-", I, -I, 0, 1}
+    TableForm[(spower[#1][z, 0] & ) /@ {"+", "-", I, -I, 0, 1}]
     ,
-    {1, 1, 1, 1, 1, 1}
+    TableForm[{dist[spower, "+"][z, 0], dist[spower, "-"][z, 0], 1, 1, 1, dist[spower, 1][z, 0]}]
     ,
     TestID->"[2] Distribution-spower.nb"
 ]

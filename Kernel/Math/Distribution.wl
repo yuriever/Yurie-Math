@@ -65,9 +65,6 @@ step::usage =
 (*Function*)
 
 
-spowerReduce::usage =
-    "spowerReduce[expr]: reduce spower distributions.";
-
 spowerStrip::usage =
     "spowerStrip[expr]: convert spower distributions to the associated function.";
 
@@ -181,12 +178,40 @@ step[{z__}] :=
 (*Main*)
 
 
-dist[spower,s_][z_,0] :=
+dist[spower,"+"|"-"][z_,λ_Integer?Negative] :=
+    Indeterminate;
+
+dist[spower,0][z_,λ_Integer?Negative]/;OddQ[λ] :=
+    Indeterminate;
+
+dist[spower,1][z_,λ_Integer?Negative]/;EvenQ[λ] :=
+    Indeterminate;
+
+dist[spowerlog,"+"|"-"][z_,λ_Integer?Negative,k_] :=
+    Indeterminate;
+
+dist[spowerlog,0][z_,λ_Integer?Negative,k_]/;OddQ[λ] :=
+    Indeterminate;
+
+dist[spowerlog,1][z_,λ_Integer?Negative,k_]/;EvenQ[λ] :=
+    Indeterminate;
+
+
+dist[spower,"+"][z_,0] :=
+    dist[step][z];
+
+dist[spower,"-"][z_,0] :=
+    1-dist[step][z];
+
+dist[spower,0][z_,0] :=
     1;
 
+dist[spower,1][z_,0] :=
+    2*dist[step][z]-1;
 
-dist[spowerlog,s:_.*I|_.*-I][z_,λ_,0] :=
-    dist[spower,s][z,λ];
+dist[spower,s:_.*I|_.*-I][z_,0] :=
+    1;
+
 
 dist[spowerlog,0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
     dist[spower,0][z,λ];
@@ -194,11 +219,24 @@ dist[spowerlog,0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
 dist[spowerlog,1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
     dist[spower,1][z,λ];
 
-dist[spowerlog,s_][z_,λ_?NumberQ,0]/;!IntegerQ[λ]||NonNegative[λ] :=
+dist[spowerlog,s:_.*I|_.*-I][z_,λ_,0] :=
+    dist[spower,s][z,λ];
+
+dist[spowerlog,s:"+"|"-"|0|1][z_,λ_?NumberQ,0]/;!IntegerQ[λ]||NonNegative[λ] :=
     (
         Message[spowerlog::InvalidExponent,λ];
         HoldComplete[dist[spowerlog,s][z,λ,0]]
     );
+
+
+dist[spower,s:_.*I|_.*-I][z_,n_Integer?NonNegative] :=
+    Power[z,n];
+
+dist[spower,0][z_,n_Integer?NonNegative]/;EvenQ[n] :=
+    Power[z,n];
+
+dist[spower,1][z_,n_Integer?NonNegative]/;OddQ[n] :=
+    Power[z,n];
 
 
 (* ::Subsubsection:: *)
@@ -247,52 +285,6 @@ Derivative[1][dist[step]][z_] :=
 
 
 (* ::Subsection:: *)
-(*spowerReduce*)
-
-
-spowerReduce[expr_] :=
-    expr//
-        spowerReduceProduct//
-        spowerReduceSpecialValue;
-
-
-spowerReduceProduct[expr_] :=
-    expr//ReplaceRepeated[{
-        (* Abs x Abs *)
-        dist[spower,s1:0|1][z_,λ1_]*dist[spower,s2:0|1][z_,λ2_]/;s1==s2:>
-            dist[spower,0][z,λ1+λ2],
-        dist[spower,s1:0|1][z_,λ1_]*dist[spower,s2:0|1][z_,λ2_]/;s1+s2==1:>
-            dist[spower,1][z,λ1+λ2],
-
-        (* Abs x PlusMinus *)
-        dist[spower,0|1][z_,λ1_]*dist[spower,"+"][z_,λ2_]:>
-            dist[spower,"+"][z,λ1+λ2],
-        dist[spower,s:0|1][z_,λ1_]*dist[spower,"-"][z_,λ2_]:>
-            (-1)^s*dist[spower,"-"][z,λ1+λ2],
-
-        (* PlusMinus x PlusMinus *)
-        dist[spower,s1:"+"|"-"][z_,λ1_]*dist[spower,s2:"+"|"-"][z_,λ2_]/;s1==s2:>
-            dist[spower,s1][z,λ1+λ2],
-        dist[spower,s1:"+"|"-"][z_,λ1_]*dist[spower,s2:"+"|"-"][z_,λ2_]/;s1!=s2:>
-            0,
-
-        (* Complex x Complex *)
-        dist[spower,s:_.*I|_.*-I][z_,λ1_]*dist[spower,s_][z_,λ2_]:>
-            dist[spower,s][z,λ1+λ2]
-    }];
-
-spowerReduceSpecialValue[expr_] :=
-    expr//ReplaceAll[{
-        dist[spower,s:_.*I|_.*-I][z_,n_Integer?NonNegative]:>
-            Power[z,n],
-        dist[spower,0][z_,n_Integer?NonNegative]/;EvenQ[n]:>
-            Power[z,n],
-        dist[spower,1][z_,n_Integer?NonNegative]/;OddQ[n]:>
-            Power[z,n]
-    }];
-
-
-(* ::Subsection:: *)
 (*spowerStrip*)
 
 
@@ -304,12 +296,6 @@ spowerStrip[expr_] :=
         dist[spower,"-"][z_,λ_]:>
             Power[-z,λ],
 
-        (* Abs *)
-        dist[spower,0][z_,λ_]:>
-            Power[Abs[z],λ],
-        dist[spower,1][z_,λ_]:>
-            Power[Abs[z],λ]*Sign[z],
-
         (* Complex *)
         dist[spower,s:_.*I|_.*-I][z_,λ_]:>
             Power[z,λ],
@@ -319,12 +305,6 @@ spowerStrip[expr_] :=
             Power[z,λ]*Log[z]^n,
         dist[spowerlog,"-"][z_,λ_,n_]:>
             Power[-z,λ]*Log[-z]^n,
-
-        (* Log, Abs *)
-        dist[spowerlog,0][z_,λ_,n_]:>
-            Power[Abs[z],λ]*Log[z]^n,
-        dist[spowerlog,1][z_,λ_,n_]:>
-            Power[Abs[z],λ]*Log[z]^n*Sign[z],
 
         (* Log, Complex *)
         dist[spowerlog,s:_.*I|_.*-I][z_,λ_,n_]:>
@@ -792,6 +772,7 @@ distReduceKernel[varP_,ifMergeDist_?BooleanQ,ifTestRegular_?BooleanQ][expr_] :=
     expr//
         distApart//
         deltaReduceKernel[varP,ifTestRegular]//
+        spowerReduceKernel[varP]//
         distIfTogether[ifMergeDist];
 
 
@@ -803,7 +784,7 @@ distIfTogether[False][expr_] :=
 
 
 (* ::Subsubsection:: *)
-(*deltaReduce*)
+(*deltaD*)
 
 
 deltaReduceKernel[varP_,ifTestRegular_][expr_] :=
@@ -879,6 +860,41 @@ isTestRegular[True][expr_,var_] :=
 
 isTestRegular[False][expr_,var_] :=
     FreeQ[expr,var];
+
+
+(* ::Subsubsection:: *)
+(*spower*)
+
+
+spowerReduceKernel[varP_][expr_] :=
+    expr//ReplaceRepeated[spowerTogetherRule[varP]];
+
+
+spowerTogetherRule[p_] :=
+    spowerTogetherRule[Verbatim[p]] =
+    {
+        (* Abs x Abs *)
+        dist[spower,s1:0|1][z:p,λ1_]*dist[spower,s2:0|1][z:p,λ2_]/;s1==s2:>
+            dist[spower,0][z,λ1+λ2],
+        dist[spower,s1:0|1][z:p,λ1_]*dist[spower,s2:0|1][z:p,λ2_]/;s1+s2==1:>
+            dist[spower,1][z,λ1+λ2],
+
+        (* Abs x PlusMinus *)
+        dist[spower,0|1][z:p,λ1_]*dist[spower,"+"][z:p,λ2_]:>
+            dist[spower,"+"][z,λ1+λ2],
+        dist[spower,s:0|1][z:p,λ1_]*dist[spower,"-"][z:p,λ2_]:>
+            (-1)^s*dist[spower,"-"][z,λ1+λ2],
+
+        (* PlusMinus x PlusMinus *)
+        dist[spower,s1:"+"|"-"][z:p,λ1_]*dist[spower,s2:"+"|"-"][z:p,λ2_]/;s1==s2:>
+            dist[spower,s1][z,λ1+λ2],
+        dist[spower,s1:"+"|"-"][z:p,λ1_]*dist[spower,s2:"+"|"-"][z:p,λ2_]/;s1!=s2:>
+            0,
+
+        (* Complex x Complex *)
+        dist[spower,s:_.*I|_.*-I][z:p,λ1_]*dist[spower,s_][z:p,λ2_]:>
+            dist[spower,s][z,λ1+λ2]
+    };
 
 
 (* ::Subsection:: *)

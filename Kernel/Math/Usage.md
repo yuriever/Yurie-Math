@@ -100,8 +100,6 @@
 
 * `#!wl step` - step[z]: Heaviside step function.
 
-* `#!wl spowerReduce` - spowerReduce[expr]: reduce spower distributions.
-
 * `#!wl spowerStrip` - spowerStrip[expr]: convert spower distributions to the associated function.
 
 * `#!wl spowerConvert` - spowerConvert[type1 -> type2]: convert between different types of spower distributions.

@@ -94,9 +94,6 @@ deltaK::usage =
 step::usage =
     "step[z]: Heaviside step function.";
 
-spowerReduce::usage =
-    "spowerReduce[expr]: reduce spower distributions.";
-
 spowerStrip::usage =
     "spowerStrip[expr]: convert spower distributions to the associated function.";
 
