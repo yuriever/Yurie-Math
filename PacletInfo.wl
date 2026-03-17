@@ -29,6 +29,13 @@ PacletObject[
         }
       },
       {
+        "Kernel",
+        "Root" -> "Sandbox/Kernel",
+        "Context" -> {
+          "Yurie`Math`"
+        }
+      },
+      {
         "AutoCompletionData",
         "Root" -> "AutoCompletionData"
       },
@@ -39,6 +46,7 @@ PacletObject[
           {"License", "LICENSE"},
           {"ReadMe", "README.md"},
           {"Test", "Test"},
+          {"Sandbox", "Sandbox"},
           {"TestSource", "TestSource"}
         }
       }
