@@ -267,24 +267,25 @@ freezeNegative[
     ];
 
 
-freezeKernel[pattern_,operation_,default_,level_,expr_] :=
-    Module[{ruleList,ruleInvList},
+freezeKernel[patternOrItsList_,operation_,default_,level_,expr_] :=
+    Module[{ruleList,ruleInvList,expr1,operation1},
         {ruleList,ruleInvList} =
-            prepareFrozenRuleList[pattern,default,level,expr];
-        Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
-    ];
+            prepareFrozenRuleList[patternOrItsList,default,level,expr];
+        expr1 =
+            Replace[expr,ruleList,level];
+        operation1 =
+            Replace[operation,ruleList,level];
 
-freezeKernel[{patterns__},operation_,default_,level_,expr_] :=
-    Module[{ruleList,ruleInvList},
-        {ruleList,ruleInvList} =
-            Map[prepareFrozenRuleList[#,default,level,expr]&,{patterns}]//Transpose//MapApply[Join];
-        Replace[expr,ruleList,level]//operation//ReplaceAll[ruleInvList]
+        expr1//operation1//ReplaceAll[ruleInvList]
     ];
 
 
 (* ::Subsubsection:: *)
 (*Helper*)
 
+
+prepareFrozenRuleList[patternList_List,default_,level_,expr_] :=
+    Map[prepareFrozenRuleList[#,default,level,expr]&,patternList]//Transpose//MapApply[Join];
 
 prepareFrozenRuleList[pattern1_,default_,level_,expr_] :=
     Module[{pattern,fun,funInv,subExprList,tempList},
