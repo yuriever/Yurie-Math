@@ -891,6 +891,10 @@ spowerReduceKernel[varP_][expr_] :=
 spowerTogetherRule[p_] :=
     spowerTogetherRule[Verbatim[p]] =
     {
+        (* Multiplicative inverse *)
+        Power[spower[s_][z:p,λ_],-1]:>
+            spower[s][z,-λ],
+
         (* Complex x Complex *)
         dist[spower,s:_.*I|_.*-I][z:p,λ1_]*dist[spower,s_][z:p,λ2_]:>
             dist[spower,s][z,λ1+λ2],
