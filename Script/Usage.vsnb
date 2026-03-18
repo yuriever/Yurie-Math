@@ -6,7 +6,14 @@
    "languageId": "wolfram",
    "outputs": [],
    "metadata": {},
-   "executionSummary": {}
+   "executionSummary": {
+    "timing": {
+     "startTime": 1773855566818,
+     "endTime": 1773855568346
+    },
+    "executionOrder": 5,
+    "success": true
+   }
   }
  ]
 }

@@ -116,26 +116,12 @@ Begin["`Private`"];
 (*dist*)
 
 
-
-Needs["Yurie`Base`"];
-
-ClearAll[dist,
-    spower,
-    spowerlog,
-    rpower,
-    deltaD,
-    deltaC,
-    deltaK,
-    step
-];
-
-
 (* ::Subsubsection:: *)
 (*Exception*)
 
 
 spowerlog::InvalidExponent =
-    "Invalid exponent `1` and type`2` for rank-0 spowerlog. The exponent should be a specific negative integer according to the type.";
+    "Invalid exponent `2` and type `1` for rank-0 spowerlog. The exponent should be a specific negative integer according to the type.";
 
 dist::Pole =
     "The distribution `1` has a pole at `2`.";
@@ -156,9 +142,9 @@ distExceptionInvalidSPowerLog//Attributes = {
     HoldAll
 };
 
-distExceptionInvalidSPowerLog[expr_,λ_] :=
+distExceptionInvalidSPowerLog[expr_,s_,λ_] :=
     (
-        Message[spowerlog::InvalidExponent,λ];
+        Message[spowerlog::InvalidExponent,s,λ];
         HoldComplete[expr]
     );
 
@@ -258,17 +244,17 @@ dist[spower,1][z_,0] :=
 
 (* Invalid exponent/rank exception. *)
 
-dist[spowerlog,s:_.*I|_.*-I][z_,λ_,0] :=
-    distExceptionInvalidSPowerLog[s,λ];
+expr:dist[spowerlog,s:_.*I|_.*-I][z_,λ_,0] :=
+    distExceptionInvalidSPowerLog[expr,s,λ];
 
-dist[spowerlog,s:"+"|"-"|0|1][z_,λ_?NumberQ,0]/;!IntegerQ[λ]||NonNegative[λ] :=
-    distExceptionInvalidSPowerLog[s,λ];
+expr:dist[spowerlog,s:"+"|"-"|0|1][z_,λ_?NumberQ,0]/;!IntegerQ[λ]||NonNegative[λ] :=
+    distExceptionInvalidSPowerLog[expr,s,λ];
 
-dist[spowerlog,s:0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
-    distExceptionInvalidSPowerLog[s,λ];
+expr:dist[spowerlog,s:0][z_,λ_Integer?Negative,0]/;EvenQ[λ] :=
+    distExceptionInvalidSPowerLog[expr,s,λ];
 
-dist[spowerlog,s:1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
-    distExceptionInvalidSPowerLog[s,λ];
+expr:dist[spowerlog,s:1][z_,λ_Integer?Negative,0]/;OddQ[λ] :=
+    distExceptionInvalidSPowerLog[expr,s,λ];
 
 
 (* ::Subsubsection:: *)
