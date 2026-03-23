@@ -422,6 +422,18 @@
 
 * `#!wl isC` - isC[x..]: test whether the arguments are complex numbers.
 
+* `#!wl headMatchQ` - headMatchQ[pattern][expr]: test whether the nested head of the expression matches the pattern.
+
+* `#!wl headSameQ` - headSameQ[pattern][expr]: test whether the nested head of the expression is the same as the pattern.
+
+* `#!wl headMatchHQ` - headMatchHQ[pattern][expr]: variant of headMatchQ with HoldAllComplete attribute.
+
+* `#!wl headSameHQ` - headSameHQ[pattern][expr]: variant of headSameQ with HoldAllComplete attribute.
+
+* `#!wl plusQ` - plusQ[expr]: test whether the expression is syntactically positive.
+
+* `#!wl minusQ` - minusQ[expr]: test whether the expression is syntactically negative.
+
 * `#!wl levelQ` - levelQ[level]: test whether the argument is a valid level specification.
 
     * Hint: All==={0,Infinity}, Infinity==={1,Infinity}, n\_Integer==={1,n}, {\_Integer}, {\_Integer,\_Integer}.
@@ -433,10 +445,6 @@
 * `#!wl linearQ` - linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present.
 
     * linearQ[expr, varList]: test linearity for all the variables.
-
-* `#!wl plusQ` - plusQ[expr]: test whether the expression is syntactically positive.
-
-* `#!wl minusQ` - minusQ[expr]: test whether the expression is syntactically negative.
 
 * `#!wl patternPresentQ` - patternPresentQ[expr]: test whether any pattern construction occurs in the expression.
 

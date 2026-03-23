@@ -437,6 +437,24 @@ isRN0::usage =
 isC::usage =
     "isC[x..]: test whether the arguments are complex numbers.";
 
+headMatchQ::usage =
+    "headMatchQ[pattern][expr]: test whether the nested head of the expression matches the pattern.";
+
+headSameQ::usage =
+    "headSameQ[pattern][expr]: test whether the nested head of the expression is the same as the pattern.";
+
+headMatchHQ::usage =
+    "headMatchHQ[pattern][expr]: variant of headMatchQ with HoldAllComplete attribute.";
+
+headSameHQ::usage =
+    "headSameHQ[pattern][expr]: variant of headSameQ with HoldAllComplete attribute.";
+
+plusQ::usage =
+    "plusQ[expr]: test whether the expression is syntactically positive.";
+
+minusQ::usage =
+    "minusQ[expr]: test whether the expression is syntactically negative.";
+
 levelQ::usage =
     StringJoin["levelQ[level]: test whether the argument is a valid level specification.", "\n", "Hint: All==={0,Infinity}, Infinity==={1,Infinity}, n_Integer==={1,n}, {_Integer}, {_Integer,_Integer}."];
 
@@ -445,12 +463,6 @@ presentQ::usage =
 
 linearQ::usage =
     StringJoin["linearQ[expr, var]: test whether the expression is linear in the variable and the variable is present.", "\n", "linearQ[expr, varList]: test linearity for all the variables."];
-
-plusQ::usage =
-    "plusQ[expr]: test whether the expression is syntactically positive.";
-
-minusQ::usage =
-    "minusQ[expr]: test whether the expression is syntactically negative.";
 
 patternPresentQ::usage =
     "patternPresentQ[expr]: test whether any pattern construction occurs in the expression.";

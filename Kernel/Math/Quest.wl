@@ -14,6 +14,10 @@ Needs["Yurie`Math`"];
 (*Public*)
 
 
+(* ::Subsection:: *)
+(*Domain*)
+
+
 isN::usage =
     "isN[x..]: test whether the arguments are natural numbers.";
 
@@ -57,6 +61,38 @@ isC::usage =
     "isC[x..]: test whether the arguments are complex numbers.";
 
 
+(* ::Subsection:: *)
+(*headMatchQ|headSameQ*)
+
+
+headMatchQ::usage =
+    "headMatchQ[pattern][expr]: test whether the nested head of the expression matches the pattern.";
+
+headSameQ::usage =
+    "headSameQ[pattern][expr]: test whether the nested head of the expression is the same as the pattern.";
+
+headMatchHQ::usage =
+    "headMatchHQ[pattern][expr]: variant of headMatchQ with HoldAllComplete attribute.";
+
+headSameHQ::usage =
+    "headSameHQ[pattern][expr]: variant of headSameQ with HoldAllComplete attribute.";
+
+
+(* ::Subsection:: *)
+(*plusQ|minusQ*)
+
+
+plusQ::usage =
+    "plusQ[expr]: test whether the expression is syntactically positive.";
+
+minusQ::usage =
+    "minusQ[expr]: test whether the expression is syntactically negative.";
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
+
 levelQ::usage =
     "levelQ[level]: test whether the argument is a valid level specification."<>
     "\n"<>
@@ -72,12 +108,6 @@ linearQ::usage =
     "\n"<>
     "linearQ[expr, varList]: test linearity for all the variables.";
 
-plusQ::usage =
-    "plusQ[expr]: test whether the expression is syntactically positive.";
-
-minusQ::usage =
-    "minusQ[expr]: test whether the expression is syntactically negative.";
-
 patternPresentQ::usage =
     "patternPresentQ[expr]: test whether any pattern construction occurs in the expression.";
 
@@ -92,15 +122,15 @@ patternEqualQ::usage =
 (*Private*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsection:: *)
-(*Main*)
+(* ::Subsection::Closed:: *)
+(*Domain*)
 
 
 isN[x_] :=
@@ -233,6 +263,100 @@ isC[] :=
     True;
 
 
+(* ::Subsection:: *)
+(*headMatchQ|headSameQ*)
+
+
+(* ::Subsubsection:: *)
+(*Main*)
+
+
+headMatchQ[pattern_][expr_] :=
+    headMatchQKernel[expr,pattern];
+
+headMatchQ[expr_,pattern_] :=
+    headMatchQKernel[expr,pattern];
+
+
+headSameQ[pattern_][expr_] :=
+    headSameQKernel[expr,pattern];
+
+headSameQ[expr_,pattern_] :=
+    headSameQKernel[expr,pattern];
+
+
+headMatchHQ//Attributes = {
+    HoldAllComplete
+};
+
+headMatchHQ[pattern_] :=
+    Function[expr,headMatchQKernel[expr,pattern],HoldAllComplete];
+
+headMatchHQ[expr_,pattern_] :=
+    headMatchQKernel[expr,pattern];
+
+
+headSameHQ//Attributes = {
+    HoldAllComplete
+};
+
+headSameHQ[pattern_] :=
+    Function[expr,headSameQKernel[expr,pattern],HoldAllComplete];
+
+headSameHQ[expr_,pattern_] :=
+    headSameQKernel[expr,pattern];
+
+
+(* ::Subsubsection:: *)
+(*Kernel*)
+
+
+headMatchQKernel//Attributes = {
+    HoldAllComplete
+};
+
+headMatchQKernel[expr_,pattern_]/;MatchQ[HoldComplete[expr],HoldPattern[HoldComplete[pattern]]] :=
+    True;
+
+headMatchQKernel[head_[___],pattern_] :=
+    headMatchQKernel[head,pattern];
+
+headMatchQKernel[_,_] :=
+    False;
+
+
+headSameQKernel//Attributes = {
+    HoldAllComplete
+};
+
+headSameQKernel[pattern_][expr_] :=
+    headSameQKernel[expr,pattern];
+
+headSameQKernel[expr_,pattern_]/;HoldComplete[expr]===HoldComplete[pattern] :=
+    True;
+
+headSameQKernel[head_[___],pattern_] :=
+    headSameQKernel[head,pattern];
+
+headSameQKernel[_,_] :=
+    False;
+
+
+(* ::Subsection:: *)
+(*plusQ|minusQ*)
+
+
+plusQ[expr_] :=
+    Not@Internal`SyntacticNegativeQ[expr];
+
+minusQ[expr_] :=
+    Internal`SyntacticNegativeQ[expr];
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
+
 levelQ[All|Infinity|_Integer|{_Integer}|{_Integer,_Integer}] :=
     True;
 
@@ -251,13 +375,6 @@ linearQ[expr_,var_] :=
     Internal`LinearQ[expr,var];
 
 
-plusQ[expr_] :=
-    Not@Internal`SyntacticNegativeQ[expr];
-
-minusQ[expr_] :=
-    Internal`SyntacticNegativeQ[expr];
-
-
 patternPresentQ[expr_] :=
     Internal`PatternPresentQ[expr];
 
@@ -268,7 +385,7 @@ patternEqualQ[patt1_,patt2_] :=
     MatchQ[Internal`ComparePatterns[patt1,patt2],"Equivalent"|"Identical"];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*End*)
 
 

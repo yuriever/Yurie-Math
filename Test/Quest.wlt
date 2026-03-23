@@ -172,6 +172,54 @@ VerificationTest[
 ]
 
 VerificationTest[
+    headMatchQ[y[_]][y]
+    ,
+    False
+    ,
+    TestID->"[21] Quest.nb"
+]
+
+VerificationTest[
+    headMatchQ[y[_]][y[a, b]]
+    ,
+    False
+    ,
+    TestID->"[22] Quest.nb"
+]
+
+VerificationTest[
+    headMatchQ[y[_]][y[a, b][c]]
+    ,
+    False
+    ,
+    TestID->"[23] Quest.nb"
+]
+
+VerificationTest[
+    headMatchQ[y[_]][y[a]]
+    ,
+    True
+    ,
+    TestID->"[24] Quest.nb"
+]
+
+VerificationTest[
+    headMatchQ[y[_]][y[a][b]]
+    ,
+    True
+    ,
+    TestID->"[25] Quest.nb"
+]
+
+VerificationTest[
+    headMatchQ[y[_]][y[a][b][c]]
+    ,
+    True
+    ,
+    TestID->"[26] Quest.nb"
+]
+
+VerificationTest[
     ClearAll["`*"];
     End[]
     ,
